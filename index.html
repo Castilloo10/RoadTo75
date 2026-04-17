@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<title>Menú Comidas + Plan Muscular</title>
+<title>Plan de nutrición y musucular - RoadTo75</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -180,8 +180,11 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 
 <div id="sync-status"><span class="sync-dot"></span><span id="sync-msg">Sincronizando…</span></div>
 
-<header>
-  <div class="logo">PLAN MUSCULAR <span>60 → 80kg</span></div>
+<header style="padding: 12px 24px;">
+  <div class="logo" style="display: flex; align-items: center; gap: 16px;">
+    <img src="sin_fondo.png"  alt="Logo Plan Muscular" style="height: 85px; width: auto; display: block;">
+    <span style="font-size: 1.4rem; font-weight: 400;">60 → 75kg</span>  
+  </div>
   <nav>
     <button class="active" onclick="showSection('menu')">📋 Menú Semanal</button>
     <button onclick="showSection('compra')">🛒 Lista Compra</button>
@@ -208,9 +211,9 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
     <div class="batido-box">
       <h3>🥤 BATIDO DIARIO (Merienda) · Fijo toda la semana</h3>
       <p style="color:var(--text2);font-size:.88rem;margin:.5rem 0 .75rem">El batido se toma cada día. Úsalo post-entreno los días que vayas al gimnasio; el resto de días, a las 16-17h como merienda.</p>
-      <p style="font-size:.9rem;color:var(--text)"><strong>35g Whey Protein</strong> (Hacendado Mercadona) + <strong>3g Creatina monohidrato</strong> + <strong>1 plátano</strong> (L/X/V) o <strong>100g fresas/frambuesas</strong> congeladas (Ma/J) + <strong>300ml leche semidesnatada</strong></p>
+      <p style="font-size:.9rem;color:var(--text)"><strong>35g Whey Protein</strong> (Hacendado Mercadona) + <strong>3g Creatina monohidrato</strong> + <strong>1 plátano</strong> (L/X/V) o <strong>100g Gresas/frambuesas</strong> congeladas (Ma/J) + <strong>300ml leche semidesnatada</strong></p>
       <div class="meal-macros" style="margin-top:.75rem">
-        <span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C (plátano) / ~22g C (fresas)</span><span class="pill f">~5g F</span>
+        <span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C (plátano) / ~22g C (fresas)</span><span class="pill f">~5g G</span>
       </div>
     </div>
     <div class="day-tabs">
@@ -228,25 +231,25 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
           <div class="meal-food"><strong>Avena con leche y huevos</strong><br>· 100g avena cocida con 300ml leche entera<br>· 3 huevos revueltos con AOVE<br>· 1 plátano mediano</div>
-          <div class="meal-macros"><span class="pill kcal">~780 kcal</span><span class="pill p">~38g P</span><span class="pill c">~95g C</span><span class="pill f">~22g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~780 kcal</span><span class="pill p">~38g P</span><span class="pill c">~95g C</span><span class="pill f">~22g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">15:00h</div></div></div>
           <div class="meal-food"><strong>Pollo con arroz y verduras</strong><br>· 200g pechuga de pollo a la plancha<br>· 100g arroz blanco (en seco) hervido<br>· 200g brócoli congelado al vapor<br>· AOVE 1 cda + sal y limón</div>
-          <div class="meal-macros"><span class="pill kcal">~790 kcal</span><span class="pill p">~55g P</span><span class="pill c">~85g C</span><span class="pill f">~14g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~790 kcal</span><span class="pill p">~55g P</span><span class="pill c">~85g C</span><span class="pill f">~14g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno ~20:00h</div></div></div>
           <div class="meal-food"><strong>Batido diario (ver arriba)</strong><br>· 35g Whey + 3g creatina<br>· 1 plátano + 300ml leche semi</div>
-          <div class="meal-macros"><span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C</span><span class="pill f">~5g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C</span><span class="pill f">~5g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
           <div class="meal-food"><strong>Salmón con patata y ensalada</strong><br>· 200g lomo de salmón al horno<br>· 250g patatas cocidas con pimentón<br>· Ensalada: lechuga, tomate, cebolla, AOVE</div>
-          <div class="meal-macros"><span class="pill kcal">~810 kcal</span><span class="pill p">~42g P</span><span class="pill c">~48g C</span><span class="pill f">~34g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~810 kcal</span><span class="pill p">~42g P</span><span class="pill c">~48g C</span><span class="pill f">~34g G</span></div>
         </div>
       </div>
-      <div class="day-total"><span class="day-total-label">TOTAL LUNES</span><div class="day-total-macros"><span class="pill kcal">2710 kcal</span><span class="pill p">172g P</span><span class="pill c">266g C</span><span class="pill f">75g F</span></div></div>
+      <div class="day-total"><span class="day-total-label">TOTAL LUNES</span><div class="day-total-macros"><span class="pill kcal">2710 kcal</span><span class="pill p">172g P</span><span class="pill c">266g C</span><span class="pill f">75g G</span></div></div>
     </div>
 
     <!-- MARTES -->
@@ -256,25 +259,25 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
           <div class="meal-food"><strong>Tostadas con aguacate y huevo</strong><br>· 3 rebanadas pan integral tostado<br>· ½ aguacate maduro aplastado<br>· 3 huevos revueltos o a la plancha<br>· 1 yogur griego natural (125g)</div>
-          <div class="meal-macros"><span class="pill kcal">~720 kcal</span><span class="pill p">~36g P</span><span class="pill c">~65g C</span><span class="pill f">~30g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~720 kcal</span><span class="pill p">~36g P</span><span class="pill c">~65g C</span><span class="pill f">~30g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">15:00</div></div></div>
           <div class="meal-food"><strong>Lentejas con chorizo y verdura</strong><br>· 200g lentejas cocidas (bote Mercadona)<br>· 50g chorizo bajo en grasa<br>· Zanahoria, cebolla, pimiento<br>· Pan integral (1 rebanada)</div>
-          <div class="meal-macros"><span class="pill kcal">~750 kcal</span><span class="pill p">~42g P</span><span class="pill c">~80g C</span><span class="pill f">~18g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~750 kcal</span><span class="pill p">~42g P</span><span class="pill c">~80g C</span><span class="pill f">~18g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div></div>
-          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 100g fresas/frambuesas congeladas<br>· 300ml leche semidesnatada</div>
-          <div class="meal-macros"><span class="pill kcal">~255 kcal</span><span class="pill p">~36g P</span><span class="pill c">~20g C</span><span class="pill f">~5g F</span></div>
+          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 100g Gresas/frambuesas congeladas<br>· 300ml leche semidesnatada</div>
+          <div class="meal-macros"><span class="pill kcal">~255 kcal</span><span class="pill p">~36g P</span><span class="pill c">~20g C</span><span class="pill f">~5g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
           <div class="meal-food"><strong>Pasta con atún y tomate</strong><br>· 100g pasta penne (seco)<br>· 2 latas atún en aceite (80g c/u)<br>· Tomate frito casero (3 cdas)<br>· Queso rallado Hacendado (20g)</div>
-          <div class="meal-macros"><span class="pill kcal">~780 kcal</span><span class="pill p">~48g P</span><span class="pill c">~82g C</span><span class="pill f">~20g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~780 kcal</span><span class="pill p">~48g P</span><span class="pill c">~82g C</span><span class="pill f">~20g G</span></div>
         </div>
       </div>
-      <div class="day-total"><span class="day-total-label">TOTAL MARTES</span><div class="day-total-macros"><span class="pill kcal">2505 kcal</span><span class="pill p">162g P</span><span class="pill c">247g C</span><span class="pill f">73g F</span></div></div>
+      <div class="day-total"><span class="day-total-label">TOTAL MARTES</span><div class="day-total-macros"><span class="pill kcal">2505 kcal</span><span class="pill p">162g P</span><span class="pill c">247g C</span><span class="pill f">73g G</span></div></div>
     </div>
 
     <!-- MIÉRCOLES -->
@@ -284,25 +287,25 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
           <div class="meal-food"><strong>Avena proteica con fruta</strong><br>· 100g avena + 300ml leche entera<br>· 1 plátano troceado encima<br>· 30g almendras crudas<br>· 1 cda miel</div>
-          <div class="meal-macros"><span class="pill kcal">~780 kcal</span><span class="pill p">~28g P</span><span class="pill c">~100g C</span><span class="pill f">~24g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~780 kcal</span><span class="pill p">~28g P</span><span class="pill c">~100g C</span><span class="pill f">~24g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
           <div class="meal-food"><strong>Ternera con patata y pimientos</strong><br>· 200g carne picada magra de ternera<br>· 250g patatas al horno con especias<br>· 150g pimientos asados (bote)<br>· AOVE + ajo + perejil</div>
-          <div class="meal-macros"><span class="pill kcal">~790 kcal</span><span class="pill p">~50g P</span><span class="pill c">~55g C</span><span class="pill f">~26g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~790 kcal</span><span class="pill p">~50g P</span><span class="pill c">~55g C</span><span class="pill f">~26g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div></div>
           <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 1 plátano + 300ml leche semi</div>
-          <div class="meal-macros"><span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C</span><span class="pill f">~5g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C</span><span class="pill f">~5g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
           <div class="meal-food"><strong>Tortilla de 4 huevos con queso</strong><br>· 4 huevos + 30g queso Hacendado<br>· 100g jamón cocido en dados<br>· 2 rebanadas pan integral<br>· Tomate natural aliñado con AOVE</div>
-          <div class="meal-macros"><span class="pill kcal">~760 kcal</span><span class="pill p">~52g P</span><span class="pill c">~38g C</span><span class="pill f">~38g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~760 kcal</span><span class="pill p">~52g P</span><span class="pill c">~38g C</span><span class="pill f">~38g G</span></div>
         </div>
       </div>
-      <div class="day-total"><span class="day-total-label">TOTAL MIÉRCOLES</span><div class="day-total-macros"><span class="pill kcal">2660 kcal</span><span class="pill p">167g P</span><span class="pill c">231g C</span><span class="pill f">93g F</span></div></div>
+      <div class="day-total"><span class="day-total-label">TOTAL MIÉRCOLES</span><div class="day-total-macros"><span class="pill kcal">2660 kcal</span><span class="pill p">167g P</span><span class="pill c">231g C</span><span class="pill f">93g G</span></div></div>
     </div>
 
     <!-- JUEVES -->
@@ -312,25 +315,25 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">08:00h</div></div></div>
           <div class="meal-food"><strong>Overnight oats</strong><br>· 80g avena + 250ml leche entera<br>· 1 yogur griego (125g)<br>· 1 plátano + 1 cda de cacahuete natural<br><em style="font-size:.78rem;color:var(--muted)">Preparar la noche anterior en un tarro</em></div>
-          <div class="meal-macros"><span class="pill kcal">~750 kcal</span><span class="pill p">~32g P</span><span class="pill c">~92g C</span><span class="pill f">~22g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~750 kcal</span><span class="pill p">~32g P</span><span class="pill c">~92g C</span><span class="pill f">~22g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
           <div class="meal-food"><strong>Arroz con pollo al curry</strong><br>· 200g contramuslo de pollo sin hueso<br>· 90g arroz basmati (en seco)<br>· Cebolla + pimiento + curry en polvo<br>· 100ml leche de coco (tetrabrik)</div>
-          <div class="meal-macros"><span class="pill kcal">~790 kcal</span><span class="pill p">~50g P</span><span class="pill c">~78g C</span><span class="pill f">~18g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~790 kcal</span><span class="pill p">~50g P</span><span class="pill c">~78g C</span><span class="pill f">~18g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">16:30h</div></div></div>
-          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 100g frambuesas congeladas<br>· 300ml leche semidesnatada</div>
-          <div class="meal-macros"><span class="pill kcal">~255 kcal</span><span class="pill p">~36g P</span><span class="pill c">~22g C</span><span class="pill f">~5g F</span></div>
+          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 100g Grambuesas congeladas<br>· 300ml leche semidesnatada</div>
+          <div class="meal-macros"><span class="pill kcal">~255 kcal</span><span class="pill p">~36g P</span><span class="pill c">~22g C</span><span class="pill f">~5g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">20:30h</div></div></div>
-          <div class="meal-food"><strong>Merluza al horno con verduras</strong><br>· 250g filetes merluza (congelada)<br>· 200g judías verdes congeladas<br>· 200g patata mediana cocida<br>· AOVE + ajo + pimentón</div>
-          <div class="meal-macros"><span class="pill kcal">~660 kcal</span><span class="pill p">~50g P</span><span class="pill c">~52g C</span><span class="pill f">~20g F</span></div>
+          <div class="meal-food"><strong>Merluza al horno con verduras</strong><br>· 250g Giletes merluza (congelada)<br>· 200g judías verdes congeladas<br>· 200g patata mediana cocida<br>· AOVE + ajo + pimentón</div>
+          <div class="meal-macros"><span class="pill kcal">~660 kcal</span><span class="pill p">~50g P</span><span class="pill c">~52g C</span><span class="pill f">~20g G</span></div>
         </div>
       </div>
-      <div class="day-total"><span class="day-total-label">TOTAL JUEVES</span><div class="day-total-macros"><span class="pill kcal">2455 kcal</span><span class="pill p">168g P</span><span class="pill c">244g C</span><span class="pill f">65g F</span></div></div>
+      <div class="day-total"><span class="day-total-label">TOTAL JUEVES</span><div class="day-total-macros"><span class="pill kcal">2455 kcal</span><span class="pill p">168g P</span><span class="pill c">244g C</span><span class="pill f">65g G</span></div></div>
     </div>
 
     <!-- VIERNES -->
@@ -343,25 +346,25 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
           <div class="meal-food"><strong>Avena + huevos + fruta</strong><br>· 100g avena con 300ml leche entera<br>· 3 huevos a la plancha con jamón<br>· 50g jamón cocido Hacendado<br>· 1 plátano</div>
-          <div class="meal-macros"><span class="pill kcal">~820 kcal</span><span class="pill p">~48g P</span><span class="pill c">~90g C</span><span class="pill f">~22g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~820 kcal</span><span class="pill p">~48g P</span><span class="pill c">~90g C</span><span class="pill f">~22g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
           <div class="meal-food"><strong>Macarrones con carne y tomate</strong><br>· 150g macarrones (en seco)<br>· 150g carne picada mixta<br>· Tomate frito casero + cebolla<br>· 20g queso parmesano rallado</div>
-          <div class="meal-macros"><span class="pill kcal">~850 kcal</span><span class="pill p">~48g P</span><span class="pill c">~98g C</span><span class="pill f">~22g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~850 kcal</span><span class="pill p">~48g P</span><span class="pill c">~98g C</span><span class="pill f">~22g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno / 17:30h (Descanso)</div></div></div>
           <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 1 plátano + 300ml leche semi</div>
-          <div class="meal-macros"><span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C</span><span class="pill f">~5g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C</span><span class="pill f">~5g G</span></div>
         </div>
         <div class="meal-card">
           <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
           <div class="meal-food"><strong>Pechuga al horno con boniato</strong><br>· 220g pechuga de pollo al horno<br>· 200g boniato asado con canela<br>· Brócoli al vapor (150g)<br>· AOVE + limón</div>
-          <div class="meal-macros"><span class="pill kcal">~720 kcal</span><span class="pill p">~55g P</span><span class="pill c">~60g C</span><span class="pill f">~14g F</span></div>
+          <div class="meal-macros"><span class="pill kcal">~720 kcal</span><span class="pill p">~55g P</span><span class="pill c">~60g C</span><span class="pill f">~14g G</span></div>
         </div>
       </div>
-      <div class="day-total"><span class="day-total-label">TOTAL VIERNES</span><div class="day-total-macros"><span class="pill kcal">2720 kcal</span><span class="pill p">188g P</span><span class="pill c">286g C</span><span class="pill f">63g F</span></div></div>
+      <div class="day-total"><span class="day-total-label">TOTAL VIERNES</span><div class="day-total-macros"><span class="pill kcal">2720 kcal</span><span class="pill p">188g P</span><span class="pill c">286g C</span><span class="pill f">63g G</span></div></div>
     </div>
   </div>
 </section>
@@ -655,7 +658,7 @@ function saveEditMode(card) {
   const lines = foodEl.querySelector('textarea').value.trim().split('\n');
   const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => parseInt(i.value) || 0);
   foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
-  macrosEl.innerHTML = `<span class="pill kcal">~${k} kcal</span><span class="pill p">~${p}g P</span><span class="pill c">~${c}g C</span><span class="pill f">~${f}g F</span>`;
+  macrosEl.innerHTML = `<span class="pill kcal">~${k} kcal</span><span class="pill p">~${p}g P</span><span class="pill c">~${c}g C</span><span class="pill f">~${f}g G</span>`;
   card.classList.remove('editing');
   card.querySelector('.edit-btn').style.display = '';
   recalcDayTotal(card);
@@ -679,7 +682,7 @@ function recalcDayTotal(card) {
     const pills = card.querySelectorAll('.meal-macros .pill');
     if (pills.length >= 4) { k += +parsePillNum(pills[0].textContent); p += +parsePillNum(pills[1].textContent); c += +parsePillNum(pills[2].textContent); f += +parsePillNum(pills[3].textContent); }
   });
-  macrosDiv.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g F</span>`;
+  macrosDiv.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span>`;
 }
 
 // ── SNAPSHOT ──
@@ -702,7 +705,7 @@ function applySnapshot(data) {
     const foodEl = card.querySelector('.meal-food');
     const macrosEl = card.querySelector('.meal-macros');
     if (foodEl) foodEl.innerHTML = saved.food;
-    if (macrosEl) macrosEl.innerHTML = `<span class="pill kcal">~${saved.kcal} kcal</span><span class="pill p">~${saved.prot}g P</span><span class="pill c">~${saved.carb}g C</span><span class="pill f">~${saved.fat}g F</span>`;
+    if (macrosEl) macrosEl.innerHTML = `<span class="pill kcal">~${saved.kcal} kcal</span><span class="pill p">~${saved.prot}g P</span><span class="pill c">~${saved.carb}g C</span><span class="pill f">~${saved.fat}g G</span>`;
   });
   document.querySelectorAll('.day-content').forEach(dayEl => { const c = dayEl.querySelector('.meal-card'); if (c) recalcDayTotal(c); });
 }
