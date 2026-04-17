@@ -573,9 +573,71 @@
     margin-left: 0.5rem;
   }
   .reset-day-btn:hover { color: var(--red); }
+
+  /* ─── SYNC STATUS ─── */
+  #sync-status {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s, transform 0.25s, border-color 0.25s;
+    pointer-events: none;
+  }
+  #sync-status.show { opacity: 1; transform: translateY(0); }
+  #sync-status.saving { border-color: var(--accent3); color: var(--accent3); }
+  #sync-status.saved  { border-color: var(--accent2); color: var(--accent2); }
+  #sync-status.error  { border-color: var(--red);     color: var(--red); }
+  #sync-status.loading { border-color: var(--blue); color: var(--blue); }
+  .sync-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+  .sync-dot.pulse { animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ─── CLOUD CONFIG BANNER ─── */
+  #config-banner {
+    background: linear-gradient(135deg, rgba(240,168,55,0.1), rgba(240,55,55,0.05));
+    border: 1px solid rgba(240,168,55,0.35);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.84rem;
+    color: var(--text2);
+    line-height: 1.7;
+    display: none;
+  }
+  #config-banner strong { color: var(--accent3); }
+  #config-banner code {
+    background: var(--surface2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
 </style>
 </head>
 <body>
+
+<div id="sync-status">
+  <span class="sync-dot"></span>
+  <span id="sync-msg">Sincronizando…</span>
+</div>
 
 <header>
   <div class="logo">PLAN MUSCULAR <span>60 → 80kg</span></div>
@@ -620,6 +682,10 @@
     </div>
 
     <div class="batido-box">
+      <div id="config-banner">
+        ⚠️ <strong>Sincronización en la nube no configurada.</strong> Los cambios solo se guardan en este navegador.<br>
+        Para sincronizar entre dispositivos, edita el HTML y rellena <code>JSONBIN_API_KEY</code> y <code>JSONBIN_BIN_ID</code> con tus credenciales de <a href="https://jsonbin.io" target="_blank" style="color:var(--accent3)">jsonbin.io</a>.
+      </div>
       <h3>🥤 BATIDO DIARIO (Merienda) · Fijo toda la semana</h3>
       <p style="color:var(--text2); font-size:0.88rem; margin:0.5rem 0 0.75rem">El batido se toma cada día. Úsalo post-entreno los días que vayas al gimnasio; el resto de días, a las 16-17h como merienda.</p>
       <p style="font-size:0.9rem; color:var(--text)">
@@ -1355,6 +1421,36 @@
 </section>
 
 <script>
+  /* ══════════════════════════════════════════════
+     ⚙️  CONFIGURACIÓN — rellena estos 2 valores
+         con tus credenciales de jsonbin.io
+  ══════════════════════════════════════════════ */
+  const JSONBIN_API_KEY = '$2a$10$.SJBVRDPU4Sz72/2Ja7B7OXc1LetnZwX/w.KAbRFGSE7c3TqCx4VG';   // ← pega tu Master Key
+  const JSONBIN_BIN_ID  = '69e28ef2856a682189461687';    // ← pega el ID del bin
+  /* ══════════════════════════════════════════ */
+
+  const CLOUD_CONFIGURED =
+    JSONBIN_API_KEY !== '$2a$10$.SJBVRDPU4Sz72/2Ja7B7OXc1LetnZwX/w.KAbRFGSE7c3TqCx4VG' &&
+    JSONBIN_BIN_ID  !== '69e28ef2856a682189461687'  &&
+    JSONBIN_API_KEY !== '' && JSONBIN_BIN_ID !== '';
+
+  const LOCAL_KEY = 'planMuscular_menus_v1';
+  let saveTimer = null;
+
+  /* ─── ESTADO DEL INDICADOR ─── */
+  function setSyncStatus(state, msg) {
+    const el  = document.getElementById('sync-status');
+    const dot = el.querySelector('.sync-dot');
+    const txt = document.getElementById('sync-msg');
+    el.className = 'show ' + state;
+    dot.className = 'sync-dot' + (state === 'saving' || state === 'loading' ? ' pulse' : '');
+    txt.textContent = msg;
+    if (state === 'saved') {
+      clearTimeout(el._hideTimer);
+      el._hideTimer = setTimeout(() => { el.classList.remove('show'); }, 2500);
+    }
+  }
+
   /* ─── NAVEGACIÓN ─── */
   function showSection(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1374,6 +1470,288 @@
     document.getElementById('plan-' + id).classList.add('active');
     event.target.classList.add('active');
   }
+
+  /* ─── INIT ─── */
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!CLOUD_CONFIGURED) {
+      document.getElementById('config-banner').style.display = 'block';
+    }
+
+    document.querySelectorAll('.day-content').forEach(function (dayEl) {
+      const dayId = dayEl.id;
+
+      dayEl.querySelectorAll('.meal-card').forEach(function (card, i) {
+        card.id = dayId + '-meal' + i;
+        const header = card.querySelector('.meal-header');
+        const editBtn = document.createElement('button');
+        editBtn.className = 'edit-btn';
+        editBtn.textContent = '✏ Editar';
+        editBtn.addEventListener('click', function () { enterEditMode(card); });
+        header.appendChild(editBtn);
+      });
+
+      const totalLabel = dayEl.querySelector('.day-total-label');
+      if (totalLabel) {
+        const resetBtn = document.createElement('button');
+        resetBtn.className = 'reset-day-btn';
+        resetBtn.textContent = '↺ Resetear';
+        resetBtn.addEventListener('click', function () { resetDay(dayId); });
+        totalLabel.parentNode.insertBefore(resetBtn, totalLabel.nextSibling);
+      }
+    });
+
+    loadData();
+  });
+
+  /* ─── PARSE NÚMERO DE PILL ─── */
+  function parsePillNum(text) {
+    const m = text.match(/(\d+)/);
+    return m ? m[1] : '0';
+  }
+
+  /* ─── ESCAPE HTML ─── */
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* ─── MODO EDICIÓN ─── */
+  function enterEditMode(card) {
+    if (card.classList.contains('editing')) return;
+    card.classList.add('editing');
+
+    const foodEl   = card.querySelector('.meal-food');
+    const macrosEl = card.querySelector('.meal-macros');
+    const editBtn  = card.querySelector('.edit-btn');
+
+    card._origFood   = foodEl.innerHTML;
+    card._origMacros = macrosEl.innerHTML;
+
+    const foodText = foodEl.innerText;
+    const pills = macrosEl.querySelectorAll('.pill');
+    const kcal = pills[0] ? parsePillNum(pills[0].textContent) : '0';
+    const prot = pills[1] ? parsePillNum(pills[1].textContent) : '0';
+    const carb = pills[2] ? parsePillNum(pills[2].textContent) : '0';
+    const fat  = pills[3] ? parsePillNum(pills[3].textContent) : '0';
+
+    foodEl.innerHTML = '<textarea class="edit-textarea" placeholder="Nombre del plato\n· Ingrediente 1\n· Ingrediente 2"></textarea>';
+    foodEl.querySelector('textarea').value = foodText;
+
+    macrosEl.innerHTML =
+      '<div class="macro-edit-row">' +
+        '<div class="macro-edit-item"><label class="lkcal">kcal</label><input type="number" min="0" data-macro="kcal" value="' + kcal + '"></div>' +
+        '<div class="macro-edit-item"><label class="lp">Prot (g)</label><input type="number" min="0" data-macro="p" value="' + prot + '"></div>' +
+        '<div class="macro-edit-item"><label class="lc">Carbs (g)</label><input type="number" min="0" data-macro="c" value="' + carb + '"></div>' +
+        '<div class="macro-edit-item"><label class="lf">Grasas (g)</label><input type="number" min="0" data-macro="f" value="' + fat + '"></div>' +
+      '</div>' +
+      '<div class="meal-edit-actions">' +
+        '<button class="btn-save-meal">✓ Guardar</button>' +
+        '<button class="btn-cancel-meal">✕ Cancelar</button>' +
+      '</div>';
+
+    macrosEl.querySelector('.btn-save-meal').addEventListener('click', function () { saveEditMode(card); });
+    macrosEl.querySelector('.btn-cancel-meal').addEventListener('click', function () { cancelEditMode(card); });
+    editBtn.style.display = 'none';
+  }
+
+  function saveEditMode(card) {
+    const foodEl   = card.querySelector('.meal-food');
+    const macrosEl = card.querySelector('.meal-macros');
+
+    const textarea = foodEl.querySelector('textarea');
+    const lines = textarea.value.trim().split('\n');
+    const title = lines[0] || '';
+    const rest  = lines.slice(1).join('<br>');
+
+    const inputs = macrosEl.querySelectorAll('input[data-macro]');
+    const kcal = parseInt(inputs[0] ? inputs[0].value : 0) || 0;
+    const prot = parseInt(inputs[1] ? inputs[1].value : 0) || 0;
+    const carb = parseInt(inputs[2] ? inputs[2].value : 0) || 0;
+    const fat  = parseInt(inputs[3] ? inputs[3].value : 0) || 0;
+
+    foodEl.innerHTML = '<strong>' + escapeHtml(title) + '</strong>' + (rest ? '<br>' + rest : '');
+    macrosEl.innerHTML =
+      '<span class="pill kcal">~' + kcal + ' kcal</span>' +
+      '<span class="pill p">~' + prot + 'g P</span>' +
+      '<span class="pill c">~' + carb + 'g C</span>' +
+      '<span class="pill f">~' + fat + 'g F</span>';
+
+    card.classList.remove('editing');
+    card.querySelector('.edit-btn').style.display = '';
+
+    recalcDayTotal(card);
+    scheduleSave();
+  }
+
+  function cancelEditMode(card) {
+    card.querySelector('.meal-food').innerHTML   = card._origFood;
+    card.querySelector('.meal-macros').innerHTML = card._origMacros;
+    card.classList.remove('editing');
+    card.querySelector('.edit-btn').style.display = '';
+  }
+
+  /* ─── RECALCULAR TOTAL DEL DÍA ─── */
+  function recalcDayTotal(card) {
+    const dayEl   = card.closest('.day-content');
+    if (!dayEl) return;
+    const totalEl = dayEl.querySelector('.day-total');
+    if (!totalEl) return;
+
+    let totalKcal = 0, totalP = 0, totalC = 0, totalF = 0;
+    dayEl.querySelectorAll('.meal-card').forEach(function (c) {
+      const pills = c.querySelectorAll('.meal-macros .pill');
+      if (pills.length >= 4) {
+        totalKcal += parseInt(parsePillNum(pills[0].textContent)) || 0;
+        totalP    += parseInt(parsePillNum(pills[1].textContent)) || 0;
+        totalC    += parseInt(parsePillNum(pills[2].textContent)) || 0;
+        totalF    += parseInt(parsePillNum(pills[3].textContent)) || 0;
+      }
+    });
+
+    const macrosDiv = totalEl.querySelector('.day-total-macros');
+    if (macrosDiv) {
+      macrosDiv.innerHTML =
+        '<span class="pill kcal">' + totalKcal + ' kcal</span>' +
+        '<span class="pill p">' + totalP + 'g P</span>' +
+        '<span class="pill c">' + totalC + 'g C</span>' +
+        '<span class="pill f">' + totalF + 'g F</span>';
+    }
+  }
+
+  /* ─── SNAPSHOT DEL ESTADO ACTUAL ─── */
+  function buildSnapshot() {
+    const data = {};
+    document.querySelectorAll('.meal-card[id]').forEach(function (card) {
+      const foodEl = card.querySelector('.meal-food');
+      const pills  = card.querySelectorAll('.meal-macros .pill');
+      if (!foodEl || pills.length < 4) return;
+      data[card.id] = {
+        food: foodEl.innerHTML,
+        kcal: parsePillNum(pills[0].textContent),
+        prot: parsePillNum(pills[1].textContent),
+        carb: parsePillNum(pills[2].textContent),
+        fat:  parsePillNum(pills[3].textContent)
+      };
+    });
+    return data;
+  }
+
+  /* ─── APLICAR SNAPSHOT AL DOM ─── */
+  function applySnapshot(data) {
+    if (!data) return;
+    Object.keys(data).forEach(function (cardId) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+      const saved = data[cardId];
+      const foodEl   = card.querySelector('.meal-food');
+      const macrosEl = card.querySelector('.meal-macros');
+      if (foodEl)   foodEl.innerHTML = saved.food;
+      if (macrosEl) {
+        macrosEl.innerHTML =
+          '<span class="pill kcal">~' + saved.kcal + ' kcal</span>' +
+          '<span class="pill p">~' + saved.prot + 'g P</span>' +
+          '<span class="pill c">~' + saved.carb + 'g C</span>' +
+          '<span class="pill f">~' + saved.fat + 'g F</span>';
+      }
+    });
+    document.querySelectorAll('.day-content').forEach(function (dayEl) {
+      const anyCard = dayEl.querySelector('.meal-card');
+      if (anyCard) recalcDayTotal(anyCard);
+    });
+  }
+
+  /* ══════════════════════════════════════════
+     CLOUD SYNC — JSONBin.io
+  ══════════════════════════════════════════ */
+
+  async function loadData() {
+    if (CLOUD_CONFIGURED) {
+      setSyncStatus('loading', 'Cargando datos…');
+      try {
+        const res = await fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID + '/latest', {
+          headers: { 'X-Master-Key': JSONBIN_API_KEY }
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const json = await res.json();
+        const cloudData = json.record;
+        // Guardar también en local como caché offline
+        try { localStorage.setItem(LOCAL_KEY, JSON.stringify(cloudData)); } catch(e) {}
+        applySnapshot(cloudData);
+        setSyncStatus('saved', '✓ Datos sincronizados');
+      } catch (err) {
+        console.warn('Error cargando nube, usando caché local:', err);
+        setSyncStatus('error', 'Sin conexión — usando caché local');
+        loadFromLocal();
+        setTimeout(() => { document.getElementById('sync-status').classList.remove('show'); }, 3500);
+      }
+    } else {
+      loadFromLocal();
+    }
+  }
+
+  /* Guardar con debounce de 800ms para no saturar la API */
+  function scheduleSave() {
+    clearTimeout(saveTimer);
+    setSyncStatus('saving', 'Guardando…');
+    saveTimer = setTimeout(persistData, 800);
+  }
+
+  async function persistData() {
+    const data = buildSnapshot();
+    // Siempre guardar en local como caché
+    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
+
+    if (!CLOUD_CONFIGURED) return;
+
+    try {
+      const res = await fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': JSONBIN_API_KEY
+        },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      setSyncStatus('saved', '✓ Guardado en la nube');
+    } catch (err) {
+      console.warn('Error guardando en nube:', err);
+      setSyncStatus('error', 'Error al guardar en la nube');
+      setTimeout(() => { document.getElementById('sync-status').classList.remove('show'); }, 4000);
+    }
+  }
+
+  function loadFromLocal() {
+    let data;
+    try { data = JSON.parse(localStorage.getItem(LOCAL_KEY) || 'null'); } catch(e) { return; }
+    if (data) applySnapshot(data);
+  }
+
+  /* ─── RESETEAR UN DÍA ─── */
+  async function resetDay(dayId) {
+    if (!confirm('¿Resetear este día al menú original? Se perderán los cambios guardados.')) return;
+
+    // Quitar del snapshot
+    let data = {};
+    try { data = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); } catch(e) {}
+    const dayEl = document.getElementById(dayId);
+    if (dayEl) {
+      dayEl.querySelectorAll('.meal-card[id]').forEach(function (card) { delete data[card.id]; });
+    }
+    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
+
+    if (CLOUD_CONFIGURED) {
+      setSyncStatus('saving', 'Actualizando nube…');
+      try {
+        await fetch('https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_API_KEY },
+          body: JSON.stringify(data)
+        });
+      } catch(e) {}
+    }
+    location.reload();
+  }
+</script>
 
   /* ─── STORAGE KEY ─── */
   const STORAGE_KEY = 'planMuscular_menus_v1';
