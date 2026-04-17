@@ -7,638 +7,178 @@
 <title>Menú Comidas + Plan Muscular</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0d0f0e;
-    --surface: #141716;
-    --surface2: #1c1f1d;
-    --border: #2a2e2b;
-    --accent: #b5f037;
-    --accent2: #37f0a8;
-    --accent3: #f0a837;
-    --muted: #6b7068;
-    --text: #e8ede9;
-    --text2: #9fa89d;
-    --red: #f03737;
-    --blue: #37a8f0;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    line-height: 1.6;
-  }
+:root {
+  --bg:#0d0f0e; --surface:#141716; --surface2:#1c1f1d; --border:#2a2e2b;
+  --accent:#b5f037; --accent2:#37f0a8; --accent3:#f0a837;
+  --muted:#6b7068; --text:#e8ede9; --text2:#9fa89d; --red:#f03737; --blue:#37a8f0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
 
-  /* ─── HEADER ─── */
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    height: 60px;
-  }
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    color: var(--accent);
-    letter-spacing: 2px;
-    white-space: nowrap;
-  }
-  .logo span { color: var(--text2); font-size: 1rem; margin-left: 8px; letter-spacing: 1px; }
-  nav {
-    display: flex;
-    gap: 0.25rem;
-    flex-wrap: wrap;
-  }
-  nav button {
-    background: transparent;
-    border: none;
-    color: var(--text2);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 500;
-    padding: 6px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-  }
-  nav button:hover { background: var(--surface2); color: var(--text); }
-  nav button.active { background: var(--accent); color: #0d0f0e; font-weight: 700; }
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:2rem;height:60px}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--accent);letter-spacing:2px;white-space:nowrap}
+.logo span{color:var(--text2);font-size:1rem;margin-left:8px;letter-spacing:1px}
+nav{display:flex;gap:.25rem;flex-wrap:wrap}
+nav button{background:transparent;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap}
+nav button:hover{background:var(--surface2);color:var(--text)}
+nav button.active{background:var(--accent);color:#0d0f0e;font-weight:700}
 
-  /* ─── HERO ─── */
-  .hero {
-    padding: 3rem 2rem 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 2rem;
-    align-items: start;
-  }
-  h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 8vw, 5.5rem);
-    line-height: 0.92;
-    letter-spacing: 1px;
-    color: var(--text);
-  }
-  h1 em { color: var(--accent); font-style: normal; }
-  .hero-sub { color: var(--text2); font-size: 0.95rem; margin-top: 1rem; max-width: none; line-height: 1.7; }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    min-width: 240px;
-  }
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-  }
-  .stat-card .val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    color: var(--accent);
-    line-height: 1;
-  }
-  .stat-card .lbl { font-size: 0.72rem; color: var(--text2); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+/* LAYOUT */
+.hero{padding:3rem 2rem 2rem;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start}
+.section{max-width:1100px;margin:0 auto;padding:2rem;display:none}
+.section.active{display:block}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,5.5rem);line-height:.92;letter-spacing:1px}
+h1 em{color:var(--accent);font-style:normal}
+h2{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:1px;color:var(--accent);margin-bottom:.25rem}
+h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;color:var(--text);margin-bottom:.75rem}
+h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem}
+.hero-sub{color:var(--text2);font-size:.95rem;margin-top:1rem;line-height:1.7}
+.section-intro{color:var(--text2);font-size:.9rem;margin-bottom:2rem}
+.divider{border:none;border-top:1px solid var(--border);margin:2rem 0}
 
-  /* ─── SECTIONS ─── */
-  .section {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem;
-    display: none;
-  }
-  .section.active { display: block; }
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;min-width:240px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center}
+.stat-card .val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--accent);line-height:1}
+.stat-card .lbl{font-size:.72rem;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;margin-top:2px}
 
-  h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem;
-    letter-spacing: 1px;
-    color: var(--accent);
-    margin-bottom: 0.25rem;
-  }
-  h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 0.5px;
-    color: var(--text);
-    margin-bottom: 0.75rem;
-  }
-  h4 { font-size: 0.9rem; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+/* MACROS */
+.macro-overview{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.macro-item{text-align:center}
+.macro-val{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;line-height:1}
+.macro-val.kcal{color:var(--accent3)} .macro-val.prot{color:var(--accent)} .macro-val.carb{color:var(--blue)} .macro-val.fat{color:var(--red)}
+.macro-unit{font-size:.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
 
-  .section-intro { color: var(--text2); font-size: 0.9rem; margin-bottom: 2rem; }
+/* PILLS */
+.pill{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:3px 8px;border-radius:20px;font-weight:600}
+.pill.kcal{background:rgba(240,168,55,.15);color:var(--accent3)}
+.pill.p{background:rgba(181,240,55,.15);color:var(--accent)}
+.pill.c{background:rgba(55,160,240,.15);color:var(--blue)}
+.pill.f{background:rgba(240,55,55,.15);color:var(--red)}
 
-  /* ─── MACRO BAR ─── */
-  .macro-overview {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-  .macro-item { text-align: center; }
-  .macro-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.4rem;
-    line-height: 1;
-  }
-  .macro-val.kcal { color: var(--accent3); }
-  .macro-val.prot { color: var(--accent); }
-  .macro-val.carb { color: var(--blue); }
-  .macro-val.fat  { color: var(--red); }
-  .macro-unit { font-size: 0.75rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
+/* TABS */
+.day-tabs{display:flex;gap:.25rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.day-tab{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all .18s}
+.day-tab:hover{border-color:var(--accent);color:var(--accent)}
+.day-tab.active{background:var(--accent);border-color:var(--accent);color:#0d0f0e}
+.day-content{display:none} .day-content.active{display:block}
 
-  /* ─── DÍAS ─── */
-  .day-tabs { display: flex; gap: 0.25rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-  .day-tab {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 18px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--text2);
-    cursor: pointer;
-    transition: all 0.18s;
-  }
-  .day-tab:hover { border-color: var(--accent); color: var(--accent); }
-  .day-tab.active { background: var(--accent); border-color: var(--accent); color: #0d0f0e; }
+/* MEAL CARDS */
+.meals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:1.25rem}
+.meal-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:border-color .2s}
+.meal-card:hover{border-color:var(--accent)}
+.meal-header{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
+.meal-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.meal-icon.d{background:rgba(181,240,55,.15)} .meal-icon.c{background:rgba(55,160,240,.15)}
+.meal-icon.m{background:rgba(240,168,55,.15)} .meal-icon.ce{background:rgba(55,240,168,.15)}
+.meal-name{font-weight:700;font-size:.88rem;color:var(--text)}
+.meal-time{font-size:.72rem;color:var(--muted)}
+.meal-food{font-size:.85rem;color:var(--text2);line-height:1.65}
+.meal-food strong{color:var(--text)}
+.meal-macros{display:flex;gap:6px;margin-top:.9rem;flex-wrap:wrap}
 
-  .day-content { display: none; }
-  .day-content.active { display: block; }
+/* DAY TOTAL */
+.day-total{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.day-total-label{font-size:.8rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.day-total-macros{display:flex;gap:.75rem;flex-wrap:wrap}
 
-  .meals-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-  .meal-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    transition: border-color 0.2s;
-  }
-  .meal-card:hover { border-color: var(--accent); }
-  .meal-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 0.75rem;
-  }
-  .meal-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-  }
-  .meal-icon.d { background: rgba(181,240,55,0.15); }
-  .meal-icon.c { background: rgba(55,160,240,0.15); }
-  .meal-icon.m { background: rgba(240,168,55,0.15); }
-  .meal-icon.ce { background: rgba(55,240,168,0.15); }
-  .meal-name { font-weight: 700; font-size: 0.88rem; color: var(--text); }
-  .meal-time { font-size: 0.72rem; color: var(--muted); }
-  .meal-food { font-size: 0.85rem; color: var(--text2); line-height: 1.65; }
-  .meal-food strong { color: var(--text); }
-  .meal-macros {
-    display: flex;
-    gap: 6px;
-    margin-top: 0.9rem;
-    flex-wrap: wrap;
-  }
-  .pill {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    padding: 3px 8px;
-    border-radius: 20px;
-    font-weight: 600;
-  }
-  .pill.kcal { background: rgba(240,168,55,0.15); color: var(--accent3); }
-  .pill.p { background: rgba(181,240,55,0.15); color: var(--accent); }
-  .pill.c { background: rgba(55,160,240,0.15); color: var(--blue); }
-  .pill.f { background: rgba(240,55,55,0.15); color: var(--red); }
+/* BATIDO */
+.batido-box{background:linear-gradient(135deg,rgba(181,240,55,.08),rgba(55,240,168,.05));border:1px solid rgba(181,240,55,.25);border-radius:14px;padding:1.5rem;margin-bottom:2rem}
+.batido-box h3{color:var(--accent)}
 
-  .day-total {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-  .day-total-label { font-size: 0.8rem; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
-  .day-total-macros { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+/* BADGE ENTRENO */
+.day-badge-train{display:inline-block;background:rgba(181,240,55,.15);color:var(--accent);font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.5px;text-transform:uppercase;margin-left:8px;vertical-align:middle}
 
-  /* ─── BATIDO ─── */
-  .batido-box {
-    background: linear-gradient(135deg, rgba(181,240,55,0.08), rgba(55,240,168,0.05));
-    border: 1px solid rgba(181,240,55,0.25);
-    border-radius: 14px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  .batido-box h3 { color: var(--accent); }
+/* COMPRA */
+.compra-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:2rem}
+.compra-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.compra-cat{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:1px;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.compra-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:.84rem;color:var(--text2)}
+.compra-item:last-child{border-bottom:none}
+.compra-item .name{color:var(--text)}
+.compra-item .price{font-family:'JetBrains Mono',monospace;color:var(--accent3);font-size:.78rem}
+.price-total{background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
+.price-total .label{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--text)}
+.price-total .amount{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--accent)}
 
-  /* ─── COMPRA ─── */
-  .compra-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  .compra-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .compra-cat {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .compra-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.84rem;
-    color: var(--text2);
-  }
-  .compra-item:last-child { border-bottom: none; }
-  .compra-item .name { color: var(--text); }
-  .compra-item .price { font-family: 'JetBrains Mono', monospace; color: var(--accent3); font-size: 0.78rem; }
+/* ENTRENO */
+.entreno-toggle{display:flex;gap:.5rem;margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content}
+.etog-btn{background:transparent;border:none;border-radius:7px;padding:8px 20px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s}
+.etog-btn.active{background:var(--accent);color:#0d0f0e}
+.entreno-plan{display:none} .entreno-plan.active{display:block}
+.dias-entreno{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.dia-entreno{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.dia-entreno-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.dia-badge{background:var(--accent);color:#0d0f0e;font-family:'Bebas Neue',sans-serif;font-size:.9rem;padding:3px 10px;border-radius:6px;letter-spacing:.5px}
+.dia-badge.pull{background:var(--blue)} .dia-badge.legs{background:var(--accent2)}
+.dia-badge.upper{background:var(--accent)} .dia-badge.lower{background:var(--accent3)}
+.dia-badge.upperB{background:var(--accent2)} .dia-badge.lowerB{background:var(--red)}
+.dia-title{font-weight:700;font-size:.9rem} .dia-sub{font-size:.75rem;color:var(--muted)}
+.exercise{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);gap:.5rem}
+.exercise:last-child{border-bottom:none}
+.ex-name{font-size:.83rem;color:var(--text2)} .ex-name strong{color:var(--text);display:block}
+.ex-sets{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);white-space:nowrap;font-weight:600}
 
-  .price-total {
-    background: var(--surface);
-    border: 2px solid var(--accent);
-    border-radius: 14px;
-    padding: 1.5rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
-  }
-  .price-total .label { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--text); }
-  .price-total .amount { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--accent); }
+/* PROGRESION */
+.prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:2rem}
+.prog-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;border-top:3px solid var(--accent)}
+.prog-card h4{color:var(--accent);font-size:.8rem;margin-bottom:.5rem}
+.prog-card p{font-size:.84rem;color:var(--text2);line-height:1.65}
+.rule-box{background:linear-gradient(135deg,rgba(181,240,55,.08),transparent);border:1px solid rgba(181,240,55,.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
+.rule-box h3{color:var(--accent);margin-bottom:.5rem} .rule-box p{font-size:.88rem;color:var(--text2);line-height:1.7} .rule-box strong{color:var(--text)}
+.descanso-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.descanso-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center}
+.descanso-icon{font-size:2rem;margin-bottom:.5rem}
+.descanso-card h4{color:var(--text);font-size:.88rem;margin-bottom:.4rem}
+.descanso-card p{font-size:.8rem;color:var(--text2);line-height:1.6}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem}
 
-  /* ─── ENTRENO ─── */
-  .entreno-toggle {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 4px;
-    width: fit-content;
-  }
-  .etog-btn {
-    background: transparent;
-    border: none;
-    border-radius: 7px;
-    padding: 8px 20px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text2);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .etog-btn.active { background: var(--accent); color: #0d0f0e; }
+/* EDIT MODE */
+.edit-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.72rem;padding:2px 8px;border-radius:5px;cursor:pointer;margin-left:auto;transition:all .2s;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.edit-btn:hover{border-color:var(--accent);color:var(--accent)}
+.meal-card.editing{border-color:var(--accent);box-shadow:0 0 0 2px rgba(181,240,55,.12)}
+.edit-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;line-height:1.65;padding:.6rem .75rem;resize:vertical;min-height:100px;margin-top:.25rem}
+.edit-textarea:focus{outline:none;border-color:var(--accent)}
+.macro-edit-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:.75rem}
+.macro-edit-item{display:flex;flex-direction:column;gap:3px;flex:1;min-width:55px}
+.macro-edit-item label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)}
+.macro-edit-item label.lkcal{color:var(--accent3)} .macro-edit-item label.lp{color:var(--accent)}
+.macro-edit-item label.lc{color:var(--blue)} .macro-edit-item label.lf{color:var(--red)}
+.macro-edit-item input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.8rem;padding:4px 6px;width:100%}
+.macro-edit-item input:focus{outline:none;border-color:var(--accent)}
+.meal-edit-actions{display:flex;gap:.5rem;margin-top:.75rem}
+.btn-save-meal{background:var(--accent);color:#0d0f0e;border:none;border-radius:7px;padding:6px 16px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s}
+.btn-save-meal:hover{opacity:.85}
+.btn-cancel-meal{background:transparent;border:1px solid var(--border);color:var(--text2);border-radius:7px;padding:6px 16px;font-size:.8rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:border-color .2s}
+.btn-cancel-meal:hover{border-color:var(--text2)}
+.reset-day-btn{background:transparent;border:none;color:var(--muted);font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;padding:2px 6px;border-radius:4px;transition:color .2s;margin-left:.5rem}
+.reset-day-btn:hover{color:var(--red)}
 
-  .entreno-plan { display: none; }
-  .entreno-plan.active { display: block; }
+/* SYNC STATUS */
+#sync-status{position:fixed;bottom:1.25rem;right:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--text2);display:flex;align-items:center;gap:7px;z-index:999;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s,border-color .25s;pointer-events:none}
+#sync-status.show{opacity:1;transform:translateY(0)}
+#sync-status.saving{border-color:var(--accent3);color:var(--accent3)}
+#sync-status.saved{border-color:var(--accent2);color:var(--accent2)}
+#sync-status.error{border-color:var(--red);color:var(--red)}
+#sync-status.loading{border-color:var(--blue);color:var(--blue)}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+.sync-dot.pulse{animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-  .dias-entreno {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1rem;
-  }
-  .dia-entreno {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .dia-entreno-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1rem;
-  }
-  .dia-badge {
-    background: var(--accent);
-    color: #0d0f0e;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.9rem;
-    padding: 3px 10px;
-    border-radius: 6px;
-    letter-spacing: 0.5px;
-  }
-  .dia-badge.pull { background: var(--blue); }
-  .dia-badge.legs { background: var(--accent2); }
-  .dia-badge.upper { background: var(--accent); }
-  .dia-badge.lower { background: var(--accent3); }
-  .dia-badge.upperB { background: var(--accent2); }
-  .dia-badge.lowerB { background: var(--red); }
-
-  .dia-title { font-weight: 700; font-size: 0.9rem; }
-  .dia-sub { font-size: 0.75rem; color: var(--muted); }
-
-  .exercise {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 7px 0;
-    border-bottom: 1px solid var(--border);
-    gap: 0.5rem;
-  }
-  .exercise:last-child { border-bottom: none; }
-  .ex-name { font-size: 0.83rem; color: var(--text2); }
-  .ex-name strong { color: var(--text); display: block; }
-  .ex-sets {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent);
-    white-space: nowrap;
-    font-weight: 600;
-  }
-
-  /* ─── PROGRESION ─── */
-  .prog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  .prog-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    border-top: 3px solid var(--accent);
-  }
-  .prog-card h4 { color: var(--accent); font-size: 0.8rem; margin-bottom: 0.5rem; }
-  .prog-card p { font-size: 0.84rem; color: var(--text2); line-height: 1.65; }
-
-  .rule-box {
-    background: linear-gradient(135deg, rgba(181,240,55,0.08), transparent);
-    border: 1px solid rgba(181,240,55,0.3);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  .rule-box h3 { color: var(--accent); margin-bottom: 0.5rem; }
-  .rule-box p { font-size: 0.88rem; color: var(--text2); line-height: 1.7; }
-  .rule-box strong { color: var(--text); }
-
-  .descanso-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-  .descanso-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    text-align: center;
-  }
-  .descanso-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-  .descanso-card h4 { color: var(--text); font-size: 0.88rem; margin-bottom: 0.4rem; }
-  .descanso-card p { font-size: 0.8rem; color: var(--text2); line-height: 1.6; }
-
-  /* ─── DIVIDER ─── */
-  .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
-
-  /* ─── BADGE ENTRENO ─── */
-  .day-badge-train {
-    display: inline-block;
-    background: rgba(181,240,55,0.15);
-    color: var(--accent);
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 4px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    margin-left: 8px;
-    vertical-align: middle;
-  }
-
-  @media (max-width: 600px) {
-    .hero { grid-template-columns: 1fr; }
-    .macro-overview { grid-template-columns: 2fr 2fr; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
-    header { flex-wrap: wrap; height: auto; padding: 0.75rem 1rem; }
-    nav { gap: 0.15rem; }
-    nav button { font-size: 0.75rem; padding: 5px 10px; }
-  }
-
-  /* ─── EDIT MODE ─── */
-  .edit-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 0.72rem;
-    padding: 2px 8px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: auto;
-    transition: all 0.2s;
-    font-family: 'DM Sans', sans-serif;
-    white-space: nowrap;
-  }
-  .edit-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .meal-card.editing { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(181,240,55,0.12); }
-  .edit-textarea {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    line-height: 1.65;
-    padding: 0.6rem 0.75rem;
-    resize: vertical;
-    min-height: 100px;
-    margin-top: 0.25rem;
-  }
-  .edit-textarea:focus { outline: none; border-color: var(--accent); }
-  .macro-edit-row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 0.75rem;
-  }
-  .macro-edit-item {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    flex: 1;
-    min-width: 55px;
-  }
-  .macro-edit-item label {
-    font-size: 0.62rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text2);
-  }
-  .macro-edit-item label.lkcal { color: var(--accent3); }
-  .macro-edit-item label.lp    { color: var(--accent); }
-  .macro-edit-item label.lc    { color: var(--blue); }
-  .macro-edit-item label.lf    { color: var(--red); }
-  .macro-edit-item input {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    padding: 4px 6px;
-    width: 100%;
-  }
-  .macro-edit-item input:focus { outline: none; border-color: var(--accent); }
-  .meal-edit-actions {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-  }
-  .btn-save-meal {
-    background: var(--accent);
-    color: #0d0f0e;
-    border: none;
-    border-radius: 7px;
-    padding: 6px 16px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: opacity 0.2s;
-  }
-  .btn-save-meal:hover { opacity: 0.85; }
-  .btn-cancel-meal {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text2);
-    border-radius: 7px;
-    padding: 6px 16px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: border-color 0.2s;
-  }
-  .btn-cancel-meal:hover { border-color: var(--text2); }
-  .reset-day-btn {
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    font-size: 0.72rem;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    padding: 2px 6px;
-    border-radius: 4px;
-    transition: color 0.2s;
-    margin-left: 0.5rem;
-  }
-  .reset-day-btn:hover { color: var(--red); }
-
-  /* ─── SYNC STATUS ─── */
-  #sync-status {
-    position: fixed;
-    bottom: 1.25rem;
-    right: 1.25rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 0.75rem;
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--text2);
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    z-index: 999;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.25s, transform 0.25s, border-color 0.25s;
-    pointer-events: none;
-  }
-  #sync-status.show { opacity: 1; transform: translateY(0); }
-  #sync-status.saving { border-color: var(--accent3); color: var(--accent3); }
-  #sync-status.saved  { border-color: var(--accent2); color: var(--accent2); }
-  #sync-status.error  { border-color: var(--red);     color: var(--red); }
-  #sync-status.loading { border-color: var(--blue); color: var(--blue); }
-  .sync-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: currentColor;
-    flex-shrink: 0;
-  }
-  .sync-dot.pulse { animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-  /* ─── CLOUD CONFIG BANNER ─── */
-  #config-banner {
-    background: linear-gradient(135deg, rgba(240,168,55,0.1), rgba(240,55,55,0.05));
-    border: 1px solid rgba(240,168,55,0.35);
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.5rem;
-    font-size: 0.84rem;
-    color: var(--text2);
-    line-height: 1.7;
-    display: none;
-  }
-  #config-banner strong { color: var(--accent3); }
-  #config-banner code {
-    background: var(--surface2);
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--accent);
-  }
+@media(max-width:600px){
+  .hero{grid-template-columns:1fr}
+  .macro-overview{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  header{flex-wrap:wrap;height:auto;padding:.75rem 1rem}
+  nav{gap:.15rem}
+  nav button{font-size:.75rem;padding:5px 10px}
+}
 </style>
 </head>
 <body>
 
-<div id="sync-status">
-  <span class="sync-dot"></span>
-  <span id="sync-msg">Sincronizando…</span>
-</div>
+<div id="sync-status"><span class="sync-dot"></span><span id="sync-msg">Sincronizando…</span></div>
 
 <header>
   <div class="logo">PLAN MUSCULAR <span>60 → 80kg</span></div>
@@ -650,54 +190,29 @@
   </nav>
 </header>
 
-<!-- ─── SECTION: MENÚ ─── -->
+<!-- ══ MENÚ ══ -->
 <section id="menu" class="section active">
-  <div class="hero" style="padding-top:2rem" >
+  <div class="hero" style="padding-top:2rem">
     <div>
       <h1>PLAN DE<em> NUTRICIÓN </em>SEMANAL</h1>
-      <p class="hero-sub">Diseñado para hombre de 29 años · 60 kg · objetivo 75-80 kg<br>
-      3-4 entrenos/semana · Superávit calórico controlado · Ingredientes Mercadona</p>
+      <p class="hero-sub">Diseñado para hombre de 29 años · 60 kg · objetivo 75-80 kg<br>3-4 entrenos/semana · Superávit calórico controlado · Ingredientes Mercadona</p>
     </div>
-
   </div>
-
-  <div class="section" style="display:block; padding-top:0">
-
+  <div class="section" style="display:block;padding-top:0">
     <div class="macro-overview">
-      <div class="macro-item">
-        <div class="macro-val kcal">~2750</div>
-        <div class="macro-unit">kcal · superávit +350</div>
-      </div>
-      <div class="macro-item">
-        <div class="macro-val prot">165g</div>
-        <div class="macro-unit">proteína · 2.75g/kg</div>
-      </div>
-      <div class="macro-item">
-        <div class="macro-val carb">300g</div>
-        <div class="macro-unit">carbohidratos · 5g/kg</div>
-      </div>
-      <div class="macro-item">
-        <div class="macro-val fat">75g</div>
-        <div class="macro-unit">grasas · 1.25g/kg</div>
-      </div>
+      <div class="macro-item"><div class="macro-val kcal">~2750</div><div class="macro-unit">kcal · superávit +350</div></div>
+      <div class="macro-item"><div class="macro-val prot">165g</div><div class="macro-unit">proteína · 2.75g/kg</div></div>
+      <div class="macro-item"><div class="macro-val carb">300g</div><div class="macro-unit">carbohidratos · 5g/kg</div></div>
+      <div class="macro-item"><div class="macro-val fat">75g</div><div class="macro-unit">grasas · 1.25g/kg</div></div>
     </div>
-
     <div class="batido-box">
       <h3>🥤 BATIDO DIARIO (Merienda) · Fijo toda la semana</h3>
-      <p style="color:var(--text2); font-size:0.88rem; margin:0.5rem 0 0.75rem">El batido se toma cada día. Úsalo post-entreno los días que vayas al gimnasio; el resto de días, a las 16-17h como merienda.</p>
-      <p style="font-size:0.9rem; color:var(--text)">
-        <strong>35g Whey Protein</strong> (Hacendado Mercadona) + <strong>3g Creatina monohidrato</strong> +
-        <strong>1 plátano</strong> (L/X/V) o <strong>100g fresas/frambuesas</strong> congeladas (Ma/J) +
-        <strong>300ml leche semidesnatada</strong>
-      </p>
-      <div class="meal-macros" style="margin-top:0.75rem">
-        <span class="pill kcal">~330 kcal</span>
-        <span class="pill p">~37g P</span>
-        <span class="pill c">~38g C (plátano) / ~22g C (fresas)</span>
-        <span class="pill f">~5g F</span>
+      <p style="color:var(--text2);font-size:.88rem;margin:.5rem 0 .75rem">El batido se toma cada día. Úsalo post-entreno los días que vayas al gimnasio; el resto de días, a las 16-17h como merienda.</p>
+      <p style="font-size:.9rem;color:var(--text)"><strong>35g Whey Protein</strong> (Hacendado Mercadona) + <strong>3g Creatina monohidrato</strong> + <strong>1 plátano</strong> (L/X/V) o <strong>100g fresas/frambuesas</strong> congeladas (Ma/J) + <strong>300ml leche semidesnatada</strong></p>
+      <div class="meal-macros" style="margin-top:.75rem">
+        <span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C (plátano) / ~22g C (fresas)</span><span class="pill f">~5g F</span>
       </div>
     </div>
-
     <div class="day-tabs">
       <button class="day-tab active" onclick="showDay('lun')">LUNES</button>
       <button class="day-tab" onclick="showDay('mar')">MARTES</button>
@@ -706,483 +221,156 @@
       <button class="day-tab" onclick="showDay('vie')">VIERNES</button>
     </div>
 
-    <!-- ─── LUNES ─── -->
+    <!-- LUNES -->
     <div class="day-content active" id="day-lun">
-      <div style="margin-bottom:1rem; font-size:0.85rem; color:var(--text2)">
-       <span class="day-badge-train">🏋️ DÍA ENTRENO</span>
-        &nbsp;·&nbsp; Tren Superior A
-      </div>
+      <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Tren Superior A</div>
       <div class="meals-grid">
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon d">🌅</div>
-            <div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Avena con leche y huevos</strong><br>
-            · 100g avena cocida con 300ml leche entera<br>
-            · 3 huevos revueltos con AOVE<br>
-            · 1 plátano mediano
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~780 kcal</span>
-            <span class="pill p">~38g P</span>
-            <span class="pill c">~95g C</span>
-            <span class="pill f">~22g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
+          <div class="meal-food"><strong>Avena con leche y huevos</strong><br>· 100g avena cocida con 300ml leche entera<br>· 3 huevos revueltos con AOVE<br>· 1 plátano mediano</div>
+          <div class="meal-macros"><span class="pill kcal">~780 kcal</span><span class="pill p">~38g P</span><span class="pill c">~95g C</span><span class="pill f">~22g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon c">☀️</div>
-            <div><div class="meal-name">Comida</div><div class="meal-time">15:00h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Pollo con arroz y verduras</strong><br>
-            · 200g pechuga de pollo a la plancha<br>
-            · 100g arroz blanco (en seco) hervido<br>
-            · 200g brócoli congelado al vapor<br>
-            · AOVE 1 cda + sal y limón
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~790 kcal</span>
-            <span class="pill p">~55g P</span>
-            <span class="pill c">~85g C</span>
-            <span class="pill f">~14g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">15:00h</div></div></div>
+          <div class="meal-food"><strong>Pollo con arroz y verduras</strong><br>· 200g pechuga de pollo a la plancha<br>· 100g arroz blanco (en seco) hervido<br>· 200g brócoli congelado al vapor<br>· AOVE 1 cda + sal y limón</div>
+          <div class="meal-macros"><span class="pill kcal">~790 kcal</span><span class="pill p">~55g P</span><span class="pill c">~85g C</span><span class="pill f">~14g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon m">🥤</div>
-            <div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno ~20:00h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Batido diario (ver arriba)</strong><br>
-            · 35g Whey + 3g creatina<br>
-            · 1 plátano + 300ml leche semi
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~330 kcal</span>
-            <span class="pill p">~37g P</span>
-            <span class="pill c">~38g C</span>
-            <span class="pill f">~5g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno ~20:00h</div></div></div>
+          <div class="meal-food"><strong>Batido diario (ver arriba)</strong><br>· 35g Whey + 3g creatina<br>· 1 plátano + 300ml leche semi</div>
+          <div class="meal-macros"><span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C</span><span class="pill f">~5g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon ce">🌙</div>
-            <div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Salmón con patata y ensalada</strong><br>
-            · 200g lomo de salmón al horno<br>
-            · 250g patatas cocidas con pimentón<br>
-            · Ensalada: lechuga, tomate, cebolla, AOVE
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~810 kcal</span>
-            <span class="pill p">~42g P</span>
-            <span class="pill c">~48g C</span>
-            <span class="pill f">~34g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+          <div class="meal-food"><strong>Salmón con patata y ensalada</strong><br>· 200g lomo de salmón al horno<br>· 250g patatas cocidas con pimentón<br>· Ensalada: lechuga, tomate, cebolla, AOVE</div>
+          <div class="meal-macros"><span class="pill kcal">~810 kcal</span><span class="pill p">~42g P</span><span class="pill c">~48g C</span><span class="pill f">~34g F</span></div>
         </div>
       </div>
-      <div class="day-total">
-        <span class="day-total-label">TOTAL LUNES</span>
-        <div class="day-total-macros">
-          <span class="pill kcal">2710 kcal</span>
-          <span class="pill p">172g P</span>
-          <span class="pill c">266g C</span>
-          <span class="pill f">75g F</span>
-        </div>
-      </div>
+      <div class="day-total"><span class="day-total-label">TOTAL LUNES</span><div class="day-total-macros"><span class="pill kcal">2710 kcal</span><span class="pill p">172g P</span><span class="pill c">266g C</span><span class="pill f">75g F</span></div></div>
     </div>
 
-    <!-- ─── MARTES ─── -->
+    <!-- MARTES -->
     <div class="day-content" id="day-mar">
-      <div style="margin-bottom:1rem; font-size:0.85rem; color:var(--text2)">
-         <span class="day-badge-train">🏋️ DÍA ENTRENO</span>
-        &nbsp;·&nbsp; Pierna
-      </div>
+      <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Pierna</div>
       <div class="meals-grid">
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon d">🌅</div>
-            <div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Tostadas con aguacate y huevo</strong><br>
-            · 3 rebanadas pan integral tostado<br>
-            · ½ aguacate maduro aplastado<br>
-            · 3 huevos revueltos o a la plancha<br>
-            · 1 yogur griego natural (125g)
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~720 kcal</span>
-            <span class="pill p">~36g P</span>
-            <span class="pill c">~65g C</span>
-            <span class="pill f">~30g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
+          <div class="meal-food"><strong>Tostadas con aguacate y huevo</strong><br>· 3 rebanadas pan integral tostado<br>· ½ aguacate maduro aplastado<br>· 3 huevos revueltos o a la plancha<br>· 1 yogur griego natural (125g)</div>
+          <div class="meal-macros"><span class="pill kcal">~720 kcal</span><span class="pill p">~36g P</span><span class="pill c">~65g C</span><span class="pill f">~30g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon c">☀️</div>
-            <div><div class="meal-name">Comida</div><div class="meal-time">15:00</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Lentejas con chorizo y verdura</strong><br>
-            · 200g lentejas cocidas (bote Mercadona)<br>
-            · 50g chorizo bajo en grasa<br>
-            · Zanahoria, cebolla, pimiento<br>
-            · Pan integral (1 rebanada)
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~750 kcal</span>
-            <span class="pill p">~42g P</span>
-            <span class="pill c">~80g C</span>
-            <span class="pill f">~18g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">15:00</div></div></div>
+          <div class="meal-food"><strong>Lentejas con chorizo y verdura</strong><br>· 200g lentejas cocidas (bote Mercadona)<br>· 50g chorizo bajo en grasa<br>· Zanahoria, cebolla, pimiento<br>· Pan integral (1 rebanada)</div>
+          <div class="meal-macros"><span class="pill kcal">~750 kcal</span><span class="pill p">~42g P</span><span class="pill c">~80g C</span><span class="pill f">~18g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon m">🥤</div>
-            <div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Batido diario</strong><br>
-            · 35g Whey + 3g creatina<br>
-            · 100g fresas/frambuesas congeladas<br>
-            · 300ml leche semidesnatada
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~255 kcal</span>
-            <span class="pill p">~36g P</span>
-            <span class="pill c">~20g C</span>
-            <span class="pill f">~5g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div></div>
+          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 100g fresas/frambuesas congeladas<br>· 300ml leche semidesnatada</div>
+          <div class="meal-macros"><span class="pill kcal">~255 kcal</span><span class="pill p">~36g P</span><span class="pill c">~20g C</span><span class="pill f">~5g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon ce">🌙</div>
-            <div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Pasta con atún y tomate</strong><br>
-            · 100g pasta penne (seco)<br>
-            · 2 latas atún en aceite (80g c/u)<br>
-            · Tomate frito casero (3 cdas)<br>
-            · Queso rallado Hacendado (20g)
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~780 kcal</span>
-            <span class="pill p">~48g P</span>
-            <span class="pill c">~82g C</span>
-            <span class="pill f">~20g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+          <div class="meal-food"><strong>Pasta con atún y tomate</strong><br>· 100g pasta penne (seco)<br>· 2 latas atún en aceite (80g c/u)<br>· Tomate frito casero (3 cdas)<br>· Queso rallado Hacendado (20g)</div>
+          <div class="meal-macros"><span class="pill kcal">~780 kcal</span><span class="pill p">~48g P</span><span class="pill c">~82g C</span><span class="pill f">~20g F</span></div>
         </div>
       </div>
-      <div class="day-total">
-        <span class="day-total-label">TOTAL MARTES</span>
-        <div class="day-total-macros">
-          <span class="pill kcal">2505 kcal</span>
-          <span class="pill p">162g P</span>
-          <span class="pill c">247g C</span>
-          <span class="pill f">73g F</span>
-        </div>
-      </div>
+      <div class="day-total"><span class="day-total-label">TOTAL MARTES</span><div class="day-total-macros"><span class="pill kcal">2505 kcal</span><span class="pill p">162g P</span><span class="pill c">247g C</span><span class="pill f">73g F</span></div></div>
     </div>
 
-    <!-- ─── MIÉRCOLES ─── -->
+    <!-- MIÉRCOLES -->
     <div class="day-content" id="day-mie">
-      <div style="margin-bottom:1rem; font-size:0.85rem; color:var(--text2)">
-	  <span style="background:rgba(55,160,240,0.15);color:var(--blue)" class="day-badge-train">💤 DESCANSO</span>
-      &nbsp;·&nbsp; Calorías ligeramente inferiores
-      </div>
+      <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span style="background:rgba(55,160,240,.15);color:var(--blue)" class="day-badge-train">💤 DESCANSO</span> &nbsp;·&nbsp; Calorías ligeramente inferiores</div>
       <div class="meals-grid">
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon d">🌅</div>
-            <div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Avena proteica con fruta</strong><br>
-            · 100g avena + 300ml leche entera<br>
-            · 1 plátano troceado encima<br>
-            · 30g almendras crudas<br>
-            · 1 cda miel
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~780 kcal</span>
-            <span class="pill p">~28g P</span>
-            <span class="pill c">~100g C</span>
-            <span class="pill f">~24g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
+          <div class="meal-food"><strong>Avena proteica con fruta</strong><br>· 100g avena + 300ml leche entera<br>· 1 plátano troceado encima<br>· 30g almendras crudas<br>· 1 cda miel</div>
+          <div class="meal-macros"><span class="pill kcal">~780 kcal</span><span class="pill p">~28g P</span><span class="pill c">~100g C</span><span class="pill f">~24g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon c">☀️</div>
-            <div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Ternera con patata y pimientos</strong><br>
-            · 200g carne picada magra de ternera<br>
-            · 250g patatas al horno con especias<br>
-            · 150g pimientos asados (bote)<br>
-            · AOVE + ajo + perejil
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~790 kcal</span>
-            <span class="pill p">~50g P</span>
-            <span class="pill c">~55g C</span>
-            <span class="pill f">~26g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
+          <div class="meal-food"><strong>Ternera con patata y pimientos</strong><br>· 200g carne picada magra de ternera<br>· 250g patatas al horno con especias<br>· 150g pimientos asados (bote)<br>· AOVE + ajo + perejil</div>
+          <div class="meal-macros"><span class="pill kcal">~790 kcal</span><span class="pill p">~50g P</span><span class="pill c">~55g C</span><span class="pill f">~26g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon m">🥤</div>
-            <div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Batido diario</strong><br>
-            · 35g Whey + 3g creatina<br>
-            · 1 plátano + 300ml leche semi
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~330 kcal</span>
-            <span class="pill p">~37g P</span>
-            <span class="pill c">~38g C</span>
-            <span class="pill f">~5g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div></div>
+          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 1 plátano + 300ml leche semi</div>
+          <div class="meal-macros"><span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C</span><span class="pill f">~5g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon ce">🌙</div>
-            <div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Tortilla de 4 huevos con queso</strong><br>
-            · 4 huevos + 30g queso Hacendado<br>
-            · 100g jamón cocido en dados<br>
-            · 2 rebanadas pan integral<br>
-            · Tomate natural aliñado con AOVE
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~760 kcal</span>
-            <span class="pill p">~52g P</span>
-            <span class="pill c">~38g C</span>
-            <span class="pill f">~38g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+          <div class="meal-food"><strong>Tortilla de 4 huevos con queso</strong><br>· 4 huevos + 30g queso Hacendado<br>· 100g jamón cocido en dados<br>· 2 rebanadas pan integral<br>· Tomate natural aliñado con AOVE</div>
+          <div class="meal-macros"><span class="pill kcal">~760 kcal</span><span class="pill p">~52g P</span><span class="pill c">~38g C</span><span class="pill f">~38g F</span></div>
         </div>
       </div>
-      <div class="day-total">
-        <span class="day-total-label">TOTAL MIÉRCOLES</span>
-        <div class="day-total-macros">
-          <span class="pill kcal">2660 kcal</span>
-          <span class="pill p">167g P</span>
-          <span class="pill c">231g C</span>
-          <span class="pill f">93g F</span>
-        </div>
-      </div>
+      <div class="day-total"><span class="day-total-label">TOTAL MIÉRCOLES</span><div class="day-total-macros"><span class="pill kcal">2660 kcal</span><span class="pill p">167g P</span><span class="pill c">231g C</span><span class="pill f">93g F</span></div></div>
     </div>
 
-    <!-- ─── JUEVES ─── -->
+    <!-- JUEVES -->
     <div class="day-content" id="day-jue">
-      <div style="margin-bottom:1rem; font-size:0.85rem; color:var(--text2)">
-       <span class="day-badge-train">🏋️ DÍA ENTRENO</span>
-        &nbsp;·&nbsp; Tren Superior B
-      </div>
+      <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Tren Superior B</div>
       <div class="meals-grid">
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon d">🌅</div>
-            <div><div class="meal-name">Desayuno</div><div class="meal-time">08:00h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Overnight oats</strong><br>
-            · 80g avena + 250ml leche entera<br>
-            · 1 yogur griego (125g)<br>
-            · 1 plátano + 1 cda de cacahuete natural<br>
-            <em style="font-size:0.78rem;color:var(--muted)">Preparar la noche anterior en un tarro</em>
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~750 kcal</span>
-            <span class="pill p">~32g P</span>
-            <span class="pill c">~92g C</span>
-            <span class="pill f">~22g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">08:00h</div></div></div>
+          <div class="meal-food"><strong>Overnight oats</strong><br>· 80g avena + 250ml leche entera<br>· 1 yogur griego (125g)<br>· 1 plátano + 1 cda de cacahuete natural<br><em style="font-size:.78rem;color:var(--muted)">Preparar la noche anterior en un tarro</em></div>
+          <div class="meal-macros"><span class="pill kcal">~750 kcal</span><span class="pill p">~32g P</span><span class="pill c">~92g C</span><span class="pill f">~22g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon c">☀️</div>
-            <div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Arroz con pollo al curry</strong><br>
-            · 200g contramuslo de pollo sin hueso<br>
-            · 90g arroz basmati (en seco)<br>
-            · Cebolla + pimiento + curry en polvo<br>
-            · 100ml leche de coco (tetrabrik)
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~790 kcal</span>
-            <span class="pill p">~50g P</span>
-            <span class="pill c">~78g C</span>
-            <span class="pill f">~18g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
+          <div class="meal-food"><strong>Arroz con pollo al curry</strong><br>· 200g contramuslo de pollo sin hueso<br>· 90g arroz basmati (en seco)<br>· Cebolla + pimiento + curry en polvo<br>· 100ml leche de coco (tetrabrik)</div>
+          <div class="meal-macros"><span class="pill kcal">~790 kcal</span><span class="pill p">~50g P</span><span class="pill c">~78g C</span><span class="pill f">~18g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon m">🥤</div>
-            <div><div class="meal-name">Merienda / Batido</div><div class="meal-time">16:30h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Batido diario</strong><br>
-            · 35g Whey + 3g creatina<br>
-            · 100g frambuesas congeladas<br>
-            · 300ml leche semidesnatada
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~255 kcal</span>
-            <span class="pill p">~36g P</span>
-            <span class="pill c">~22g C</span>
-            <span class="pill f">~5g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">16:30h</div></div></div>
+          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 100g frambuesas congeladas<br>· 300ml leche semidesnatada</div>
+          <div class="meal-macros"><span class="pill kcal">~255 kcal</span><span class="pill p">~36g P</span><span class="pill c">~22g C</span><span class="pill f">~5g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon ce">🌙</div>
-            <div><div class="meal-name">Cena</div><div class="meal-time">20:30h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Merluza al horno con verduras</strong><br>
-            · 250g filetes merluza (congelada)<br>
-            · 200g judías verdes congeladas<br>
-            · 200g patata mediana cocida<br>
-            · AOVE + ajo + pimentón
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~660 kcal</span>
-            <span class="pill p">~50g P</span>
-            <span class="pill c">~52g C</span>
-            <span class="pill f">~20g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">20:30h</div></div></div>
+          <div class="meal-food"><strong>Merluza al horno con verduras</strong><br>· 250g filetes merluza (congelada)<br>· 200g judías verdes congeladas<br>· 200g patata mediana cocida<br>· AOVE + ajo + pimentón</div>
+          <div class="meal-macros"><span class="pill kcal">~660 kcal</span><span class="pill p">~50g P</span><span class="pill c">~52g C</span><span class="pill f">~20g F</span></div>
         </div>
       </div>
-      <div class="day-total">
-        <span class="day-total-label">TOTAL JUEVES</span>
-        <div class="day-total-macros">
-          <span class="pill kcal">2455 kcal</span>
-          <span class="pill p">168g P</span>
-          <span class="pill c">244g C</span>
-          <span class="pill f">65g F</span>
-        </div>
-      </div>
+      <div class="day-total"><span class="day-total-label">TOTAL JUEVES</span><div class="day-total-macros"><span class="pill kcal">2455 kcal</span><span class="pill p">168g P</span><span class="pill c">244g C</span><span class="pill f">65g F</span></div></div>
     </div>
 
-    <!-- ─── VIERNES ─── -->
+    <!-- VIERNES -->
     <div class="day-content" id="day-vie">
-      <div style="margin-bottom:1rem; font-size:0.85rem; color:var(--text2)">
-        <span class="day-badge-train">🏋️ DÍA ENTRENO</span>
-		&nbsp;·&nbsp; Pierna
-		<br><span style="background:rgba(55,160,240,0.15);color:var(--blue)" class="day-badge-train">💤 DESCANSO</span>
-        &nbsp;·&nbsp; <em>Opcional</em> - Plan de entrenamiento de 3 días
+      <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)">
+        <span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Pierna
+        <br><span style="background:rgba(55,160,240,.15);color:var(--blue)" class="day-badge-train">💤 DESCANSO</span> &nbsp;·&nbsp; <em>Opcional</em> - Plan de entrenamiento de 3 días
       </div>
       <div class="meals-grid">
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon d">🌅</div>
-            <div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Avena + huevos + fruta</strong><br>
-            · 100g avena con 300ml leche entera<br>
-            · 3 huevos a la plancha con jamón<br>
-            · 50g jamón cocido Hacendado<br>
-            · 1 plátano
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~820 kcal</span>
-            <span class="pill p">~48g P</span>
-            <span class="pill c">~90g C</span>
-            <span class="pill f">~22g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
+          <div class="meal-food"><strong>Avena + huevos + fruta</strong><br>· 100g avena con 300ml leche entera<br>· 3 huevos a la plancha con jamón<br>· 50g jamón cocido Hacendado<br>· 1 plátano</div>
+          <div class="meal-macros"><span class="pill kcal">~820 kcal</span><span class="pill p">~48g P</span><span class="pill c">~90g C</span><span class="pill f">~22g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon c">☀️</div>
-            <div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Macarrones con carne y tomate</strong><br>
-            · 150g macarrones (en seco)<br>
-            · 150g carne picada mixta<br>
-            · Tomate frito casero + cebolla<br>
-            · 20g queso parmesano rallado
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~850 kcal</span>
-            <span class="pill p">~48g P</span>
-            <span class="pill c">~98g C</span>
-            <span class="pill f">~22g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
+          <div class="meal-food"><strong>Macarrones con carne y tomate</strong><br>· 150g macarrones (en seco)<br>· 150g carne picada mixta<br>· Tomate frito casero + cebolla<br>· 20g queso parmesano rallado</div>
+          <div class="meal-macros"><span class="pill kcal">~850 kcal</span><span class="pill p">~48g P</span><span class="pill c">~98g C</span><span class="pill f">~22g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon m">🥤</div>
-            <div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno / 17:30h (Descanso)</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Batido diario</strong><br>
-            · 35g Whey + 3g creatina<br>
-            · 1 plátano + 300ml leche semi
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~330 kcal</span>
-            <span class="pill p">~37g P</span>
-            <span class="pill c">~38g C</span>
-            <span class="pill f">~5g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno / 17:30h (Descanso)</div></div></div>
+          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 1 plátano + 300ml leche semi</div>
+          <div class="meal-macros"><span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C</span><span class="pill f">~5g F</span></div>
         </div>
         <div class="meal-card">
-          <div class="meal-header">
-            <div class="meal-icon ce">🌙</div>
-            <div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div>
-          </div>
-          <div class="meal-food">
-            <strong>Pechuga al horno con boniato</strong><br>
-            · 220g pechuga de pollo al horno<br>
-            · 200g boniato asado con canela<br>
-            · Brócoli al vapor (150g)<br>
-            · AOVE + limón
-          </div>
-          <div class="meal-macros">
-            <span class="pill kcal">~720 kcal</span>
-            <span class="pill p">~55g P</span>
-            <span class="pill c">~60g C</span>
-            <span class="pill f">~14g F</span>
-          </div>
+          <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+          <div class="meal-food"><strong>Pechuga al horno con boniato</strong><br>· 220g pechuga de pollo al horno<br>· 200g boniato asado con canela<br>· Brócoli al vapor (150g)<br>· AOVE + limón</div>
+          <div class="meal-macros"><span class="pill kcal">~720 kcal</span><span class="pill p">~55g P</span><span class="pill c">~60g C</span><span class="pill f">~14g F</span></div>
         </div>
       </div>
-      <div class="day-total">
-        <span class="day-total-label">TOTAL VIERNES</span>
-        <div class="day-total-macros">
-          <span class="pill kcal">2720 kcal</span>
-          <span class="pill p">188g P</span>
-          <span class="pill c">286g C</span>
-          <span class="pill f">63g F</span>
-        </div>
-      </div>
+      <div class="day-total"><span class="day-total-label">TOTAL VIERNES</span><div class="day-total-macros"><span class="pill kcal">2720 kcal</span><span class="pill p">188g P</span><span class="pill c">286g C</span><span class="pill f">63g F</span></div></div>
     </div>
-
   </div>
 </section>
 
-<!-- ─── SECTION: COMPRA ─── -->
+<!-- ══ COMPRA ══ -->
 <section id="compra" class="section">
   <h1>LISTA DE LA <em>COMPRA SEMANAL</em></h1>
   <p class="section-intro">Estimación semanal para 5 días · Mercadona · Precios Abril 2026</p>
-
   <div class="compra-grid">
-
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--accent)">🍗 PROTEÍNAS ANIMALES</div>
       <div class="compra-item"><span class="name">Filetes pechuga de pollo</span><span class="price">4,75 €</span></div>
@@ -1194,7 +382,6 @@
       <div class="compra-item"><span class="name">Atún en aceite (pack 3x80g)</span><span class="price">~2,30€</span></div>
       <div class="compra-item"><span class="name">Jamón cocido extra (200g)</span><span class="price">~2,20€</span></div>
     </div>
-
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--blue)">🥛 LÁCTEOS Y DERIVADOS</div>
       <div class="compra-item"><span class="name">Leche entera (2L)</span><span class="price">~1,60€</span></div>
@@ -1202,7 +389,6 @@
       <div class="compra-item"><span class="name">Yogur griego natural (4x125g)</span><span class="price">~1,90€</span></div>
       <div class="compra-item"><span class="name">Queso semicurado rallado (150g)</span><span class="price">~1,80€</span></div>
     </div>
-
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--accent3)">🌾 HIDRATOS DE CARBONO</div>
       <div class="compra-item"><span class="name">Avena tradicional 1kg (Hacendado)</span><span class="price">~1,50€</span></div>
@@ -1213,7 +399,6 @@
       <div class="compra-item"><span class="name">Pan integral (barra o molde)</span><span class="price">~1,50€</span></div>
       <div class="compra-item"><span class="name">Lentejas cocidas bote (400g)</span><span class="price">~0,90€</span></div>
     </div>
-
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--accent2)">🥦 FRUTAS Y VERDURAS</div>
       <div class="compra-item"><span class="name">Plátanos (1,5kg)</span><span class="price">~1,50€</span></div>
@@ -1227,7 +412,6 @@
       <div class="compra-item"><span class="name">Cebolla (1kg)</span><span class="price">~0,80€</span></div>
       <div class="compra-item"><span class="name">Aguacates (2 ud)</span><span class="price">~1,80€</span></div>
     </div>
-
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--red)">🧴 DESPENSA Y GRASAS</div>
       <div class="compra-item"><span class="name">AOVE (500ml, Hacendado)</span><span class="price">~3,50€</span></div>
@@ -1239,107 +423,78 @@
       <div class="compra-item"><span class="name">Miel (bote pequeño)</span><span class="price">~2,50€</span></div>
       <div class="compra-item"><span class="name">Especias: curry, pimentón, ajo</span><span class="price">~3,00€</span></div>
     </div>
-
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--accent)">💊 SUPLEMENTOS</div>
       <div class="compra-item"><span class="name">Proteína Whey Hacendado (750g)¹</span><span class="price">~14,90€</span></div>
       <div class="compra-item"><span class="name">Creatina Monohidrato Hacendado¹</span><span class="price">~9,90€</span></div>
-      <p style="font-size:0.72rem; color:var(--muted); margin-top:0.75rem; line-height:1.5">¹ Los suplementos se compran mensualmente. El coste mensual de la whey (175g/semana) equivale a ~1 bote/mes. La creatina cunde varios meses.</p>
+      <p style="font-size:.72rem;color:var(--muted);margin-top:.75rem;line-height:1.5">¹ Los suplementos se compran mensualmente. El coste mensual de la whey (175g/semana) equivale a ~1 bote/mes. La creatina cunde varios meses.</p>
     </div>
-
   </div>
-
   <div class="price-total">
-    <div>
-      <div class="label">TOTAL SEMANAL ESTIMADO</div>
-      <div style="font-size:0.8rem; color:var(--text2); margin-top:4px">Alimentación sin suplementos · Los suplementos son ~25€/mes adicionales</div>
-    </div>
+    <div><div class="label">TOTAL SEMANAL ESTIMADO</div><div style="font-size:.8rem;color:var(--text2);margin-top:4px">Alimentación sin suplementos · Los suplementos son ~25€/mes adicionales</div></div>
     <div class="amount">~65€</div>
   </div>
-
-  <div style="margin-top:1rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; font-size:0.83rem; color:var(--text2); line-height:1.7">
+  <div style="margin-top:1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;font-size:.83rem;color:var(--text2);line-height:1.7">
     💡 <strong style="color:var(--text)">Consejos de ahorro:</strong> Compra el pollo entero y pártelo tú mismo. Las verduras congeladas son igual de nutritivas y más baratas. Los botes de legumbres cocidas ahorran tiempo. El AOVE puede durar varias semanas. La creatina Hacendado tiene excelente relación calidad-precio.
   </div>
 </section>
 
-<!-- ─── SECTION: ENTRENAMIENTO ─── -->
+<!-- ══ ENTRENAMIENTO ══ -->
 <section id="entreno" class="section">
-     
-        <h1>PLAN DE<em> ENTRENAMIENTO</em></h1>
-		 <div><p class="section-intro">Hipertrofia · Progresión de cargas · Ejercicios compuestos prioritarios</p>
+  <h1>PLAN DE<em> ENTRENAMIENTO</em></h1>
+  <p class="section-intro">Hipertrofia · Progresión de cargas · Ejercicios compuestos prioritarios</p>
   <div class="entreno-toggle">
     <button class="etog-btn active" onclick="showPlan('3dias')">Plan 3 Días</button>
     <button class="etog-btn" onclick="showPlan('4dias')">Plan 4 Días</button>
   </div>
 
-  <!-- PLAN 3 DÍAS -->
   <div class="entreno-plan active" id="plan-3dias">
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.84rem;color:var(--text2)">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2)">
       <strong style="color:var(--text)">Estructura Push / Pull / Legs</strong> · Lunes – Miércoles – Viernes<br>
       Cada músculo se trabaja 1 vez/semana con alto volumen. Ideal para el nivel principiante-intermedio.
     </div>
-
     <div class="dias-entreno">
-
       <div class="dia-entreno">
-        <div class="dia-entreno-header">
-          <span class="dia-badge">PUSH</span>
-          <div><div class="dia-title">Día A · Empuje</div><div class="dia-sub">Pecho · Hombros · Tríceps · LUNES</div></div>
-        </div>
+        <div class="dia-entreno-header"><span class="dia-badge">PUSH</span><div><div class="dia-title">Día A · Empuje</div><div class="dia-sub">Pecho · Hombros · Tríceps · LUNES</div></div></div>
         <div class="exercise"><div class="ex-name"><strong>Press de banca plano (barra)</strong>Compuesto principal de pecho</div><span class="ex-sets">4×6-8</span></div>
         <div class="exercise"><div class="ex-name"><strong>Press inclinado (mancuernas)</strong>Porción clavicular del pecho</div><span class="ex-sets">3×8-10</span></div>
         <div class="exercise"><div class="ex-name"><strong>Press militar (barra o mancuernas)</strong>Deltoides anterior y medial</div><span class="ex-sets">3×8-10</span></div>
         <div class="exercise"><div class="ex-name"><strong>Elevaciones laterales</strong>Amplitud de hombros</div><span class="ex-sets">3×12-15</span></div>
         <div class="exercise"><div class="ex-name"><strong>Fondos en paralelas</strong>Tríceps y pecho inferior</div><span class="ex-sets">3×8-10</span></div>
         <div class="exercise"><div class="ex-name"><strong>Extensión tríceps en polea</strong>Aislamiento de tríceps</div><span class="ex-sets">3×12-15</span></div>
-        <div style="margin-top:0.75rem;font-size:0.78rem;color:var(--muted)">Descanso: 90-120s entre series compuestas · 60s aislamiento</div>
+        <div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 90-120s entre series compuestas · 60s aislamiento</div>
       </div>
-
       <div class="dia-entreno">
-        <div class="dia-entreno-header">
-          <span class="dia-badge pull">PULL</span>
-          <div><div class="dia-title">Día B · Tirón</div><div class="dia-sub">Espalda · Bíceps · MIÉRCOLES</div></div>
-        </div>
+        <div class="dia-entreno-header"><span class="dia-badge pull">PULL</span><div><div class="dia-title">Día B · Tirón</div><div class="dia-sub">Espalda · Bíceps · MIÉRCOLES</div></div></div>
         <div class="exercise"><div class="ex-name"><strong>Dominadas o jalón al pecho</strong>Dorsal ancho · compuesto clave</div><span class="ex-sets">4×6-8</span></div>
         <div class="exercise"><div class="ex-name"><strong>Remo con barra (Pendlay)</strong>Espalda media y trapecio</div><span class="ex-sets">4×6-8</span></div>
         <div class="exercise"><div class="ex-name"><strong>Remo en polea sentado</strong>Romboides y dorsal</div><span class="ex-sets">3×10-12</span></div>
         <div class="exercise"><div class="ex-name"><strong>Face pulls en polea</strong>Deltoides posterior y manguito</div><span class="ex-sets">3×15</span></div>
         <div class="exercise"><div class="ex-name"><strong>Curl bíceps con barra Z</strong>Bíceps braquial</div><span class="ex-sets">3×10-12</span></div>
         <div class="exercise"><div class="ex-name"><strong>Curl martillo mancuernas</strong>Braquial y braquiorradial</div><span class="ex-sets">3×12-15</span></div>
-        <div style="margin-top:0.75rem;font-size:0.78rem;color:var(--muted)">Descanso: 90-120s entre series compuestas · 60s aislamiento</div>
+        <div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 90-120s entre series compuestas · 60s aislamiento</div>
       </div>
-
       <div class="dia-entreno">
-        <div class="dia-entreno-header">
-          <span class="dia-badge legs">LEGS</span>
-          <div><div class="dia-title">Día C · Piernas</div><div class="dia-sub">Cuádriceps · Isquios · Glúteos · VIERNES</div></div>
-        </div>
+        <div class="dia-entreno-header"><span class="dia-badge legs">LEGS</span><div><div class="dia-title">Día C · Piernas</div><div class="dia-sub">Cuádriceps · Isquios · Glúteos · VIERNES</div></div></div>
         <div class="exercise"><div class="ex-name"><strong>Sentadilla con barra (trasera)</strong>Rey de los compuestos de pierna</div><span class="ex-sets">4×6-8</span></div>
         <div class="exercise"><div class="ex-name"><strong>Peso muerto rumano</strong>Isquiotibiales y glúteos</div><span class="ex-sets">3×8-10</span></div>
         <div class="exercise"><div class="ex-name"><strong>Prensa de piernas</strong>Cuádriceps con seguridad</div><span class="ex-sets">3×10-12</span></div>
         <div class="exercise"><div class="ex-name"><strong>Extensión de cuádriceps (máquina)</strong>Aislamiento cuádriceps</div><span class="ex-sets">3×12-15</span></div>
         <div class="exercise"><div class="ex-name"><strong>Curl de isquiotibiales tumbado</strong>Femoral posterior</div><span class="ex-sets">3×12-15</span></div>
         <div class="exercise"><div class="ex-name"><strong>Gemelos de pie (máquina o barra)</strong>Gastrocnemio y sóleo</div><span class="ex-sets">4×12-15</span></div>
-        <div style="margin-top:0.75rem;font-size:0.78rem;color:var(--muted)">Descanso: 2-3 min sentadilla · 90s resto compuestos · 60s aislamiento</div>
+        <div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 2-3 min sentadilla · 90s resto compuestos · 60s aislamiento</div>
       </div>
-
     </div>
   </div>
 
-  <!-- PLAN 4 DÍAS -->
   <div class="entreno-plan" id="plan-4dias">
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.84rem;color:var(--text2)">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2)">
       <strong style="color:var(--text)">Estructura Upper / Lower (2 días cada uno)</strong> · Lunes – Martes – Jueves – Viernes<br>
       Mayor frecuencia por grupo muscular (2×/semana). Óptimo para hipertrofia intermedia.
     </div>
-
     <div class="dias-entreno">
-
       <div class="dia-entreno">
-        <div class="dia-entreno-header">
-          <span class="dia-badge upper">UPPER A</span>
-          <div><div class="dia-title">Tren Superior A</div><div class="dia-sub">Pecho/Tríceps énfasis · LUNES</div></div>
-        </div>
+        <div class="dia-entreno-header"><span class="dia-badge upper">UPPER A</span><div><div class="dia-title">Tren Superior A</div><div class="dia-sub">Pecho/Tríceps énfasis · LUNES</div></div></div>
         <div class="exercise"><div class="ex-name"><strong>Press de banca plano (barra)</strong>Compuesto principal</div><span class="ex-sets">4×5-7</span></div>
         <div class="exercise"><div class="ex-name"><strong>Remo con barra (Pendlay)</strong>Espalda media · antagonista</div><span class="ex-sets">4×6-8</span></div>
         <div class="exercise"><div class="ex-name"><strong>Press inclinado mancuernas</strong>Porción clavicular</div><span class="ex-sets">3×8-10</span></div>
@@ -1348,12 +503,8 @@
         <div class="exercise"><div class="ex-name"><strong>Fondos en paralelas</strong>Tríceps</div><span class="ex-sets">3×8-10</span></div>
         <div class="exercise"><div class="ex-name"><strong>Curl bíceps barra</strong>Bíceps</div><span class="ex-sets">3×12</span></div>
       </div>
-
       <div class="dia-entreno">
-        <div class="dia-entreno-header">
-          <span class="dia-badge lower">LOWER A</span>
-          <div><div class="dia-title">Tren Inferior A</div><div class="dia-sub">Cuádriceps énfasis · MARTES</div></div>
-        </div>
+        <div class="dia-entreno-header"><span class="dia-badge lower">LOWER A</span><div><div class="dia-title">Tren Inferior A</div><div class="dia-sub">Cuádriceps énfasis · MARTES</div></div></div>
         <div class="exercise"><div class="ex-name"><strong>Sentadilla con barra</strong>Compuesto principal de pierna</div><span class="ex-sets">4×5-7</span></div>
         <div class="exercise"><div class="ex-name"><strong>Peso muerto rumano</strong>Isquios y glúteos</div><span class="ex-sets">3×8-10</span></div>
         <div class="exercise"><div class="ex-name"><strong>Prensa de piernas</strong>Cuádriceps</div><span class="ex-sets">3×10-12</span></div>
@@ -1361,12 +512,8 @@
         <div class="exercise"><div class="ex-name"><strong>Curl isquiotibiales tumbado</strong>Femoral posterior</div><span class="ex-sets">3×12-15</span></div>
         <div class="exercise"><div class="ex-name"><strong>Gemelos de pie</strong>Gastrocnemio</div><span class="ex-sets">4×15</span></div>
       </div>
-
       <div class="dia-entreno">
-        <div class="dia-entreno-header">
-          <span class="dia-badge upperB">UPPER B</span>
-          <div><div class="dia-title">Tren Superior B</div><div class="dia-sub">Espalda/Bíceps énfasis · JUEVES</div></div>
-        </div>
+        <div class="dia-entreno-header"><span class="dia-badge upperB">UPPER B</span><div><div class="dia-title">Tren Superior B</div><div class="dia-sub">Espalda/Bíceps énfasis · JUEVES</div></div></div>
         <div class="exercise"><div class="ex-name"><strong>Dominadas (o jalón neutro)</strong>Dorsal · compuesto principal</div><span class="ex-sets">4×6-8</span></div>
         <div class="exercise"><div class="ex-name"><strong>Press banca inclinado barra</strong>Pecho clavicular</div><span class="ex-sets">4×8-10</span></div>
         <div class="exercise"><div class="ex-name"><strong>Remo en polea sentado</strong>Romboides · espalda media</div><span class="ex-sets">3×10-12</span></div>
@@ -1375,12 +522,8 @@
         <div class="exercise"><div class="ex-name"><strong>Curl martillo mancuernas</strong>Braquial y bíceps</div><span class="ex-sets">3×12</span></div>
         <div class="exercise"><div class="ex-name"><strong>Extensión tríceps polea</strong>Tríceps largo</div><span class="ex-sets">3×12-15</span></div>
       </div>
-
       <div class="dia-entreno">
-        <div class="dia-entreno-header">
-          <span class="dia-badge lowerB">LOWER B</span>
-          <div><div class="dia-title">Tren Inferior B</div><div class="dia-sub">Isquios/Glúteos énfasis · VIERNES</div></div>
-        </div>
+        <div class="dia-entreno-header"><span class="dia-badge lowerB">LOWER B</span><div><div class="dia-title">Tren Inferior B</div><div class="dia-sub">Isquios/Glúteos énfasis · VIERNES</div></div></div>
         <div class="exercise"><div class="ex-name"><strong>Peso muerto convencional</strong>Compuesto total posterior</div><span class="ex-sets">4×4-6</span></div>
         <div class="exercise"><div class="ex-name"><strong>Hip Thrust con barra</strong>Glúteo máximo</div><span class="ex-sets">4×10-12</span></div>
         <div class="exercise"><div class="ex-name"><strong>Sentadilla búlgara (unilateral)</strong>Cuádriceps y glúteo</div><span class="ex-sets">3×10</span></div>
@@ -1388,322 +531,228 @@
         <div class="exercise"><div class="ex-name"><strong>Curl nórdico o máquina isquios</strong>Isquiotibiales</div><span class="ex-sets">3×10-12</span></div>
         <div class="exercise"><div class="ex-name"><strong>Gemelos sentado (máquina)</strong>Sóleo</div><span class="ex-sets">4×15</span></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ─── SECTION: PROGRESION ─── -->
+<!-- ══ PROGRESIÓN ══ -->
 <section id="progresion" class="section">
   <div class="card">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
       <h1>REGISTRO DE<em> PESOS</em></h1>
-      <!--<a href="https://docs.google.com/spreadsheets/d/1_Z5yQdInCyfIucy8zNBrGkO41cRg1MGO6B9z8xfngso/edit?gid=1020107431#gid=1020107431" target="_blank" style="color: var(--accent2); text-decoration: none; font-size: 0.8rem; border: 1px solid var(--accent2); padding: 5px 10px; border-radius: 5px;">Ver Historial Completo</a>-->
     </div>
     <p class="section-intro">Anota tus pesos al terminar cada serie/ejercicio para asegurar la sobrecarga progresiva.</p>
-	
-      <a href="https://www.notion.so/registroseries/344d8688427180d3b10cc21a7c402e96?v=c670445a3666472b99ca310374855cfd&source=copy_link" target="_blank" rel="noopener" style="display:block; text-decoration:none; color:inherit;">
-      <div style="position: relative; width: 100%; min-height: 280px; border-radius: 12px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(55,240,168,0.08), rgba(181,240,55,0.05)); padding: 2.5rem 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: border-color 0.2s, transform 0.2s;" onmouseover="this.style.borderColor='var(--accent2)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)';">
-        <div style="font-size: 3rem; margin-bottom: 0.75rem;">📊</div>
-        <h3 style="color: var(--accent2); margin-bottom: 0.5rem;">Abrir registro en Notion</h3>
-        <p style="font-size: 0.88rem; color: var(--text2); max-width: 480px; line-height: 1.6; margin-bottom: 1.25rem;">
-          La tabla completa con tu progresión de cargas está alojada en Notion. Notion no permite incrustar sus páginas dentro de otros sitios, así que se abre en una pestaña nueva.
-        </p>
-        <span style="display: inline-block; background: var(--accent2); color: #0d0f0e; font-weight: 700; font-size: 0.85rem; padding: 10px 22px; border-radius: 8px; letter-spacing: 0.3px;">
-          Ver registro completo →
-        </span>
+    <a href="https://www.notion.so/registroseries/344d8688427180d3b10cc21a7c402e96?v=c670445a3666472b99ca310374855cfd&source=copy_link" target="_blank" rel="noopener" style="display:block;text-decoration:none;color:inherit">
+      <div style="width:100%;min-height:280px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(135deg,rgba(55,240,168,.08),rgba(181,240,55,.05));padding:2.5rem 2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:border-color .2s,transform .2s" onmouseover="this.style.borderColor='var(--accent2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='translateY(0)'">
+        <div style="font-size:3rem;margin-bottom:.75rem">📊</div>
+        <h3 style="color:var(--accent2);margin-bottom:.5rem">Abrir registro en Notion</h3>
+        <p style="font-size:.88rem;color:var(--text2);max-width:480px;line-height:1.6;margin-bottom:1.25rem">La tabla completa con tu progresión de cargas está alojada en Notion. Notion no permite incrustar sus páginas dentro de otros sitios, así que se abre en una pestaña nueva.</p>
+        <span style="display:inline-block;background:var(--accent2);color:#0d0f0e;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:8px;letter-spacing:.3px">Ver registro completo →</span>
       </div>
     </a>
   </div>
 </section>
 
 <script>
-  /* ══════════════════════════════════════════════
-     ⚙️  CONFIGURACIÓN — solo necesitas esta URL
-  ══════════════════════════════════════════════ */
-  const FIREBASE_URL = 'https://plan-muscular-default-rtdb.europe-west1.firebasedatabase.app/';
-  // Ejemplo: 'https://mi-plan-default-rtdb.europe-west1.firebasedatabase.app'
-  /* ══════════════════════════════════════════ */
+// ══ CONFIGURACIÓN ══════════════════════════════
+const FIREBASE_URL = 'TU_FIREBASE_URL_AQUI';
+// Ejemplo: 'https://mi-plan-default-rtdb.europe-west1.firebasedatabase.app'
+// ═══════════════════════════════════════════════
 
-  const CLOUD_CONFIGURED = FIREBASE_URL !== 'https://plan-muscular-default-rtdb.europe-west1.firebasedatabase.app/' && FIREBASE_URL.startsWith('https://');
-  const LOCAL_KEY = 'planMuscular_menus_v1';
-  let saveTimer = null;
+const CLOUD_CONFIGURED = FIREBASE_URL.startsWith('https://');
+const FIREBASE_ENDPOINT = CLOUD_CONFIGURED ? FIREBASE_URL.replace(/\/$/, '') + '/menus.json' : null;
+const LOCAL_KEY = 'planMuscular_menus_v1';
+let saveTimer = null;
 
-  /* ─── INDICADOR SYNC ─── */
-  function setSyncStatus(state, msg) {
-    const el  = document.getElementById('sync-status');
-    const dot = el.querySelector('.sync-dot');
-    const txt = document.getElementById('sync-msg');
-    el.className = 'show ' + state;
-    dot.className = 'sync-dot' + (state === 'saving' || state === 'loading' ? ' pulse' : '');
-    txt.textContent = msg;
-    if (state === 'saved' || state === 'error') {
-      clearTimeout(el._hideTimer);
-      el._hideTimer = setTimeout(function() { el.classList.remove('show'); }, 3000);
-    }
+// ── SYNC STATUS ──
+function setSyncStatus(state, msg) {
+  const el = document.getElementById('sync-status');
+  el.className = 'show ' + state;
+  el.querySelector('.sync-dot').className = 'sync-dot' + (/saving|loading/.test(state) ? ' pulse' : '');
+  document.getElementById('sync-msg').textContent = msg;
+  if (/saved|error/.test(state)) {
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('show'), 3000);
   }
+}
 
-  /* ─── NAVEGACIÓN ─── */
-  function showSection(id) {
-    document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
-    document.querySelectorAll('nav button').forEach(function(b){ b.classList.remove('active'); });
-    document.getElementById(id).classList.add('active');
-    event.target.classList.add('active');
-  }
-  function showDay(id) {
-    document.querySelectorAll('.day-content').forEach(function(d){ d.classList.remove('active'); });
-    document.querySelectorAll('.day-tab').forEach(function(t){ t.classList.remove('active'); });
-    document.getElementById('day-' + id).classList.add('active');
-    event.target.classList.add('active');
-  }
-  function showPlan(id) {
-    document.querySelectorAll('.entreno-plan').forEach(function(p){ p.classList.remove('active'); });
-    document.querySelectorAll('.etog-btn').forEach(function(b){ b.classList.remove('active'); });
-    document.getElementById('plan-' + id).classList.add('active');
-    event.target.classList.add('active');
-  }
+// ── NAVEGACIÓN ──
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+function showDay(id) {
+  document.querySelectorAll('.day-content').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('day-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+function showPlan(id) {
+  document.querySelectorAll('.entreno-plan').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.etog-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('plan-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
 
-  /* ─── HELPERS ─── */
-  function parsePillNum(text) { var m = text.match(/(\d+)/); return m ? m[1] : '0'; }
-  function escapeHtml(str) {
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
+// ── HELPERS ──
+const parsePillNum = t => (t.match(/(\d+)/) || ['','0'])[1];
+const escapeHtml = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-  /* ─── INIT ─── */
-  document.addEventListener('DOMContentLoaded', function() {
-    if (!CLOUD_CONFIGURED) {
-      document.getElementById('config-banner').style.display = 'block';
-    }
-    document.querySelectorAll('.day-content').forEach(function(dayEl) {
-      var dayId = dayEl.id;
-      dayEl.querySelectorAll('.meal-card').forEach(function(card, i) {
-        card.id = dayId + '-meal' + i;
-        var header = card.querySelector('.meal-header');
-        var editBtn = document.createElement('button');
-        editBtn.className = 'edit-btn';
-        editBtn.textContent = '✏ Editar';
-        editBtn.addEventListener('click', function() { enterEditMode(card); });
-        header.appendChild(editBtn);
-      });
-      var totalLabel = dayEl.querySelector('.day-total-label');
-      if (totalLabel) {
-        var resetBtn = document.createElement('button');
-        resetBtn.className = 'reset-day-btn';
-        resetBtn.textContent = '↺ Resetear';
-        resetBtn.addEventListener('click', function() { resetDay(dayId); });
-        totalLabel.parentNode.insertBefore(resetBtn, totalLabel.nextSibling);
-      }
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.day-content').forEach(dayEl => {
+    const dayId = dayEl.id;
+    dayEl.querySelectorAll('.meal-card').forEach((card, i) => {
+      card.id = dayId + '-meal' + i;
+      const btn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar' });
+      btn.addEventListener('click', () => enterEditMode(card));
+      card.querySelector('.meal-header').appendChild(btn);
     });
-    loadData();
+    const lbl = dayEl.querySelector('.day-total-label');
+    if (lbl) {
+      const rb = Object.assign(document.createElement('button'), { className: 'reset-day-btn', textContent: '↺ Resetear' });
+      rb.addEventListener('click', () => resetDay(dayId));
+      lbl.parentNode.insertBefore(rb, lbl.nextSibling);
+    }
   });
+  loadData();
+});
 
-  /* ─── MODO EDICIÓN ─── */
-  function enterEditMode(card) {
-    if (card.classList.contains('editing')) return;
-    card.classList.add('editing');
-    var foodEl   = card.querySelector('.meal-food');
-    var macrosEl = card.querySelector('.meal-macros');
-    var editBtn  = card.querySelector('.edit-btn');
-    card._origFood   = foodEl.innerHTML;
-    card._origMacros = macrosEl.innerHTML;
-    var foodText = foodEl.innerText;
-    var pills = macrosEl.querySelectorAll('.pill');
-    var kcal = pills[0] ? parsePillNum(pills[0].textContent) : '0';
-    var prot = pills[1] ? parsePillNum(pills[1].textContent) : '0';
-    var carb = pills[2] ? parsePillNum(pills[2].textContent) : '0';
-    var fat  = pills[3] ? parsePillNum(pills[3].textContent) : '0';
-    foodEl.innerHTML = '<textarea class="edit-textarea" placeholder="Nombre del plato\n· Ingrediente 1\n· Ingrediente 2"></textarea>';
-    foodEl.querySelector('textarea').value = foodText;
-    macrosEl.innerHTML =
-      '<div class="macro-edit-row">' +
-        '<div class="macro-edit-item"><label class="lkcal">kcal</label><input type="number" min="0" data-macro="kcal" value="' + kcal + '"></div>' +
-        '<div class="macro-edit-item"><label class="lp">Prot (g)</label><input type="number" min="0" data-macro="p" value="' + prot + '"></div>' +
-        '<div class="macro-edit-item"><label class="lc">Carbs (g)</label><input type="number" min="0" data-macro="c" value="' + carb + '"></div>' +
-        '<div class="macro-edit-item"><label class="lf">Grasas (g)</label><input type="number" min="0" data-macro="f" value="' + fat + '"></div>' +
-      '</div>' +
-      '<div class="meal-edit-actions">' +
-        '<button class="btn-save-meal">✓ Guardar</button>' +
-        '<button class="btn-cancel-meal">✕ Cancelar</button>' +
-      '</div>';
-    macrosEl.querySelector('.btn-save-meal').addEventListener('click', function() { saveEditMode(card); });
-    macrosEl.querySelector('.btn-cancel-meal').addEventListener('click', function() { cancelEditMode(card); });
-    editBtn.style.display = 'none';
+// ── EDIT MODE ──
+function enterEditMode(card) {
+  if (card.classList.contains('editing')) return;
+  card.classList.add('editing');
+  const foodEl = card.querySelector('.meal-food');
+  const macrosEl = card.querySelector('.meal-macros');
+  const editBtn = card.querySelector('.edit-btn');
+  card._origFood = foodEl.innerHTML;
+  card._origMacros = macrosEl.innerHTML;
+  const pills = macrosEl.querySelectorAll('.pill');
+  const [kcal, prot, carb, fat] = [...pills].map(p => parsePillNum(p.textContent));
+  foodEl.innerHTML = `<textarea class="edit-textarea" placeholder="Nombre del plato\n· Ingrediente 1\n· Ingrediente 2"></textarea>`;
+  foodEl.querySelector('textarea').value = foodEl._origText || card._origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'');
+  macrosEl.innerHTML = `
+    <div class="macro-edit-row">
+      <div class="macro-edit-item"><label class="lkcal">kcal</label><input type="number" min="0" value="${kcal}"></div>
+      <div class="macro-edit-item"><label class="lp">Prot (g)</label><input type="number" min="0" value="${prot}"></div>
+      <div class="macro-edit-item"><label class="lc">Carbs (g)</label><input type="number" min="0" value="${carb}"></div>
+      <div class="macro-edit-item"><label class="lf">Grasas (g)</label><input type="number" min="0" value="${fat}"></div>
+    </div>
+    <div class="meal-edit-actions">
+      <button class="btn-save-meal">✓ Guardar</button>
+      <button class="btn-cancel-meal">✕ Cancelar</button>
+    </div>`;
+  macrosEl.querySelector('.btn-save-meal').addEventListener('click', () => saveEditMode(card));
+  macrosEl.querySelector('.btn-cancel-meal').addEventListener('click', () => cancelEditMode(card));
+  editBtn.style.display = 'none';
+}
+
+function saveEditMode(card) {
+  const foodEl = card.querySelector('.meal-food');
+  const macrosEl = card.querySelector('.meal-macros');
+  const lines = foodEl.querySelector('textarea').value.trim().split('\n');
+  const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => parseInt(i.value) || 0);
+  foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
+  macrosEl.innerHTML = `<span class="pill kcal">~${k} kcal</span><span class="pill p">~${p}g P</span><span class="pill c">~${c}g C</span><span class="pill f">~${f}g F</span>`;
+  card.classList.remove('editing');
+  card.querySelector('.edit-btn').style.display = '';
+  recalcDayTotal(card);
+  scheduleSave();
+}
+
+function cancelEditMode(card) {
+  card.querySelector('.meal-food').innerHTML = card._origFood;
+  card.querySelector('.meal-macros').innerHTML = card._origMacros;
+  card.classList.remove('editing');
+  card.querySelector('.edit-btn').style.display = '';
+}
+
+// ── RECALC TOTAL ──
+function recalcDayTotal(card) {
+  const dayEl = card.closest('.day-content');
+  const macrosDiv = dayEl?.querySelector('.day-total-macros');
+  if (!macrosDiv) return;
+  let [k,p,c,f] = [0,0,0,0];
+  dayEl.querySelectorAll('.meal-card').forEach(card => {
+    const pills = card.querySelectorAll('.meal-macros .pill');
+    if (pills.length >= 4) { k += +parsePillNum(pills[0].textContent); p += +parsePillNum(pills[1].textContent); c += +parsePillNum(pills[2].textContent); f += +parsePillNum(pills[3].textContent); }
+  });
+  macrosDiv.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g F</span>`;
+}
+
+// ── SNAPSHOT ──
+function buildSnapshot() {
+  const data = {};
+  document.querySelectorAll('.meal-card[id]').forEach(card => {
+    const foodEl = card.querySelector('.meal-food');
+    const pills = card.querySelectorAll('.meal-macros .pill');
+    if (!foodEl || pills.length < 4) return;
+    data[card.id] = { food: foodEl.innerHTML, kcal: parsePillNum(pills[0].textContent), prot: parsePillNum(pills[1].textContent), carb: parsePillNum(pills[2].textContent), fat: parsePillNum(pills[3].textContent) };
+  });
+  return data;
+}
+
+function applySnapshot(data) {
+  if (!data) return;
+  Object.entries(data).forEach(([id, saved]) => {
+    const card = document.getElementById(id);
+    if (!card) return;
+    const foodEl = card.querySelector('.meal-food');
+    const macrosEl = card.querySelector('.meal-macros');
+    if (foodEl) foodEl.innerHTML = saved.food;
+    if (macrosEl) macrosEl.innerHTML = `<span class="pill kcal">~${saved.kcal} kcal</span><span class="pill p">~${saved.prot}g P</span><span class="pill c">~${saved.carb}g C</span><span class="pill f">~${saved.fat}g F</span>`;
+  });
+  document.querySelectorAll('.day-content').forEach(dayEl => { const c = dayEl.querySelector('.meal-card'); if (c) recalcDayTotal(c); });
+}
+
+// ── CLOUD SYNC ──
+async function loadData() {
+  let local = null;
+  try { local = JSON.parse(localStorage.getItem(LOCAL_KEY)); } catch(e) {}
+  if (local) applySnapshot(local);
+  if (!CLOUD_CONFIGURED) return;
+  setSyncStatus('loading', 'Sincronizando…');
+  try {
+    const res = await fetch(FIREBASE_ENDPOINT);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const cloud = await res.json();
+    if (cloud) { try { localStorage.setItem(LOCAL_KEY, JSON.stringify(cloud)); } catch(e) {} applySnapshot(cloud); }
+    setSyncStatus('saved', '✓ Datos cargados');
+  } catch(e) {
+    setSyncStatus('error', 'Sin conexión — caché local');
   }
+}
 
-  function saveEditMode(card) {
-    var foodEl   = card.querySelector('.meal-food');
-    var macrosEl = card.querySelector('.meal-macros');
-    var lines = foodEl.querySelector('textarea').value.trim().split('\n');
-    var title = lines[0] || '';
-    var rest  = lines.slice(1).join('<br>');
-    var inputs = macrosEl.querySelectorAll('input[data-macro]');
-    var kcal = parseInt(inputs[0] ? inputs[0].value : 0) || 0;
-    var prot = parseInt(inputs[1] ? inputs[1].value : 0) || 0;
-    var carb = parseInt(inputs[2] ? inputs[2].value : 0) || 0;
-    var fat  = parseInt(inputs[3] ? inputs[3].value : 0) || 0;
-    foodEl.innerHTML = '<strong>' + escapeHtml(title) + '</strong>' + (rest ? '<br>' + rest : '');
-    macrosEl.innerHTML =
-      '<span class="pill kcal">~' + kcal + ' kcal</span>' +
-      '<span class="pill p">~' + prot + 'g P</span>' +
-      '<span class="pill c">~' + carb + 'g C</span>' +
-      '<span class="pill f">~' + fat + 'g F</span>';
-    card.classList.remove('editing');
-    card.querySelector('.edit-btn').style.display = '';
-    recalcDayTotal(card);
-    scheduleSave();
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  setSyncStatus('saving', 'Guardando…');
+  saveTimer = setTimeout(persistData, 800);
+}
+
+async function persistData() {
+  const data = buildSnapshot();
+  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
+  if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Guardado'); return; }
+  try {
+    const res = await fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    setSyncStatus('saved', '✓ Guardado en la nube');
+  } catch(e) {
+    setSyncStatus('error', '⚠ Error al guardar');
   }
+}
 
-  function cancelEditMode(card) {
-    card.querySelector('.meal-food').innerHTML   = card._origFood;
-    card.querySelector('.meal-macros').innerHTML = card._origMacros;
-    card.classList.remove('editing');
-    card.querySelector('.edit-btn').style.display = '';
-  }
-
-  /* ─── RECALCULAR TOTAL DÍA ─── */
-  function recalcDayTotal(card) {
-    var dayEl = card.closest('.day-content');
-    if (!dayEl) return;
-    var totalEl = dayEl.querySelector('.day-total');
-    if (!totalEl) return;
-    var totalKcal=0, totalP=0, totalC=0, totalF=0;
-    dayEl.querySelectorAll('.meal-card').forEach(function(c) {
-      var pills = c.querySelectorAll('.meal-macros .pill');
-      if (pills.length >= 4) {
-        totalKcal += parseInt(parsePillNum(pills[0].textContent)) || 0;
-        totalP    += parseInt(parsePillNum(pills[1].textContent)) || 0;
-        totalC    += parseInt(parsePillNum(pills[2].textContent)) || 0;
-        totalF    += parseInt(parsePillNum(pills[3].textContent)) || 0;
-      }
-    });
-    var macrosDiv = totalEl.querySelector('.day-total-macros');
-    if (macrosDiv) {
-      macrosDiv.innerHTML =
-        '<span class="pill kcal">' + totalKcal + ' kcal</span>' +
-        '<span class="pill p">' + totalP + 'g P</span>' +
-        '<span class="pill c">' + totalC + 'g C</span>' +
-        '<span class="pill f">' + totalF + 'g F</span>';
-    }
-  }
-
-  /* ─── SNAPSHOT ─── */
-  function buildSnapshot() {
-    var data = {};
-    document.querySelectorAll('.meal-card[id]').forEach(function(card) {
-      var foodEl = card.querySelector('.meal-food');
-      var pills  = card.querySelectorAll('.meal-macros .pill');
-      if (!foodEl || pills.length < 4) return;
-      data[card.id] = {
-        food: foodEl.innerHTML,
-        kcal: parsePillNum(pills[0].textContent),
-        prot: parsePillNum(pills[1].textContent),
-        carb: parsePillNum(pills[2].textContent),
-        fat:  parsePillNum(pills[3].textContent)
-      };
-    });
-    return data;
-  }
-
-  function applySnapshot(data) {
-    if (!data) return;
-    Object.keys(data).forEach(function(cardId) {
-      var card = document.getElementById(cardId);
-      if (!card) return;
-      var saved = data[cardId];
-      var foodEl   = card.querySelector('.meal-food');
-      var macrosEl = card.querySelector('.meal-macros');
-      if (foodEl)   foodEl.innerHTML = saved.food;
-      if (macrosEl) {
-        macrosEl.innerHTML =
-          '<span class="pill kcal">~' + saved.kcal + ' kcal</span>' +
-          '<span class="pill p">~' + saved.prot + 'g P</span>' +
-          '<span class="pill c">~' + saved.carb + 'g C</span>' +
-          '<span class="pill f">~' + saved.fat + 'g F</span>';
-      }
-    });
-    document.querySelectorAll('.day-content').forEach(function(dayEl) {
-      var anyCard = dayEl.querySelector('.meal-card');
-      if (anyCard) recalcDayTotal(anyCard);
-    });
-  }
-
-  /* ══════════════════════════════════════════
-     CLOUD SYNC — Firebase Realtime Database
-     REST API: no requiere SDK, funciona con
-     fetch desde cualquier dominio sin CORS.
-  ══════════════════════════════════════════ */
-  var FIREBASE_ENDPOINT = FIREBASE_URL.replace(/\/$/, '') + '/menus.json';
-
-  async function loadData() {
-    // Primero mostrar caché local para respuesta instantánea
-    var local = null;
-    try { local = JSON.parse(localStorage.getItem(LOCAL_KEY) || 'null'); } catch(e) {}
-    if (local) applySnapshot(local);
-
-    if (!CLOUD_CONFIGURED) return;
-
-    setSyncStatus('loading', 'Sincronizando…');
-    try {
-      var res = await fetch(FIREBASE_ENDPOINT);
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      var cloudData = await res.json();
-      if (cloudData) {
-        try { localStorage.setItem(LOCAL_KEY, JSON.stringify(cloudData)); } catch(e) {}
-        applySnapshot(cloudData);
-        setSyncStatus('saved', '✓ Datos cargados');
-      } else {
-        setSyncStatus('saved', '✓ Conectado');
-      }
-    } catch(err) {
-      console.warn('Error cargando Firebase:', err);
-      setSyncStatus('error', 'Sin conexión — caché local');
-    }
-  }
-
-  function scheduleSave() {
-    clearTimeout(saveTimer);
-    setSyncStatus('saving', 'Guardando…');
-    saveTimer = setTimeout(persistData, 800);
-  }
-
-  async function persistData() {
-    var data = buildSnapshot();
-    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
-    if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Guardado localmente'); return; }
-    try {
-      var res = await fetch(FIREBASE_ENDPOINT, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      setSyncStatus('saved', '✓ Guardado en la nube');
-    } catch(err) {
-      console.warn('Error guardando en Firebase:', err);
-      setSyncStatus('error', '⚠ Error al guardar');
-    }
-  }
-
-  async function resetDay(dayId) {
-    if (!confirm('¿Resetear este día al menú original? Se perderán los cambios.')) return;
-    var data = {};
-    try { data = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); } catch(e) {}
-    var dayEl = document.getElementById(dayId);
-    if (dayEl) {
-      dayEl.querySelectorAll('.meal-card[id]').forEach(function(card) { delete data[card.id]; });
-    }
-    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
-    if (CLOUD_CONFIGURED) {
-      try {
-        await fetch(FIREBASE_ENDPOINT, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-      } catch(e) {}
-    }
-    location.reload();
-  }
+async function resetDay(dayId) {
+  if (!confirm('¿Resetear este día al menú original? Se perderán los cambios.')) return;
+  let data = {};
+  try { data = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); } catch(e) {}
+  document.getElementById(dayId)?.querySelectorAll('.meal-card[id]').forEach(c => delete data[c.id]);
+  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
+  if (CLOUD_CONFIGURED) { try { await fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch(e) {} }
+  location.reload();
+}
 </script>
 </body>
 </html>
