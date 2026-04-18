@@ -16,11 +16,13 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
 
 /* HEADER */
-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:2rem;height:60px}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--accent);letter-spacing:2px;white-space:nowrap}
-.logo span{color:var(--text2);font-size:1rem;margin-left:8px;letter-spacing:1px}
-nav{display:flex;gap:.25rem;flex-wrap:wrap}
-nav button{background:transparent;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap}
+header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:112px}
+.logo{display:flex;align-items:center;gap:16px;justify-self:end;margin-right:1.5rem}
+.logo img{height:100px;width:auto;display:block;border-radius:50%}
+.logo span{color:var(--text2);font-size:1rem;letter-spacing:1px;white-space:nowrap}
+nav{display:flex;gap:.25rem;flex-wrap:wrap;justify-content:center}
+nav button{background:transparent;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;padding:8px 16px;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap}
 nav button:hover{background:var(--surface2);color:var(--text)}
 nav button.active{background:var(--accent);color:#0d0f0e;font-weight:700}
 
@@ -94,10 +96,14 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .compra-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:2rem}
 .compra-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
 .compra-cat{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:1px;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
-.compra-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:.84rem;color:var(--text2)}
+.compra-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:.84rem;color:var(--text2);gap:8px}
 .compra-item:last-child{border-bottom:none}
-.compra-item .name{color:var(--text)}
-.compra-item .price{font-family:'JetBrains Mono',monospace;color:var(--accent3);font-size:.78rem}
+.compra-item .name{color:var(--text);flex:1}
+.compra-item .price{font-family:'JetBrains Mono',monospace;color:var(--accent3);font-size:.78rem;white-space:nowrap}
+.compra-img{width:36px;height:36px;border-radius:7px;object-fit:cover;flex-shrink:0;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;overflow:hidden}
+.compra-img img{width:100%;height:100%;object-fit:cover;border-radius:7px}
+.compra-img img.error{display:none}
+.compra-img.fallback::after{content:attr(data-emoji)}
 .price-total{background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
 .price-total .label{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--text)}
 .price-total .amount{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--accent)}
@@ -170,9 +176,12 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   .hero{grid-template-columns:1fr}
   .macro-overview{grid-template-columns:1fr 1fr}
   .stats-grid{grid-template-columns:1fr 1fr}
-  header{flex-wrap:wrap;height:auto;padding:.75rem 1rem}
-  nav{gap:.15rem}
-  nav button{font-size:.75rem;padding:5px 10px}
+  .header-inner{grid-template-columns:auto 1fr;grid-template-rows:auto auto;height:auto;padding:.6rem 1rem;gap:.5rem}
+  .logo{grid-column:1;grid-row:1}
+  .logo img{height:48px}
+  .logo span{font-size:.85rem}
+  nav{grid-column:1/-1;grid-row:2;gap:.15rem;justify-content:flex-start}
+  nav button{font-size:.72rem;padding:5px 9px}
 }
 </style>
 </head>
@@ -180,17 +189,18 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 
 <div id="sync-status"><span class="sync-dot"></span><span id="sync-msg">Sincronizando…</span></div>
 
-<header style="padding: 12px 24px;">
-  <div class="logo" style="display: flex; align-items: center; gap: 16px;">
-    <img src="sin_fondo.png"  alt="Logo Plan Muscular" style="height: 85px; width: auto; display: block;">
-    <span style="font-size: 1.4rem; font-weight: 400;">60 → 75kg</span>  
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <img src="sin_fondo.png" alt="Logo Plan Muscular">
+    </div>
+    <nav>
+      <button class="active" onclick="showSection('menu')">📋 Menú Semanal</button>
+      <button onclick="showSection('compra')">🛒 Lista Compra</button>
+      <button onclick="showSection('entreno')">💪 Entrenamiento</button>
+      <button onclick="showSection('progresion')">📈 Progresión</button>
+    </nav>
   </div>
-  <nav>
-    <button class="active" onclick="showSection('menu')">📋 Menú Semanal</button>
-    <button onclick="showSection('compra')">🛒 Lista Compra</button>
-    <button onclick="showSection('entreno')">💪 Entrenamiento</button>
-    <button onclick="showSection('progresion')">📈 Progresión</button>
-  </nav>
 </header>
 
 <!-- ══ MENÚ ══ -->
@@ -203,10 +213,10 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   </div>
   <div class="section" style="display:block;padding-top:0">
     <div class="macro-overview">
-      <div class="macro-item"><div class="macro-val kcal">~2750</div><div class="macro-unit">kcal · superávit +350</div></div>
-      <div class="macro-item"><div class="macro-val prot">165g</div><div class="macro-unit">proteína · 2.75g/kg</div></div>
-      <div class="macro-item"><div class="macro-val carb">300g</div><div class="macro-unit">carbohidratos · 5g/kg</div></div>
-      <div class="macro-item"><div class="macro-val fat">75g</div><div class="macro-unit">grasas · 1.25g/kg</div></div>
+      <div class="macro-item"><div class="macro-val kcal" id="avg-kcal">2750</div><div class="macro-unit">kcal · media semanal</div></div>
+      <div class="macro-item"><div class="macro-val prot" id="avg-prot">165g</div><div class="macro-unit">proteína · media semanal</div></div>
+      <div class="macro-item"><div class="macro-val carb" id="avg-carb">300g</div><div class="macro-unit">carbohidratos · media semanal</div></div>
+      <div class="macro-item"><div class="macro-val fat" id="avg-fat">75g</div><div class="macro-unit">grasas · media semanal</div></div>
     </div>
     <div class="batido-box">
       <h3>🥤 BATIDO DIARIO (Merienda) · Fijo toda la semana</h3>
@@ -375,60 +385,60 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   <div class="compra-grid">
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--accent)">🍗 PROTEÍNAS ANIMALES</div>
-      <div class="compra-item"><span class="name">Filetes pechuga de pollo</span><span class="price">4,75 €</span></div>
-      <div class="compra-item"><span class="name">Contramuslos de pollo deshuesados y sin piel</span><span class="price">3,58 €</span></div>
-      <div class="compra-item"><span class="name">Carne picada mixta (500g)</span><span class="price">~3,50€</span></div>
-      <div class="compra-item"><span class="name">Huevos L (docena)</span><span class="price">~2,50€</span></div>
-      <div class="compra-item"><span class="name">Lomo salmón (pack 2 lomos, ~400g)</span><span class="price">~6,90€</span></div>
-      <div class="compra-item"><span class="name">Filetes merluza congelada (600g)</span><span class="price">~4,20€</span></div>
-      <div class="compra-item"><span class="name">Atún en aceite (pack 3x80g)</span><span class="price">~2,30€</span></div>
-      <div class="compra-item"><span class="name">Jamón cocido extra (200g)</span><span class="price">~2,20€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍗"><img src="https://tienda.mercadona.es/api/images/57039-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Filetes pechuga de pollo</span><span class="price">4,75 €</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍗"><img src="https://tienda.mercadona.es/api/images/77143-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Contramuslos de pollo deshuesados y sin piel</span><span class="price">3,58 €</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥩"><img src="https://tienda.mercadona.es/api/images/56261-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Carne picada mixta (500g)</span><span class="price">~3,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥚"><img src="https://tienda.mercadona.es/api/images/62491-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Huevos L (docena)</span><span class="price">~2,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🐟"><img src="https://tienda.mercadona.es/api/images/84611-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lomo salmón (pack 2 lomos, ~400g)</span><span class="price">~6,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🐟"><img src="https://tienda.mercadona.es/api/images/83141-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Filetes merluza congelada (600g)</span><span class="price">~4,20€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🐟"><img src="https://tienda.mercadona.es/api/images/20401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Atún en aceite (pack 3x80g)</span><span class="price">~2,30€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥓"><img src="https://tienda.mercadona.es/api/images/43581-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Jamón cocido extra (200g)</span><span class="price">~2,20€</span></div>
     </div>
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--blue)">🥛 LÁCTEOS Y DERIVADOS</div>
-      <div class="compra-item"><span class="name">Leche entera (2L)</span><span class="price">~1,60€</span></div>
-      <div class="compra-item"><span class="name">Leche semidesnatada (2L)</span><span class="price">~1,40€</span></div>
-      <div class="compra-item"><span class="name">Yogur griego natural (4x125g)</span><span class="price">~1,90€</span></div>
-      <div class="compra-item"><span class="name">Queso semicurado rallado (150g)</span><span class="price">~1,80€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥛"><img src="https://tienda.mercadona.es/api/images/30101-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche entera (2L)</span><span class="price">~1,60€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥛"><img src="https://tienda.mercadona.es/api/images/30151-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche semidesnatada (2L)</span><span class="price">~1,40€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🫙"><img src="https://tienda.mercadona.es/api/images/32011-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Yogur griego natural (4x125g)</span><span class="price">~1,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🧀"><img src="https://tienda.mercadona.es/api/images/34811-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Queso semicurado rallado (150g)</span><span class="price">~1,80€</span></div>
     </div>
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--accent3)">🌾 HIDRATOS DE CARBONO</div>
-      <div class="compra-item"><span class="name">Avena tradicional 1kg (Hacendado)</span><span class="price">~1,50€</span></div>
-      <div class="compra-item"><span class="name">Arroz blanco 1kg</span><span class="price">~1,10€</span></div>
-      <div class="compra-item"><span class="name">Arroz basmati 500g</span><span class="price">~1,20€</span></div>
-      <div class="compra-item"><span class="name">Pasta penne 500g</span><span class="price">~0,75€</span></div>
-      <div class="compra-item"><span class="name">Macarrones 500g</span><span class="price">~0,65€</span></div>
-      <div class="compra-item"><span class="name">Pan integral (barra o molde)</span><span class="price">~1,50€</span></div>
-      <div class="compra-item"><span class="name">Lentejas cocidas bote (400g)</span><span class="price">~0,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🌾"><img src="https://tienda.mercadona.es/api/images/11801-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Avena tradicional 1kg (Hacendado)</span><span class="price">~1,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍚"><img src="https://tienda.mercadona.es/api/images/10501-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Arroz blanco 1kg</span><span class="price">~1,10€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍚"><img src="https://tienda.mercadona.es/api/images/10521-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Arroz basmati 500g</span><span class="price">~1,20€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍝"><img src="https://tienda.mercadona.es/api/images/11201-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pasta penne 500g</span><span class="price">~0,75€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍝"><img src="https://tienda.mercadona.es/api/images/11211-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Macarrones 500g</span><span class="price">~0,65€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍞"><img src="https://tienda.mercadona.es/api/images/14081-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pan integral (barra o molde)</span><span class="price">~1,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🫘"><img src="https://tienda.mercadona.es/api/images/12101-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lentejas cocidas bote (400g)</span><span class="price">~0,90€</span></div>
     </div>
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--accent2)">🥦 FRUTAS Y VERDURAS</div>
-      <div class="compra-item"><span class="name">Plátanos (1,5kg)</span><span class="price">~1,50€</span></div>
-      <div class="compra-item"><span class="name">Fresas/frambuesas congeladas (750g)</span><span class="price">~3,50€</span></div>
-      <div class="compra-item"><span class="name">Brócoli congelado (750g)</span><span class="price">~1,50€</span></div>
-      <div class="compra-item"><span class="name">Judías verdes congeladas (750g)</span><span class="price">~1,40€</span></div>
-      <div class="compra-item"><span class="name">Patatas (2kg malla)</span><span class="price">~1,90€</span></div>
-      <div class="compra-item"><span class="name">Boniato (1kg)</span><span class="price">~1,80€</span></div>
-      <div class="compra-item"><span class="name">Tomates de pera (1kg)</span><span class="price">~2,00€</span></div>
-      <div class="compra-item"><span class="name">Lechuga iceberg</span><span class="price">~0,80€</span></div>
-      <div class="compra-item"><span class="name">Cebolla (1kg)</span><span class="price">~0,80€</span></div>
-      <div class="compra-item"><span class="name">Aguacates (2 ud)</span><span class="price">~1,80€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍌"><img src="https://tienda.mercadona.es/api/images/91401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Plátanos (1,5kg)</span><span class="price">~1,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍓"><img src="https://tienda.mercadona.es/api/images/90511-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Fresas/frambuesas congeladas (750g)</span><span class="price">~3,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥦"><img src="https://tienda.mercadona.es/api/images/91841-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Brócoli congelado (750g)</span><span class="price">~1,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🫛"><img src="https://tienda.mercadona.es/api/images/91771-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Judías verdes congeladas (750g)</span><span class="price">~1,40€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥔"><img src="https://tienda.mercadona.es/api/images/92031-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Patatas (2kg malla)</span><span class="price">~1,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍠"><img src="https://tienda.mercadona.es/api/images/92051-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Boniato (1kg)</span><span class="price">~1,80€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍅"><img src="https://tienda.mercadona.es/api/images/92241-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Tomates de pera (1kg)</span><span class="price">~2,00€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥬"><img src="https://tienda.mercadona.es/api/images/92141-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lechuga iceberg</span><span class="price">~0,80€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🧅"><img src="https://tienda.mercadona.es/api/images/92071-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Cebolla (1kg)</span><span class="price">~0,80€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥑"><img src="https://tienda.mercadona.es/api/images/91281-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Aguacates (2 ud)</span><span class="price">~1,80€</span></div>
     </div>
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--red)">🧴 DESPENSA Y GRASAS</div>
-      <div class="compra-item"><span class="name">AOVE (500ml, Hacendado)</span><span class="price">~3,50€</span></div>
-      <div class="compra-item"><span class="name">Almendras naturales (200g)</span><span class="price">~2,50€</span></div>
-      <div class="compra-item"><span class="name">Mantequilla cacahuete nat. (350g)</span><span class="price">~3,90€</span></div>
-      <div class="compra-item"><span class="name">Tomate frito Hacendado (400g)</span><span class="price">~0,75€</span></div>
-      <div class="compra-item"><span class="name">Pimientos asados bote</span><span class="price">~1,20€</span></div>
-      <div class="compra-item"><span class="name">Leche de coco (200ml tetrabrik)</span><span class="price">~1,10€</span></div>
-      <div class="compra-item"><span class="name">Miel (bote pequeño)</span><span class="price">~2,50€</span></div>
-      <div class="compra-item"><span class="name">Especias: curry, pimentón, ajo</span><span class="price">~3,00€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🫒"><img src="https://tienda.mercadona.es/api/images/40201-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">AOVE (500ml, Hacendado)</span><span class="price">~3,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥜"><img src="https://tienda.mercadona.es/api/images/19781-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Almendras naturales (200g)</span><span class="price">~2,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥜"><img src="https://tienda.mercadona.es/api/images/19861-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Mantequilla cacahuete nat. (350g)</span><span class="price">~3,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍅"><img src="https://tienda.mercadona.es/api/images/40831-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Tomate frito Hacendado (400g)</span><span class="price">~0,75€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🫑"><img src="https://tienda.mercadona.es/api/images/40881-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pimientos asados bote</span><span class="price">~1,20€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥥"><img src="https://tienda.mercadona.es/api/images/30401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche de coco (200ml tetrabrik)</span><span class="price">~1,10€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍯"><img src="https://tienda.mercadona.es/api/images/19311-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Miel (bote pequeño)</span><span class="price">~2,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🌶️"><img src="https://tienda.mercadona.es/api/images/41191-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Especias: curry, pimentón, ajo</span><span class="price">~3,00€</span></div>
     </div>
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--accent)">💊 SUPLEMENTOS</div>
-      <div class="compra-item"><span class="name">Proteína Whey Hacendado (750g)¹</span><span class="price">~14,90€</span></div>
-      <div class="compra-item"><span class="name">Creatina Monohidrato Hacendado¹</span><span class="price">~9,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="💪"><img src="https://tienda.mercadona.es/api/images/55601-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Proteína Whey Hacendado (750g)¹</span><span class="price">~14,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="💊"><img src="https://tienda.mercadona.es/api/images/55611-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Creatina Monohidrato Hacendado¹</span><span class="price">~9,90€</span></div>
       <p style="font-size:.72rem;color:var(--muted);margin-top:.75rem;line-height:1.5">¹ Los suplementos se compran mensualmente. El coste mensual de la whey (175g/semana) equivale a ~1 bote/mes. La creatina cunde varios meses.</p>
     </div>
   </div>
@@ -557,13 +567,33 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 
 <script>
 // ══ CONFIGURACIÓN ══════════════════════════════
-const FIREBASE_URL = 'https://plan-muscular-default-rtdb.europe-west1.firebasedatabase.app/';
+const FIREBASE_URL = 'TU_FIREBASE_URL_AQUI';
+// Ejemplo: 'https://mi-plan-default-rtdb.europe-west1.firebasedatabase.app'
 // ═══════════════════════════════════════════════
 
 const CLOUD_CONFIGURED = FIREBASE_URL.startsWith('https://');
 const FIREBASE_ENDPOINT = CLOUD_CONFIGURED ? FIREBASE_URL.replace(/\/$/, '') + '/menus.json' : null;
 const LOCAL_KEY = 'planMuscular_menus_v1';
 let saveTimer = null;
+
+// ── WEEKLY AVERAGE ──
+function recalcWeeklyAvg() {
+  let totK=0, totP=0, totC=0, totF=0, days=0;
+  document.querySelectorAll('.day-total-macros').forEach(el => {
+    const pills = el.querySelectorAll('.pill');
+    if (pills.length < 4) return;
+    totK += +parsePillNum(pills[0].textContent);
+    totP += +parsePillNum(pills[1].textContent);
+    totC += +parsePillNum(pills[2].textContent);
+    totF += +parsePillNum(pills[3].textContent);
+    days++;
+  });
+  if (!days) return;
+  document.getElementById('avg-kcal').textContent = '~' + Math.round(totK/days);
+  document.getElementById('avg-prot').textContent = Math.round(totP/days) + 'g';
+  document.getElementById('avg-carb').textContent = Math.round(totC/days) + 'g';
+  document.getElementById('avg-fat').textContent  = Math.round(totF/days) + 'g';
+}
 
 // ── SYNC STATUS ──
 function setSyncStatus(state, msg) {
@@ -619,6 +649,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   loadData();
+  // Fallback emoji si la imagen no carga
+  document.querySelectorAll('.compra-img img').forEach(img => {
+    img.addEventListener('error', () => {
+      img.style.display = 'none';
+      img.parentElement.style.fontSize = '1.3rem';
+    });
+  });
 });
 
 // ── EDIT MODE ──
@@ -636,10 +673,10 @@ function enterEditMode(card) {
   foodEl.querySelector('textarea').value = foodEl._origText || card._origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'');
   macrosEl.innerHTML = `
     <div class="macro-edit-row">
-      <div class="macro-edit-item"><label class="lkcal">kcal</label><input type="number" min="0" value="${kcal}"></div>
-      <div class="macro-edit-item"><label class="lp">Prot (g)</label><input type="number" min="0" value="${prot}"></div>
-      <div class="macro-edit-item"><label class="lc">Carbs (g)</label><input type="number" min="0" value="${carb}"></div>
-      <div class="macro-edit-item"><label class="lf">Grasas (g)</label><input type="number" min="0" value="${fat}"></div>
+      <div class="macro-edit-item"><label class="lkcal">kcal</label><input type="number" min="0" value="${kcal}" oninput="if(this.value<0)this.value=0"></div>
+      <div class="macro-edit-item"><label class="lp">Prot (g)</label><input type="number" min="0" value="${prot}" oninput="if(this.value<0)this.value=0"></div>
+      <div class="macro-edit-item"><label class="lc">Carbs (g)</label><input type="number" min="0" value="${carb}" oninput="if(this.value<0)this.value=0"></div>
+      <div class="macro-edit-item"><label class="lf">Grasas (g)</label><input type="number" min="0" value="${fat}" oninput="if(this.value<0)this.value=0"></div>
     </div>
     <div class="meal-edit-actions">
       <button class="btn-save-meal">✓ Guardar</button>
@@ -654,12 +691,13 @@ function saveEditMode(card) {
   const foodEl = card.querySelector('.meal-food');
   const macrosEl = card.querySelector('.meal-macros');
   const lines = foodEl.querySelector('textarea').value.trim().split('\n');
-  const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => parseInt(i.value) || 0);
+  const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => Math.max(0, parseInt(i.value) || 0));
   foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
   macrosEl.innerHTML = `<span class="pill kcal">~${k} kcal</span><span class="pill p">~${p}g P</span><span class="pill c">~${c}g C</span><span class="pill f">~${f}g G</span>`;
   card.classList.remove('editing');
   card.querySelector('.edit-btn').style.display = '';
   recalcDayTotal(card);
+  recalcWeeklyAvg();
   scheduleSave();
 }
 
@@ -706,6 +744,7 @@ function applySnapshot(data) {
     if (macrosEl) macrosEl.innerHTML = `<span class="pill kcal">~${saved.kcal} kcal</span><span class="pill p">~${saved.prot}g P</span><span class="pill c">~${saved.carb}g C</span><span class="pill f">~${saved.fat}g G</span>`;
   });
   document.querySelectorAll('.day-content').forEach(dayEl => { const c = dayEl.querySelector('.meal-card'); if (c) recalcDayTotal(c); });
+  recalcWeeklyAvg();
 }
 
 // ── CLOUD SYNC ──
