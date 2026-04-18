@@ -161,6 +161,36 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .reset-day-btn{background:transparent;border:none;color:var(--muted);font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;padding:2px 6px;border-radius:4px;transition:color .2s;margin-left:.5rem}
 .reset-day-btn:hover{color:var(--red)}
 
+/* SUPLEMENTOS TRACKER */
+.supl-tracker{margin-top:1.1rem;display:flex;flex-direction:column;gap:.7rem}
+.supl-row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.supl-label{font-size:.82rem;color:var(--text2);min-width:80px}
+.supl-count-btn{background:var(--accent);color:#0d0f0e;border:none;border-radius:7px;width:30px;height:30px;font-size:1.1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .2s}
+.supl-count-btn:hover{opacity:.8}
+.supl-count-btn.minus{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+.supl-count-btn.minus:hover{border-color:var(--red);color:var(--red)}
+.supl-num{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent);line-height:1;min-width:28px;text-align:center}
+.supl-remain{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);padding:3px 8px;background:var(--surface2);border-radius:6px;border:1px solid var(--border)}
+.supl-remain.warn{border-color:var(--red);color:var(--red);background:rgba(240,55,55,.08)}
+.supl-reset-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.7rem;padding:3px 8px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-left:auto}
+.supl-reset-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+.batido-counter-row{display:flex;align-items:center;gap:.75rem;margin-top:1rem;flex-wrap:wrap}
+.batido-counter-label{font-size:.85rem;color:var(--text2)}
+.batido-total{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--accent);line-height:1}
+.supl-stock-row{display:flex;align-items:center;gap:6px;margin-top:.4rem;flex-wrap:wrap}
+.supl-stock-label{font-size:.75rem;color:var(--muted)}
+.supl-stock-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:3px 7px;width:80px;text-align:center}
+.supl-stock-input:focus{outline:none;border-color:var(--accent)}
+.supl-alert{display:none;margin-top:.75rem;background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.35);border-radius:8px;padding:.6rem 1rem;font-size:.8rem;color:var(--red);line-height:1.5}
+.supl-batidos{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent2);padding:3px 8px;background:rgba(55,240,168,.08);border-radius:6px;border:1px solid rgba(55,240,168,.2);white-space:nowrap}
+.supl-batidos.warn{border-color:var(--red);color:var(--red);background:rgba(240,55,55,.08)}
+.supl-batidos:empty{display:none}
+
+/* PRECIO EDITABLE SUPLEMENTOS */
+.supl-price-input{background:transparent;border:none;border-bottom:1px dashed var(--border);color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem;width:50px;text-align:right;padding:1px 2px}
+.supl-price-input:focus{outline:none;border-bottom-color:var(--accent)}
+.supl-price-input::-webkit-inner-spin-button,.supl-price-input::-webkit-outer-spin-button{-webkit-appearance:none}
+
 /* SYNC STATUS */
 #sync-status{position:fixed;bottom:1.25rem;right:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--text2);display:flex;align-items:center;gap:7px;z-index:999;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s,border-color .25s;pointer-events:none}
 #sync-status.show{opacity:1;transform:translateY(0)}
@@ -171,6 +201,32 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .sync-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
 .sync-dot.pulse{animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* LIGHTBOX + GALLERY */
+#lightbox{position:fixed;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;z-index:2000;pointer-events:none;opacity:0;transition:opacity .3s ease,background .3s ease}
+#lightbox.open{opacity:1;pointer-events:all;background:rgba(0,0,0,.88)}
+#lightbox-inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:1.1rem;transform:scale(.6);opacity:0;transition:transform .32s cubic-bezier(.34,1.56,.64,1),opacity .25s ease}
+#lightbox.open #lightbox-inner{transform:scale(1);opacity:1}
+#lightbox-img-wrap{position:relative;display:flex;align-items:center;justify-content:center}
+#lightbox-img{max-width:min(480px,88vw);max-height:68vh;border-radius:16px;object-fit:contain;box-shadow:0 24px 80px rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.08);transition:opacity .15s ease,transform .15s ease;display:block}
+#lightbox-img.switching{opacity:0;transform:scale(.96)}
+#lightbox-close{position:absolute;top:-14px;right:-14px;width:36px;height:36px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:background .2s,transform .15s;z-index:1}
+#lightbox-close:hover{background:var(--red);transform:scale(1.1)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:1.4rem;cursor:pointer;display:none;align-items:center;justify-content:center;transition:background .2s;backdrop-filter:blur(6px);line-height:1}
+.lb-nav:hover{background:rgba(255,255,255,.2)}
+.lb-nav.visible{display:flex}
+.lb-nav:disabled{opacity:.2;cursor:default;pointer-events:none}
+.lb-nav.prev{left:-58px}
+.lb-nav.next{right:-58px}
+#lightbox-footer{display:flex;flex-direction:column;align-items:center;gap:.55rem;width:100%}
+#lightbox-label{text-align:center;font-size:.82rem;color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;max-width:min(480px,88vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#lb-dots{display:flex;gap:7px;justify-content:center;min-height:10px}
+.lb-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.22);border:none;cursor:pointer;padding:0;transition:background .2s,transform .2s,width .2s;flex-shrink:0}
+.lb-dot.active{background:var(--accent);transform:scale(1.25)}
+.compra-img{position:relative}
+.compra-img img{cursor:zoom-in;transition:opacity .2s,transform .2s}
+.compra-img img:hover{opacity:.82;transform:scale(1.1)}
+@media(max-width:600px){.lb-nav.prev{left:-44px}.lb-nav.next{right:-44px}.lb-nav{width:34px;height:34px;font-size:1.1rem}}
 
 @media(max-width:600px){
   .hero{grid-template-columns:1fr}
@@ -186,6 +242,22 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </style>
 </head>
 <body>
+
+<!-- LIGHTBOX + GALLERY -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada">
+  <div id="lightbox-inner">
+    <div id="lightbox-img-wrap">
+      <button class="lb-nav prev" aria-label="Foto anterior">&#8249;</button>
+      <button id="lightbox-close" aria-label="Cerrar">✕</button>
+      <img id="lightbox-img" src="" alt="">
+      <button class="lb-nav next" aria-label="Foto siguiente">&#8250;</button>
+    </div>
+    <div id="lightbox-footer">
+      <div id="lightbox-label"></div>
+      <div id="lb-dots"></div>
+    </div>
+  </div>
+</div>
 
 <div id="sync-status"><span class="sync-dot"></span><span id="sync-msg">Sincronizando…</span></div>
 
@@ -220,9 +292,23 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
     </div>
     <div class="batido-box">
       <h3>🥤 BATIDO DIARIO (Merienda) · Fijo toda la semana</h3>
-      <p style="font-size:.9rem;color:var(--text)"><strong>35g Proteína</strong> + <strong>3g Creatina monohidrato</strong> + <strong>pieza de fruta (100g)</strong> + <strong>300ml leche semidesnatada</strong></p>
+      <p style="font-size:.9rem;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:2">
+        <input class="supl-stock-input" id="prot-dosis-input" type="number" min="1" step="1" placeholder="35" style="width:52px" title="Gramos de proteína por batido">
+        <strong>g Proteína</strong> +
+        <input class="supl-stock-input" id="creat-dosis-input" type="number" min="1" step="1" placeholder="3" style="width:44px" title="Gramos de creatina por batido">
+        <strong>g Creatina</strong> + <strong>fruta (100g)</strong> + <strong>300ml leche semi</strong>
+      </p>
       <div class="meal-macros" style="margin-top:.75rem">
         <span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C (plátano) / ~22g C (fresas)</span><span class="pill f">~5g G</span>
+      </div>
+      <div class="batido-counter-row">
+        <button class="supl-count-btn minus" onclick="changeBatidos(-1)">−</button>
+        <div style="text-align:center">
+          <div class="batido-counter-label">Batidos tomados</div>
+          <div class="batido-total" id="batido-count">0</div>
+        </div>
+        <button class="supl-count-btn" onclick="changeBatidos(1)">+</button>
+        <button class="supl-reset-btn" onclick="resetBatidos()" style="margin-left:.5rem">↺ Resetear batidos</button>
       </div>
     </div>
     <div class="day-tabs">
@@ -349,7 +435,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
     <div class="day-content" id="day-vie">
       <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)">
         <span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Pierna
-        <br><span style="background:rgba(55,160,240,.15);color:var(--blue)" class="day-badge-train">💤 DESCANSO</span> &nbsp;·&nbsp; <em>Opcional</em> - Plan de entrenamiento de 3 días
+        <br><span style="display:inline-block;margin-top:5px;background:rgba(55,160,240,.15);color:var(--blue)" class="day-badge-train">💤 DESCANSO</span> &nbsp;·&nbsp; <em>Opcional</em> - Plan de entrenamiento de 3 días
       </div>
       <div class="meals-grid">
         <div class="meal-card">
@@ -382,11 +468,19 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <section id="compra" class="section">
   <h1>LISTA DE LA <em>COMPRA SEMANAL</em></h1>
   <p class="section-intro">Estimación semanal para 5 días · Mercadona · Precios Abril 2026</p>
+
+  <!--
+  ─── CÓMO AÑADIR FOTOS EXTRA A UN PRODUCTO ───────────────────────────────────
+  Añade el atributo  data-gallery="URL1|URL2|URL3"  al div.compra-item
+  Separa cada URL con una barra vertical  |
+  Ejemplo:
+    <div class="compra-item" data-gallery="https://ejemplo.com/foto2.jpg|https://ejemplo.com/foto3.jpg">
+  ─────────────────────────────────────────────────────────────────────────────
+  -->
   <div class="compra-grid">
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--accent)">🍗 PROTEÍNAS ANIMALES</div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍗"><img src="https://tienda.mercadona.es/api/images/57039-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Filetes pechuga de pollo</span><span class="price">4,75 €</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍗"><img src="https://tienda.mercadona.es/api/images/77143-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Contramuslos de pollo deshuesados y sin piel</span><span class="price">3,58 €</span></div>
+      <div class="compra-item" data-gallery="https://prod-mercadona.imgix.net/images/c0902c682f4d28953dc3dbf54cfbca00.jpg?fit=crop&h=600&w=600|https://prod-mercadona.imgix.net/images/5f79052c42e92bf7c963363bf179a40e.jpg?fit=crop&h=600&w=600"><span class="compra-img" data-emoji="🍗"><img src="https://prod-mercadona.imgix.net/images/c0902c682f4d28953dc3dbf54cfbca00.jpg?fit=crop&h=600&w=600" alt="" onerror="this.style.display='none'"></span><span class="name">Filetes pechuga de pollo</span><span class="price">4,75 €</span></div>
       <div class="compra-item"><span class="compra-img" data-emoji="🥩"><img src="https://tienda.mercadona.es/api/images/56261-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Carne picada mixta (500g)</span><span class="price">~3,50€</span></div>
       <div class="compra-item"><span class="compra-img" data-emoji="🥚"><img src="https://tienda.mercadona.es/api/images/62491-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Huevos L (docena)</span><span class="price">~2,50€</span></div>
       <div class="compra-item"><span class="compra-img" data-emoji="🐟"><img src="https://tienda.mercadona.es/api/images/84611-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lomo salmón (pack 2 lomos, ~400g)</span><span class="price">~6,90€</span></div>
@@ -437,14 +531,87 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
     </div>
     <div class="compra-card">
       <div class="compra-cat" style="color:var(--accent)">💊 SUPLEMENTOS</div>
-      <div class="compra-item"><span class="compra-img" data-emoji="💪"><img src="https://tienda.mercadona.es/api/images/55601-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Proteína Whey Hacendado (750g)¹</span><span class="price">~14,90€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="💊"><img src="https://tienda.mercadona.es/api/images/55611-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Creatina Monohidrato Hacendado¹</span><span class="price">~9,90€</span></div>
-      <p style="font-size:.72rem;color:var(--muted);margin-top:.75rem;line-height:1.5">¹ Los suplementos se compran mensualmente. El coste mensual de la whey (175g/semana) equivale a ~1 bote/mes. La creatina cunde varios meses.</p>
+
+      <!-- PROTEÍNA -->
+      <div class="compra-item" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-bottom:.75rem">
+        <div style="display:flex;align-items:center;gap:8px;width:100%">
+          <span class="compra-img" data-emoji="💪"><img src="https://tienda.mercadona.es/api/images/55601-0_1/400" alt="" onerror="this.style.display='none'"></span>
+          <span class="name">Proteína Whey Hacendado</span>
+          <span style="margin-left:auto;display:flex;align-items:center;gap:1px;color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem" title="Edita el precio del bote">~<input class="supl-price-input" id="prot-precio-input" type="number" min="0" step="0.01" placeholder="14.90">€</span>
+        </div>
+        <div class="supl-stock-row">
+          <span class="supl-stock-label">Compré:</span>
+          <input class="supl-stock-input" id="prot-stock-input" type="number" min="0" step="1" placeholder="750" title="Gramos comprados">
+          <span class="supl-stock-label">g</span>
+          <button class="supl-reset-btn" onclick="resetSupl('prot')" style="margin-left:.25rem">↺ Nueva compra</button>
+        </div>
+        <div class="supl-tracker">
+          <div class="supl-row">
+            <span class="supl-label">Consumido:</span>
+            <span class="supl-num" id="prot-used">0</span>
+            <span class="supl-stock-label">g</span>
+            <span class="supl-remain" id="prot-remain">— g restantes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CREATINA -->
+      <div class="compra-item" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-top:.75rem;border-top:1px solid var(--border);border-bottom:none">
+        <div style="display:flex;align-items:center;gap:8px;width:100%">
+          <span class="compra-img" data-emoji="💊"><img src="https://tienda.mercadona.es/api/images/55611-0_1/400" alt="" onerror="this.style.display='none'"></span>
+          <span class="name">Creatina Monohidrato Hacendado</span>
+          <span style="margin-left:auto;display:flex;align-items:center;gap:1px;color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem" title="Edita el precio del bote">~<input class="supl-price-input" id="creat-precio-input" type="number" min="0" step="0.01" placeholder="9.90">€</span>
+        </div>
+        <div class="supl-stock-row">
+          <span class="supl-stock-label">Compré:</span>
+          <input class="supl-stock-input" id="creat-stock-input" type="number" min="0" step="1" placeholder="300" title="Gramos comprados">
+          <span class="supl-stock-label">g</span>
+          <button class="supl-reset-btn" onclick="resetSupl('creat')" style="margin-left:.25rem">↺ Nueva compra</button>
+        </div>
+        <div class="supl-tracker">
+          <div class="supl-row">
+            <span class="supl-label">Consumido:</span>
+            <span class="supl-num" id="creat-used">0</span>
+            <span class="supl-stock-label">g</span>
+            <span class="supl-remain" id="creat-remain">— g restantes</span>
+          </div>
+        </div>
+        <div class="supl-alert" id="creat-alert" style="display:none"></div>
+      </div>
+
+      <!-- BADGE BATIDOS UNIFICADO -->
+      <div style="margin-top:.75rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+        <span style="font-size:.8rem;color:var(--text2)">Batidos que puedes hacer:</span>
+        <span class="supl-batidos" id="supl-batidos-unified"></span>
+      </div>
+
+      <!-- ALERTA COMBINADA -->
+      <div class="supl-alert" id="supl-combined-alert" style="display:none"></div>
+
+      <p id="supl-footer-note" style="font-size:.72rem;color:var(--muted);margin-top:.75rem;line-height:1.5">Introduce los gramos comprados en "Compré" y las dosis por batido arriba para que el seguimiento sea preciso.</p>
     </div>
   </div>
   <div class="price-total">
     <div><div class="label">TOTAL SEMANAL ESTIMADO</div><div style="font-size:.8rem;color:var(--text2);margin-top:4px">Alimentación sin suplementos · Los suplementos son ~25€/mes adicionales</div></div>
     <div class="amount">65€</div>
+  </div>
+
+  <!-- ══ COSTE SUPLEMENTOS ══ -->
+  <div class="price-total" style="border-color:var(--accent2);margin-top:.75rem">
+    <div>
+      <div class="label">COSTE SUPLEMENTOS / MES · AÑO</div>
+      <div style="font-size:.8rem;color:var(--text2);margin-top:4px">30 batidos/mes · precio y gramos del bote de la tarjeta superior</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:1.75rem">
+      <div style="text-align:right">
+        <div style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">/ mes</div>
+        <div class="amount" style="color:var(--accent2)" id="supl-cost-mes">—</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">/ año</div>
+        <div class="amount" style="color:var(--accent3)" id="supl-cost-anio">—</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -585,7 +752,7 @@ function recalcWeeklyAvg() {
     days++;
   });
   if (!days) return;
-  document.getElementById('avg-kcal').textContent = '~' + Math.round(totK/days);
+  document.getElementById('avg-kcal').textContent = Math.round(totK/days);
   document.getElementById('avg-prot').textContent = Math.round(totP/days) + 'g';
   document.getElementById('avg-carb').textContent = Math.round(totC/days) + 'g';
   document.getElementById('avg-fat').textContent  = Math.round(totF/days) + 'g';
@@ -644,6 +811,102 @@ document.addEventListener('DOMContentLoaded', () => {
       lbl.parentNode.insertBefore(rb, lbl.nextSibling);
     }
   });
+  // ── LIGHTBOX (solo lectura, galería por código vía data-gallery) ──
+  const lb      = document.getElementById('lightbox');
+  const lbImg   = document.getElementById('lightbox-img');
+  const lbLabel = document.getElementById('lightbox-label');
+  const lbClose = document.getElementById('lightbox-close');
+  const lbDots  = document.getElementById('lb-dots');
+  const lbPrev  = document.querySelector('.lb-nav.prev');
+  const lbNext  = document.querySelector('.lb-nav.next');
+
+  let lbState = { gallery: [], idx: 0 };
+
+  // Para cada producto: si tiene data-gallery, usar su primera URL como thumbnail
+  document.querySelectorAll('.compra-item').forEach(item => {
+    const raw = (item.dataset.gallery || '').trim();
+    if (!raw) return;
+    const urls = raw.split('|').map(s => s.trim()).filter(Boolean);
+    if (!urls.length) return;
+    const img = item.querySelector('.compra-img img');
+    if (img) img.src = urls[0]; // primera URL del data-gallery = thumbnail
+    item.dataset.galleryParsed = JSON.stringify(urls);
+  });
+
+  function openLightbox(gallery, label) {
+    lbState = { gallery, idx: 0 };
+    lbLabel.textContent = label || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    renderLb();
+  }
+
+  function renderLb() {
+    const { gallery, idx } = lbState;
+    lbImg.src = gallery[idx] || '';
+    lbDots.innerHTML = '';
+    if (gallery.length > 1) {
+      gallery.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'lb-dot' + (i === idx ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        lbDots.appendChild(dot);
+      });
+    }
+    const multi = gallery.length > 1;
+    lbPrev.classList.toggle('visible', multi);
+    lbNext.classList.toggle('visible', multi);
+    lbPrev.disabled = idx === 0;
+    lbNext.disabled = idx === gallery.length - 1;
+  }
+
+  function goTo(i) {
+    const { gallery } = lbState;
+    if (i < 0 || i >= gallery.length) return;
+    lbImg.classList.add('switching');
+    setTimeout(() => {
+      lbState.idx = i;
+      lbImg.src = gallery[i];
+      lbImg.classList.remove('switching');
+      renderLb();
+    }, 150);
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { lbImg.src = ''; lbDots.innerHTML = ''; }, 350);
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+  lbPrev.addEventListener('click', () => goTo(lbState.idx - 1));
+  lbNext.addEventListener('click', () => goTo(lbState.idx + 1));
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  goTo(lbState.idx - 1);
+    if (e.key === 'ArrowRight') goTo(lbState.idx + 1);
+  });
+  let _tx = 0;
+  lbImg.addEventListener('touchstart', e => { _tx = e.touches[0].clientX; }, { passive: true });
+  lbImg.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - _tx;
+    if (Math.abs(dx) > 40) dx < 0 ? goTo(lbState.idx + 1) : goTo(lbState.idx - 1);
+  });
+
+  // Click en imagen abre lightbox con todas las URLs del data-gallery
+  document.querySelectorAll('.compra-item').forEach(item => {
+    const img = item.querySelector('.compra-img img');
+    if (!img) return;
+    img.addEventListener('click', () => {
+      if (img.style.display === 'none') return;
+      const raw = item.dataset.galleryParsed;
+      const gallery = raw ? JSON.parse(raw) : [img.src];
+      openLightbox(gallery, item.querySelector('.name')?.textContent || '');
+    });
+  });
+
   loadData();
   // Fallback emoji si la imagen no carga
   document.querySelectorAll('.compra-img img').forEach(img => {
@@ -789,6 +1052,193 @@ async function resetDay(dayId) {
   if (CLOUD_CONFIGURED) { try { await fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch(e) {} }
   location.reload();
 }
+// ══ SUPLEMENTOS TRACKER ══
+const SUPL_KEY = 'suplTracker_v1';
+
+function loadSuplState() {
+  try { return JSON.parse(localStorage.getItem(SUPL_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveSuplState(s) {
+  try { localStorage.setItem(SUPL_KEY, JSON.stringify(s)); } catch(e) {}
+}
+
+function renderSupl() {
+  const s = loadSuplState();
+  const batidos    = s.batidos    || 0;
+  const protStock  = s.protStock  || 0;
+  const creatStock = s.creatStock || 0;
+  const protDosis  = s.protDosis  || 35;
+  const creatDosis = s.creatDosis || 3;
+
+  // batido counter
+  document.getElementById('batido-count').textContent = batidos;
+
+  // ── proteína ──
+  const protUsed = batidos * protDosis;
+  const protRest = protStock - protUsed;
+  document.getElementById('prot-used').textContent = protUsed;
+  const protRemEl = document.getElementById('prot-remain');
+
+  let protBatidosRestantes = null;
+  let lowProt = false;
+
+  if (protStock > 0) {
+    protBatidosRestantes = Math.round(Math.max(0, protRest) / protDosis);
+    lowProt = protBatidosRestantes < 7;
+    protRemEl.textContent = Math.max(0, protRest) + 'g restantes';
+    protRemEl.classList.toggle('warn', lowProt || protRest <= 0);
+  } else {
+    protRemEl.textContent = 'Introduce gramos comprados';
+    protRemEl.classList.remove('warn');
+  }
+
+  // ── creatina ──
+  const creatUsed = batidos * creatDosis;
+  const creatRest = creatStock - creatUsed;
+  document.getElementById('creat-used').textContent = creatUsed;
+  const creatRemEl = document.getElementById('creat-remain');
+
+  let creatBatidosRestantes = null;
+  let lowCreat = false;
+
+  if (creatStock > 0) {
+    creatBatidosRestantes = Math.round(Math.max(0, creatRest) / creatDosis);
+    lowCreat = creatBatidosRestantes < 7;
+    creatRemEl.textContent = Math.max(0, creatRest) + 'g restantes';
+    creatRemEl.classList.toggle('warn', lowCreat || creatRest <= 0);
+  } else {
+    creatRemEl.textContent = 'Introduce gramos comprados';
+    creatRemEl.classList.remove('warn');
+  }
+
+  // ── badge unificado ──
+  const unifiedEl = document.getElementById('supl-batidos-unified');
+  if (unifiedEl) {
+    const ambos = protBatidosRestantes !== null && creatBatidosRestantes !== null;
+    const soloP = protBatidosRestantes !== null && creatBatidosRestantes === null;
+    const soloC = protBatidosRestantes === null && creatBatidosRestantes !== null;
+
+    let batidosReales = null;
+    if (ambos)  batidosReales = Math.min(protBatidosRestantes, creatBatidosRestantes);
+    else if (soloP) batidosReales = protBatidosRestantes;
+    else if (soloC) batidosReales = creatBatidosRestantes;
+
+    if (batidosReales !== null) {
+      unifiedEl.textContent = '🥤 ' + batidosReales + ' batido' + (batidosReales === 1 ? '' : 's');
+      unifiedEl.classList.toggle('warn', batidosReales < 7);
+    } else {
+      unifiedEl.textContent = '';
+      unifiedEl.classList.remove('warn');
+    }
+  }
+
+  // ── alerta combinada ──
+  const combinedAlertEl = document.getElementById('supl-combined-alert');
+  if (combinedAlertEl) {
+    const items = [];
+    if (lowProt)  items.push('proteína <strong>(' + protBatidosRestantes + ' batido' + (protBatidosRestantes === 1 ? '' : 's') + ')</strong>');
+    if (lowCreat) items.push('creatina <strong>(' + creatBatidosRestantes + ' batido' + (creatBatidosRestantes === 1 ? '' : 's') + ')</strong>');
+
+    if (items.length > 0) {
+      const lista = items.length === 2 ? items[0] + ' y ' + items[1] : items[0];
+      combinedAlertEl.innerHTML = '🛒 <strong>¡Hora de comprar!</strong> Te queda poco de ' + lista + '.';
+      combinedAlertEl.style.display = 'block';
+    } else {
+      combinedAlertEl.style.display = 'none';
+    }
+  }
+
+  // ── sincronizar inputs ──
+  const protInput  = document.getElementById('prot-stock-input');
+  const creatInput = document.getElementById('creat-stock-input');
+  if (protInput  && protStock  > 0) protInput.value  = protStock;
+  if (creatInput && creatStock > 0) creatInput.value = creatStock;
+
+  const protDosisInput  = document.getElementById('prot-dosis-input');
+  const creatDosisInput = document.getElementById('creat-dosis-input');
+  if (protDosisInput)  protDosisInput.value  = protDosis;
+  if (creatDosisInput) creatDosisInput.value = creatDosis;
+
+  // actualizar también el bloque de costes (la dosis afecta al cálculo)
+  renderCostSupl();
+}
+
+function changeBatidos(delta) {
+  const s = loadSuplState();
+  s.batidos = Math.max(0, (s.batidos || 0) + delta);
+  saveSuplState(s);
+  renderSupl();
+}
+
+function resetBatidos() {
+  if (!confirm('¿Resetear el contador de batidos a 0?')) return;
+  const s = loadSuplState();
+  s.batidos = 0;
+  saveSuplState(s);
+  renderSupl();
+}
+
+function resetSupl(type) {
+  const label = type === 'prot' ? 'proteína' : 'creatina';
+  if (!confirm('¿Resetear el stock de ' + label + '? Úsalo cuando hagas una nueva compra.')) return;
+  const s = loadSuplState();
+  if (type === 'prot') { s.protStock = 0; delete s.protStock; }
+  else { s.creatStock = 0; delete s.creatStock; }
+  saveSuplState(s);
+  const inputId = type === 'prot' ? 'prot-stock-input' : 'creat-stock-input';
+  const input = document.getElementById(inputId);
+  if (input) input.value = '';
+  renderSupl();
+}
+
+// ══ COSTE SUPLEMENTOS ══
+function fmtEur(n) {
+  return n.toFixed(2).replace('.', ',') + '€';
+}
+
+function renderCostSupl() {
+  const s = loadSuplState();
+  const protDosis   = s.protDosis  || 35;
+  const creatDosis  = s.creatDosis || 3;
+  const protPrecio  = parseFloat(s.protPrecio)  || 0;
+  const creatPrecio = parseFloat(s.creatPrecio) || 0;
+  const protGramos  = parseFloat(s.protStock)   || 0; // "Compré" = gramos del bote
+  const creatGramos = parseFloat(s.creatStock)  || 0;
+
+  let totalMes = 0;
+  if (protPrecio  > 0 && protGramos  > 0) totalMes += (protPrecio  / protGramos)  * protDosis  * 30;
+  if (creatPrecio > 0 && creatGramos > 0) totalMes += (creatPrecio / creatGramos) * creatDosis * 30;
+
+  const mesEl  = document.getElementById('supl-cost-mes');
+  const anioEl = document.getElementById('supl-cost-anio');
+  if (mesEl)  mesEl.textContent  = totalMes > 0 ? fmtEur(totalMes)      : '—';
+  if (anioEl) anioEl.textContent = totalMes > 0 ? fmtEur(totalMes * 12) : '—';
+
+  // sincronizar precio inputs
+  const ppI = document.getElementById('prot-precio-input');
+  const cpI = document.getElementById('creat-precio-input');
+  if (ppI && protPrecio  > 0) ppI.value = protPrecio;
+  if (cpI && creatPrecio > 0) cpI.value = creatPrecio;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderSupl();
+
+  const protInput  = document.getElementById('prot-stock-input');
+  const creatInput = document.getElementById('creat-stock-input');
+  if (protInput)  protInput.addEventListener('input',  () => { const s = loadSuplState(); s.protStock  = Math.max(0, parseInt(protInput.value)  || 0); saveSuplState(s); renderSupl(); });
+  if (creatInput) creatInput.addEventListener('input', () => { const s = loadSuplState(); s.creatStock = Math.max(0, parseInt(creatInput.value) || 0); saveSuplState(s); renderSupl(); });
+
+  const protDosisInput  = document.getElementById('prot-dosis-input');
+  const creatDosisInput = document.getElementById('creat-dosis-input');
+  if (protDosisInput)  protDosisInput.addEventListener('input',  () => { const s = loadSuplState(); s.protDosis  = Math.max(1, parseInt(protDosisInput.value)  || 35); saveSuplState(s); renderSupl(); });
+  if (creatDosisInput) creatDosisInput.addEventListener('input', () => { const s = loadSuplState(); s.creatDosis = Math.max(1, parseInt(creatDosisInput.value) || 3);  saveSuplState(s); renderSupl(); });
+
+  const protPrecioInput  = document.getElementById('prot-precio-input');
+  const creatPrecioInput = document.getElementById('creat-precio-input');
+  if (protPrecioInput)  protPrecioInput.addEventListener('input',  () => { const s = loadSuplState(); s.protPrecio  = Math.max(0, parseFloat(protPrecioInput.value)  || 0); saveSuplState(s); renderCostSupl(); });
+  if (creatPrecioInput) creatPrecioInput.addEventListener('input', () => { const s = loadSuplState(); s.creatPrecio = Math.max(0, parseFloat(creatPrecioInput.value) || 0); saveSuplState(s); renderCostSupl(); });
+});
 </script>
 </body>
 </html>
