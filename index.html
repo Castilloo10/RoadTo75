@@ -105,7 +105,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .compra-img img.error{display:none}
 .compra-img.fallback::after{content:attr(data-emoji)}
 .price-total{background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
-.price-total .label{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--text)}
+.price-total .label{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--text)}
 .price-total .amount{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--accent)}
 
 /* ENTRENO */
@@ -181,10 +181,49 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .supl-stock-label{font-size:.75rem;color:var(--muted)}
 .supl-stock-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:3px 7px;width:80px;text-align:center}
 .supl-stock-input:focus{outline:none;border-color:var(--accent)}
-.supl-alert{display:none;margin-top:.75rem;background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.35);border-radius:8px;padding:.6rem 1rem;font-size:.8rem;color:var(--red);line-height:1.5}
+.supl-alert{display:none;margin-top:.6rem;border-radius:8px;padding:.6rem 1rem;font-size:.8rem;line-height:1.5}
+.supl-alert.orange{background:rgba(240,168,55,.12);border:1px solid rgba(240,168,55,.4);color:var(--accent3)}
+.supl-alert.red{background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.35);color:var(--red)}
 .supl-batidos{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent2);padding:3px 8px;background:rgba(55,240,168,.08);border-radius:6px;border:1px solid rgba(55,240,168,.2);white-space:nowrap}
 .supl-batidos.warn{border-color:var(--red);color:var(--red);background:rgba(240,55,55,.08)}
 .supl-batidos:empty{display:none}
+
+/* BATIDO EDIT MODE */
+.batido-edit-panel{display:none;margin-top:1rem;background:var(--surface2);border:1px solid var(--accent);border-radius:10px;padding:1.1rem}
+.batido-edit-panel.open{display:block}
+.batido-edit-row{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}
+.batido-edit-row label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)}
+.batido-edit-row input,.batido-edit-row textarea{background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;padding:5px 8px}
+.batido-edit-row input:focus,.batido-edit-row textarea:focus{outline:none;border-color:var(--accent)}
+.batido-edit-row textarea{resize:vertical;min-height:70px;line-height:1.5}
+.batido-edit-macros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.75rem}
+.batido-edit-macros .macro-edit-item{flex:1;min-width:55px;display:flex;flex-direction:column;gap:3px}
+.batido-edit-macros label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)}
+.batido-edit-macros input{background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.8rem;padding:4px 6px;width:100%}
+.batido-edit-macros input:focus{outline:none;border-color:var(--accent)}
+.batido-edit-actions{display:flex;gap:.5rem;margin-top:.25rem}
+
+/* COMPRA EDIT MODE */
+.compra-cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+.compra-edit-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.7rem;padding:3px 9px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap}
+.compra-edit-btn:hover{border-color:var(--accent);color:var(--accent)}
+.compra-card.editing-compra{border-color:var(--accent);box-shadow:0 0 0 2px rgba(181,240,55,.1)}
+.compra-item-edit{display:flex;flex-direction:column;gap:.4rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
+.compra-item-edit:last-of-type{border-bottom:none}
+.compra-item-edit-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.compra-item-edit input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.8rem;padding:4px 7px}
+.compra-item-edit input:focus{outline:none;border-color:var(--accent)}
+.compra-item-edit .inp-name{flex:2;min-width:120px}
+.compra-item-edit .inp-price{width:80px}
+.compra-item-edit .inp-img{flex:3;min-width:180px;font-size:.75rem}
+.compra-item-edit .inp-emoji{width:52px;text-align:center}
+.compra-item-edit-lbl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);white-space:nowrap}
+.btn-del-item{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:5px;padding:3px 7px;cursor:pointer;font-size:.78rem;transition:all .2s;flex-shrink:0}
+.btn-del-item:hover{border-color:var(--red);color:var(--red);background:rgba(240,55,55,.08)}
+.compra-add-row{margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--border)}
+.btn-add-item{background:rgba(181,240,55,.1);border:1px dashed var(--accent);color:var(--accent);border-radius:7px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-add-item:hover{background:rgba(181,240,55,.2)}
+.compra-edit-actions{display:flex;gap:.5rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
 
 /* PRECIO EDITABLE SUPLEMENTOS */
 .supl-price-input{background:transparent;border:none;border-bottom:1px dashed var(--border);color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem;width:50px;text-align:right;padding:1px 2px}
@@ -291,15 +330,48 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
       <div class="macro-item"><div class="macro-val fat" id="avg-fat">75g</div><div class="macro-unit">grasas · media semanal</div></div>
     </div>
     <div class="batido-box">
-      <h3>🥤 BATIDO DIARIO (Merienda) · Fijo toda la semana</h3>
-      <p style="font-size:.9rem;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:2">
-        <input class="supl-stock-input" id="prot-dosis-input" type="number" min="1" step="1" placeholder="35" style="width:52px" title="Gramos de proteína por batido">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.25rem">
+        <h3 style="margin-bottom:0">🥤 BATIDO DIARIO (Merienda) · Fijo toda la semana</h3>
+        <button class="edit-btn" id="batido-edit-btn" onclick="toggleBatidoEdit()">✏ Editar</button>
+      </div>
+      <p id="batido-desc-view" style="font-size:.9rem;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:2">
+        <strong id="batido-prot-dosis-view">35</strong>
         <strong>g Proteína</strong> +
-        <input class="supl-stock-input" id="creat-dosis-input" type="number" min="1" step="1" placeholder="3" style="width:44px" title="Gramos de creatina por batido">
-        <strong>g Creatina</strong> + <strong>fruta (100g)</strong> + <strong>300ml leche semi</strong>
+        <strong id="batido-creat-dosis-view">3</strong>
+        <strong>g Creatina</strong> + <strong id="batido-extra-view">fruta (100g) + 300ml leche semi</strong>
       </p>
-      <div class="meal-macros" style="margin-top:.75rem">
-        <span class="pill kcal">~330 kcal</span><span class="pill p">~37g P</span><span class="pill c">~38g C (plátano) / ~22g C (fresas)</span><span class="pill f">~5g G</span>
+      <!-- inputs ocultos para que renderSupl() siga funcionando internamente -->
+      <input type="hidden" id="prot-dosis-input" value="35">
+      <input type="hidden" id="creat-dosis-input" value="3">
+      <div class="meal-macros" style="margin-top:.75rem" id="batido-macros-view">
+        <span class="pill kcal" id="bm-kcal">~330 kcal</span><span class="pill p" id="bm-prot">~37g P</span><span class="pill c" id="bm-carb">~38g C (plátano) / ~22g C (fresas)</span><span class="pill f" id="bm-fat">~5g G</span>
+      </div>
+      <!-- PANEL DE EDICIÓN BATIDO -->
+      <div class="batido-edit-panel" id="batido-edit-panel">
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem">
+          <div class="batido-edit-row" style="flex:1;min-width:100px">
+            <label style="color:var(--accent)">g Proteína por batido</label>
+            <input type="number" id="be-prot-dosis" min="1" step="1" placeholder="35" value="35">
+          </div>
+          <div class="batido-edit-row" style="flex:1;min-width:100px">
+            <label style="color:var(--accent2)">g Creatina por batido</label>
+            <input type="number" id="be-creat-dosis" min="1" step="1" placeholder="3" value="3">
+          </div>
+        </div>
+        <div class="batido-edit-row">
+          <label>Resto de ingredientes (texto libre)</label>
+          <textarea id="be-extra" placeholder="fruta (100g) + 300ml leche semi">fruta (100g) + 300ml leche semi</textarea>
+        </div>
+        <div class="batido-edit-macros">
+          <div class="macro-edit-item"><label class="lkcal" style="color:var(--accent3)">kcal</label><input type="number" id="be-kcal" min="0" value="330"></div>
+          <div class="macro-edit-item"><label class="lp" style="color:var(--accent)">Prot (g)</label><input type="number" id="be-prot" min="0" value="37"></div>
+          <div class="macro-edit-item"><label class="lc" style="color:var(--blue)">Carbs (g) / texto</label><input type="text" id="be-carb" value="38g C (plátano) / ~22g C (fresas)" style="width:100%"></div>
+          <div class="macro-edit-item"><label class="lf" style="color:var(--red)">Grasas (g)</label><input type="number" id="be-fat" min="0" value="5"></div>
+        </div>
+        <div class="batido-edit-actions">
+          <button class="btn-save-meal" onclick="saveBatidoEdit()">✓ Guardar</button>
+          <button class="btn-cancel-meal" onclick="cancelBatidoEdit()">✕ Cancelar</button>
+        </div>
       </div>
       <div class="batido-counter-row">
         <button class="supl-count-btn minus" onclick="changeBatidos(-1)">−</button>
@@ -308,8 +380,20 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
           <div class="batido-total" id="batido-count">0</div>
         </div>
         <button class="supl-count-btn" onclick="changeBatidos(1)">+</button>
-        <button class="supl-reset-btn" onclick="resetBatidos()" style="margin-left:.5rem">↺ Resetear batidos</button>
+        <button class="supl-reset-btn" onclick="resetBatidos()" style="margin-left:.5rem">↺ Resetear batidos tomados y restantes</button>
       </div>
+      <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:.75rem">
+        <div style="text-align:center">
+          <div class="batido-counter-label">Total batidos según g indicados</div>
+          <div class="batido-total" id="batido-total-posibles" style="color:var(--text2)">—</div>
+        </div>
+        <div style="text-align:center">
+          <div class="batido-counter-label">Batidos restantes</div>
+          <div class="batido-total" id="batido-restantes" style="color:var(--accent2)">—</div>
+        </div>
+      </div>
+      <div class="supl-alert" id="batido-prot-alert"></div>
+      <div class="supl-alert" id="batido-creat-alert"></div>
     </div>
     <div class="day-tabs">
       <button class="day-tab active" onclick="showDay('lun')">LUNES</button>
@@ -478,65 +562,76 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   ─────────────────────────────────────────────────────────────────────────────
   -->
   <div class="compra-grid">
-    <div class="compra-card">
-      <div class="compra-cat" style="color:var(--accent)">🍗 PROTEÍNAS ANIMALES</div>
+    <div class="compra-card" data-cat-id="proteinas">
+      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">🍗 PROTEÍNAS ANIMALES</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+      <div class="compra-items-list">
       <div class="compra-item" data-gallery="https://prod-mercadona.imgix.net/images/c0902c682f4d28953dc3dbf54cfbca00.jpg?fit=crop&h=600&w=600|https://prod-mercadona.imgix.net/images/5f79052c42e92bf7c963363bf179a40e.jpg?fit=crop&h=600&w=600"><span class="compra-img" data-emoji="🍗"><img src="https://prod-mercadona.imgix.net/images/c0902c682f4d28953dc3dbf54cfbca00.jpg?fit=crop&h=600&w=600" alt="" onerror="this.style.display='none'"></span><span class="name">Filetes pechuga de pollo</span><span class="price">4,75 €</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥩"><img src="https://tienda.mercadona.es/api/images/56261-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Carne picada mixta (500g)</span><span class="price">~3,50€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥚"><img src="https://tienda.mercadona.es/api/images/62491-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Huevos L (docena)</span><span class="price">~2,50€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🐟"><img src="https://tienda.mercadona.es/api/images/84611-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lomo salmón (pack 2 lomos, ~400g)</span><span class="price">~6,90€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🐟"><img src="https://tienda.mercadona.es/api/images/83141-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Filetes merluza congelada (600g)</span><span class="price">~4,20€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🐟"><img src="https://tienda.mercadona.es/api/images/20401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Atún en aceite (pack 3x80g)</span><span class="price">~2,30€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥓"><img src="https://tienda.mercadona.es/api/images/43581-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Jamón cocido extra (200g)</span><span class="price">~2,20€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥩"><img src="https://tienda.mercadona.es/api/images/56261-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Carne picada mixta (500g)</span><span class="price">3,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥚"><img src="https://tienda.mercadona.es/api/images/62491-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Huevos L (docena)</span><span class="price">2,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🐟"><img src="https://tienda.mercadona.es/api/images/84611-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lomo salmón (pack 2 lomos, ~400g)</span><span class="price">6,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🐟"><img src="https://tienda.mercadona.es/api/images/83141-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Filetes merluza congelada (600g)</span><span class="price">4,20€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🐟"><img src="https://tienda.mercadona.es/api/images/20401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Atún en aceite (pack 3x80g)</span><span class="price">2,30€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥓"><img src="https://tienda.mercadona.es/api/images/43581-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Jamón cocido extra (200g)</span><span class="price">2,20€</span></div>
+      </div>
     </div>
-    <div class="compra-card">
-      <div class="compra-cat" style="color:var(--blue)">🥛 LÁCTEOS Y DERIVADOS</div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥛"><img src="https://tienda.mercadona.es/api/images/30101-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche entera (2L)</span><span class="price">~1,60€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥛"><img src="https://tienda.mercadona.es/api/images/30151-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche semidesnatada (2L)</span><span class="price">~1,40€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🫙"><img src="https://tienda.mercadona.es/api/images/32011-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Yogur griego natural (4x125g)</span><span class="price">~1,90€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🧀"><img src="https://tienda.mercadona.es/api/images/34811-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Queso semicurado rallado (150g)</span><span class="price">~1,80€</span></div>
+    <div class="compra-card" data-cat-id="lacteos">
+      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--blue);margin-bottom:0">🥛 LÁCTEOS Y DERIVADOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+      <div class="compra-items-list">
+      <div class="compra-item"><span class="compra-img" data-emoji="🥛"><img src="https://tienda.mercadona.es/api/images/30101-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche entera (2L)</span><span class="price">1,60€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥛"><img src="https://tienda.mercadona.es/api/images/30151-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche semidesnatada (2L)</span><span class="price">1,40€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🫙"><img src="https://tienda.mercadona.es/api/images/32011-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Yogur griego natural (4x125g)</span><span class="price">1,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🧀"><img src="https://tienda.mercadona.es/api/images/34811-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Queso semicurado rallado (150g)</span><span class="price">1,80€</span></div>
+      </div>
     </div>
-    <div class="compra-card">
-      <div class="compra-cat" style="color:var(--accent3)">🌾 HIDRATOS DE CARBONO</div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🌾"><img src="https://tienda.mercadona.es/api/images/11801-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Avena tradicional 1kg (Hacendado)</span><span class="price">~1,50€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍚"><img src="https://tienda.mercadona.es/api/images/10501-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Arroz blanco 1kg</span><span class="price">~1,10€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍚"><img src="https://tienda.mercadona.es/api/images/10521-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Arroz basmati 500g</span><span class="price">~1,20€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍝"><img src="https://tienda.mercadona.es/api/images/11201-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pasta penne 500g</span><span class="price">~0,75€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍝"><img src="https://tienda.mercadona.es/api/images/11211-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Macarrones 500g</span><span class="price">~0,65€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍞"><img src="https://tienda.mercadona.es/api/images/14081-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pan integral (barra o molde)</span><span class="price">~1,50€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🫘"><img src="https://tienda.mercadona.es/api/images/12101-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lentejas cocidas bote (400g)</span><span class="price">~0,90€</span></div>
+    <div class="compra-card" data-cat-id="hidratos">
+      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent3);margin-bottom:0">🌾 HIDRATOS DE CARBONO</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+      <div class="compra-items-list">
+      <div class="compra-item"><span class="compra-img" data-emoji="🌾"><img src="https://tienda.mercadona.es/api/images/11801-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Avena tradicional 1kg (Hacendado)</span><span class="price">1,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍚"><img src="https://tienda.mercadona.es/api/images/10501-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Arroz blanco 1kg</span><span class="price">1,10€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍚"><img src="https://tienda.mercadona.es/api/images/10521-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Arroz basmati 500g</span><span class="price">1,20€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍝"><img src="https://tienda.mercadona.es/api/images/11201-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pasta penne 500g</span><span class="price">0,75€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍝"><img src="https://tienda.mercadona.es/api/images/11211-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Macarrones 500g</span><span class="price">0,65€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍞"><img src="https://tienda.mercadona.es/api/images/14081-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pan integral (barra o molde)</span><span class="price">1,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🫘"><img src="https://tienda.mercadona.es/api/images/12101-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lentejas cocidas bote (400g)</span><span class="price">0,90€</span></div>
+      </div>
     </div>
-    <div class="compra-card">
-      <div class="compra-cat" style="color:var(--accent2)">🥦 FRUTAS Y VERDURAS</div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍌"><img src="https://tienda.mercadona.es/api/images/91401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Plátanos (1,5kg)</span><span class="price">~1,50€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍓"><img src="https://tienda.mercadona.es/api/images/90511-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Fresas/frambuesas congeladas (750g)</span><span class="price">~3,50€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥦"><img src="https://tienda.mercadona.es/api/images/91841-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Brócoli congelado (750g)</span><span class="price">~1,50€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🫛"><img src="https://tienda.mercadona.es/api/images/91771-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Judías verdes congeladas (750g)</span><span class="price">~1,40€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥔"><img src="https://tienda.mercadona.es/api/images/92031-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Patatas (2kg malla)</span><span class="price">~1,90€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍠"><img src="https://tienda.mercadona.es/api/images/92051-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Boniato (1kg)</span><span class="price">~1,80€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍅"><img src="https://tienda.mercadona.es/api/images/92241-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Tomates de pera (1kg)</span><span class="price">~2,00€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥬"><img src="https://tienda.mercadona.es/api/images/92141-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lechuga iceberg</span><span class="price">~0,80€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🧅"><img src="https://tienda.mercadona.es/api/images/92071-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Cebolla (1kg)</span><span class="price">~0,80€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥑"><img src="https://tienda.mercadona.es/api/images/91281-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Aguacates (2 ud)</span><span class="price">~1,80€</span></div>
+    <div class="compra-card" data-cat-id="frutas">
+      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent2);margin-bottom:0">🥦 FRUTAS Y VERDURAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+      <div class="compra-items-list">
+      <div class="compra-item"><span class="compra-img" data-emoji="🍌"><img src="https://tienda.mercadona.es/api/images/91401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Plátanos (1,5kg)</span><span class="price">1,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍓"><img src="https://tienda.mercadona.es/api/images/90511-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Fresas/frambuesas congeladas (750g)</span><span class="price">3,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥦"><img src="https://tienda.mercadona.es/api/images/91841-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Brócoli congelado (750g)</span><span class="price">1,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🫛"><img src="https://tienda.mercadona.es/api/images/91771-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Judías verdes congeladas (750g)</span><span class="price">1,40€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥔"><img src="https://tienda.mercadona.es/api/images/92031-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Patatas (2kg malla)</span><span class="price">1,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍠"><img src="https://tienda.mercadona.es/api/images/92051-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Boniato (1kg)</span><span class="price">1,80€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍅"><img src="https://tienda.mercadona.es/api/images/92241-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Tomates de pera (1kg)</span><span class="price">2,00€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥬"><img src="https://tienda.mercadona.es/api/images/92141-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lechuga iceberg</span><span class="price">0,80€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🧅"><img src="https://tienda.mercadona.es/api/images/92071-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Cebolla (1kg)</span><span class="price">0,80€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥑"><img src="https://tienda.mercadona.es/api/images/91281-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Aguacates (2 ud)</span><span class="price">1,80€</span></div>
+      </div>
     </div>
-    <div class="compra-card">
-      <div class="compra-cat" style="color:var(--red)">🧴 DESPENSA Y GRASAS</div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🫒"><img src="https://tienda.mercadona.es/api/images/40201-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">AOVE (500ml, Hacendado)</span><span class="price">~3,50€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥜"><img src="https://tienda.mercadona.es/api/images/19781-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Almendras naturales (200g)</span><span class="price">~2,50€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥜"><img src="https://tienda.mercadona.es/api/images/19861-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Mantequilla cacahuete nat. (350g)</span><span class="price">~3,90€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍅"><img src="https://tienda.mercadona.es/api/images/40831-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Tomate frito Hacendado (400g)</span><span class="price">~0,75€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🫑"><img src="https://tienda.mercadona.es/api/images/40881-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pimientos asados bote</span><span class="price">~1,20€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🥥"><img src="https://tienda.mercadona.es/api/images/30401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche de coco (200ml tetrabrik)</span><span class="price">~1,10€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🍯"><img src="https://tienda.mercadona.es/api/images/19311-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Miel (bote pequeño)</span><span class="price">~2,50€</span></div>
-      <div class="compra-item"><span class="compra-img" data-emoji="🌶️"><img src="https://tienda.mercadona.es/api/images/41191-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Especias: curry, pimentón, ajo</span><span class="price">~3,00€</span></div>
+    <div class="compra-card" data-cat-id="despensa">
+      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--red);margin-bottom:0">🧴 DESPENSA Y GRASAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+      <div class="compra-items-list">
+      <div class="compra-item"><span class="compra-img" data-emoji="🫒"><img src="https://tienda.mercadona.es/api/images/40201-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">AOVE (500ml, Hacendado)</span><span class="price">3,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥜"><img src="https://tienda.mercadona.es/api/images/19781-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Almendras naturales (200g)</span><span class="price">2,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥜"><img src="https://tienda.mercadona.es/api/images/19861-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Mantequilla cacahuete nat. (350g)</span><span class="price">3,90€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍅"><img src="https://tienda.mercadona.es/api/images/40831-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Tomate frito Hacendado (400g)</span><span class="price">0,75€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🫑"><img src="https://tienda.mercadona.es/api/images/40881-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pimientos asados bote</span><span class="price">1,20€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🥥"><img src="https://tienda.mercadona.es/api/images/30401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche de coco (200ml tetrabrik)</span><span class="price">1,10€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🍯"><img src="https://tienda.mercadona.es/api/images/19311-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Miel (bote pequeño)</span><span class="price">2,50€</span></div>
+      <div class="compra-item"><span class="compra-img" data-emoji="🌶️"><img src="https://tienda.mercadona.es/api/images/41191-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Especias: curry, pimentón, ajo</span><span class="price">3,00€</span></div>
+      </div>
     </div>
-    <div class="compra-card">
-      <div class="compra-cat" style="color:var(--accent)">💊 SUPLEMENTOS</div>
+    <div class="compra-card" data-cat-id="suplementos">
+      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">💊 SUPLEMENTOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 
       <!-- PROTEÍNA -->
-      <div class="compra-item" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-bottom:.75rem">
+      <div class="compra-items-list" id="supl-items-list">
+      <div class="compra-item supl-product-item" data-supl-id="prot" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-bottom:.75rem">
         <div style="display:flex;align-items:center;gap:8px;width:100%">
-          <span class="compra-img" data-emoji="💪"><img src="https://tienda.mercadona.es/api/images/55601-0_1/400" alt="" onerror="this.style.display='none'"></span>
-          <span class="name">Proteína Whey Hacendado</span>
+          <span class="compra-img supl-img-view" data-emoji="💪"><img id="prot-product-img" src="https://tienda.mercadona.es/api/images/55601-0_1/400" alt="" onerror="this.style.display='none'"></span>
+          <span class="name supl-name-view" id="prot-product-name">Proteína Whey Hacendado</span>
           <span style="margin-left:auto;display:flex;align-items:center;gap:1px;color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem" title="Edita el precio del bote">~<input class="supl-price-input" id="prot-precio-input" type="number" min="0" step="0.01" placeholder="14.90">€</span>
         </div>
         <div class="supl-stock-row">
@@ -553,13 +648,14 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
             <span class="supl-remain" id="prot-remain">— g restantes</span>
           </div>
         </div>
+        <div class="supl-alert" id="prot-alert-el"></div>
       </div>
 
       <!-- CREATINA -->
-      <div class="compra-item" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-top:.75rem;border-top:1px solid var(--border);border-bottom:none">
+      <div class="compra-item supl-product-item" data-supl-id="creat" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-top:.75rem;border-top:1px solid var(--border);border-bottom:none">
         <div style="display:flex;align-items:center;gap:8px;width:100%">
-          <span class="compra-img" data-emoji="💊"><img src="https://tienda.mercadona.es/api/images/55611-0_1/400" alt="" onerror="this.style.display='none'"></span>
-          <span class="name">Creatina Monohidrato Hacendado</span>
+          <span class="compra-img supl-img-view" data-emoji="💊"><img id="creat-product-img" src="https://tienda.mercadona.es/api/images/55611-0_1/400" alt="" onerror="this.style.display='none'"></span>
+          <span class="name supl-name-view" id="creat-product-name">Creatina Monohidrato Hacendado</span>
           <span style="margin-left:auto;display:flex;align-items:center;gap:1px;color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem" title="Edita el precio del bote">~<input class="supl-price-input" id="creat-precio-input" type="number" min="0" step="0.01" placeholder="9.90">€</span>
         </div>
         <div class="supl-stock-row">
@@ -576,7 +672,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
             <span class="supl-remain" id="creat-remain">— g restantes</span>
           </div>
         </div>
-        <div class="supl-alert" id="creat-alert" style="display:none"></div>
+        <div class="supl-alert" id="creat-alert-el"></div>
       </div>
 
       <!-- BADGE BATIDOS UNIFICADO -->
@@ -588,31 +684,38 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
       <!-- ALERTA COMBINADA -->
       <div class="supl-alert" id="supl-combined-alert" style="display:none"></div>
 
-      <p id="supl-footer-note" style="font-size:.72rem;color:var(--muted);margin-top:.75rem;line-height:1.5">Introduce los gramos comprados en "Compré" y las dosis por batido arriba para que el seguimiento sea preciso.</p>
+      <p id="supl-footer-note" style="font-size:.72rem;color:var(--muted);margin-top:.75rem;line-height:1.5">Introduce los gramos comprados en "Compré" para que el resultado sea preciso.</p>
+      </div><!-- /compra-items-list -->
     </div>
   </div>
   <div class="price-total">
-    <div><div class="label">TOTAL SEMANAL ESTIMADO</div><div style="font-size:.8rem;color:var(--text2);margin-top:4px">Alimentación sin suplementos · Los suplementos son ~25€/mes adicionales</div></div>
+   <div class="label">TOTAL SEMANAL ESTIMADO <em style="font-size:1.3rem;color:var(--text2);margin-top:4px">(SIN SUPLEMENTOS)</em></div>
     <div class="amount">65€</div>
   </div>
 
   <!-- ══ COSTE SUPLEMENTOS ══ -->
-  <div class="price-total" style="border-color:var(--accent2);margin-top:.75rem">
-    <div>
-      <div class="label">COSTE SUPLEMENTOS / MES · AÑO</div>
-      <div style="font-size:.8rem;color:var(--text2);margin-top:4px">30 batidos/mes · precio y gramos del bote de la tarjeta superior</div>
-    </div>
+<div class="price-total" style="border-color:var(--accent2);margin-top:.75rem">
+  
+  <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
+    
+    <!-- IZQUIERDA -->
+    <div class="label">COSTE SUPLEMENTOS / MES · AÑO <em style="font-size:1.3rem;color:var(--text2);margin-top:4px">(PRECIO SEGÚN GRAMOS INDICADOS)</em></div>
+
+    <!-- DERECHA -->
     <div style="display:flex;align-items:center;gap:1.75rem">
       <div style="text-align:right">
-        <div style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">/ mes</div>
+        <div style="font-size:.90rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">/MES</div>
         <div class="amount" style="color:var(--accent2)" id="supl-cost-mes">—</div>
       </div>
       <div style="text-align:right">
-        <div style="font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">/ año</div>
+        <div style="font-size:.90rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">/AÑO</div>
         <div class="amount" style="color:var(--accent3)" id="supl-cost-anio">—</div>
       </div>
     </div>
+
   </div>
+
+</div>
 </section>
 
 <!-- ══ ENTRENAMIENTO ══ -->
@@ -840,6 +943,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = 'hidden';
     renderLb();
   }
+  window.openLightbox = openLightbox;
 
   function renderLb() {
     const { gallery, idx } = lbState;
@@ -908,6 +1012,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   loadData();
+  loadBatidoData();
+  loadCompraData();
   // Fallback emoji si la imagen no carga
   document.querySelectorAll('.compra-img img').forEach(img => {
     img.addEventListener('error', () => {
@@ -1070,6 +1176,9 @@ function renderSupl() {
   const protDosis  = s.protDosis  || 35;
   const creatDosis = s.creatDosis || 3;
 
+  const protHasStock  = protStock  > 0;
+  const creatHasStock = creatStock > 0;
+
   // batido counter
   document.getElementById('batido-count').textContent = batidos;
 
@@ -1078,15 +1187,12 @@ function renderSupl() {
   const protRest = protStock - protUsed;
   document.getElementById('prot-used').textContent = protUsed;
   const protRemEl = document.getElementById('prot-remain');
+  let protBatidosRest = null;
 
-  let protBatidosRestantes = null;
-  let lowProt = false;
-
-  if (protStock > 0) {
-    protBatidosRestantes = Math.round(Math.max(0, protRest) / protDosis);
-    lowProt = protBatidosRestantes < 7;
+  if (protHasStock) {
+    protBatidosRest = Math.floor(Math.max(0, protRest) / protDosis);
     protRemEl.textContent = Math.max(0, protRest) + 'g restantes';
-    protRemEl.classList.toggle('warn', lowProt || protRest <= 0);
+    protRemEl.classList.toggle('warn', protBatidosRest < 7);
   } else {
     protRemEl.textContent = 'Introduce gramos comprados';
     protRemEl.classList.remove('warn');
@@ -1097,55 +1203,112 @@ function renderSupl() {
   const creatRest = creatStock - creatUsed;
   document.getElementById('creat-used').textContent = creatUsed;
   const creatRemEl = document.getElementById('creat-remain');
+  let creatBatidosRest = null;
 
-  let creatBatidosRestantes = null;
-  let lowCreat = false;
-
-  if (creatStock > 0) {
-    creatBatidosRestantes = Math.round(Math.max(0, creatRest) / creatDosis);
-    lowCreat = creatBatidosRestantes < 7;
+  if (creatHasStock) {
+    creatBatidosRest = Math.floor(Math.max(0, creatRest) / creatDosis);
     creatRemEl.textContent = Math.max(0, creatRest) + 'g restantes';
-    creatRemEl.classList.toggle('warn', lowCreat || creatRest <= 0);
+    creatRemEl.classList.toggle('warn', creatBatidosRest < 7);
   } else {
     creatRemEl.textContent = 'Introduce gramos comprados';
     creatRemEl.classList.remove('warn');
   }
 
-  // ── badge unificado ──
-  const unifiedEl = document.getElementById('supl-batidos-unified');
-  if (unifiedEl) {
-    const ambos = protBatidosRestantes !== null && creatBatidosRestantes !== null;
-    const soloP = protBatidosRestantes !== null && creatBatidosRestantes === null;
-    const soloC = protBatidosRestantes === null && creatBatidosRestantes !== null;
-
-    let batidosReales = null;
-    if (ambos)  batidosReales = Math.min(protBatidosRestantes, creatBatidosRestantes);
-    else if (soloP) batidosReales = protBatidosRestantes;
-    else if (soloC) batidosReales = creatBatidosRestantes;
-
-    if (batidosReales !== null) {
-      unifiedEl.textContent = '🥤 ' + batidosReales + ' batido' + (batidosReales === 1 ? '' : 's');
-      unifiedEl.classList.toggle('warn', batidosReales < 7);
+  // ── helper: render una alerta (orange/red/hidden) ──
+  function setAlert(el, batidosRestantes, productoLabel, grRestantes) {
+    if (!el) return;
+    if (batidosRestantes === null) { el.style.display = 'none'; el.className = 'supl-alert'; return; }
+    if (batidosRestantes === 0) {
+      el.className = 'supl-alert red';
+      el.innerHTML = '🚫 <strong>No queda ' + productoLabel + '</strong> (' + Math.max(0, grRestantes) + 'g). <strong>Compra cuanto antes.</strong>';
+      el.style.display = 'block';
+    } else if (batidosRestantes <= 7) {
+      el.className = 'supl-alert orange';
+      el.innerHTML = '⚠️ <strong>Queda poca ' + productoLabel + '</strong> (' + Math.max(0, grRestantes) + 'g — para ' + batidosRestantes + ' batido' + (batidosRestantes === 1 ? '' : 's') + '). <strong>Hace falta comprar.</strong>';
+      el.style.display = 'block';
     } else {
-      unifiedEl.textContent = '';
-      unifiedEl.classList.remove('warn');
+      el.style.display = 'none';
+      el.className = 'supl-alert';
     }
   }
 
-  // ── alerta combinada ──
-  const combinedAlertEl = document.getElementById('supl-combined-alert');
-  if (combinedAlertEl) {
-    const items = [];
-    if (lowProt)  items.push('proteína <strong>(' + protBatidosRestantes + ' batido' + (protBatidosRestantes === 1 ? '' : 's') + ')</strong>');
-    if (lowCreat) items.push('creatina <strong>(' + creatBatidosRestantes + ' batido' + (creatBatidosRestantes === 1 ? '' : 's') + ')</strong>');
+  // Alertas en suplementos
+  setAlert(document.getElementById('prot-alert-el'),  protBatidosRest,  'proteína',  protRest);
+  setAlert(document.getElementById('creat-alert-el'), creatBatidosRest, 'creatina',  creatRest);
 
-    if (items.length > 0) {
-      const lista = items.length === 2 ? items[0] + ' y ' + items[1] : items[0];
-      combinedAlertEl.innerHTML = '🛒 <strong>¡Hora de comprar!</strong> Te queda poco de ' + lista + '.';
-      combinedAlertEl.style.display = 'block';
-    } else {
-      combinedAlertEl.style.display = 'none';
+  // ── badge unificado + alerta combinada en suplementos ──
+  const unifiedEl      = document.getElementById('supl-batidos-unified');
+  const combinedAlert  = document.getElementById('supl-combined-alert');
+  const footerNote     = document.getElementById('supl-footer-note');
+
+  let totalPosibles = null;
+  let missingMsg = [];
+
+  if (!protHasStock)  missingMsg.push('proteína');
+  if (!creatHasStock) missingMsg.push('creatina');
+
+  if (missingMsg.length > 0) {
+    if (unifiedEl) { unifiedEl.textContent = ''; unifiedEl.classList.remove('warn'); }
+    if (combinedAlert) {
+      combinedAlert.className = 'supl-alert orange';
+      combinedAlert.innerHTML = '⚠️ Falta indicar los gramos comprados de: <strong>' + missingMsg.join(' y ') + '</strong>.';
+      combinedAlert.style.display = 'block';
     }
+  } else {
+    totalPosibles = Math.min(
+      Math.floor(protStock  / protDosis),
+      Math.floor(creatStock / creatDosis)
+    );
+    const batidosRestUnified = Math.max(0, totalPosibles - batidos);
+
+    if (unifiedEl) {
+      unifiedEl.textContent = '🥤 ' + totalPosibles + ' batido' + (totalPosibles === 1 ? '' : 's');
+      unifiedEl.classList.toggle('warn', totalPosibles < 7);
+    }
+
+    // Alerta combinada en suplementos
+    const alertItems = [];
+    if (protBatidosRest  !== null && protBatidosRest  <= 7) alertItems.push({ label: 'proteína',  rest: protBatidosRest,  gr: protRest });
+    if (creatBatidosRest !== null && creatBatidosRest <= 7) alertItems.push({ label: 'creatina', rest: creatBatidosRest, gr: creatRest });
+
+    if (alertItems.length > 0 && combinedAlert) {
+      const hasZero = alertItems.some(a => a.rest === 0);
+      combinedAlert.className = 'supl-alert ' + (hasZero ? 'red' : 'orange');
+      const msgs = alertItems.map(a =>
+        a.rest === 0
+          ? 'No queda <strong>' + a.label + '</strong> (' + Math.max(0, a.gr) + 'g)'
+          : 'Queda poca <strong>' + a.label + '</strong> (' + Math.max(0, a.gr) + 'g — ' + a.rest + ' batido' + (a.rest === 1 ? '' : 's') + ')'
+      );
+      const action = hasZero ? 'Compra cuanto antes.' : 'Hace falta comprar.';
+      combinedAlert.innerHTML = (hasZero ? '🚫 ' : '⚠️ ') + msgs.join(' · ') + '. <strong>' + action + '</strong>';
+      combinedAlert.style.display = 'block';
+    } else if (combinedAlert) {
+      combinedAlert.style.display = 'none';
+    }
+  }
+
+  // ── totales en batido-box ──
+  const totalPosiblesEl  = document.getElementById('batido-total-posibles');
+  const batidosRestantesEl = document.getElementById('batido-restantes');
+
+  if (!protHasStock || !creatHasStock) {
+    if (totalPosiblesEl)    { totalPosiblesEl.textContent = '—'; totalPosiblesEl.style.color = 'var(--text2)'; }
+    if (batidosRestantesEl) { batidosRestantesEl.textContent = '—'; batidosRestantesEl.style.color = 'var(--text2)'; }
+  } else {
+    const tp = Math.min(
+      Math.floor(protStock  / protDosis),
+      Math.floor(creatStock / creatDosis)
+    );
+    const tr = Math.max(0, tp - batidos);
+    if (totalPosiblesEl)    { totalPosiblesEl.textContent = tp; totalPosiblesEl.style.color = 'var(--text2)'; }
+    if (batidosRestantesEl) {
+      batidosRestantesEl.textContent = tr;
+      batidosRestantesEl.style.color = tr === 0 ? 'var(--red)' : tr <= 7 ? 'var(--accent3)' : 'var(--accent2)';
+    }
+
+    // Alertas en batido-box (por separado proteína y creatina)
+    setAlert(document.getElementById('batido-prot-alert'),  protBatidosRest,  'proteína',  protRest);
+    setAlert(document.getElementById('batido-creat-alert'), creatBatidosRest, 'creatina',  creatRest);
   }
 
   // ── sincronizar inputs ──
@@ -1158,14 +1321,24 @@ function renderSupl() {
   const creatDosisInput = document.getElementById('creat-dosis-input');
   if (protDosisInput)  protDosisInput.value  = protDosis;
   if (creatDosisInput) creatDosisInput.value = creatDosis;
+  const protDosisView  = document.getElementById('batido-prot-dosis-view');
+  const creatDosisView = document.getElementById('batido-creat-dosis-view');
+  if (protDosisView)  protDosisView.textContent  = protDosis;
+  if (creatDosisView) creatDosisView.textContent = creatDosis;
 
-  // actualizar también el bloque de costes (la dosis afecta al cálculo)
   renderCostSupl();
 }
 
 function changeBatidos(delta) {
   const s = loadSuplState();
-  s.batidos = Math.max(0, (s.batidos || 0) + delta);
+  const protStock  = s.protStock  || 0;
+  const creatStock = s.creatStock || 0;
+  const protDosis  = s.protDosis  || 35;
+  const creatDosis = s.creatDosis || 3;
+  const maxBatidos = (protStock > 0 && creatStock > 0)
+    ? Math.min(Math.floor(protStock / protDosis), Math.floor(creatStock / creatDosis))
+    : Infinity;
+  s.batidos = Math.min(maxBatidos, Math.max(0, (s.batidos || 0) + delta));
   saveSuplState(s);
   renderSupl();
 }
@@ -1231,14 +1404,478 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const protDosisInput  = document.getElementById('prot-dosis-input');
   const creatDosisInput = document.getElementById('creat-dosis-input');
-  if (protDosisInput)  protDosisInput.addEventListener('input',  () => { const s = loadSuplState(); s.protDosis  = Math.max(1, parseInt(protDosisInput.value)  || 35); saveSuplState(s); renderSupl(); });
-  if (creatDosisInput) creatDosisInput.addEventListener('input', () => { const s = loadSuplState(); s.creatDosis = Math.max(1, parseInt(creatDosisInput.value) || 3);  saveSuplState(s); renderSupl(); });
+  // dosis inputs are now hidden — managed via the batido edit panel
 
   const protPrecioInput  = document.getElementById('prot-precio-input');
   const creatPrecioInput = document.getElementById('creat-precio-input');
   if (protPrecioInput)  protPrecioInput.addEventListener('input',  () => { const s = loadSuplState(); s.protPrecio  = Math.max(0, parseFloat(protPrecioInput.value)  || 0); saveSuplState(s); renderCostSupl(); });
   if (creatPrecioInput) creatPrecioInput.addEventListener('input', () => { const s = loadSuplState(); s.creatPrecio = Math.max(0, parseFloat(creatPrecioInput.value) || 0); saveSuplState(s); renderCostSupl(); });
 });
+// ══ BATIDO EDIT ══
+const BATIDO_FB_KEY = 'batido';
+const BATIDO_LOCAL_KEY = 'planMuscular_batido_v1';
+
+function toggleBatidoEdit() {
+  const panel = document.getElementById('batido-edit-panel');
+  const btn   = document.getElementById('batido-edit-btn');
+  if (panel.classList.contains('open')) {
+    cancelBatidoEdit();
+    return;
+  }
+  // Rellenar panel con valores actuales
+  const extra = document.getElementById('batido-extra-view').textContent;
+  document.getElementById('be-extra').value = extra;
+  document.getElementById('be-prot-dosis').value = document.getElementById('prot-dosis-input').value || '35';
+  document.getElementById('be-creat-dosis').value = document.getElementById('creat-dosis-input').value || '3';
+  document.getElementById('be-kcal').value = parsePillNum(document.getElementById('bm-kcal').textContent);
+  document.getElementById('be-prot').value = parsePillNum(document.getElementById('bm-prot').textContent);
+  document.getElementById('be-carb').value = document.getElementById('bm-carb').textContent.replace(/^~/, '');
+  document.getElementById('be-fat').value  = parsePillNum(document.getElementById('bm-fat').textContent);
+  panel.classList.add('open');
+  btn.textContent = '✕ Cerrar';
+}
+
+function cancelBatidoEdit() {
+  document.getElementById('batido-edit-panel').classList.remove('open');
+  document.getElementById('batido-edit-btn').textContent = '✏ Editar';
+}
+
+function saveBatidoEdit() {
+  const protDosis  = Math.max(1, parseInt(document.getElementById('be-prot-dosis').value)  || 35);
+  const creatDosis = Math.max(1, parseInt(document.getElementById('be-creat-dosis').value) || 3);
+  const extra = document.getElementById('be-extra').value.trim() || 'fruta (100g) + 300ml leche semi';
+  const kcal  = parseInt(document.getElementById('be-kcal').value) || 0;
+  const prot  = parseInt(document.getElementById('be-prot').value) || 0;
+  const carb  = document.getElementById('be-carb').value.trim() || '0g C';
+  const fat   = parseInt(document.getElementById('be-fat').value) || 0;
+
+  // Actualizar spans de dosis visibles
+  document.getElementById('batido-prot-dosis-view').textContent  = protDosis;
+  document.getElementById('batido-creat-dosis-view').textContent = creatDosis;
+  // Actualizar hidden inputs para que renderSupl() use los nuevos valores
+  document.getElementById('prot-dosis-input').value  = protDosis;
+  document.getElementById('creat-dosis-input').value = creatDosis;
+  // Actualizar vista ingredientes extra y macros
+  document.getElementById('batido-extra-view').textContent = extra;
+  document.getElementById('bm-kcal').textContent = '~' + kcal + ' kcal';
+  document.getElementById('bm-prot').textContent = '~' + prot + 'g P';
+  document.getElementById('bm-carb').textContent = '~' + carb;
+  document.getElementById('bm-fat').textContent  = '~' + fat + 'g G';
+
+  // Persistir dosis en suplState también para que el tracker funcione
+  const s = loadSuplState();
+  s.protDosis  = protDosis;
+  s.creatDosis = creatDosis;
+  saveSuplState(s);
+  renderSupl();
+
+  cancelBatidoEdit();
+
+  const data = { extra, kcal, prot, carb, fat, protDosis, creatDosis };
+  try { localStorage.setItem(BATIDO_LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
+
+  if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Batido guardado'); return; }
+  setSyncStatus('saving', 'Guardando…');
+  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_FB_KEY + '.json', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    setSyncStatus('saved', '✓ Batido guardado en la nube');
+  }).catch(() => setSyncStatus('error', '⚠ Error al guardar batido'));
+}
+
+function applyBatidoData(d) {
+  if (!d) return;
+  if (d.extra) document.getElementById('batido-extra-view').textContent = d.extra;
+  if (d.kcal !== undefined) document.getElementById('bm-kcal').textContent = '~' + d.kcal + ' kcal';
+  if (d.prot !== undefined) document.getElementById('bm-prot').textContent = '~' + d.prot + 'g P';
+  if (d.carb) document.getElementById('bm-carb').textContent = '~' + d.carb;
+  if (d.fat  !== undefined) document.getElementById('bm-fat').textContent  = '~' + d.fat  + 'g G';
+  if (d.protDosis) {
+    document.getElementById('batido-prot-dosis-view').textContent = d.protDosis;
+    document.getElementById('prot-dosis-input').value = d.protDosis;
+  }
+  if (d.creatDosis) {
+    document.getElementById('batido-creat-dosis-view').textContent = d.creatDosis;
+    document.getElementById('creat-dosis-input').value = d.creatDosis;
+  }
+}
+
+async function loadBatidoData() {
+  try { applyBatidoData(JSON.parse(localStorage.getItem(BATIDO_LOCAL_KEY))); } catch(e) {}
+  if (!CLOUD_CONFIGURED) return;
+  try {
+    const res = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_FB_KEY + '.json');
+    if (!res.ok) throw new Error();
+    const d = await res.json();
+    if (d) { try { localStorage.setItem(BATIDO_LOCAL_KEY, JSON.stringify(d)); } catch(e) {} applyBatidoData(d); }
+  } catch(e) {}
+}
+
+// ══ COMPRA EDIT ══
+const COMPRA_FB_KEY  = 'compra';
+const COMPRA_LOCAL_KEY = 'planMuscular_compra_v1';
+
+// Extrae array de items de una compra-card tal como está en el DOM
+function extractItemsFromCard(card) {
+  const items = [];
+  card.querySelectorAll('.compra-items-list .compra-item').forEach(item => {
+    const imgEl   = item.querySelector('.compra-img img');
+    const emojiEl = item.querySelector('.compra-img');
+    const nameEl  = item.querySelector('.name');
+    const priceEl = item.querySelector('.price');
+    if (!nameEl) return; // suplementos, ignorar
+    const mainSrc = imgEl ? imgEl.src : '';
+    const gallery = item.dataset.gallery || '';
+    items.push({
+      emoji:   emojiEl ? (emojiEl.dataset.emoji || '') : '',
+      img:     mainSrc,
+      gallery: gallery,
+      name:    nameEl.textContent,
+      price:   priceEl ? priceEl.textContent : ''
+    });
+  });
+  return items;
+}
+
+// Reconstruye el HTML de un .compra-items-list a partir de un array de items
+function renderItemsToList(list, items) {
+  list.innerHTML = '';
+  items.forEach(it => {
+    const div = document.createElement('div');
+    div.className = 'compra-item';
+    if (it.gallery) div.dataset.gallery = it.gallery;
+    div.innerHTML = `<span class="compra-img" data-emoji="${escapeHtml(it.emoji || '')}"><img src="${escapeHtml(it.img || '')}" alt="" onerror="this.style.display='none'"></span><span class="name">${escapeHtml(it.name)}</span><span class="price">${escapeHtml(it.price)}</span>`;
+    list.appendChild(div);
+  });
+  // Re-attach lightbox listeners
+  attachLightboxToItems(list.querySelectorAll('.compra-item'));
+  attachImgFallback(list.querySelectorAll('.compra-img img'));
+}
+
+function attachLightboxToItems(items) {
+  const lb      = document.getElementById('lightbox');
+  const lbImg   = document.getElementById('lightbox-img');
+  const lbLabel = document.getElementById('lightbox-label');
+  const lbDots  = document.getElementById('lb-dots');
+  const lbPrev  = document.querySelector('.lb-nav.prev');
+  const lbNext  = document.querySelector('.lb-nav.next');
+  if (!lb) return;
+  items.forEach(item => {
+    const raw = (item.dataset.gallery || '').trim();
+    if (raw) {
+      const urls = raw.split('|').map(s => s.trim()).filter(Boolean);
+      if (urls.length && item.querySelector('.compra-img img')) {
+        item.querySelector('.compra-img img').src = urls[0];
+        item.dataset.galleryParsed = JSON.stringify(urls);
+      }
+    }
+    const img = item.querySelector('.compra-img img');
+    if (!img) return;
+    img.addEventListener('click', () => {
+      if (img.style.display === 'none') return;
+      const raw2 = item.dataset.galleryParsed;
+      const gallery = raw2 ? JSON.parse(raw2) : [img.src];
+      if (typeof openLightbox === 'function') openLightbox(gallery, item.querySelector('.name')?.textContent || '');
+    });
+  });
+}
+
+function attachImgFallback(imgs) {
+  imgs.forEach(img => {
+    img.addEventListener('error', () => {
+      img.style.display = 'none';
+      img.parentElement.style.fontSize = '1.3rem';
+    });
+  });
+}
+
+// ── Suplementos: leer datos de nombre/emoji/img de los items especiales ──
+function extractSuplItems() {
+  const items = [];
+  document.querySelectorAll('.supl-product-item').forEach(el => {
+    const id    = el.dataset.suplId;
+    const imgEl = el.querySelector('.supl-img-view img');
+    const nameEl = el.querySelector('.supl-name-view');
+    const emojiEl = el.querySelector('.supl-img-view');
+    items.push({
+      id,
+      emoji: emojiEl ? (emojiEl.dataset.emoji || '') : '',
+      img:   imgEl ? imgEl.src : '',
+      name:  nameEl ? nameEl.textContent : ''
+    });
+  });
+  return items;
+}
+
+function toggleCompraEdit(btn) {
+  const card = btn.closest('.compra-card');
+  const catId = card.dataset.catId;
+  const isEditing = card.classList.contains('editing-compra');
+  if (isEditing) { cancelCompraEdit(card); return; }
+
+  card.classList.add('editing-compra');
+  btn.textContent = '✕ Cancelar';
+
+  // ── Caso especial: SUPLEMENTOS ──
+  if (catId === 'suplementos') {
+    const suplItems = extractSuplItems();
+    // Insertar panel de edición justo después del header, antes del primer supl-product-item
+    const existingPanel = card.querySelector('.supl-edit-panel');
+    if (existingPanel) existingPanel.remove();
+    const panel = document.createElement('div');
+    panel.className = 'supl-edit-panel batido-edit-panel open';
+    panel.style.marginBottom = '1rem';
+    panel.innerHTML = suplItems.map(it => `
+      <div class="compra-item-edit" data-supl-edit-id="${escapeHtml(it.id)}" style="border-bottom:1px solid var(--border);padding-bottom:.75rem;margin-bottom:.75rem">
+        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:.4rem">${it.id === 'prot' ? '💪 Proteína' : '💊 Creatina'}</div>
+        <div class="compra-item-edit-row">
+          <span class="compra-item-edit-lbl">Emoji</span>
+          <input class="inp-emoji" type="text" value="${escapeHtml(it.emoji)}" placeholder="💪">
+          <span class="compra-item-edit-lbl">Nombre</span>
+          <input class="inp-name" type="text" value="${escapeHtml(it.name)}" placeholder="Nombre del producto" style="flex:2;min-width:140px">
+        </div>
+        <div class="compra-item-edit-row">
+          <span class="compra-item-edit-lbl">URL foto</span>
+          <input class="inp-img" type="text" value="${escapeHtml(it.img)}" placeholder="https://..." style="flex:1;min-width:180px">
+          <span class="compra-item-edit-lbl">Galería extra (| separadas)</span>
+          <input class="inp-gallery" type="text" value="${escapeHtml(it.gallery || '')}" placeholder="https://foto2.jpg|..." style="flex:1;min-width:180px">
+        </div>
+      </div>`).join('');
+    const actRow = document.createElement('div');
+    actRow.className = 'compra-edit-actions';
+    actRow.innerHTML = `<button class="btn-save-meal" onclick="saveSuplEdit(this)">✓ Guardar</button><button class="btn-cancel-meal" onclick="cancelCompraEditBtn(this)">✕ Cancelar</button>`;
+    panel.appendChild(actRow);
+    // Insertar tras el compra-cat-header
+    const header = card.querySelector('.compra-cat-header');
+    header.insertAdjacentElement('afterend', panel);
+    return;
+  }
+
+  // ── Resto de categorías (comportamiento normal) ──
+  const list = card.querySelector('.compra-items-list');
+  card._origItemsHTML = list.innerHTML;
+  const items = extractItemsFromCard(card);
+  list.innerHTML = '';
+  items.forEach((it) => {
+    const row = document.createElement('div');
+    row.className = 'compra-item-edit';
+    row.innerHTML = `
+      <div class="compra-item-edit-row">
+        <span class="compra-item-edit-lbl">Emoji</span>
+        <input class="inp-emoji" type="text" value="${escapeHtml(it.emoji)}" placeholder="🥩">
+        <span class="compra-item-edit-lbl">Nombre</span>
+        <input class="inp-name" type="text" value="${escapeHtml(it.name)}" placeholder="Nombre del producto">
+        <span class="compra-item-edit-lbl">Precio</span>
+        <input class="inp-price" type="text" value="${escapeHtml(it.price)}" placeholder="3,50€">
+        <button class="btn-del-item" onclick="deleteCompraItem(this)" title="Eliminar">🗑</button>
+      </div>
+      <div class="compra-item-edit-row">
+        <span class="compra-item-edit-lbl">URL foto</span>
+        <input class="inp-img" type="text" value="${escapeHtml(it.img)}" placeholder="https://...">
+        <span class="compra-item-edit-lbl">Galería extra (URLs separadas por |)</span>
+        <input class="inp-img" type="text" value="${escapeHtml(it.gallery)}" placeholder="https://foto2.jpg|https://foto3.jpg">
+      </div>`;
+    list.appendChild(row);
+  });
+  const addRow = document.createElement('div');
+  addRow.className = 'compra-add-row';
+  addRow.innerHTML = `<button class="btn-add-item" onclick="addCompraItem(this)">+ Añadir producto</button>`;
+  list.appendChild(addRow);
+  const actRow = document.createElement('div');
+  actRow.className = 'compra-edit-actions';
+  actRow.innerHTML = `<button class="btn-save-meal" onclick="saveCompraEdit(this)">✓ Guardar categoría</button><button class="btn-cancel-meal" onclick="cancelCompraEditBtn(this)">✕ Cancelar</button>`;
+  list.appendChild(actRow);
+}
+
+// Guardar edición de suplementos (solo nombre/emoji/img, no toca tracker)
+function saveSuplEdit(btn) {
+  const card = btn.closest('.compra-card');
+  const panel = card.querySelector('.supl-edit-panel');
+  const suplData = {};
+
+  panel.querySelectorAll('[data-supl-edit-id]').forEach(block => {
+    const id      = block.dataset.suplEditId;
+    const inputs  = block.querySelectorAll('input');
+    const emoji   = inputs[0]?.value.trim() || '';
+    const name    = inputs[1]?.value.trim() || '';
+    const img     = inputs[2]?.value.trim() || '';
+    const gallery = inputs[3]?.value.trim() || '';
+    suplData[id]  = { emoji, name, img, gallery };
+  });
+
+  // Aplicar cambios al DOM de cada supl-product-item (sin tocar tracker)
+  Object.entries(suplData).forEach(([id, d]) => {
+    const item = document.querySelector(`.supl-product-item[data-supl-id="${id}"]`);
+    if (!item) return;
+    const imgEl   = item.querySelector('.supl-img-view img');
+    const nameEl  = item.querySelector('.supl-name-view');
+    const emojiEl = item.querySelector('.supl-img-view');
+    if (emojiEl) emojiEl.dataset.emoji = d.emoji;
+    if (imgEl)   { imgEl.src = d.img; imgEl.style.display = ''; }
+    if (nameEl)  nameEl.textContent = d.name;
+    if (d.gallery) {
+      item.dataset.gallery = d.gallery;
+      item.dataset.galleryParsed = JSON.stringify(d.gallery.split('|').map(s => s.trim()).filter(Boolean));
+    }
+  });
+
+  // Cerrar panel
+  panel.remove();
+  card.classList.remove('editing-compra');
+  const editBtn = card.querySelector('.compra-edit-btn');
+  if (editBtn) editBtn.textContent = '✏ Editar categoría';
+
+  // Persistir
+  let allCompra = {};
+  try { allCompra = JSON.parse(localStorage.getItem(COMPRA_LOCAL_KEY) || '{}'); } catch(e) {}
+  allCompra['suplementos'] = suplData;
+  try { localStorage.setItem(COMPRA_LOCAL_KEY, JSON.stringify(allCompra)); } catch(e) {}
+
+  if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Suplementos guardados'); return; }
+  setSyncStatus('saving', 'Guardando…');
+  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + COMPRA_FB_KEY + '/suplementos.json', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(suplData)
+  }).then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    setSyncStatus('saved', '✓ Suplementos guardados en la nube');
+  }).catch(() => setSyncStatus('error', '⚠ Error al guardar suplementos'));
+}
+
+function deleteCompraItem(btn) {
+  btn.closest('.compra-item-edit').remove();
+}
+
+function addCompraItem(btn) {
+  const list = btn.closest('.compra-items-list');
+  const addRow = btn.closest('.compra-add-row');
+  const row = document.createElement('div');
+  row.className = 'compra-item-edit';
+  row.innerHTML = `
+    <div class="compra-item-edit-row">
+      <span class="compra-item-edit-lbl">Emoji</span>
+      <input class="inp-emoji" type="text" value="" placeholder="🥩">
+      <span class="compra-item-edit-lbl">Nombre</span>
+      <input class="inp-name" type="text" value="" placeholder="Nombre del producto">
+      <span class="compra-item-edit-lbl">Precio</span>
+      <input class="inp-price" type="text" value="" placeholder="3,50€">
+      <button class="btn-del-item" onclick="deleteCompraItem(this)" title="Eliminar">🗑</button>
+    </div>
+    <div class="compra-item-edit-row">
+      <span class="compra-item-edit-lbl">URL foto</span>
+      <input class="inp-img" type="text" value="" placeholder="https://...">
+      <span class="compra-item-edit-lbl">Galería extra (URLs separadas por |)</span>
+      <input class="inp-img" type="text" value="" placeholder="https://foto2.jpg|https://foto3.jpg">
+    </div>`;
+  list.insertBefore(row, addRow);
+  row.querySelector('.inp-name').focus();
+}
+
+function cancelCompraEditBtn(btn) {
+  const card = btn.closest('.compra-card');
+  cancelCompraEdit(card);
+}
+
+function cancelCompraEdit(card) {
+  card.classList.remove('editing-compra');
+  const editBtn = card.querySelector('.compra-edit-btn');
+  if (editBtn) editBtn.textContent = '✏ Editar categoría';
+  // Caso suplementos: eliminar panel flotante
+  const suplPanel = card.querySelector('.supl-edit-panel');
+  if (suplPanel) { suplPanel.remove(); return; }
+  // Resto: restaurar HTML original
+  const list = card.querySelector('.compra-items-list');
+  if (card._origItemsHTML !== undefined) {
+    list.innerHTML = card._origItemsHTML;
+    attachLightboxToItems(list.querySelectorAll('.compra-item'));
+    attachImgFallback(list.querySelectorAll('.compra-img img'));
+  }
+}
+
+function saveCompraEdit(btn) {
+  const card = btn.closest('.compra-card');
+  const list = card.querySelector('.compra-items-list');
+  const catId = card.dataset.catId;
+
+  const items = [];
+  list.querySelectorAll('.compra-item-edit').forEach(row => {
+    const inputs = row.querySelectorAll('input');
+    const emoji   = inputs[0]?.value.trim() || '';
+    const name    = inputs[1]?.value.trim() || '';
+    const price   = inputs[2]?.value.trim() || '';
+    const img     = inputs[3]?.value.trim() || '';
+    const gallery = inputs[4]?.value.trim() || '';
+    if (name) items.push({ emoji, name, price, img, gallery });
+  });
+
+  card.classList.remove('editing-compra');
+  const editBtn = card.querySelector('.compra-edit-btn');
+  if (editBtn) editBtn.textContent = '✏ Editar categoría';
+
+  renderItemsToList(list, items);
+
+  let allCompra = {};
+  try { allCompra = JSON.parse(localStorage.getItem(COMPRA_LOCAL_KEY) || '{}'); } catch(e) {}
+  allCompra[catId] = items;
+  try { localStorage.setItem(COMPRA_LOCAL_KEY, JSON.stringify(allCompra)); } catch(e) {}
+
+  if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Lista guardada'); return; }
+  setSyncStatus('saving', 'Guardando…');
+  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + COMPRA_FB_KEY + '/' + catId + '.json', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(items)
+  }).then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    setSyncStatus('saved', '✓ Lista guardada en la nube');
+  }).catch(() => setSyncStatus('error', '⚠ Error al guardar lista'));
+}
+
+function applyCompraData(allCompra) {
+  if (!allCompra) return;
+  // Categorías normales
+  document.querySelectorAll('.compra-card[data-cat-id]').forEach(card => {
+    const catId = card.dataset.catId;
+    if (catId === 'suplementos') return; // gestionado aparte
+    const items = allCompra[catId];
+    if (!items || !Array.isArray(items)) return;
+    const list = card.querySelector('.compra-items-list');
+    if (list) renderItemsToList(list, items);
+  });
+  // Suplementos: solo nombre/emoji/img
+  const suplData = allCompra['suplementos'];
+  if (suplData && typeof suplData === 'object') {
+    Object.entries(suplData).forEach(([id, d]) => {
+      const item = document.querySelector(`.supl-product-item[data-supl-id="${id}"]`);
+      if (!item) return;
+      const imgEl   = item.querySelector('.supl-img-view img');
+      const nameEl  = item.querySelector('.supl-name-view');
+      const emojiEl = item.querySelector('.supl-img-view');
+      if (d.emoji && emojiEl) emojiEl.dataset.emoji = d.emoji;
+      if (d.img   && imgEl)   { imgEl.src = d.img; imgEl.style.display = ''; }
+      if (d.name  && nameEl)  nameEl.textContent = d.name;
+      if (d.gallery) {
+        item.dataset.gallery = d.gallery;
+        item.dataset.galleryParsed = JSON.stringify(d.gallery.split('|').map(s => s.trim()).filter(Boolean));
+      }
+    });
+  }
+}
+
+async function loadCompraData() {
+  try { applyCompraData(JSON.parse(localStorage.getItem(COMPRA_LOCAL_KEY))); } catch(e) {}
+  if (!CLOUD_CONFIGURED) return;
+  try {
+    const res = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + COMPRA_FB_KEY + '.json');
+    if (!res.ok) throw new Error();
+    const d = await res.json();
+    if (d) { try { localStorage.setItem(COMPRA_LOCAL_KEY, JSON.stringify(d)); } catch(e) {} applyCompraData(d); }
+  } catch(e) {}
+}
 </script>
 </body>
 </html>
