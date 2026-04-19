@@ -1187,9 +1187,36 @@ async function saveEditMode(card) {
   const macrosEl = card.querySelector('.meal-macros');
   const lines = foodEl.querySelector('textarea').value.trim().split('\n');
   const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => Math.max(0, parseInt(i.value) || 0));
-  const origText = card._origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'').trim();
-  const newText  = lines.join('\n').trim();
-  const origPills = [...(card._origMacros.matchAll(/>([\d]+)</g))].map(m => parseInt(m[1]));
+
+  // Leer estado "antes" desde Firebase (fuente de verdad)
+  let origFood = card._origFood;
+  let origMacros = card._origMacros;
+  if (CLOUD_CONFIGURED) {
+    try {
+      const r = await fetch(FIREBASE_ENDPOINT);
+      if (r.ok) {
+        const fb = await r.json();
+        if (fb && fb[card.id]) {
+          const fd = fb[card.id];
+          origFood   = fd.food   ?? origFood;
+          origMacros = `<span class="pill kcal">${fd.kcal} kcal</span><span class="pill p">${fd.prot}g P</span><span class="pill c">${fd.carb}g C</span><span class="pill f">${fd.fat}g G</span>`;
+        }
+      }
+    } catch(e) {}
+  } else {
+    try {
+      const lc = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}');
+      if (lc[card.id]) {
+        const fd = lc[card.id];
+        origFood   = fd.food ?? origFood;
+        origMacros = `<span class="pill kcal">${fd.kcal} kcal</span><span class="pill p">${fd.prot}g P</span><span class="pill c">${fd.carb}g C</span><span class="pill f">${fd.fat}g G</span>`;
+      }
+    } catch(e) {}
+  }
+
+  const origText  = origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'').trim();
+  const newText   = lines.join('\n').trim();
+  const origPills = [...(origMacros.matchAll(/>([\d]+)</g))].map(m => parseInt(m[1]));
   const menuChanges = [];
   if (origText !== newText) menuChanges.push({ label: 'Descripción', from: origText.slice(0,80), to: newText.slice(0,80) });
   ['kcal','Prot g','Carbs g','Grasas g'].forEach((lbl, i) => {
@@ -1648,14 +1675,24 @@ async function saveBatidoEdit() {
   const prot  = parseInt(document.getElementById('be-prot').value) || 0;
   const carb  = document.getElementById('be-carb').value.trim() || '0g C';
   const fat   = parseInt(document.getElementById('be-fat').value) || 0;
-  // Recopilar cambios para confirmar
-  const _pPD = parseInt(document.getElementById('prot-dosis-input').value) || 35;
-  const _pCD = parseInt(document.getElementById('creat-dosis-input').value) || 3;
-  const _pEx = document.getElementById('batido-extra-view').textContent.trim();
-  const _pKc = parseInt(document.getElementById('bm-kcal').textContent) || 0;
-  const _pPr = parseInt(document.getElementById('bm-prot').textContent) || 0;
-  const _pCb = document.getElementById('bm-carb').textContent.trim();
-  const _pFt = parseInt(document.getElementById('bm-fat').textContent) || 0;
+  // Recopilar cambios para confirmar — leer "antes" desde Firebase
+  let fbBatido = null;
+  if (CLOUD_CONFIGURED) {
+    try {
+      const r = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_FB_KEY + '.json');
+      if (r.ok) fbBatido = await r.json();
+    } catch(e) {}
+  }
+  if (!fbBatido) {
+    try { fbBatido = JSON.parse(localStorage.getItem(BATIDO_LOCAL_KEY) || 'null'); } catch(e) {}
+  }
+  const _pPD = fbBatido?.protDosis  ?? parseInt(document.getElementById('prot-dosis-input').value)  ?? 35;
+  const _pCD = fbBatido?.creatDosis ?? parseInt(document.getElementById('creat-dosis-input').value) ?? 3;
+  const _pEx = fbBatido?.extra      ?? document.getElementById('batido-extra-view').textContent.trim();
+  const _pKc = fbBatido?.kcal       ?? parseInt(document.getElementById('bm-kcal').textContent) ?? 0;
+  const _pPr = fbBatido?.prot       ?? parseInt(document.getElementById('bm-prot').textContent) ?? 0;
+  const _pCb = fbBatido?.carb       ?? document.getElementById('bm-carb').textContent.trim();
+  const _pFt = fbBatido?.fat        ?? parseInt(document.getElementById('bm-fat').textContent)  ?? 0;
   const _bCh = [];
   if (_pPD !== protDosis)  _bCh.push({ label: 'g Proteína/batido', from: _pPD, to: protDosis });
   if (_pCD !== creatDosis) _bCh.push({ label: 'g Creatina/batido', from: _pCD, to: creatDosis });
@@ -1901,7 +1938,7 @@ function extractSuplItems() {
   return items;
 }
 
-function toggleCompraEdit(btn) {
+async function toggleCompraEdit(btn) {
   const card = btn.closest('.compra-card');
   const catId = card.dataset.catId;
   const isEditing = card.classList.contains('editing-compra');
@@ -1909,6 +1946,22 @@ function toggleCompraEdit(btn) {
 
   card.classList.add('editing-compra');
   btn.textContent = '✕ Cancelar';
+
+  // Cargar estado "antes" desde Firebase (fuente de verdad)
+  let firebaseOrig = null;
+  if (CLOUD_CONFIGURED && catId !== 'suplementos') {
+    try {
+      const r = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + COMPRA_FB_KEY + '/' + catId + '.json');
+      if (r.ok) firebaseOrig = await r.json();
+    } catch(e) {}
+  }
+  if (!firebaseOrig && catId !== 'suplementos') {
+    try {
+      const lc = JSON.parse(localStorage.getItem(COMPRA_LOCAL_KEY) || '{}');
+      firebaseOrig = lc[catId] || null;
+    } catch(e) {}
+  }
+  card._origItems = Array.isArray(firebaseOrig) ? firebaseOrig.map(it => ({ ...it })) : [];
 
   // ── Caso especial: SUPLEMENTOS ──
   if (catId === 'suplementos') {
@@ -2008,6 +2061,18 @@ async function saveSuplEdit(btn) {
   const suplData = {};
   const s = loadSuplState();
 
+  // Leer estado "antes" desde Firebase (fuente de verdad)
+  let fbSuplOrig = null;
+  if (CLOUD_CONFIGURED) {
+    try {
+      const r = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + SUPL_FB_KEY + '.json');
+      if (r.ok) fbSuplOrig = await r.json();
+    } catch(e) {}
+  }
+  if (!fbSuplOrig) {
+    try { fbSuplOrig = JSON.parse(localStorage.getItem(SUPL_KEY) || '{}'); } catch(e) { fbSuplOrig = {}; }
+  }
+
   // Recopilar cambios para confirmación
   const _sCh = [];
   list.querySelectorAll('.compra-item-edit[data-supl-edit-id]').forEach(row => {
@@ -2019,14 +2084,12 @@ async function saveSuplEdit(btn) {
     const gallery = row.querySelector('.inp-gallery')?.value.trim()                  || '';
     suplData[id]  = { name, price, stock, img, gallery };
 
-    // Registrar cambios vs estado anterior
-    const _pi  = document.querySelector(`.supl-product-item[data-supl-id="${id}"]`);
-    const _pNm = _pi?.querySelector('.supl-name-view')?.textContent?.trim() || '';
-    const _ps  = loadSuplState();
-    const _pPr = id === 'prot' ? (_ps.protPrecio||0) : (_ps.creatPrecio||0);
-    const _pSt = id === 'prot' ? (_ps.protStock||0)  : (_ps.creatStock||0);
+    // Comparar vs Firebase
+    const _pNm = id === 'prot' ? (fbSuplOrig.protNombre || document.querySelector('.supl-product-item[data-supl-id="prot"] .supl-name-view')?.textContent?.trim() || '') : (fbSuplOrig.creatNombre || document.querySelector('.supl-product-item[data-supl-id="creat"] .supl-name-view')?.textContent?.trim() || '');
+    const _pPr = id === 'prot' ? (fbSuplOrig.protPrecio  || 0) : (fbSuplOrig.creatPrecio  || 0);
+    const _pSt = id === 'prot' ? (fbSuplOrig.protStock   || 0) : (fbSuplOrig.creatStock   || 0);
     const _lbl = id === 'prot' ? 'Proteína' : 'Creatina';
-    if (_pNm !== name  && name)  _sCh.push({ label: 'Nombre ('  + _lbl + ')', from: _pNm,                      to: name });
+    if (_pNm && _pNm !== name  && name)  _sCh.push({ label: 'Nombre ('  + _lbl + ')', from: _pNm,                      to: name });
     if (_pPr !== price && price) _sCh.push({ label: 'Precio ('  + _lbl + ')', from: _pPr ? fmtEur(_pPr) : '—', to: fmtEur(price) });
     if (_pSt !== stock && stock) _sCh.push({ label: 'Compré ('  + _lbl + ')', from: _pSt ? _pSt + 'g' : '—',   to: stock + 'g' });
 
