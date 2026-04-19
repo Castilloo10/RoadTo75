@@ -331,14 +331,14 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
     </div>
     <div class="batido-box">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.25rem">
-        <h3 style="margin-bottom:0">🥤 BATIDO DIARIO (Merienda) · Fijo toda la semana</h3>
+        <h3 style="margin-bottom:0">🥤 SUPLEMENTACIÓN - BATIDO PROTÉICO DIARIO (Merienda / Post-Entreno)</h3>
         <button class="edit-btn" id="batido-edit-btn" onclick="toggleBatidoEdit()">✏ Editar</button>
       </div>
       <p id="batido-desc-view" style="font-size:.9rem;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:2">
         <strong id="batido-prot-dosis-view">35</strong>
         <strong>g Proteína</strong> +
         <strong id="batido-creat-dosis-view">3</strong>
-        <strong>g Creatina</strong> + <strong id="batido-extra-view">fruta (100g) + 300ml leche semi</strong>
+        <strong>g Creatina</strong> + <strong id="batido-extra-view">fruta (100g) + 300ml leche semidesnatada</strong>
       </p>
       <!-- inputs ocultos para que renderSupl() siga funcionando internamente -->
       <input type="hidden" id="prot-dosis-input" value="35">
@@ -632,7 +632,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
         <div style="display:flex;align-items:center;gap:8px;width:100%">
           <span class="compra-img supl-img-view" data-emoji="💪"><img id="prot-product-img" src="https://tienda.mercadona.es/api/images/55601-0_1/400" alt="" onerror="this.style.display='none'"></span>
           <span class="name supl-name-view" id="prot-product-name">Proteína Whey Hacendado</span>
-          <span style="margin-left:auto;display:flex;align-items:center;gap:1px;color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem" title="Edita el precio del bote">~<input class="supl-price-input" id="prot-precio-input" type="number" min="0" step="0.01" placeholder="14.90">€</span>
+          <span style="margin-left:auto;display:flex;align-items:center;gap:1px;color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem" title="Edita el precio del bote"><input class="supl-price-input" id="prot-precio-input" type="number" min="0" step="0.01" placeholder="14.90">€</span>
         </div>
         <div class="supl-stock-row">
           <span class="supl-stock-label">Compré:</span>
@@ -656,7 +656,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
         <div style="display:flex;align-items:center;gap:8px;width:100%">
           <span class="compra-img supl-img-view" data-emoji="💊"><img id="creat-product-img" src="https://tienda.mercadona.es/api/images/55611-0_1/400" alt="" onerror="this.style.display='none'"></span>
           <span class="name supl-name-view" id="creat-product-name">Creatina Monohidrato Hacendado</span>
-          <span style="margin-left:auto;display:flex;align-items:center;gap:1px;color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem" title="Edita el precio del bote">~<input class="supl-price-input" id="creat-precio-input" type="number" min="0" step="0.01" placeholder="9.90">€</span>
+          <span style="margin-left:auto;display:flex;align-items:center;gap:1px;color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem" title="Edita el precio del bote"><input class="supl-price-input" id="creat-precio-input" type="number" min="0" step="0.01" placeholder="9.90">€</span>
         </div>
         <div class="supl-stock-row">
           <span class="supl-stock-label">Compré:</span>
