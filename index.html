@@ -993,7 +993,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dayId = dayEl.id;
     dayEl.querySelectorAll('.meal-card').forEach((card, i) => {
       card.id = dayId + '-meal' + i;
-      const btn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar' });
+      const btn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
       btn.addEventListener('click', () => enterEditMode(card));
       card.querySelector('.meal-header').appendChild(btn);
     });
