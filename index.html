@@ -680,7 +680,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   </div>
   <div class="price-total">
    <div class="label">TOTAL SEMANAL ESTIMADO <em style="font-size:1.3rem;color:var(--text2);margin-top:4px">(SIN SUPLEMENTOS)</em></div>
-    <div class="amount">65€</div>
+    <div class="amount" id="compra-total-semanal">—</div>
   </div>
 
   <!-- ══ COSTE SUPLEMENTOS ══ -->
@@ -1004,6 +1004,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadData();
   loadBatidoData();
   loadCompraData();
+  // recalcTotalSemanal se llama desde applyCompraData
   // Fallback emoji si la imagen no carga
   document.querySelectorAll('.compra-img img').forEach(img => {
     img.addEventListener('error', () => {
@@ -1012,6 +1013,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// ── CONFIRM SAVE HELPER ──
+function confirmSave(changes) {
+  if (!changes || !changes.length) return true;
+  const lines = changes.map(c => {
+    const fromStr = (c.from !== undefined && c.from !== null && String(c.from) !== '') ? String(c.from) : '(vacío)';
+    const toStr   = (c.to   !== undefined && c.to   !== null && String(c.to)   !== '') ? String(c.to)   : '(vacío)';
+    return '• ' + c.label + ':\n  Antes:   ' + fromStr + '\n  Después: ' + toStr;
+  });
+  return confirm('¿Confirmar los siguientes cambios?\n\n' + lines.join('\n\n'));
+}
 
 // ── EDIT MODE ──
 function enterEditMode(card) {
@@ -1047,6 +1059,16 @@ function saveEditMode(card) {
   const macrosEl = card.querySelector('.meal-macros');
   const lines = foodEl.querySelector('textarea').value.trim().split('\n');
   const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => Math.max(0, parseInt(i.value) || 0));
+  const origText = card._origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'').trim();
+  const newText  = lines.join('\n').trim();
+  const origPills = [...(card._origMacros.matchAll(/>([\d]+)</g))].map(m => parseInt(m[1]));
+  const menuChanges = [];
+  if (origText !== newText) menuChanges.push({ label: 'Descripción', from: origText.slice(0,80), to: newText.slice(0,80) });
+  ['kcal','Prot g','Carbs g','Grasas g'].forEach((lbl, i) => {
+    const origN = origPills[i] ?? 0;
+    if (origN !== [k,p,c,f][i]) menuChanges.push({ label: lbl, from: origN, to: [k,p,c,f][i] });
+  });
+  if (!confirmSave(menuChanges)) return;
   foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
   macrosEl.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span>`;
   card.classList.remove('editing');
@@ -1304,6 +1326,17 @@ function changeBatidos(delta) {
   s.batidos = Math.min(maxBatidos, Math.max(0, (s.batidos || 0) + delta));
   saveSuplState(s);
   renderSupl();
+  persistBatidosCount(s.batidos);
+}
+
+function persistBatidosCount(count) {
+  try { localStorage.setItem('planMuscular_batidos_count', String(count)); } catch(e) {}
+  if (!CLOUD_CONFIGURED) return;
+  fetch(FIREBASE_URL.replace(/\/$/, '') + '/batidos_count.json', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(count)
+  }).catch(() => {});
 }
 
 function resetBatidos() {
@@ -1327,9 +1360,26 @@ function resetSupl(type) {
   renderSupl();
 }
 
+// ══ TOTAL SEMANAL ══
+function fmtPrice(n) {
+  return n.toFixed(2).replace('.', ',') + '\u00a0€';
+}
+
+function recalcTotalSemanal() {
+  let total = 0;
+  document.querySelectorAll('.compra-card[data-cat-id]').forEach(card => {
+    if (card.dataset.catId === 'suplementos') return;
+    card.querySelectorAll('.compra-items-list .compra-item:not(.compra-item-edit) .price').forEach(el => {
+      total += parsePriceStr(el.textContent);
+    });
+  });
+  const el = document.getElementById('compra-total-semanal');
+  if (el) el.textContent = total > 0 ? Math.round(total) + '\u00a0€' : '—';
+}
+
 // ══ COSTE SUPLEMENTOS ══
 function fmtEur(n) {
-  return n.toFixed(2).replace('.', ',') + '€';
+  return fmtPrice(n);
 }
 
 // ── PRECIO: normaliza decimales y bloquea negativos ──
@@ -1447,6 +1497,23 @@ function saveBatidoEdit() {
   const prot  = parseInt(document.getElementById('be-prot').value) || 0;
   const carb  = document.getElementById('be-carb').value.trim() || '0g C';
   const fat   = parseInt(document.getElementById('be-fat').value) || 0;
+  // Recopilar cambios para confirmar
+  const _pPD = parseInt(document.getElementById('prot-dosis-input').value) || 35;
+  const _pCD = parseInt(document.getElementById('creat-dosis-input').value) || 3;
+  const _pEx = document.getElementById('batido-extra-view').textContent.trim();
+  const _pKc = parseInt(document.getElementById('bm-kcal').textContent) || 0;
+  const _pPr = parseInt(document.getElementById('bm-prot').textContent) || 0;
+  const _pCb = document.getElementById('bm-carb').textContent.trim();
+  const _pFt = parseInt(document.getElementById('bm-fat').textContent) || 0;
+  const _bCh = [];
+  if (_pPD !== protDosis)  _bCh.push({ label: 'g Proteína/batido', from: _pPD, to: protDosis });
+  if (_pCD !== creatDosis) _bCh.push({ label: 'g Creatina/batido', from: _pCD, to: creatDosis });
+  if (_pEx !== extra)      _bCh.push({ label: 'Ingredientes extra', from: _pEx, to: extra });
+  if (_pKc !== kcal)       _bCh.push({ label: 'kcal',              from: _pKc, to: kcal });
+  if (_pPr !== prot)       _bCh.push({ label: 'Proteína g',        from: _pPr, to: prot });
+  if (_pCb !== carb)       _bCh.push({ label: 'Carbos',            from: _pCb, to: carb });
+  if (_pFt !== fat)        _bCh.push({ label: 'Grasas g',          from: _pFt, to: fat });
+  if (!confirmSave(_bCh)) return;
 
   // Actualizar spans de dosis visibles
   document.getElementById('batido-prot-dosis-view').textContent  = protDosis;
@@ -1555,12 +1622,29 @@ function syncBatidoToMenuCards(d) {
 
 async function loadBatidoData() {
   try { applyBatidoData(JSON.parse(localStorage.getItem(BATIDO_LOCAL_KEY))); } catch(e) {}
+  // Restaurar contador de batidos desde localStorage
+  try {
+    const _lc = parseInt(localStorage.getItem('planMuscular_batidos_count'));
+    if (!isNaN(_lc) && _lc >= 0) { const _s = loadSuplState(); _s.batidos = _lc; saveSuplState(_s); renderSupl(); }
+  } catch(e) {}
   if (!CLOUD_CONFIGURED) return;
   try {
     const res = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_FB_KEY + '.json');
     if (!res.ok) throw new Error();
     const d = await res.json();
     if (d) { try { localStorage.setItem(BATIDO_LOCAL_KEY, JSON.stringify(d)); } catch(e) {} applyBatidoData(d); }
+  } catch(e) {}
+  // Cargar contador desde Firebase (tiene prioridad sobre localStorage)
+  try {
+    const _rc = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/batidos_count.json');
+    if (_rc.ok) {
+      const _cnt = await _rc.json();
+      if (_cnt !== null && !isNaN(parseInt(_cnt))) {
+        const _s = loadSuplState(); _s.batidos = parseInt(_cnt); saveSuplState(_s);
+        try { localStorage.setItem('planMuscular_batidos_count', String(_s.batidos)); } catch(e) {}
+        renderSupl();
+      }
+    }
   } catch(e) {}
 }
 
@@ -1597,7 +1681,9 @@ function renderItemsToList(list, items) {
     const div = document.createElement('div');
     div.className = 'compra-item';
     if (it.gallery) div.dataset.gallery = it.gallery;
-    div.innerHTML = `<span class="compra-img"><img src="${escapeHtml(it.img || '')}" alt="" onerror="this.style.display='none'"></span><span class="name">${escapeHtml(it.name)}</span><span class="price">${escapeHtml(it.price)}</span>`;
+        const _priceNum = parsePriceStr(it.price);
+    const _priceDisplay = _priceNum > 0 ? fmtPrice(_priceNum) : escapeHtml(it.price || '');
+    div.innerHTML = `<span class="compra-img"><img src="${escapeHtml(it.img || '')}" alt="" onerror="this.style.display='none'"></span><span class="name">${escapeHtml(it.name)}</span><span class="price">${_priceDisplay}</span>`;
     list.appendChild(div);
   });
   // Re-attach lightbox listeners
@@ -1771,6 +1857,8 @@ function saveSuplEdit(btn) {
   const suplData = {};
   const s = loadSuplState();
 
+  // Recopilar cambios para confirmación
+  const _sCh = [];
   list.querySelectorAll('.compra-item-edit[data-supl-edit-id]').forEach(row => {
     const id      = row.dataset.suplEditId;
     const name    = row.querySelector('.inp-name')?.value.trim()                     || '';
@@ -1780,11 +1868,23 @@ function saveSuplEdit(btn) {
     const gallery = row.querySelector('.inp-gallery')?.value.trim()                  || '';
     suplData[id]  = { name, price, stock, img, gallery };
 
+    // Registrar cambios vs estado anterior
+    const _pi  = document.querySelector(`.supl-product-item[data-supl-id="${id}"]`);
+    const _pNm = _pi?.querySelector('.supl-name-view')?.textContent?.trim() || '';
+    const _ps  = loadSuplState();
+    const _pPr = id === 'prot' ? (_ps.protPrecio||0) : (_ps.creatPrecio||0);
+    const _pSt = id === 'prot' ? (_ps.protStock||0)  : (_ps.creatStock||0);
+    const _lbl = id === 'prot' ? 'Proteína' : 'Creatina';
+    if (_pNm !== name  && name)  _sCh.push({ label: 'Nombre ('  + _lbl + ')', from: _pNm,                      to: name });
+    if (_pPr !== price && price) _sCh.push({ label: 'Precio ('  + _lbl + ')', from: _pPr ? fmtEur(_pPr) : '—', to: fmtEur(price) });
+    if (_pSt !== stock && stock) _sCh.push({ label: 'Compré ('  + _lbl + ')', from: _pSt ? _pSt + 'g' : '—',   to: stock + 'g' });
+
     // Actualizar suplState con precio y stock
     if (id === 'prot')  { s.protPrecio  = price; if (stock > 0) s.protStock  = stock; }
     if (id === 'creat') { s.creatPrecio = price; if (stock > 0) s.creatStock = stock; }
   });
 
+  if (!confirmSave(_sCh)) return;
   saveSuplState(s);
 
   // Restaurar HTML original de la lista y aplicar los nuevos valores visuales
@@ -1898,18 +1998,33 @@ function saveCompraEdit(btn) {
   list.querySelectorAll('.compra-item-edit').forEach(row => {
     const inputs = row.querySelectorAll('input');
     const name    = inputs[0]?.value.trim() || '';
-    const rawPrice = (inputs[1]?.value || '').trim().replace(/[€\s]/g, '');
-    const price   = rawPrice ? rawPrice + '\u00a0€' : '';
+    const rawPrice = (inputs[1]?.value || '').trim().replace(/[€\s\u00a0]/g, '');
+    const priceNum = parseFloat(rawPrice.replace(',', '.')) || 0;
+    const price   = priceNum > 0 ? fmtPrice(priceNum) : '';
     const img     = inputs[2]?.value.trim() || '';
     const gallery = inputs[3]?.value.trim() || '';
     if (name) items.push({ name, price, img, gallery });
   });
+
+  // Confirmar cambios vs estado actual del DOM
+  const prevItems = [];
+  list.querySelectorAll('.compra-item:not(.compra-item-edit)').forEach(it => {
+    prevItems.push((it.querySelector('.name')?.textContent || '') + ' — ' + (it.querySelector('.price')?.textContent || ''));
+  });
+  const nextItems = items.map(it => it.name + ' — ' + (it.price || ''));
+  const addedItems   = nextItems.filter(x => !prevItems.includes(x));
+  const removedItems = prevItems.filter(x => !nextItems.includes(x));
+  const compraChanges = [];
+  removedItems.forEach(x => compraChanges.push({ label: 'Eliminar', from: x, to: '(eliminado)' }));
+  addedItems.forEach(x  => compraChanges.push({ label: 'Añadir/modificar', from: '', to: x }));
+  if (!confirmSave(compraChanges)) return;
 
   card.classList.remove('editing-compra');
   const editBtn = card.querySelector('.compra-edit-btn');
   if (editBtn) editBtn.textContent = '✏ Editar categoría';
 
   renderItemsToList(list, items);
+  recalcTotalSemanal();
 
   let allCompra = {};
   try { allCompra = JSON.parse(localStorage.getItem(COMPRA_LOCAL_KEY) || '{}'); } catch(e) {}
@@ -1939,6 +2054,7 @@ function applyCompraData(allCompra) {
     const list = card.querySelector('.compra-items-list');
     if (list) renderItemsToList(list, items);
   });
+  recalcTotalSemanal();
   // Suplementos: nombre/emoji/img + precio y stock al suplState
   const suplData = allCompra['suplementos'];
   if (suplData && typeof suplData === 'object') {
