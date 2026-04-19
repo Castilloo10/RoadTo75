@@ -1004,6 +1004,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadData();
   loadBatidoData();
   loadCompraData();
+  loadSuplStateFromCloud();
   // recalcTotalSemanal se llama desde applyCompraData
   // Fallback emoji si la imagen no carga
   document.querySelectorAll('.compra-img img').forEach(img => {
@@ -1172,12 +1173,34 @@ async function resetDay(dayId) {
 }
 // ══ SUPLEMENTOS TRACKER ══
 const SUPL_KEY = 'suplTracker_v1';
+const SUPL_FB_KEY = 'supl_state';
 
 function loadSuplState() {
   try { return JSON.parse(localStorage.getItem(SUPL_KEY) || '{}'); } catch(e) { return {}; }
 }
 function saveSuplState(s) {
   try { localStorage.setItem(SUPL_KEY, JSON.stringify(s)); } catch(e) {}
+  // Sincronizar con Firebase de forma silenciosa
+  if (!CLOUD_CONFIGURED) return;
+  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + SUPL_FB_KEY + '.json', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(s)
+  }).catch(() => {});
+}
+
+async function loadSuplStateFromCloud() {
+  if (!CLOUD_CONFIGURED) return;
+  try {
+    const res = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + SUPL_FB_KEY + '.json');
+    if (!res.ok) throw new Error();
+    const d = await res.json();
+    if (d && typeof d === 'object') {
+      // Fusionar: la nube tiene prioridad sobre localStorage
+      try { localStorage.setItem(SUPL_KEY, JSON.stringify(d)); } catch(e) {}
+      renderSupl();
+    }
+  } catch(e) {}
 }
 
 function renderSupl() {
@@ -1345,6 +1368,7 @@ function resetBatidos() {
   s.batidos = 0;
   saveSuplState(s);
   renderSupl();
+  persistBatidosCount(0);
 }
 
 function resetSupl(type) {
