@@ -2048,7 +2048,7 @@ async function toggleCompraEdit(btn) {
   list.appendChild(addRow);
   const actRow = document.createElement('div');
   actRow.className = 'compra-edit-actions';
-  actRow.innerHTML = `<button class="btn-save-meal" onclick="saveCompraEdit(this)">✓ Guardar categoría</button><button class="btn-cancel-meal" onclick="cancelCompraEditBtn(this)">✕ Cancelar</button>`;
+  actRow.innerHTML = `<button class="btn-save-meal" onclick="saveCompraEdit(this)">✓ Guardar</button><button class="btn-cancel-meal" onclick="cancelCompraEditBtn(this)">✕ Cancelar</button>`;
   list.appendChild(actRow);
   // Attach price normalization to all price inputs
   list.querySelectorAll('.inp-price').forEach(inp => attachPriceNormalization(inp));
