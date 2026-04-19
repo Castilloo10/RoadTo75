@@ -265,6 +265,12 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   #modal-confirm.open #modal-confirm-box{transform:scale(1)}
 }
 
+/* EMOJI PICKER */
+.emoji-picker-grid::-webkit-scrollbar{width:4px}
+.emoji-picker-grid::-webkit-scrollbar-track{background:transparent}
+.emoji-picker-grid::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.emoji-search-input:focus{border-color:var(--accent) !important}
+
 /* SYNC STATUS */
 #sync-status{position:fixed;bottom:1.25rem;right:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--text2);display:flex;align-items:center;gap:7px;z-index:999;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s,border-color .25s;pointer-events:none}
 #sync-status.show{opacity:1;transform:translateY(0)}
@@ -632,8 +638,8 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
     <!-- VIERNES -->
     <div class="day-content" id="day-vie">
       <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)">
-        <span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Pierna
-        <br><span style="display:inline-block;margin-top:5px;background:rgba(55,160,240,.15);color:var(--blue)" class="day-badge-train">💤 DESCANSO</span> &nbsp;·&nbsp; <em>Opcional</em> - Plan de entrenamiento de 3 días
+        <div><span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Pierna</div>
+        <div style="margin-top:5px"><span style="display:inline-block;background:rgba(55,160,240,.15);color:var(--blue)" class="day-badge-train">💤 DESCANSO</span> &nbsp;·&nbsp; <em>Opcional</em> - Plan de entrenamiento de 3 días</div>
       </div>
       <div class="meals-grid">
         <div class="meal-card">
@@ -969,18 +975,54 @@ function showSection(id) {
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   event.target.classList.add('active');
+  try { sessionStorage.setItem('nav_section', id); } catch(e) {}
 }
 function showDay(id) {
   document.querySelectorAll('.day-content').forEach(d => d.classList.remove('active'));
   document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('day-' + id).classList.add('active');
   event.target.classList.add('active');
+  try { sessionStorage.setItem('nav_day', id); } catch(e) {}
 }
 function showPlan(id) {
   document.querySelectorAll('.entreno-plan').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.etog-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('plan-' + id).classList.add('active');
   event.target.classList.add('active');
+  try { sessionStorage.setItem('nav_plan', id); } catch(e) {}
+}
+
+function restoreNavState() {
+  try {
+    const section = sessionStorage.getItem('nav_section');
+    if (section && document.getElementById(section)) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById(section).classList.add('active');
+      // Marcar el botón de nav correspondiente
+      document.querySelectorAll('nav button').forEach(b => {
+        if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + section + "'")) b.classList.add('active');
+      });
+    }
+    const day = sessionStorage.getItem('nav_day');
+    if (day && document.getElementById('day-' + day)) {
+      document.querySelectorAll('.day-content').forEach(d => d.classList.remove('active'));
+      document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('day-' + day).classList.add('active');
+      document.querySelectorAll('.day-tab').forEach(t => {
+        if (t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + day + "'")) t.classList.add('active');
+      });
+    }
+    const plan = sessionStorage.getItem('nav_plan');
+    if (plan && document.getElementById('plan-' + plan)) {
+      document.querySelectorAll('.entreno-plan').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.etog-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('plan-' + plan).classList.add('active');
+      document.querySelectorAll('.etog-btn').forEach(b => {
+        if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + plan + "'")) b.classList.add('active');
+      });
+    }
+  } catch(e) {}
 }
 
 // ── HELPERS ──
@@ -997,6 +1039,28 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => enterEditMode(card));
       card.querySelector('.meal-header').appendChild(btn);
     });
+    // Botón «Añadir comida» y «Eliminar comida» en la fila del badge del día
+    const badgeRow = dayEl.querySelector('div[style*="margin-bottom:1rem"]');
+    if (badgeRow) {
+      // Si el badgeRow tiene divs hijos (caso viernes con dos líneas), usar el primer div hijo
+      // para no romper el layout de líneas múltiples. Si no, usar el propio badgeRow.
+      const firstLineEl = badgeRow.querySelector(':scope > div') || badgeRow;
+      firstLineEl.style.display = 'flex';
+      firstLineEl.style.justifyContent = 'space-between';
+      firstLineEl.style.alignItems = 'center';
+      firstLineEl.style.flexWrap = 'wrap';
+      firstLineEl.style.gap = '.5rem';
+      const btnWrap = document.createElement('div');
+      btnWrap.style.cssText = 'display:flex;gap:.4rem;margin-left:auto;flex-wrap:wrap';
+      const addBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '+ Añadir comida' });
+      addBtn.addEventListener('click', () => addMealMode(dayEl));
+      const delBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '🗑 Eliminar comida' });
+      delBtn.style.cssText = 'color:var(--red);border-color:rgba(240,55,55,.35)';
+      delBtn.addEventListener('click', () => toggleDeleteMode(dayEl, delBtn));
+      btnWrap.appendChild(addBtn);
+      btnWrap.appendChild(delBtn);
+      firstLineEl.appendChild(btnWrap);
+    }
     const lbl = dayEl.querySelector('.day-total-label');
     if (lbl) {
       const rb = Object.assign(document.createElement('button'), { className: 'reset-day-btn', textContent: '↺ Resetear' });
@@ -1113,6 +1177,8 @@ document.addEventListener('DOMContentLoaded', () => {
       img.parentElement.style.fontSize = '1.3rem';
     });
   });
+  // Restaurar pestaña/sección donde estaba el usuario
+  restoreNavState();
 });
 
 // ── CONFIRM SAVE HELPER ──
@@ -1146,11 +1212,337 @@ function mobileConfirm(title, body) {
 async function confirmSave(changes) {
   if (!changes || !changes.length) return true;
   const lines = changes.map(c => {
-    const fromStr = (c.from !== undefined && c.from !== null && String(c.from) !== '') ? String(c.from) : '(vacío)';
-    const toStr   = (c.to   !== undefined && c.to   !== null && String(c.to)   !== '') ? String(c.to)   : '(vacío)';
+    const fromStr = (c.from !== undefined && c.from !== null && String(c.from).trim() !== '' && String(c.from) !== '—') ? String(c.from) : '—';
+    const toStr   = (c.to   !== undefined && c.to   !== null && String(c.to).trim()   !== '' && String(c.to)   !== '—') ? String(c.to)   : '—';
     return `<strong>${escapeHtml(c.label)}</strong><br>· Antes: ${escapeHtml(fromStr)}<br>· Después: ${escapeHtml(toStr)}`;
   });
   return mobileConfirm('¿Confirmar cambios?', lines.join('<br><br>'));
+}
+
+// ── EMOJI PICKER COMPLETO ──
+// Emojis organizados por categoría (fallback offline)
+const EMOJI_CATEGORIES = {
+  '🍽️ Comida & Bebida': ['🍽️','🥗','🍳','🥞','🧆','🥙','🌮','🌯','🥪','🫔','🧇','🥓','🥚','🍲','🥘','🫕','🍛','🍜','🍝','🍠','🍢','🍣','🍤','🍱','🍛','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥨','🥯','🍞','🥐','🥖','🧀','🥗','🥙','🧆','🥚','🍳','🥞','🧇','🍤','🦐','🦑','🦞','🦀','🦪','🍱','🍛','🍜','🍝','🍣','🍤','🍙','🍘','🍥','🥮','🍢','🧁','🍰','🎂','🍮','🍭','🍬','🍫','🍿','🍩','🍪','🌰','🥜','🍯','🧂'],
+  '🥦 Verduras': ['🥦','🥕','🍅','🥑','🍆','🥔','🧅','🧄','🌽','🌶️','🫑','🥒','🥬','🥗','🫛','🧅','🧄','🌿','🪴','🌱','🌾','🫚','🫙'],
+  '🍎 Frutas': ['🍎','🍊','🍋','🍋‍🟩','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🫒','🍐'],
+  '🥛 Lácteos & Huevos': ['🥛','🧀','🥚','🍳','🧈','🫙'],
+  '☕ Bebidas': ['☕','🍵','🧃','🥤','🧋','🍺','🧉','🫖','🍶','🍾','🥂','🍷','🍸','🍹','🍻','🥃','🫗'],
+  '🏋️ Deporte & Fitness': ['🏋️','💪','🤸','🧘','🏃','🚴','⚡','🔥','💥','🎯','🏆','🥇','⏱️','💦','🫀','🫁','🧠'],
+  '🌅 Momento del día': ['🌅','☀️','🌤️','🌙','🌛','⭐','🌟','✨','🌈','🌿','❄️','🔥','💫'],
+  '😊 Otros': ['😋','🤤','👨‍🍳','👩‍🍳','🧑‍🍳','🛒','📦','⚖️','🫶','💚','💛','🧡','❤️','🟢','🔵','🟡','🟠','🔴']
+};
+
+// Cache global de emojis cargados
+let _emojiPickerCache = null;
+
+async function loadEmojiData() {
+  if (_emojiPickerCache) return _emojiPickerCache;
+  try {
+    // API pública de emojis: emoji-api.com (no requiere key para los más usados)
+    // Usamos open-emoji-api que es completamente abierta
+    const res = await fetch('https://emoji-api.com/emojis?access_key=public', { signal: AbortSignal.timeout(3000) });
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    if (!Array.isArray(data)) throw new Error();
+    _emojiPickerCache = data;
+    return data;
+  } catch(e) {
+    return null; // usar fallback local
+  }
+}
+
+function buildEmojiPicker(pickerPanel, pickerGrid, searchInput, iconPreview, onSelect) {
+  let selectedEmoji = '🍽️';
+  let currentEmojis = [];
+
+  function renderGrid(emojis) {
+    currentEmojis = emojis;
+    pickerGrid.innerHTML = '';
+    if (!emojis.length) {
+      pickerGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-size:.8rem;padding:.5rem">Sin resultados</div>';
+      return;
+    }
+    emojis.forEach(em => {
+      const btn = document.createElement('button');
+      btn.textContent = em;
+      btn.title = em;
+      btn.style.cssText = "background:transparent;border:2px solid transparent;border-radius:6px;font-size:1.25rem;padding:4px 2px;cursor:pointer;transition:background .1s,border-color .1s;line-height:1;aspect-ratio:1";
+      if (em === selectedEmoji) { btn.style.borderColor = 'var(--accent)'; btn.style.background = 'rgba(181,240,55,.15)'; }
+      btn.addEventListener('click', () => {
+        selectedEmoji = em;
+        iconPreview.textContent = em;
+        pickerGrid.querySelectorAll('button').forEach(b => { b.style.borderColor = 'transparent'; b.style.background = 'transparent'; });
+        btn.style.borderColor = 'var(--accent)';
+        btn.style.background = 'rgba(181,240,55,.15)';
+        pickerPanel.style.display = 'none';
+        iconPreview.style.transform = 'scale(1)';
+        onSelect(em);
+      });
+      btn.addEventListener('mouseenter', () => { if (em !== selectedEmoji) btn.style.background = 'rgba(255,255,255,.06)'; });
+      btn.addEventListener('mouseleave', () => { if (em !== selectedEmoji) btn.style.background = 'transparent'; });
+      pickerGrid.appendChild(btn);
+    });
+  }
+
+  function renderByCategory(filter) {
+    pickerGrid.innerHTML = '';
+    Object.entries(EMOJI_CATEGORIES).forEach(([cat, emojis]) => {
+      const filtered = filter ? emojis.filter(e => e.includes(filter)) : emojis;
+      if (!filtered.length) return;
+      const header = document.createElement('div');
+      header.style.cssText = "grid-column:1/-1;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-top:.5rem;margin-bottom:2px;padding-top:.25rem;border-top:1px solid var(--border)";
+      header.textContent = cat;
+      pickerGrid.appendChild(header);
+      filtered.forEach(em => {
+        const btn = document.createElement('button');
+        btn.textContent = em;
+        btn.title = em;
+        btn.style.cssText = "background:transparent;border:2px solid transparent;border-radius:6px;font-size:1.25rem;padding:4px 2px;cursor:pointer;transition:background .1s,border-color .1s;line-height:1;aspect-ratio:1";
+        if (em === selectedEmoji) { btn.style.borderColor = 'var(--accent)'; btn.style.background = 'rgba(181,240,55,.15)'; }
+        btn.addEventListener('click', () => {
+          selectedEmoji = em;
+          iconPreview.textContent = em;
+          pickerGrid.querySelectorAll('button').forEach(b => { b.style.borderColor = 'transparent'; b.style.background = 'transparent'; });
+          btn.style.borderColor = 'var(--accent)';
+          btn.style.background = 'rgba(181,240,55,.15)';
+          pickerPanel.style.display = 'none';
+          iconPreview.style.transform = 'scale(1)';
+          onSelect(em);
+        });
+        btn.addEventListener('mouseenter', () => { if (em !== selectedEmoji) btn.style.background = 'rgba(255,255,255,.06)'; });
+        btn.addEventListener('mouseleave', () => { if (em !== selectedEmoji) btn.style.background = 'transparent'; });
+        pickerGrid.appendChild(btn);
+      });
+    });
+  }
+
+  // Búsqueda en tiempo real
+  let searchTimer;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) { renderByCategory(''); return; }
+      // Buscar en todas las categorías
+      const all = Object.values(EMOJI_CATEGORIES).flat();
+      renderGrid(all.filter(e => {
+        // Simple búsqueda por si el usuario escribe el emoji directamente
+        return e.includes(q) || [...e].some(c => c.codePointAt(0) > 127);
+      }));
+      // También: si el usuario escribe texto buscamos en el cache de la API si existe
+      if (_emojiPickerCache) {
+        const apiResults = _emojiPickerCache
+          .filter(item => item.unicodeName && item.unicodeName.toLowerCase().includes(q))
+          .slice(0, 80)
+          .map(item => item.character)
+          .filter(Boolean);
+        if (apiResults.length) renderGrid(apiResults);
+      }
+    }, 200);
+  });
+
+  // Render inicial por categorías
+  renderByCategory('');
+  return { getSelected: () => selectedEmoji };
+}
+
+// ── AÑADIR COMIDA ──
+function addMealMode(dayEl) {
+  const grid = dayEl.querySelector('.meals-grid');
+  if (!grid) return;
+  if (grid.querySelector('.meal-card.adding')) return;
+  const card = document.createElement('div');
+  card.className = 'meal-card adding editing';
+  card.innerHTML = `
+    <div class="meal-header" style="align-items:flex-start">
+      <div class="meal-icon d new-meal-icon-preview" style="cursor:pointer;font-size:1.3rem;transition:transform .15s" title="Toca para cambiar emoji">🍽️</div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+        <input class="new-meal-name-input" type="text" value="" placeholder="Nombre (ej: Desayuno)" maxlength="40"
+          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;padding:4px 8px;width:100%">
+        <input class="new-meal-time-input" type="text" value="" placeholder="Hora (ej: 08:00h)" maxlength="20"
+          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:3px 8px;width:100%">
+      </div>
+    </div>
+    <div class="emoji-picker-panel" style="display:none;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.65rem;margin-bottom:.75rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:.5rem">
+        <span style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)">Elige un emoji</span>
+        <input class="emoji-search-input" type="text" placeholder="🔍 Buscar..." style="background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.8rem;padding:4px 8px;flex:1;max-width:160px;outline:none">
+      </div>
+      <div class="emoji-picker-grid" style="display:grid;grid-template-columns:repeat(10,1fr);gap:2px;max-height:220px;overflow-y:auto;padding-right:2px"></div>
+    </div>
+    <div class="meal-food">
+      <textarea class="edit-textarea" placeholder="Nombre del plato\n· Ingrediente 1\n· Ingrediente 2"></textarea>
+    </div>
+    <div class="meal-macros">
+      <div class="macro-edit-row">
+        <div class="macro-edit-item"><label class="lkcal">kcal</label><input type="number" min="0" value="0" oninput="if(this.value<0)this.value=0"></div>
+        <div class="macro-edit-item"><label class="lp">Prot (g)</label><input type="number" min="0" value="0" oninput="if(this.value<0)this.value=0"></div>
+        <div class="macro-edit-item"><label class="lc">Carbs (g)</label><input type="number" min="0" value="0" oninput="if(this.value<0)this.value=0"></div>
+        <div class="macro-edit-item"><label class="lf">Grasas (g)</label><input type="number" min="0" value="0" oninput="if(this.value<0)this.value=0"></div>
+      </div>
+      <div class="meal-edit-actions">
+        <button class="btn-save-meal">✓ Guardar comida</button>
+        <button class="btn-cancel-meal">✕ Cancelar</button>
+      </div>
+    </div>`;
+  grid.appendChild(card);
+
+  const pickerPanel  = card.querySelector('.emoji-picker-panel');
+  const pickerGrid   = card.querySelector('.emoji-picker-grid');
+  const searchInput  = card.querySelector('.emoji-search-input');
+  const iconPreview  = card.querySelector('.new-meal-icon-preview');
+
+  const picker = buildEmojiPicker(pickerPanel, pickerGrid, searchInput, iconPreview, () => {});
+
+  // Intentar enriquecer con datos de API en background
+  loadEmojiData(); // carga silenciosa para tener cache listo
+
+  // Toggle picker al pulsar el icono
+  iconPreview.addEventListener('click', () => {
+    const open = pickerPanel.style.display !== 'none';
+    pickerPanel.style.display = open ? 'none' : 'block';
+    iconPreview.style.transform = open ? 'scale(1)' : 'scale(1.15)';
+    if (!open) { searchInput.value = ''; searchInput.focus(); }
+  });
+
+  card._getSelectedEmoji = () => picker.getSelected();
+  card.querySelector('textarea').focus();
+  // Focus en nombre primero
+  const nameInp = card.querySelector('.new-meal-name-input');
+  if (nameInp) nameInp.focus();
+  card.querySelector('.btn-save-meal').addEventListener('click', () => saveNewMeal(card));
+  card.querySelector('.btn-cancel-meal').addEventListener('click', () => { card.remove(); });
+}
+
+// ── MODO ELIMINAR COMIDAS ──
+function toggleDeleteMode(dayEl, toggleBtn) {
+  const isActive = dayEl.dataset.deleteMode === '1';
+  if (isActive) {
+    // Desactivar modo eliminar
+    dayEl.dataset.deleteMode = '0';
+    toggleBtn.textContent = '🗑 Eliminar comida';
+    toggleBtn.style.color = 'var(--red)';
+    toggleBtn.style.borderColor = 'rgba(240,55,55,.35)';
+    dayEl.querySelectorAll('.meal-delete-btn').forEach(b => b.remove());
+  } else {
+    // Activar modo eliminar
+    dayEl.dataset.deleteMode = '1';
+    toggleBtn.textContent = '✕ Cancelar eliminación';
+    toggleBtn.style.color = 'var(--text2)';
+    toggleBtn.style.borderColor = 'var(--border)';
+    dayEl.querySelectorAll('.meal-card').forEach(card => {
+      if (card.classList.contains('adding')) return;
+      if (card.querySelector('.meal-delete-btn')) return;
+      const delBtn = document.createElement('button');
+      delBtn.className = 'meal-delete-btn';
+      delBtn.textContent = '🗑 Borrar';
+      delBtn.style.cssText = "background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:7px;padding:5px 12px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.75rem;width:100%;transition:background .2s";
+      delBtn.addEventListener('mouseenter', () => { delBtn.style.background = 'rgba(240,55,55,.22)'; });
+      delBtn.addEventListener('mouseleave', () => { delBtn.style.background = 'rgba(240,55,55,.1)'; });
+      delBtn.addEventListener('click', () => deleteMeal(card, dayEl, toggleBtn));
+      card.appendChild(delBtn);
+    });
+  }
+}
+
+async function deleteMeal(card, dayEl, toggleBtn) {
+  const mealName = card.querySelector('.meal-name')?.textContent || 'esta comida';
+  const confirmed = await mobileConfirm('Eliminar comida', '¿Seguro que quieres eliminar <strong>' + escapeHtml(mealName) + '</strong>?<br><br>Esta acción no se puede deshacer.');
+  if (!confirmed) return;
+  // Eliminar del snapshot si tiene id
+  if (card.id) {
+    let data = {};
+    try { data = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); } catch(e) {}
+    delete data[card.id];
+    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
+    if (CLOUD_CONFIGURED) {
+      try { await fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch(e) {}
+    }
+  }
+  card.remove();
+  // Desactivar modo eliminar después de borrar
+  const remaining = dayEl.querySelectorAll('.meal-card');
+  if (remaining.length === 0 || dayEl.dataset.deleteMode === '1') {
+    dayEl.dataset.deleteMode = '0';
+    toggleBtn.textContent = '🗑 Eliminar comida';
+    toggleBtn.style.color = 'var(--red)';
+    toggleBtn.style.borderColor = 'rgba(240,55,55,.35)';
+    dayEl.querySelectorAll('.meal-delete-btn').forEach(b => b.remove());
+  }
+  // Recalcular totales
+  const anyCard = dayEl.querySelector('.meal-card');
+  if (anyCard) { recalcDayTotal(anyCard); } else {
+    const macrosDiv = dayEl.querySelector('.day-total-macros');
+    if (macrosDiv) macrosDiv.innerHTML = '<span class="pill kcal">0 kcal</span><span class="pill p">0g P</span><span class="pill c">0g C</span><span class="pill f">0g G</span>';
+  }
+  recalcWeeklyAvg();
+  setSyncStatus('saved', '✓ Comida eliminada');
+}
+
+async function saveNewMeal(card) {
+  const foodEl   = card.querySelector('.meal-food');
+  const macrosEl = card.querySelector('.meal-macros');
+  const textarea = foodEl.querySelector('textarea');
+  const lines    = textarea.value.trim().split('\n');
+  if (!lines[0].trim()) { textarea.style.borderColor = 'var(--red)'; textarea.focus(); return; }
+  // Leer nombre y hora de los inputs
+  const nameInpEl = card.querySelector('.new-meal-name-input');
+  const timeInpEl = card.querySelector('.new-meal-time-input');
+  const mealName  = (nameInpEl && nameInpEl.value.trim()) ? nameInpEl.value.trim() : (lines[0].trim() || 'Comida extra');
+  const mealTime  = (timeInpEl && timeInpEl.value.trim()) ? timeInpEl.value.trim() : '';
+  // Capturar emoji elegido del picker
+  const chosenEmoji = card._getSelectedEmoji ? card._getSelectedEmoji() : '🍽️';
+  const iconEl = card.querySelector('.meal-icon');
+  if (iconEl) iconEl.textContent = chosenEmoji;
+  const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => Math.max(0, parseInt(i.value) || 0));
+  // Asignar id único a la nueva tarjeta
+  const dayEl = card.closest('.day-content');
+  card.id = dayEl.id + '-extra-' + Date.now();
+  // Reemplazar header con nombre y hora reales (eliminar inputs)
+  const headerDiv = card.querySelector('.meal-header > div');
+  if (headerDiv) {
+    headerDiv.innerHTML = `<div class="meal-name">${escapeHtml(mealName)}</div><div class="meal-time">${escapeHtml(mealTime)}</div>`;
+    headerDiv.style = '';
+  }
+  // Eliminar panel picker
+  card.querySelector('.emoji-picker-panel')?.remove();
+  // Convertir en tarjeta real
+  foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
+  macrosEl.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span>`;
+  card.classList.remove('editing', 'adding');
+  // Añadir botón editar
+  const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
+  editBtn.addEventListener('click', () => enterEditMode(card));
+  card.querySelector('.meal-header').appendChild(editBtn);
+  recalcDayTotal(card);
+  recalcWeeklyAvg();
+  scheduleSave();
+}
+
+// Recrear una comida extra guardada al restaurar el snapshot
+function createRestoredExtraMeal(dayEl, id, saved) {
+  const grid = dayEl.querySelector('.meals-grid');
+  if (!grid) return;
+  const card = document.createElement('div');
+  card.className = 'meal-card';
+  card.id = id;
+  card.innerHTML = `
+    <div class="meal-header">
+      <div class="meal-icon d">🍽️</div>
+      <div><div class="meal-name">Comida extra</div><div class="meal-time"></div></div>
+    </div>
+    <div class="meal-food">${saved.food || ''}</div>
+    <div class="meal-macros">
+      <span class="pill kcal">${saved.kcal} kcal</span>
+      <span class="pill p">${saved.prot}g P</span>
+      <span class="pill c">${saved.carb}g C</span>
+      <span class="pill f">${saved.fat}g G</span>
+    </div>`;
+  grid.appendChild(card);
+  // Añadir botón editar
+  const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
+  editBtn.addEventListener('click', () => enterEditMode(card));
+  card.querySelector('.meal-header').appendChild(editBtn);
 }
 
 // ── EDIT MODE ──
@@ -1160,10 +1552,74 @@ function enterEditMode(card) {
   const foodEl = card.querySelector('.meal-food');
   const macrosEl = card.querySelector('.meal-macros');
   const editBtn = card.querySelector('.edit-btn');
+  const iconEl = card.querySelector('.meal-icon');
+  const nameEl = card.querySelector('.meal-name');
+  const timeEl = card.querySelector('.meal-time');
   card._origFood = foodEl.innerHTML;
   card._origMacros = macrosEl.innerHTML;
+  card._origEmoji = iconEl ? iconEl.textContent.trim() : '🍽️';
+  card._origName  = nameEl ? nameEl.textContent.trim() : '';
+  card._origTime  = timeEl ? timeEl.textContent.trim() : '';
   const pills = macrosEl.querySelectorAll('.pill');
   const [kcal, prot, carb, fat] = [...pills].map(p => parsePillNum(p.textContent));
+
+  // Convertir nombre y hora en inputs editables
+  if (nameEl) {
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.className = 'edit-meal-name-inp';
+    inp.value = card._origName;
+    inp.maxLength = 40;
+    inp.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;padding:3px 7px;width:100%;margin-bottom:3px";
+    nameEl.replaceWith(inp);
+  }
+  if (timeEl) {
+    const inp2 = document.createElement('input');
+    inp2.type = 'text';
+    inp2.className = 'edit-meal-time-inp';
+    inp2.value = card._origTime;
+    inp2.maxLength = 20;
+    inp2.placeholder = 'Hora (ej: 08:00h)';
+    inp2.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:2px 7px;width:100%";
+    timeEl.replaceWith(inp2);
+  }
+
+  // Hacer el icono clickable para abrir el picker
+  if (iconEl) {
+    iconEl.style.cursor = 'pointer';
+    iconEl.title = 'Cambiar emoji';
+    iconEl.style.transition = 'transform .15s';
+  }
+
+  // Insertar panel del picker justo antes de meal-food
+  const pickerPanel = document.createElement('div');
+  pickerPanel.className = 'emoji-picker-panel';
+  pickerPanel.style.cssText = 'display:none;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.65rem;margin-bottom:.75rem';
+  pickerPanel.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:.5rem">
+      <span style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)">Elige un emoji</span>
+      <input class="emoji-search-input" type="text" placeholder="🔍 Buscar..." style="background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.8rem;padding:4px 8px;flex:1;max-width:160px;outline:none">
+    </div>
+    <div class="emoji-picker-grid" style="display:grid;grid-template-columns:repeat(10,1fr);gap:2px;max-height:200px;overflow-y:auto;padding-right:2px"></div>`;
+  foodEl.parentNode.insertBefore(pickerPanel, foodEl);
+
+  const pickerGrid  = pickerPanel.querySelector('.emoji-picker-grid');
+  const searchInput = pickerPanel.querySelector('.emoji-search-input');
+  buildEmojiPicker(pickerPanel, pickerGrid, searchInput, iconEl || {textContent:''}, (em) => {
+    if (iconEl) iconEl.textContent = em;
+  });
+
+  if (iconEl) {
+    iconEl.addEventListener('click', function _togglePicker() {
+      const open = pickerPanel.style.display !== 'none';
+      pickerPanel.style.display = open ? 'none' : 'block';
+      iconEl.style.transform = open ? 'scale(1)' : 'scale(1.15)';
+      if (!open) { searchInput.value = ''; searchInput.focus(); }
+    });
+  }
+
+  card._getEditEmoji = () => (iconEl ? iconEl.textContent.trim() : card._origEmoji);
+
   foodEl.innerHTML = `<textarea class="edit-textarea" placeholder="Nombre del plato\n· Ingrediente 1\n· Ingrediente 2"></textarea>`;
   foodEl.querySelector('textarea').value = foodEl._origText || card._origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'');
   macrosEl.innerHTML = `
@@ -1224,6 +1680,20 @@ async function saveEditMode(card) {
     if (origN !== [k,p,c,f][i]) menuChanges.push({ label: lbl, from: origN, to: [k,p,c,f][i] });
   });
   if (!await confirmSave(menuChanges)) return;
+  // Aplicar emoji si cambió
+  const newEmoji = card._getEditEmoji ? card._getEditEmoji() : null;
+  const iconEl2 = card.querySelector('.meal-icon');
+  if (newEmoji && iconEl2) iconEl2.textContent = newEmoji;
+  if (iconEl2) { iconEl2.style.cursor = ''; iconEl2.title = ''; iconEl2.style.transform = ''; }
+  // Aplicar nombre y hora editados
+  const nameInp = card.querySelector('.edit-meal-name-inp');
+  const timeInp = card.querySelector('.edit-meal-time-inp');
+  const newName = nameInp ? nameInp.value.trim() || card._origName : card._origName;
+  const newTime = timeInp ? timeInp.value.trim() : card._origTime;
+  if (nameInp) { const el = document.createElement('div'); el.className='meal-name'; el.textContent=newName; nameInp.replaceWith(el); }
+  if (timeInp) { const el = document.createElement('div'); el.className='meal-time'; el.textContent=newTime; timeInp.replaceWith(el); }
+  // Limpiar picker panel
+  card.querySelector('.emoji-picker-panel')?.remove();
   foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
   macrosEl.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span>`;
   card.classList.remove('editing');
@@ -1234,6 +1704,15 @@ async function saveEditMode(card) {
 }
 
 function cancelEditMode(card) {
+  // Restaurar emoji original
+  const iconEl = card.querySelector('.meal-icon');
+  if (iconEl && card._origEmoji) { iconEl.textContent = card._origEmoji; iconEl.style.cursor = ''; iconEl.title = ''; iconEl.style.transform = ''; }
+  // Restaurar nombre y hora originales
+  const nameInp = card.querySelector('.edit-meal-name-inp');
+  const timeInp = card.querySelector('.edit-meal-time-inp');
+  if (nameInp) { const el = document.createElement('div'); el.className='meal-name'; el.textContent=card._origName||''; nameInp.replaceWith(el); }
+  if (timeInp) { const el = document.createElement('div'); el.className='meal-time'; el.textContent=card._origTime||''; timeInp.replaceWith(el); }
+  card.querySelector('.emoji-picker-panel')?.remove();
   card.querySelector('.meal-food').innerHTML = card._origFood;
   card.querySelector('.meal-macros').innerHTML = card._origMacros;
   card.classList.remove('editing');
@@ -1267,6 +1746,15 @@ function buildSnapshot() {
 
 function applySnapshot(data) {
   if (!data) return;
+  // Recrear primero las comidas extra que no existen en el DOM
+  Object.entries(data).forEach(([id, saved]) => {
+    if (document.getElementById(id)) return;
+    const match = id.match(/^(day-[a-z]+)-extra-/);
+    if (!match) return;
+    const dayEl = document.getElementById(match[1]);
+    if (dayEl) createRestoredExtraMeal(dayEl, id, saved);
+  });
+  // Aplicar contenido a todas las tarjetas
   Object.entries(data).forEach(([id, saved]) => {
     const card = document.getElementById(id);
     if (!card) return;
@@ -2208,29 +2696,53 @@ async function saveCompraEdit(btn) {
   const list = card.querySelector('.compra-items-list');
   const catId = card.dataset.catId;
 
+  // Parse new items from edit inputs
   const items = [];
   list.querySelectorAll('.compra-item-edit').forEach(row => {
-    const inputs = row.querySelectorAll('input');
-    const name    = inputs[0]?.value.trim() || '';
-    const rawPrice = (inputs[1]?.value || '').trim().replace(/[€\s\u00a0]/g, '');
+    const name    = row.querySelector('.inp-name')?.value.trim() || '';
+    const rawPrice = (row.querySelector('.inp-price')?.value || '').trim().replace(/[€\s\u00a0]/g, '');
     const priceNum = parseFloat(rawPrice.replace(',', '.')) || 0;
-    const price   = priceNum > 0 ? fmtPrice(priceNum) : '';
-    const img     = inputs[2]?.value.trim() || '';
-    const gallery = inputs[3]?.value.trim() || '';
+    const price    = priceNum > 0 ? fmtPrice(priceNum) : '';
+    const img      = row.querySelectorAll('input[type=text]')[1]?.value.trim() || '';
+    const gallery  = row.querySelectorAll('input[type=text]')[2]?.value.trim() || '';
     if (name) items.push({ name, price, img, gallery });
   });
 
-  // Confirmar cambios vs estado actual del DOM
-  const prevItems = [];
-  list.querySelectorAll('.compra-item:not(.compra-item-edit)').forEach(it => {
-    prevItems.push((it.querySelector('.name')?.textContent || '') + ' — ' + (it.querySelector('.price')?.textContent || ''));
-  });
-  const nextItems = items.map(it => it.name + ' — ' + (it.price || ''));
-  const addedItems   = nextItems.filter(x => !prevItems.includes(x));
-  const removedItems = prevItems.filter(x => !nextItems.includes(x));
+  // Parse ORIGINAL items from the saved HTML (not the live DOM which was replaced)
+  const origItems = [];
+  if (card._origItemsHTML) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = card._origItemsHTML;
+    tmp.querySelectorAll('.compra-item').forEach(it => {
+      const nameEl  = it.querySelector('.name');
+      const priceEl = it.querySelector('.price');
+      if (!nameEl) return;
+      origItems.push({ name: nameEl.textContent.trim(), price: (priceEl?.textContent || '').trim() });
+    });
+  }
+
+  // Build changes: compare by position and name
   const compraChanges = [];
-  removedItems.forEach(x => compraChanges.push({ label: 'Eliminar', from: x, to: '(eliminado)' }));
-  addedItems.forEach(x  => compraChanges.push({ label: 'Añadir/modificar', from: '', to: x }));
+  const origByName = Object.fromEntries(origItems.map(o => [o.name, o]));
+  const newByName  = Object.fromEntries(items.map(i => [i.name, i]));
+
+  // Modified or added
+  items.forEach(item => {
+    const orig = origByName[item.name];
+    if (!orig) {
+      compraChanges.push({ label: 'Añadir', from: '—', to: item.name + (item.price ? ' · ' + item.price : '') });
+    } else if (orig.price !== item.price) {
+      compraChanges.push({ label: item.name, from: orig.price || '—', to: item.price || '—' });
+    }
+  });
+
+  // Removed
+  origItems.forEach(orig => {
+    if (!newByName[orig.name]) {
+      compraChanges.push({ label: 'Eliminar', from: orig.name + (orig.price ? ' · ' + orig.price : ''), to: '—' });
+    }
+  });
+
   if (!await confirmSave(compraChanges)) return;
 
   card.classList.remove('editing-compra');
