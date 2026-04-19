@@ -235,6 +235,20 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .supl-price-input:focus{outline:none;border-bottom-color:var(--accent)}
 .supl-price-input::-webkit-inner-spin-button,.supl-price-input::-webkit-outer-spin-button{-webkit-appearance:none}
 
+/* MODAL CONFIRM */
+#modal-confirm{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:3000;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .2s}
+#modal-confirm.open{opacity:1;pointer-events:all}
+#modal-confirm-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;max-width:420px;width:100%;max-height:80vh;overflow-y:auto;transform:scale(.95);transition:transform .2s}
+#modal-confirm.open #modal-confirm-box{transform:scale(1)}
+#modal-confirm-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--accent);margin-bottom:.75rem;letter-spacing:.5px}
+#modal-confirm-body{font-size:.84rem;color:var(--text2);line-height:1.7;white-space:pre-wrap;margin-bottom:1.25rem;max-height:40vh;overflow-y:auto}
+#modal-confirm-body strong{color:var(--text)}
+.modal-confirm-actions{display:flex;gap:.75rem;justify-content:flex-end;flex-wrap:wrap}
+.modal-btn-ok{background:var(--accent);color:#0d0f0e;border:none;border-radius:8px;padding:10px 22px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:opacity .2s}
+.modal-btn-ok:hover{opacity:.85}
+.modal-btn-cancel{background:transparent;border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:10px 22px;font-family:'DM Sans',sans-serif;font-size:.9rem;cursor:pointer;transition:border-color .2s}
+.modal-btn-cancel:hover{border-color:var(--text2)}
+
 /* SYNC STATUS */
 #sync-status{position:fixed;bottom:1.25rem;right:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--text2);display:flex;align-items:center;gap:7px;z-index:999;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s,border-color .25s;pointer-events:none}
 #sync-status.show{opacity:1;transform:translateY(0)}
@@ -304,6 +318,18 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 
 <div id="sync-status"><span class="sync-dot"></span><span id="sync-msg">Sincronizando…</span></div>
+
+<!-- MODAL CONFIRM -->
+<div id="modal-confirm" role="dialog" aria-modal="true">
+  <div id="modal-confirm-box">
+    <div id="modal-confirm-title">Confirmar</div>
+    <div id="modal-confirm-body"></div>
+    <div class="modal-confirm-actions">
+      <button class="modal-btn-cancel" id="modal-btn-cancel">✕ Cancelar</button>
+      <button class="modal-btn-ok" id="modal-btn-ok">✓ Confirmar</button>
+    </div>
+  </div>
+</div>
 
 <header>
   <div class="header-inner">
@@ -1016,14 +1042,41 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ── CONFIRM SAVE HELPER ──
-function confirmSave(changes) {
+// ── MODAL CONFIRM (reemplaza confirm() nativo, funciona en móvil) ──
+function mobileConfirm(title, body) {
+  return new Promise(resolve => {
+    const modal   = document.getElementById('modal-confirm');
+    const titleEl = document.getElementById('modal-confirm-title');
+    const bodyEl  = document.getElementById('modal-confirm-body');
+    const btnOk   = document.getElementById('modal-btn-ok');
+    const btnCan  = document.getElementById('modal-btn-cancel');
+    titleEl.textContent = title;
+    bodyEl.innerHTML    = body;
+    modal.classList.add('open');
+    function close(result) {
+      modal.classList.remove('open');
+      btnOk.removeEventListener('click', onOk);
+      btnCan.removeEventListener('click', onCan);
+      modal.removeEventListener('click', onBg);
+      resolve(result);
+    }
+    const onOk  = () => close(true);
+    const onCan = () => close(false);
+    const onBg  = (e) => { if (e.target === modal) close(false); };
+    btnOk.addEventListener('click',  onOk);
+    btnCan.addEventListener('click', onCan);
+    modal.addEventListener('click',  onBg);
+  });
+}
+
+async function confirmSave(changes) {
   if (!changes || !changes.length) return true;
   const lines = changes.map(c => {
     const fromStr = (c.from !== undefined && c.from !== null && String(c.from) !== '') ? String(c.from) : '(vacío)';
     const toStr   = (c.to   !== undefined && c.to   !== null && String(c.to)   !== '') ? String(c.to)   : '(vacío)';
-    return '• ' + c.label + ':\n  Antes:   ' + fromStr + '\n  Después: ' + toStr;
+    return `<strong>${escapeHtml(c.label)}</strong><br>· Antes: ${escapeHtml(fromStr)}<br>· Después: ${escapeHtml(toStr)}`;
   });
-  return confirm('¿Confirmar los siguientes cambios?\n\n' + lines.join('\n\n'));
+  return mobileConfirm('¿Confirmar cambios?', lines.join('<br><br>'));
 }
 
 // ── EDIT MODE ──
@@ -1055,7 +1108,7 @@ function enterEditMode(card) {
   editBtn.style.display = 'none';
 }
 
-function saveEditMode(card) {
+async function saveEditMode(card) {
   const foodEl = card.querySelector('.meal-food');
   const macrosEl = card.querySelector('.meal-macros');
   const lines = foodEl.querySelector('textarea').value.trim().split('\n');
@@ -1069,7 +1122,7 @@ function saveEditMode(card) {
     const origN = origPills[i] ?? 0;
     if (origN !== [k,p,c,f][i]) menuChanges.push({ label: lbl, from: origN, to: [k,p,c,f][i] });
   });
-  if (!confirmSave(menuChanges)) return;
+  if (!await confirmSave(menuChanges)) return;
   foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
   macrosEl.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span>`;
   card.classList.remove('editing');
@@ -1163,7 +1216,7 @@ async function persistData() {
 }
 
 async function resetDay(dayId) {
-  if (!confirm('¿Resetear este día al menú original? Se perderán los cambios.')) return;
+  if (!await mobileConfirm('Resetear día', '¿Resetear este día al menú original?<br>Se perderán los cambios.')) return;
   let data = {};
   try { data = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); } catch(e) {}
   document.getElementById(dayId)?.querySelectorAll('.meal-card[id]').forEach(c => delete data[c.id]);
@@ -1362,8 +1415,8 @@ function persistBatidosCount(count) {
   }).catch(() => {});
 }
 
-function resetBatidos() {
-  if (!confirm('¿Resetear el contador de batidos a 0?')) return;
+async function resetBatidos() {
+  if (!await mobileConfirm('Resetear batidos', '¿Resetear el contador de batidos a 0?')) return;
   const s = loadSuplState();
   s.batidos = 0;
   saveSuplState(s);
@@ -1371,9 +1424,9 @@ function resetBatidos() {
   persistBatidosCount(0);
 }
 
-function resetSupl(type) {
+async function resetSupl(type) {
   const label = type === 'prot' ? 'proteína' : 'creatina';
-  if (!confirm('¿Resetear el stock de ' + label + '? Úsalo cuando hagas una nueva compra.')) return;
+  if (!await mobileConfirm('Resetear stock', '¿Resetear el stock de ' + label + '?<br>Úsalo cuando hagas una nueva compra.')) return;
   const s = loadSuplState();
   if (type === 'prot') { s.protStock = 0; delete s.protStock; }
   else { s.creatStock = 0; delete s.creatStock; }
@@ -1513,7 +1566,7 @@ function cancelBatidoEdit() {
   document.getElementById('batido-edit-btn').textContent = '✏ Editar';
 }
 
-function saveBatidoEdit() {
+async function saveBatidoEdit() {
   const protDosis  = Math.max(1, parseInt(document.getElementById('be-prot-dosis').value)  || 35);
   const creatDosis = Math.max(1, parseInt(document.getElementById('be-creat-dosis').value) || 3);
   const extra = document.getElementById('be-extra').value.trim() || 'fruta (100g) + 300ml leche semi';
@@ -1537,7 +1590,7 @@ function saveBatidoEdit() {
   if (_pPr !== prot)       _bCh.push({ label: 'Proteína g',        from: _pPr, to: prot });
   if (_pCb !== carb)       _bCh.push({ label: 'Carbos',            from: _pCb, to: carb });
   if (_pFt !== fat)        _bCh.push({ label: 'Grasas g',          from: _pFt, to: fat });
-  if (!confirmSave(_bCh)) return;
+  if (!await confirmSave(_bCh)) return;
 
   // Actualizar spans de dosis visibles
   document.getElementById('batido-prot-dosis-view').textContent  = protDosis;
@@ -1875,7 +1928,7 @@ function toggleCompraEdit(btn) {
 }
 
 // Guardar edición de suplementos (nombre/emoji/img/precio/stock)
-function saveSuplEdit(btn) {
+async function saveSuplEdit(btn) {
   const card = btn.closest('.compra-card');
   const list = card.querySelector('.compra-items-list');
   const suplData = {};
@@ -1908,7 +1961,7 @@ function saveSuplEdit(btn) {
     if (id === 'creat') { s.creatPrecio = price; if (stock > 0) s.creatStock = stock; }
   });
 
-  if (!confirmSave(_sCh)) return;
+  if (!await confirmSave(_sCh)) return;
   saveSuplState(s);
 
   // Restaurar HTML original de la lista y aplicar los nuevos valores visuales
@@ -1956,10 +2009,10 @@ function saveSuplEdit(btn) {
   }).catch(() => setSyncStatus('error', '⚠ Error al guardar suplementos'));
 }
 
-function deleteCompraItem(btn) {
+async function deleteCompraItem(btn) {
   const row = btn.closest('.compra-item-edit');
   const name = row.querySelector('.inp-name')?.value.trim() || 'este producto';
-  if (!confirm('¿Eliminar "' + name + '"?')) return;
+  if (!await mobileConfirm('Eliminar producto', '¿Eliminar <strong>' + escapeHtml(name) + '</strong>?')) return;
   row.remove();
 }
 
@@ -2013,7 +2066,7 @@ function cancelCompraEdit(card) {
   }
 }
 
-function saveCompraEdit(btn) {
+async function saveCompraEdit(btn) {
   const card = btn.closest('.compra-card');
   const list = card.querySelector('.compra-items-list');
   const catId = card.dataset.catId;
@@ -2041,7 +2094,7 @@ function saveCompraEdit(btn) {
   const compraChanges = [];
   removedItems.forEach(x => compraChanges.push({ label: 'Eliminar', from: x, to: '(eliminado)' }));
   addedItems.forEach(x  => compraChanges.push({ label: 'Añadir/modificar', from: '', to: x }));
-  if (!confirmSave(compraChanges)) return;
+  if (!await confirmSave(compraChanges)) return;
 
   card.classList.remove('editing-compra');
   const editBtn = card.querySelector('.compra-edit-btn');
