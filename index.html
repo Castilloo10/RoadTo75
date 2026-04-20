@@ -1290,6 +1290,43 @@ function buildEmojiPicker(pickerPanel, pickerGrid, searchInput, iconPreview, onS
   return { getSelected: () => selectedEmoji };
 }
 
+// ── HORA UTILITIES ──
+// "14:30h" / "14:30" / "14h" → "14:30" (para input type=time)
+function timeStrToInputVal(str) {
+  if (!str) return '';
+  const m = str.trim().replace(/h$/i,'').match(/^(\d{1,2})(?::(\d{2}))?$/);
+  if (!m) return '';
+  const hh = m[1].padStart(2,'0');
+  const mm = (m[2] || '00').padStart(2,'0');
+  return hh + ':' + mm;
+}
+// "14:30" (valor de input type=time) → "14:30h"
+function inputValToTimeStr(val) {
+  if (!val) return '';
+  return val + 'h';
+}
+// "14:30h" → minutos desde medianoche (para ordenar)
+function timeStrToMinutes(str) {
+  if (!str) return Infinity;
+  const clean = str.trim().replace(/h$/i,'');
+  const parts = clean.split(':');
+  const h = parseInt(parts[0]) || 0;
+  const m = parseInt(parts[1]) || 0;
+  return h * 60 + m;
+}
+// Reordena las .meal-card dentro del .meals-grid según su .meal-time (reloj 24h)
+function sortMealsByTime(dayEl) {
+  const grid = dayEl.querySelector('.meals-grid');
+  if (!grid) return;
+  const cards = [...grid.querySelectorAll('.meal-card')].filter(c => !c.classList.contains('adding'));
+  cards.sort((a, b) => {
+    const tA = a.querySelector('.meal-time')?.textContent?.trim() || '';
+    const tB = b.querySelector('.meal-time')?.textContent?.trim() || '';
+    return timeStrToMinutes(tA) - timeStrToMinutes(tB);
+  });
+  cards.forEach(c => grid.appendChild(c));
+}
+
 // ── AÑADIR COMIDA ──
 function addMealMode(dayEl) {
   const grid = dayEl.querySelector('.meals-grid');
@@ -1303,8 +1340,8 @@ function addMealMode(dayEl) {
       <div style="flex:1;display:flex;flex-direction:column;gap:4px">
         <input class="new-meal-name-input" type="text" value="" placeholder="Nombre (ej: Desayuno)" maxlength="40"
           style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;padding:4px 8px;width:100%">
-        <input class="new-meal-time-input" type="text" value="" placeholder="Hora (ej: 08:00h)" maxlength="20"
-          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:3px 8px;width:100%">
+        <input class="new-meal-time-input" type="time" value=""
+          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:3px 8px;width:100%;color-scheme:dark">
       </div>
     </div>
     <div class="emoji-picker-panel" style="display:none;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.65rem;margin-bottom:.75rem">
@@ -1433,7 +1470,7 @@ async function saveNewMeal(card) {
   const nameInpEl   = card.querySelector('.new-meal-name-input');
   const timeInpEl   = card.querySelector('.new-meal-time-input');
   const mealName    = (nameInpEl && nameInpEl.value.trim()) ? nameInpEl.value.trim() : (lines[0].trim() || 'Comida extra');
-  const mealTime    = (timeInpEl && timeInpEl.value.trim()) ? timeInpEl.value.trim() : '';
+  const mealTime    = (timeInpEl && timeInpEl.value.trim()) ? inputValToTimeStr(timeInpEl.value.trim()) : '';
   const chosenEmoji = card._getSelectedEmoji ? card._getSelectedEmoji() : '🍽️';
   const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => Math.max(0, parseInt(i.value) || 0));
 
@@ -1472,6 +1509,7 @@ async function saveNewMeal(card) {
   const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
   editBtn.addEventListener('click', () => enterEditMode(card));
   card.querySelector('.meal-header').appendChild(editBtn);
+  sortMealsByTime(dayEl);
   recalcDayTotal(card);
   recalcWeeklyAvg();
 
@@ -1547,12 +1585,10 @@ function enterEditMode(card) {
   }
   if (timeEl) {
     const inp2 = document.createElement('input');
-    inp2.type = 'text';
+    inp2.type = 'time';
     inp2.className = 'edit-meal-time-inp';
-    inp2.value = card._origTime;
-    inp2.maxLength = 20;
-    inp2.placeholder = 'Hora (ej: 08:00h)';
-    inp2.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:2px 7px;width:100%";
+    inp2.value = timeStrToInputVal(card._origTime);
+    inp2.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:2px 7px;width:100%;color-scheme:dark";
     timeEl.replaceWith(inp2);
   }
 
@@ -1647,7 +1683,7 @@ async function saveEditMode(card) {
   const timeInp = card.querySelector('.edit-meal-time-inp');
   const newEmoji = card._getEditEmoji ? card._getEditEmoji() : (card._origEmoji || '');
   const newName  = nameInp ? (nameInp.value.trim() || card._origName) : card._origName;
-  const newTime  = timeInp ? timeInp.value.trim() : card._origTime;
+  const newTime  = timeInp ? inputValToTimeStr(timeInp.value.trim()) : card._origTime;
 
   const origText  = origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'').trim();
   const newText   = lines.join('\n').trim();
@@ -1680,6 +1716,9 @@ async function saveEditMode(card) {
   macrosEl.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span>`;
   card.classList.remove('editing');
   card.querySelector('.edit-btn').style.display = '';
+  // Reordenar tarjetas según la nueva hora
+  const _dayEl = card.closest('.day-content');
+  if (_dayEl) sortMealsByTime(_dayEl);
   recalcDayTotal(card);
   recalcWeeklyAvg();
 
@@ -1774,7 +1813,10 @@ function applySnapshot(data) {
     if (timeEl  && saved.time  !== undefined) timeEl.textContent = saved.time;
     if (iconEl  && saved.emoji)            iconEl.textContent  = saved.emoji;
   });
-  document.querySelectorAll('.day-content').forEach(dayEl => { const c = dayEl.querySelector('.meal-card'); if (c) recalcDayTotal(c); });
+  document.querySelectorAll('.day-content').forEach(dayEl => {
+    sortMealsByTime(dayEl);
+    const c = dayEl.querySelector('.meal-card'); if (c) recalcDayTotal(c);
+  });
   recalcWeeklyAvg();
 }
 
