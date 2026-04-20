@@ -2261,6 +2261,16 @@ function toggleBatidoEdit() {
   document.getElementById('be-prot').value = parsePillNum(document.getElementById('bm-prot').textContent);
   document.getElementById('be-carb').value = document.getElementById('bm-carb').textContent.replace(/^/, '');
   document.getElementById('be-fat').value  = parsePillNum(document.getElementById('bm-fat').textContent);
+  // Guardar snapshot de los valores al abrir para comparar al guardar
+  window._batidoOrigSnapshot = {
+    protDosis:  parseInt(document.getElementById('prot-dosis-input').value)  || 35,
+    creatDosis: parseInt(document.getElementById('creat-dosis-input').value) || 3,
+    extra:      extra,
+    kcal:       parsePillNum(document.getElementById('bm-kcal').textContent),
+    prot:       parsePillNum(document.getElementById('bm-prot').textContent),
+    carb:       document.getElementById('bm-carb').textContent.trim(),
+    fat:        parsePillNum(document.getElementById('bm-fat').textContent)
+  };
   panel.classList.add('open');
   btn.textContent = '✕ Cerrar';
 }
@@ -2278,32 +2288,16 @@ async function saveBatidoEdit() {
   const prot  = parseInt(document.getElementById('be-prot').value) || 0;
   const carb  = document.getElementById('be-carb').value.trim() || '0g C';
   const fat   = parseInt(document.getElementById('be-fat').value) || 0;
-  // Recopilar cambios para confirmar — leer "antes" desde Firebase
-  let fbBatido = null;
-  if (CLOUD_CONFIGURED) {
-    try {
-      const r = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_FB_KEY + '.json');
-      if (r.ok) fbBatido = await r.json();
-    } catch(e) {}
-  }
-  if (!fbBatido) {
-    try { fbBatido = JSON.parse(localStorage.getItem(BATIDO_LOCAL_KEY) || 'null'); } catch(e) {}
-  }
-  const _pPD = fbBatido?.protDosis  ?? parseInt(document.getElementById('prot-dosis-input').value)  ?? 35;
-  const _pCD = fbBatido?.creatDosis ?? parseInt(document.getElementById('creat-dosis-input').value) ?? 3;
-  const _pEx = fbBatido?.extra      ?? document.getElementById('batido-extra-view').textContent.trim();
-  const _pKc = fbBatido?.kcal       ?? parseInt(document.getElementById('bm-kcal').textContent) ?? 0;
-  const _pPr = fbBatido?.prot       ?? parseInt(document.getElementById('bm-prot').textContent) ?? 0;
-  const _pCb = fbBatido?.carb       ?? document.getElementById('bm-carb').textContent.trim();
-  const _pFt = fbBatido?.fat        ?? parseInt(document.getElementById('bm-fat').textContent)  ?? 0;
+  // Comparar contra el snapshot guardado al abrir el panel
+  const orig = window._batidoOrigSnapshot || {};
   const _bCh = [];
-  if (_pPD !== protDosis)  _bCh.push({ label: 'g Proteína/batido', from: _pPD, to: protDosis });
-  if (_pCD !== creatDosis) _bCh.push({ label: 'g Creatina/batido', from: _pCD, to: creatDosis });
-  if (_pEx !== extra)      _bCh.push({ label: 'Ingredientes extra', from: _pEx, to: extra });
-  if (_pKc !== kcal)       _bCh.push({ label: 'kcal',              from: _pKc, to: kcal });
-  if (_pPr !== prot)       _bCh.push({ label: 'Proteína g',        from: _pPr, to: prot });
-  if (_pCb !== carb)       _bCh.push({ label: 'Carbos',            from: _pCb, to: carb });
-  if (_pFt !== fat)        _bCh.push({ label: 'Grasas g',          from: _pFt, to: fat });
+  if ((orig.protDosis  ?? 35) !== protDosis)  _bCh.push({ label: 'g Proteína/batido',  from: orig.protDosis  ?? 35, to: protDosis });
+  if ((orig.creatDosis ?? 3)  !== creatDosis) _bCh.push({ label: 'g Creatina/batido',  from: orig.creatDosis ?? 3,  to: creatDosis });
+  if ((orig.extra      ?? '') !== extra)       _bCh.push({ label: 'Ingredientes extra', from: orig.extra      ?? '—', to: extra });
+  if ((orig.kcal       ?? 0)  !== kcal)        _bCh.push({ label: 'kcal',              from: orig.kcal       ?? 0,   to: kcal });
+  if ((orig.prot       ?? 0)  !== prot)        _bCh.push({ label: 'Proteína g',        from: orig.prot       ?? 0,   to: prot });
+  if ((orig.carb       ?? '') !== carb)        _bCh.push({ label: 'Carbos',            from: orig.carb       ?? '—', to: carb });
+  if ((orig.fat        ?? 0)  !== fat)         _bCh.push({ label: 'Grasas g',          from: orig.fat        ?? 0,   to: fat });
   if (!await confirmSave(_bCh)) return;
 
   // Actualizar spans de dosis visibles
