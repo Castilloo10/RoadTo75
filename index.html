@@ -1713,7 +1713,11 @@ async function saveEditMode(card) {
 
   const origText  = origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'').trim();
   const newText   = lines.join('\n').trim();
-  const origPills = [...(origMacros.matchAll(/>([\d]+)</g))].map(m => parseInt(m[1]));
+  // Extraer macros del "antes" parseando el HTML con DOM (la regex />([\d]+)</g
+  // no funciona porque el contenido es "330 kcal" o "37g P", no "330<")
+  const _origTmp = document.createElement('div');
+  _origTmp.innerHTML = origMacros;
+  const origPills = [..._origTmp.querySelectorAll('.pill')].map(el => parsePillNum(el.textContent));
   const menuChanges = [];
   if ((card._origName || '') !== newName)  menuChanges.push({ label: 'Nombre',      from: card._origName || '—', to: newName });
   if ((card._origTime || '') !== newTime)  menuChanges.push({ label: 'Hora',        from: card._origTime || '—', to: newTime || '—' });
