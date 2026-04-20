@@ -1044,15 +1044,36 @@ function restoreNavState() {
 const parsePillNum = t => (t.match(/(\d+)/) || ['','0'])[1];
 const escapeHtml = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
+// ── BATIDO CARD DETECTION ──
+function normalizeAccents(s) {
+  return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+function isBatidoCard(card) {
+  // Detectar por nombre del header (Merienda / Batido)
+  const headerName = normalizeAccents(card.querySelector('.meal-name')?.textContent || '');
+  if (headerName.includes('batido')) return true;
+  // Detectar por Nombre del Plato (primer <strong> en meal-food)
+  const tmp = document.createElement('div');
+  tmp.innerHTML = card.querySelector('.meal-food')?.innerHTML || '';
+  const firstStrong = tmp.querySelector('strong');
+  return firstStrong ? normalizeAccents(firstStrong.textContent).includes('batido') : false;
+}
+
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.day-content').forEach(dayEl => {
     const dayId = dayEl.id;
     dayEl.querySelectorAll('.meal-card').forEach((card, i) => {
       card.id = dayId + '-meal' + i;
-      const btn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
-      btn.addEventListener('click', () => enterEditMode(card));
-      card.querySelector('.meal-header').appendChild(btn);
+      const _nameCheck = normalizeAccents(card.querySelector('.meal-name')?.textContent || '');
+      if (_nameCheck.includes('batido')) {
+        // Tarjeta de batido: marcar y NO añadir botón editar
+        card.dataset.isBatido = '1';
+      } else {
+        const btn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
+        btn.addEventListener('click', () => enterEditMode(card));
+        card.querySelector('.meal-header').appendChild(btn);
+      }
     });
     // Botón «Añadir comida» y «Eliminar comida» en la fila del badge del día
     const badgeRow = dayEl.querySelector('div[style*="margin-bottom:1rem"]');
@@ -1631,6 +1652,7 @@ function toggleDeleteMode(dayEl, toggleBtn) {
     toggleBtn.style.borderColor = 'var(--border)';
     dayEl.querySelectorAll('.meal-card').forEach(card => {
       if (card.classList.contains('adding')) return;
+      if (isBatidoCard(card)) return; // El batido no se puede eliminar
       if (card.querySelector('.meal-delete-btn')) return;
       const delBtn = document.createElement('button');
       delBtn.className = 'meal-delete-btn';
@@ -1645,6 +1667,11 @@ function toggleDeleteMode(dayEl, toggleBtn) {
 }
 
 async function deleteMeal(card, dayEl, toggleBtn) {
+  // Las tarjetas de batido no se pueden eliminar
+  if (isBatidoCard(card)) {
+    await mobileConfirm('No se puede eliminar', 'El batido no se puede eliminar. Usa el botón <strong>⏸ Desactivar hoy</strong> para ocultarlo en un día concreto, o el botón global <strong>✗ Desactivado</strong> para desactivarlo globalmente.');
+    return;
+  }
   const mealName = card.querySelector('.meal-name')?.textContent || 'esta comida';
   const confirmed = await mobileConfirm('Eliminar comida', '¿Seguro que quieres eliminar <strong>' + escapeHtml(mealName) + '</strong>?<br><br>Esta acción no se puede deshacer.');
   if (!confirmed) return;
@@ -1732,10 +1759,14 @@ async function saveNewMeal(card) {
   foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
   macrosEl.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span>`;
   card.classList.remove('editing', 'adding');
-  // Añadir botón editar
-  const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
-  editBtn.addEventListener('click', () => enterEditMode(card));
-  card.querySelector('.meal-header').appendChild(editBtn);
+  // Añadir botón editar solo si NO es tarjeta de batido
+  if (!normalizeAccents(mealName).includes('batido')) {
+    const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
+    editBtn.addEventListener('click', () => enterEditMode(card));
+    card.querySelector('.meal-header').appendChild(editBtn);
+  } else {
+    card.dataset.isBatido = '1';
+  }
   sortMealsByTime(dayEl);
   recalcDayTotal(card);
   recalcWeeklyAvg();
@@ -1776,10 +1807,14 @@ function createRestoredExtraMeal(dayEl, id, saved) {
       <span class="pill f">${saved.fat}g G</span>
     </div>`;
   grid.appendChild(card);
-  // Añadir botón editar
-  const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
-  editBtn.addEventListener('click', () => enterEditMode(card));
-  card.querySelector('.meal-header').appendChild(editBtn);
+  // Añadir botón editar solo si NO es tarjeta de batido
+  if (!normalizeAccents(_name).includes('batido')) {
+    const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
+    editBtn.addEventListener('click', () => enterEditMode(card));
+    card.querySelector('.meal-header').appendChild(editBtn);
+  } else {
+    card.dataset.isBatido = '1';
+  }
 }
 
 // ── EDIT MODE ──
@@ -2675,8 +2710,8 @@ function syncBatidoToMenuCards(d) {
   const carb       = d.carb       || null;
   const fat        = d.fat        !== undefined ? d.fat  : null;
 
-  // Descripción visible del batido (igual que en el batido-box)
-  const descHtml = `<strong>${protDosis}g Proteína + ${creatDosis}g Creatina + ${escapeHtml(extra)}</strong>`;
+  // Descripción visible del batido: solo los ingredientes (SIN el nombre del plato)
+  const descText = `${protDosis}g Proteína + ${creatDosis}g Creatina + ${escapeHtml(extra)}`;
 
   // Buscar las tarjetas de Merienda/Batido en cada día
   document.querySelectorAll('.day-content').forEach(dayEl => {
@@ -2684,16 +2719,32 @@ function syncBatidoToMenuCards(d) {
       const nameEl = card.querySelector('.meal-name');
       if (!nameEl) return;
       const name = nameEl.textContent.trim().toLowerCase();
-      // Detectar si es la tarjeta de Merienda/Batido
-      if (!name.includes('batido')) return;
+      // Detectar si es la tarjeta de Merienda/Batido (por header o por Nombre del Plato)
+      if (!isBatidoCard(card)) return;
 
       // Solo actualizar si no está en modo edición
       if (card.classList.contains('editing')) return;
 
-      // Actualizar descripción (solo si batido global activo)
+      // Actualizar descripción preservando el Nombre del Plato
       const foodEl = card.querySelector('.meal-food');
       const globalActive = getBatidoGlobalActive();
-      if (foodEl) foodEl.innerHTML = descHtml;
+      if (foodEl) {
+        // Leer el Nombre del Plato actual (primer <strong> en meal-food)
+        const tmp = document.createElement('div');
+        tmp.innerHTML = foodEl.innerHTML;
+        const existingStrong = tmp.querySelector('strong');
+        const existingName = existingStrong ? existingStrong.textContent.trim() : '';
+        // Preservar si ya tiene un nombre de batido; si no, usar "Batido"
+        const nombrePlato = (existingName && normalizeAccents(existingName).includes('batido'))
+          ? escapeHtml(existingName)
+          : 'Batido';
+        foodEl.innerHTML = `<strong>${nombrePlato}</strong><br>${descText}`;
+      }
+
+      // Quitar el botón "✏ Editar comida" si existe y marcar la tarjeta
+      const existingEditBtn = card.querySelector('.edit-btn');
+      if (existingEditBtn) existingEditBtn.remove();
+      card.dataset.isBatido = '1';
 
       // Añadir botón toggle por día si no existe
       if (!card.querySelector('.batido-day-toggle')) {
