@@ -207,6 +207,18 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .supl-batidos.warn{border-color:var(--red);color:var(--red);background:rgba(240,55,55,.08)}
 .supl-batidos:empty{display:none}
 
+/* BATIDO GLOBAL TOGGLE */
+.batido-toggle-btn{font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;padding:5px 14px;border-radius:7px;cursor:pointer;border:1px solid;transition:all .2s}
+.batido-toggle-btn.active{background:rgba(181,240,55,.15);border-color:rgba(181,240,55,.4);color:var(--accent)}
+.batido-toggle-btn.inactive{background:rgba(240,55,55,.1);border-color:rgba(240,55,55,.35);color:var(--red)}
+/* BATIDO PER-DAY TOGGLE */
+.batido-day-toggle{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.68rem;padding:2px 7px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;margin-top:.5rem;width:100%}
+.batido-day-toggle:hover{border-color:var(--accent2);color:var(--accent2)}
+.batido-day-toggle.off{border-color:rgba(240,55,55,.4);color:var(--red);background:rgba(240,55,55,.07)}
+/* BATIDO DISABLED CARD */
+.meal-card.batido-disabled{opacity:.45}
+.meal-card.batido-disabled .meal-food::after{content:'⏸ Batido desactivado para este día';display:block;color:var(--red);font-size:.75rem;margin-top:.4rem;font-style:italic}
+.meal-card.batido-global-off .meal-food::after{content:'⏸ Batido global desactivado';display:block;color:var(--muted);font-size:.75rem;margin-top:.4rem;font-style:italic}
 /* BATIDO EDIT MODE */
 .batido-edit-panel{display:none;margin-top:1rem;background:var(--surface2);border:1px solid var(--accent);border-radius:10px;padding:1.1rem}
 .batido-edit-panel.open{display:block}
@@ -455,7 +467,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <div class="batido-box">
 <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.25rem">
 <h3 style="margin-bottom:0">🥤 SUPLEMENTACIÓN - BATIDO PROTÉICO DIARIO (Merienda / Post-Entreno)</h3>
-<button class="edit-btn" id="batido-edit-btn" onclick="toggleBatidoEdit()">✏ Editar</button>
+<div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap"><button class="batido-toggle-btn active" id="batido-global-toggle" onclick="toggleBatidoGlobal()">✓ Activo</button><button class="edit-btn" id="batido-edit-btn" onclick="toggleBatidoEdit()">✏ Editar</button></div>
 </div>
 <p id="batido-desc-view" style="font-size:.9rem;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:2">
 <strong id="batido-prot-dosis-view">—</strong>
@@ -1173,6 +1185,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCompraData();
   loadSuplStateFromCloud();
   loadDayTypes();
+  loadBatidoActiveState();
   // recalcTotalSemanal se llama desde applyCompraData
   // Fallback emoji si la imagen no carga
   document.querySelectorAll('.compra-img img').forEach(img => {
@@ -1888,6 +1901,7 @@ function recalcDayTotal(card) {
   if (!macrosDiv) return;
   let [k,p,c,f] = [0,0,0,0];
   dayEl.querySelectorAll('.meal-card').forEach(card => {
+    if (card.classList.contains('batido-disabled') || card.classList.contains('batido-global-off')) return;
     const pills = card.querySelectorAll('.meal-macros .pill');
     if (pills.length >= 4) { k += +parsePillNum(pills[0].textContent); p += +parsePillNum(pills[1].textContent); c += +parsePillNum(pills[2].textContent); f += +parsePillNum(pills[3].textContent); }
   });
@@ -2427,6 +2441,143 @@ function applyBatidoData(d) {
   }
   // Sincronizar tarjetas de Merienda/Batido en el menú diario
   syncBatidoToMenuCards(d);
+  // Re-apply active state after sync (in case cards were just created)
+  setTimeout(() => applyBatidoActiveUI(getBatidoGlobalActive()), 0);
+}
+
+// ── BATIDO ACTIVE STATE ──
+const BATIDO_ACTIVE_FB_KEY = 'batido_active';
+const BATIDO_DAYS_FB_KEY   = 'batido_days_disabled';
+
+function getBatidoGlobalActive() {
+  try { const v = localStorage.getItem('batido_global_active'); return v === null ? true : v === '1'; } catch(e) { return true; }
+}
+function setBatidoGlobalActive(val) {
+  try { localStorage.setItem('batido_global_active', val ? '1' : '0'); } catch(e) {}
+  if (!CLOUD_CONFIGURED) return;
+  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_ACTIVE_FB_KEY + '.json', {
+    method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(val)
+  }).catch(()=>{});
+}
+function getBatidoDaysDisabled() {
+  try { return JSON.parse(localStorage.getItem('batido_days_disabled') || '{}'); } catch(e) { return {}; }
+}
+function getBatidoDayDisabled(dayId) {
+  return !!getBatidoDaysDisabled()[dayId];
+}
+function setBatidoDayDisabled(dayId, val) {
+  const d = getBatidoDaysDisabled();
+  if (val) d[dayId] = true; else delete d[dayId];
+  try { localStorage.setItem('batido_days_disabled', JSON.stringify(d)); } catch(e) {}
+  if (!CLOUD_CONFIGURED) return;
+  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_DAYS_FB_KEY + '.json', {
+    method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(d)
+  }).catch(()=>{});
+}
+
+function applyBatidoActiveUI(active) {
+  const btn = document.getElementById('batido-global-toggle');
+  if (btn) { btn.textContent = active ? '✓ Activo' : '✗ Desactivado'; btn.className = 'batido-toggle-btn ' + (active ? 'active' : 'inactive'); }
+  const descView = document.getElementById('batido-desc-view');
+  if (descView) descView.style.opacity = active ? '' : '.4';
+  const macrosView = document.getElementById('batido-macros-view');
+  if (macrosView) macrosView.style.opacity = active ? '' : '.4';
+  // Update all batido cards
+  document.querySelectorAll('.meal-card').forEach(card => {
+    const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
+    if (!name.includes('batido') || name.includes('merienda')) return;
+    card.classList.toggle('batido-global-off', !active);
+    if (!active) { card.classList.remove('batido-disabled'); }
+    const dayId = (card.closest('.day-content')?.id || '').replace('day-','');
+    card.classList.toggle('batido-disabled', active && getBatidoDayDisabled(dayId));
+    updateBatidoDayBtn(card, dayId);
+    recalcDayTotal(card);
+  });
+  recalcWeeklyAvg();
+}
+
+function updateBatidoDayBtn(card, dayId) {
+  const btn = card.querySelector('.batido-day-toggle');
+  if (!btn) return;
+  const globalActive = getBatidoGlobalActive();
+  const dayOff = getBatidoDayDisabled(dayId);
+  btn.disabled = !globalActive;
+  btn.style.opacity = globalActive ? '' : '.4';
+  btn.textContent = dayOff ? '▶ Activar hoy' : '⏸ Desactivar hoy';
+  btn.classList.toggle('off', dayOff);
+}
+
+function toggleBatidoGlobal() {
+  const newVal = !getBatidoGlobalActive();
+  setBatidoGlobalActive(newVal);
+  applyBatidoActiveUI(newVal);
+  setSyncStatus('saved', newVal ? '✓ Batido activado' : '✓ Batido desactivado');
+}
+
+function toggleBatidoDay(dayId) {
+  if (!getBatidoGlobalActive()) return;
+  const newVal = !getBatidoDayDisabled(dayId);
+  setBatidoDayDisabled(dayId, newVal);
+  const dayEl = document.getElementById('day-' + dayId);
+  if (!dayEl) return;
+  dayEl.querySelectorAll('.meal-card').forEach(card => {
+    const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
+    if (!name.includes('batido') || name.includes('merienda')) return;
+    card.classList.toggle('batido-disabled', newVal);
+    updateBatidoDayBtn(card, dayId);
+    recalcDayTotal(card);
+  });
+  recalcWeeklyAvg();
+  setSyncStatus('saved', newVal ? '✓ Batido desactivado hoy' : '✓ Batido activado hoy');
+}
+
+async function loadBatidoActiveState() {
+  // Apply local first
+  applyBatidoActiveUI(getBatidoGlobalActive());
+  // Apply days disabled
+  const days = getBatidoDaysDisabled();
+  Object.keys(days).forEach(dayId => {
+    const dayEl = document.getElementById('day-' + dayId);
+    if (!dayEl) return;
+    dayEl.querySelectorAll('.meal-card').forEach(card => {
+      const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
+      if (!name.includes('batido') || name.includes('merienda')) return;
+      card.classList.add('batido-disabled');
+      updateBatidoDayBtn(card, dayId);
+    });
+  });
+  if (!CLOUD_CONFIGURED) return;
+  // Load from Firebase
+  try {
+    const [rA, rD] = await Promise.all([
+      fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_ACTIVE_FB_KEY + '.json'),
+      fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_DAYS_FB_KEY + '.json')
+    ]);
+    if (rA.ok) {
+      const val = await rA.json();
+      if (val !== null) {
+        try { localStorage.setItem('batido_global_active', val ? '1' : '0'); } catch(e) {}
+        applyBatidoActiveUI(!!val);
+      }
+    }
+    if (rD.ok) {
+      const daysData = await rD.json();
+      if (daysData && typeof daysData === 'object') {
+        try { localStorage.setItem('batido_days_disabled', JSON.stringify(daysData)); } catch(e) {}
+        // Reset all then apply
+        document.querySelectorAll('.meal-card').forEach(card => {
+          const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
+          if (!name.includes('batido') || name.includes('merienda')) return;
+          const dayId = (card.closest('.day-content')?.id || '').replace('day-','');
+          const disabled = getBatidoGlobalActive() && !!daysData[dayId];
+          card.classList.toggle('batido-disabled', disabled);
+          updateBatidoDayBtn(card, dayId);
+          recalcDayTotal(card);
+        });
+        recalcWeeklyAvg();
+      }
+    }
+  } catch(e) {}
 }
 
 // ── Sincronizar datos del batido a las tarjetas de Merienda/Batido del menú diario ──
@@ -2450,23 +2601,40 @@ function syncBatidoToMenuCards(d) {
       if (!nameEl) return;
       const name = nameEl.textContent.trim().toLowerCase();
       // Detectar si es la tarjeta de Merienda/Batido
-      if (!name.includes('merienda') && !name.includes('batido')) return;
+      if (!name.includes('batido') || name.includes('merienda')) return;
 
       // Solo actualizar si no está en modo edición
       if (card.classList.contains('editing')) return;
 
-      // Actualizar descripción
+      // Actualizar descripción (solo si batido global activo)
       const foodEl = card.querySelector('.meal-food');
+      const globalActive = getBatidoGlobalActive();
       if (foodEl) foodEl.innerHTML = descHtml;
+
+      // Añadir botón toggle por día si no existe
+      if (!card.querySelector('.batido-day-toggle')) {
+        const btn = document.createElement('button');
+        btn.className = 'batido-day-toggle';
+        btn.textContent = '⏸ Desactivar hoy';
+        const dayEl2 = card.closest('.day-content');
+        const dayId = dayEl2 ? dayEl2.id.replace('day-','') : '';
+        btn.onclick = () => toggleBatidoDay(dayId);
+        card.appendChild(btn);
+      }
+
+      // Aplicar estado disabled global
+      card.classList.toggle('batido-global-off', !globalActive);
+      // Mantener estado por día
+      const dayId2 = (card.closest('.day-content')?.id || '').replace('day-','');
+      const dayDisabled = getBatidoDayDisabled(dayId2);
+      card.classList.toggle('batido-disabled', globalActive && dayDisabled);
 
       // Actualizar macros
       if (kcal !== null && prot !== null && carb !== null && fat !== null) {
         const macrosEl = card.querySelector('.meal-macros');
         if (macrosEl && !macrosEl.querySelector('input')) {
-          // Parsear carb que puede ser texto como "38g C (plátano)"
           const carbNum = parseInt(String(carb)) || 0;
           macrosEl.innerHTML = `<span class="pill kcal">${kcal} kcal</span><span class="pill p">${prot}g P</span><span class="pill c">${carbNum}g C</span><span class="pill f">${fat}g G</span>`;
-          // Recalcular totales del día
           recalcDayTotal(card);
         }
       }
