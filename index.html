@@ -2266,10 +2266,10 @@ function toggleBatidoEdit() {
     protDosis:  parseInt(document.getElementById('prot-dosis-input').value)  || 35,
     creatDosis: parseInt(document.getElementById('creat-dosis-input').value) || 3,
     extra:      extra,
-    kcal:       parsePillNum(document.getElementById('bm-kcal').textContent),
-    prot:       parsePillNum(document.getElementById('bm-prot').textContent),
+    kcal:       parseInt(parsePillNum(document.getElementById('bm-kcal').textContent)) || 0,
+    prot:       parseInt(parsePillNum(document.getElementById('bm-prot').textContent)) || 0,
     carb:       document.getElementById('bm-carb').textContent.trim(),
-    fat:        parsePillNum(document.getElementById('bm-fat').textContent)
+    fat:        parseInt(parsePillNum(document.getElementById('bm-fat').textContent))  || 0
   };
   panel.classList.add('open');
   btn.textContent = '✕ Cerrar';
