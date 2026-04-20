@@ -1655,7 +1655,7 @@ async function saveEditMode(card) {
   // no funciona porque el contenido es "330 kcal" o "37g P", no "330<")
   const _origTmp = document.createElement('div');
   _origTmp.innerHTML = origMacros;
-  const origPills = [..._origTmp.querySelectorAll('.pill')].map(el => parsePillNum(el.textContent));
+  const origPills = [..._origTmp.querySelectorAll('.pill')].map(el => +parsePillNum(el.textContent));
   const menuChanges = [];
   if ((card._origName || '') !== newName)  menuChanges.push({ label: 'Nombre',      from: card._origName || '—', to: newName });
   if ((card._origTime || '') !== newTime)  menuChanges.push({ label: 'Hora',        from: card._origTime || '—', to: newTime || '—' });
@@ -2752,26 +2752,41 @@ async function saveCompraEdit(btn) {
         return parsed;
       })();
 
-  // Build changes: compare by name, including img and gallery
+  // Build changes: detect renames by position, normalize prices
   const compraChanges = [];
   const origByName = Object.fromEntries(origItems.map(o => [o.name, o]));
   const newByName  = Object.fromEntries(items.map(i => [i.name, i]));
+  const normPrice  = p => Math.round(parsePriceStr(p || '') * 100);
 
-  // Modified or added
-  items.forEach(item => {
+  // Track orig items matched as renames (skip in "Removed" loop)
+  const renamedOrigNames = new Set();
+
+  // Modified, added, or renamed
+  items.forEach((item, idx) => {
     const orig = origByName[item.name];
     if (!orig) {
-      compraChanges.push({ label: 'Añadir', from: '—', to: item.name + (item.price ? ' · ' + item.price : '') });
+      // Name not found by key — check if it's a rename (same position in orig is also orphaned)
+      const origAtPos = origItems[idx];
+      if (origAtPos && !newByName[origAtPos.name]) {
+        // Rename detected
+        renamedOrigNames.add(origAtPos.name);
+        compraChanges.push({ label: 'Nombre', from: origAtPos.name, to: item.name });
+        if (normPrice(origAtPos.price) !== normPrice(item.price)) compraChanges.push({ label: item.name + ' — precio',  from: origAtPos.price || '—', to: item.price || '—' });
+        if ((origAtPos.img     || '') !== (item.img     || ''))    compraChanges.push({ label: item.name + ' — foto',    from: origAtPos.img   || '—', to: item.img   || '—' });
+        if ((origAtPos.gallery || '') !== (item.gallery || ''))    compraChanges.push({ label: item.name + ' — galería', from: origAtPos.gallery || '—', to: item.gallery || '—' });
+      } else {
+        compraChanges.push({ label: 'Añadir', from: '—', to: item.name + (item.price ? ' · ' + item.price : '') });
+      }
     } else {
-      if ((orig.price   || '') !== (item.price   || '')) compraChanges.push({ label: item.name + ' — precio',   from: orig.price   || '—', to: item.price   || '—' });
-      if ((orig.img     || '') !== (item.img     || '')) compraChanges.push({ label: item.name + ' — foto',     from: orig.img     || '—', to: item.img     || '—' });
-      if ((orig.gallery || '') !== (item.gallery || '')) compraChanges.push({ label: item.name + ' — galería',  from: orig.gallery || '—', to: item.gallery || '—' });
+      if (normPrice(orig.price) !== normPrice(item.price)) compraChanges.push({ label: item.name + ' — precio',  from: orig.price   || '—', to: item.price   || '—' });
+      if ((orig.img     || '') !== (item.img     || ''))   compraChanges.push({ label: item.name + ' — foto',    from: orig.img     || '—', to: item.img     || '—' });
+      if ((orig.gallery || '') !== (item.gallery || ''))   compraChanges.push({ label: item.name + ' — galería', from: orig.gallery || '—', to: item.gallery || '—' });
     }
   });
 
-  // Removed
+  // Removed (excluding renames)
   origItems.forEach(orig => {
-    if (!newByName[orig.name]) {
+    if (!newByName[orig.name] && !renamedOrigNames.has(orig.name)) {
       compraChanges.push({ label: 'Eliminar', from: orig.name + (orig.price ? ' · ' + orig.price : ''), to: '—' });
     }
   });
