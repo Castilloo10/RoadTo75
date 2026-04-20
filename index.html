@@ -1226,15 +1226,70 @@ async function confirmSave(changes) {
 // ── EMOJI PICKER COMPLETO ──
 // Emojis organizados por categoría (fallback offline)
 const EMOJI_CATEGORIES = {
-  '🍽️ Comida & Bebida': ['🍽️','🥗','🍳','🥞','🧆','🥙','🌮','🌯','🥪','🫔','🧇','🥓','🥚','🍲','🥘','🫕','🍛','🍜','🍝','🍠','🍢','🍣','🍤','🍱','🍛','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥨','🥯','🍞','🥐','🥖','🧀','🥗','🥙','🧆','🥚','🍳','🥞','🧇','🍤','🦐','🦑','🦞','🦀','🦪','🍱','🍛','🍜','🍝','🍣','🍤','🍙','🍘','🍥','🥮','🍢','🧁','🍰','🎂','🍮','🍭','🍬','🍫','🍿','🍩','🍪','🌰','🥜','🍯','🧂'],
-  '🥦 Verduras': ['🥦','🥕','🍅','🥑','🍆','🥔','🧅','🧄','🌽','🌶️','🫑','🥒','🥬','🥗','🫛','🧅','🧄','🌿','🪴','🌱','🌾','🫚','🫙'],
-  '🍎 Frutas': ['🍎','🍊','🍋','🍋‍🟩','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🫒','🍐'],
-  '🥛 Lácteos & Huevos': ['🥛','🧀','🥚','🍳','🧈','🫙'],
-  '☕ Bebidas': ['☕','🍵','🧃','🥤','🧋','🍺','🧉','🫖','🍶','🍾','🥂','🍷','🍸','🍹','🍻','🥃','🫗'],
-  '🏋️ Deporte & Fitness': ['🏋️','💪','🤸','🧘','🏃','🚴','⚡','🔥','💥','🎯','🏆','🥇','⏱️','💦','🫀','🫁','🧠'],
-  '🌅 Momento del día': ['🌅','☀️','🌤️','🌙','🌛','⭐','🌟','✨','🌈','🌿','❄️','🔥','💫'],
-  '😊 Otros': ['😋','🤤','👨‍🍳','👩‍🍳','🧑‍🍳','🛒','📦','⚖️','🫶','💚','💛','🧡','❤️','🟢','🔵','🟡','🟠','🔴']
+  '🍽️ Comida & Bebida': ['🍽️','🥗','🍳','🥞','🧆','🥙','🌮','🌯','🥪','🫔','🧇','🥓','🥚','🍲','🥘','🫕','🍛','🍜','🍝','🍠','🍢','🍣','🍤','🍱','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥨','🥯','🍞','🥐','🥖','🧀','🦐','🦑','🦞','🦀','🦪','🍙','🍘','🍥','🥮','🧁','🍰','🎂','🍮','🍭','🍬','🍫','🍿','🍩','🍪','🌰','🥜','🍯','🧂','🫓','🥫','🍱','🥟','🥠','🥡'],
+  '🥦 Verduras': ['🥦','🥕','🍅','🥑','🍆','🥔','🧅','🧄','🌽','🌶️','🫑','🥒','🥬','🫛','🌿','🌱','🌾','🫚','🫙','🥗','🪴'],
+  '🍎 Frutas': ['🍎','🍊','🍋','🍋‍🟩','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🫒','🍐','🍏','🍑','🍆'],
+  '🥛 Lácteos & Huevos': ['🥛','🧀','🥚','🍳','🧈','🫙','🍼','🥄'],
+  '☕ Bebidas': ['☕','🍵','🧃','🥤','🧋','🍺','🧉','🫖','🍶','🍾','🥂','🍷','🍸','🍹','🍻','🥃','🫗','🧊','💧'],
+  '🐟 Pescados & Mariscos': ['🐟','🐠','🐡','🦈','🐙','🦑','🦐','🦀','🦞','🦪','🐚','🍣','🍤','🍱'],
+  '🥩 Carnes': ['🥩','🍗','🍖','🌭','🥓','🍔','🍕','🫕','🍲','🥘'],
+  '🏋️ Deporte & Fitness': ['🏋️','💪','🤸','🧘','🏃','🚴','⚡','🔥','💥','🎯','🏆','🥇','⏱️','💦','🫀','🫁','🧠','🥊','🏅','⚽','🎽'],
+  '🌅 Momento del día': ['🌅','☀️','🌤️','🌙','🌛','⭐','🌟','✨','🌈','🌿','❄️','🔥','💫','🌄','🌇','🏙️','🌆'],
+  '😊 Otros': ['😋','🤤','👨‍🍳','👩‍🍳','🧑‍🍳','🛒','📦','⚖️','🫶','💚','💛','🧡','❤️','🟢','🔵','🟡','🟠','🔴','✅','⭐','🏠','🍀']
 };
+
+// Nombres en español para búsqueda de emojis
+const EMOJI_ES_NAMES = {
+  '🍽️':'plato comida',   '🥗':'ensalada verde',    '🍳':'huevo frito sarten', '🥞':'tortitas crepes pancakes',
+  '🧆':'falafel croquetas','🥙':'kebab wrap sandwich','🌮':'taco mexicano',       '🌯':'burrito wrap',
+  '🥪':'bocadillo sandwich','🫔':'wrap tamal',        '🧇':'gofre waffle',        '🥓':'bacon tocino',
+  '🥚':'huevo',            '🍲':'olla estofado',      '🥘':'paella guiso cazuela','🫕':'fondue olla',
+  '🍛':'curry arroz',      '🍜':'ramen fideos',       '🍝':'pasta espagueti',     '🍠':'batata boniato',
+  '🍢':'brocheta pincho',  '🍣':'sushi',              '🍤':'gamba tempura frita', '🍱':'bento fiambrera',
+  '🥩':'carne filete',     '🍗':'muslo pollo',        '🍖':'costilla carne hueso','🌭':'perrito caliente hot dog',
+  '🍔':'hamburguesa',      '🍟':'patatas fritas',     '🍕':'pizza',               '🥨':'pretzel',
+  '🥯':'bagel pan',        '🍞':'pan barra',          '🥐':'croissant',           '🥖':'baguette pan',
+  '🧀':'queso',            '🦐':'gambas camarones',   '🦑':'calamar',             '🦞':'langosta bogavante',
+  '🦀':'cangrejo',         '🦪':'ostra mejillon',     '🍙':'bola arroz',          '🍘':'galleta arroz',
+  '🍥':'naruto kamaboko',  '🥮':'pastel luna',        '🧁':'magdalena cupcake',   '🍰':'tarta pastel',
+  '🎂':'tarta cumpleaños', '🍮':'flan pudding',       '🍭':'piruleta caramelo',   '🍬':'caramelo',
+  '🍫':'chocolate',        '🍿':'palomitas',          '🍩':'dona donut',          '🍪':'galleta cookie',
+  '🌰':'castana turrón',   '🥜':'cacahuetes frutos secos','🍯':'miel',            '🧂':'sal',
+  '🫓':'pan flatbread',    '🥫':'lata conserva',      '🥟':'empanadilla gyoza',   '🥠':'galleta suerte',
+  '🥡':'caja comida china','🥦':'brocoli brécol',     '🥕':'zanahoria',           '🍅':'tomate',
+  '🥑':'aguacate',         '🍆':'berenjena',           '🥔':'patata',              '🧅':'cebolla',
+  '🧄':'ajo',              '🌽':'maiz mazorca',        '🌶️':'guindilla pimiento picante','🫑':'pimiento',
+  '🥒':'pepino',           '🥬':'lechuga col espinaca','🫛':'guisante vaina',      '🌿':'hierbas cilantro',
+  '🌱':'brote germinado',  '🌾':'trigo cereal grano', '🫚':'aceite oliva',        '🫙':'tarro bote',
+  '🥗':'ensalada',         '🍎':'manzana roja',        '🍊':'naranja mandarina',   '🍋':'limon',
+  '🍌':'platano banana',   '🍉':'sandia',              '🍇':'uvas',                '🍓':'fresa',
+  '🫐':'arandanos',        '🍈':'melon',               '🍒':'cerezas',             '🍑':'melocoton',
+  '🥭':'mango',            '🍍':'pina anana',          '🥥':'coco',                '🥝':'kiwi',
+  '🫒':'aceituna oliva',   '🍐':'pera',                '🍏':'manzana verde',       '🥛':'leche',
+  '🧀':'queso',            '🥚':'huevo',               '🧈':'mantequilla',         '🍼':'biberon leche',
+  '🥄':'cuchara',          '☕':'cafe',                '🍵':'te infusion',         '🧃':'zumo zumo',
+  '🥤':'refresco bebida',  '🧋':'bubble tea',          '🍺':'cerveza',             '🧉':'mate',
+  '🫖':'tetera',           '🍶':'sake',                '🍾':'champan cava botella','🥂':'copas brindis',
+  '🍷':'vino tinto',       '🍸':'coctel martini',      '🍹':'coctel tropical',     '🍻':'jarras cerveza brindis',
+  '🥃':'whisky vaso',      '🫗':'vertiendo',           '🧊':'hielo cubitos',       '💧':'agua',
+  '🐟':'pez pescado',      '🐠':'pez tropical',        '🐡':'pez globo',           '🦈':'tiburon',
+  '🐙':'pulpo',            '🐚':'concha marisco',      '🏋️':'pesas gimnasio levantamiento','💪':'musculo biceps fuerza',
+  '🤸':'acrobata gimnasia','🧘':'yoga meditacion',     '🏃':'correr running jogging','🚴':'ciclismo bici',
+  '⚡':'energia rayo',      '🔥':'fuego calorias',      '💥':'explosion impacto',   '🎯':'diana objetivo',
+  '🏆':'trofeo campeon',   '🥇':'medalla oro primero', '⏱️':'cronometro tiempo',   '💦':'sudor agua gotas',
+  '🫀':'corazon organo',   '🫁':'pulmon respiracion',  '🧠':'cerebro mental',      '🥊':'boxeo guante',
+  '🏅':'medalla',          '⚽':'futbol balon',         '🎽':'camiseta deporte',    '🌅':'amanecer alba',
+  '☀️':'sol dia soleado',  '🌤️':'nublado sol',         '🌙':'luna noche',          '🌛':'luna cuarto',
+  '⭐':'estrella',          '🌟':'estrella brillante',  '✨':'destellos brillos',   '🌈':'arcoiris',
+  '🌿':'hoja planta',      '❄️':'nieve frio hielo',    '💫':'destello girando',    '🌄':'amanecer montanas',
+  '🌇':'atardecer ciudad', '🏙️':'ciudad skyline',      '🌆':'ciudad tarde',        '😋':'saboreando rico',
+  '🤤':'babeando hambre',  '👨‍🍳':'cocinero chef',      '👩‍🍳':'cocinera chef',    '🧑‍🍳':'cocinero chef',
+  '🛒':'carrito compra',   '📦':'caja paquete',        '⚖️':'bascula peso',        '🫶':'manos corazon',
+  '💚':'corazon verde',    '💛':'corazon amarillo',    '🧡':'corazon naranja',     '❤️':'corazon rojo amor',
+  '🟢':'circulo verde',    '🔵':'circulo azul',        '🟡':'circulo amarillo',    '🟠':'circulo naranja',
+  '🔴':'circulo rojo',     '✅':'check correcto ok',   '🍀':'trebol suerte',
+};
+
 
 // Cache global de emojis cargados
 let _emojiPickerCache = null;
@@ -1327,21 +1382,27 @@ function buildEmojiPicker(pickerPanel, pickerGrid, searchInput, iconPreview, onS
     searchTimer = setTimeout(() => {
       const q = searchInput.value.trim().toLowerCase();
       if (!q) { renderByCategory(''); return; }
-      // Buscar en todas las categorías
-      const all = Object.values(EMOJI_CATEGORIES).flat();
-      renderGrid(all.filter(e => {
-        // Simple búsqueda por si el usuario escribe el emoji directamente
-        return e.includes(q) || [...e].some(c => c.codePointAt(0) > 127);
-      }));
-      // También: si el usuario escribe texto buscamos en el cache de la API si existe
+      // Obtener todos los emojis sin duplicados
+      const allUnique = [...new Set(Object.values(EMOJI_CATEGORIES).flat())];
+      // Filtrar: coincide si el propio emoji incluye el texto buscado
+      // O si el nombre en español contiene la búsqueda
+      const results = allUnique.filter(e => {
+        if (e === q) return true; // emoji exacto escrito
+        const esName = (EMOJI_ES_NAMES[e] || '').toLowerCase();
+        return esName.includes(q);
+      });
+      if (results.length) { renderGrid(results); return; }
+      // Si no hay resultados locales, buscar en el cache de la API (nombres en inglés)
       if (_emojiPickerCache) {
         const apiResults = _emojiPickerCache
           .filter(item => item.unicodeName && item.unicodeName.toLowerCase().includes(q))
           .slice(0, 80)
           .map(item => item.character)
           .filter(Boolean);
-        if (apiResults.length) renderGrid(apiResults);
+        if (apiResults.length) { renderGrid(apiResults); return; }
       }
+      // Sin resultados
+      renderGrid([]);
     }, 200);
   });
 
@@ -1547,14 +1608,23 @@ async function saveNewMeal(card) {
   ];
   if (!await confirmSave(newChanges)) return;
 
-  // Aplicar emoji al icono
+  // Aplicar emoji al icono y limpiar sus estilos de edición
   const iconEl = card.querySelector('.meal-icon');
-  if (iconEl) iconEl.textContent = chosenEmoji;
+  if (iconEl) {
+    iconEl.textContent = chosenEmoji;
+    iconEl.classList.remove('new-meal-icon-preview');
+    iconEl.style.cursor = '';
+    iconEl.style.fontSize = '';
+    iconEl.style.transition = '';
+    iconEl.title = '';
+    iconEl.style.transform = '';
+  }
   // Asignar id único a la nueva tarjeta
   const dayEl = card.closest('.day-content');
   card.id = dayEl.id + '-extra-' + Date.now();
-  // Reemplazar header con nombre y hora reales
-  const headerDiv = card.querySelector('.meal-header > div');
+  // Reemplazar el div que contiene los inputs (segundo hijo de meal-header) con nombre y hora reales
+  // IMPORTANTE: usar :last-child para coger el div de inputs, NO el div del icono (primer hijo)
+  const headerDiv = card.querySelector('.meal-header > div:last-child');
   if (headerDiv) {
     headerDiv.innerHTML = `<div class="meal-name">${escapeHtml(mealName)}</div><div class="meal-time">${escapeHtml(mealTime)}</div>`;
     headerDiv.style = '';
