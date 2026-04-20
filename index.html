@@ -173,6 +173,11 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .reset-day-btn{background:transparent;border:none;color:var(--muted);font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;padding:2px 6px;border-radius:4px;transition:color .2s;margin-left:.5rem}
 .reset-day-btn:hover{color:var(--red)}
 
+/* DAY TYPE SELECT */
+.day-type-select{appearance:none;-webkit-appearance:none;background:rgba(181,240,55,.15);border:1px solid rgba(181,240,55,.3);border-radius:6px;color:var(--accent);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;padding:4px 28px 4px 10px;cursor:pointer;letter-spacing:.4px;text-transform:uppercase;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b5f037'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;transition:border-color .2s,background-color .2s}
+.day-type-select:focus{outline:none;border-color:var(--accent)}
+.day-type-select.descanso{background-color:rgba(55,160,240,.12);border-color:rgba(55,160,240,.3);color:var(--blue);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2337a8f0'/%3E%3C/svg%3E")}
+
 /* SUPLEMENTOS TRACKER */
 .supl-tracker{margin-top:1.1rem;display:flex;flex-direction:column;gap:.7rem}
 .supl-row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
@@ -520,7 +525,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- LUNES -->
 <div class="day-content active" id="day-lun">
-<div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span>  ·  Tren Superior A</div>
+<div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="lun" onchange="saveDayType('lun',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
@@ -547,7 +552,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- MARTES -->
 <div class="day-content" id="day-mar">
-<div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span>  ·  Pierna</div>
+<div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="mar" onchange="saveDayType('mar',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
@@ -574,7 +579,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- MIÉRCOLES -->
 <div class="day-content" id="day-mie">
-<div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train" style="background:rgba(55,160,240,.15);color:var(--blue)">💤 DESCANSO</span>  ·  Calorías ligeramente inferiores</div>
+<div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="mie" onchange="saveDayType('mie',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso"  selected>💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
@@ -601,7 +606,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- JUEVES -->
 <div class="day-content" id="day-jue">
-<div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span>  ·  Tren Superior B</div>
+<div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="jue" onchange="saveDayType('jue',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">08:00h</div></div></div>
@@ -628,10 +633,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- VIERNES -->
 <div class="day-content" id="day-vie">
-<div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)">
-<div><span class="day-badge-train">🏋️ DÍA ENTRENO</span>  ·  Pierna</div>
-<div style="margin-top:5px"><span class="day-badge-train" style="display:inline-block;background:rgba(55,160,240,.15);color:var(--blue)">💤 DESCANSO</span>  ·  <em>Opcional</em> - Plan de entrenamiento de 3 días</div>
-</div>
+<div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="vie" onchange="saveDayType('vie',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
@@ -874,7 +876,61 @@ const FIREBASE_URL = 'https://plan-muscular-default-rtdb.europe-west1.firebaseda
 const CLOUD_CONFIGURED = FIREBASE_URL.startsWith('https://');
 const FIREBASE_ENDPOINT = CLOUD_CONFIGURED ? FIREBASE_URL.replace(/\/$/, '') + '/menus.json' : null;
 const LOCAL_KEY = 'planMuscular_menus_v1';
+const DAYTYPE_LOCAL_KEY = 'planMuscular_dayTypes_v1';
+const DAYTYPE_FB_KEY = 'day_types';
 let saveTimer = null;
+
+// ── TIPO DE DÍA (ENTRENO / DESCANSO) ──
+function applyDayTypeStyle(sel, val) {
+  if (!sel) return;
+  sel.classList.toggle('descanso', val === 'descanso');
+}
+
+async function saveDayType(day, val) {
+  // Actualizar estilo visual
+  const sel = document.querySelector('.day-type-select[data-day="' + day + '"]');
+  applyDayTypeStyle(sel, val);
+  // Guardar local
+  let types = {};
+  try { types = JSON.parse(localStorage.getItem(DAYTYPE_LOCAL_KEY) || '{}'); } catch(e) {}
+  types[day] = val;
+  try { localStorage.setItem(DAYTYPE_LOCAL_KEY, JSON.stringify(types)); } catch(e) {}
+  // Guardar Firebase
+  if (!CLOUD_CONFIGURED) return;
+  try {
+    await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + DAYTYPE_FB_KEY + '.json', {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(types)
+    });
+  } catch(e) {}
+}
+
+function applyDayTypes(types) {
+  if (!types || typeof types !== 'object') return;
+  document.querySelectorAll('.day-type-select').forEach(sel => {
+    const day = sel.dataset.day;
+    if (types[day]) {
+      sel.value = types[day];
+      applyDayTypeStyle(sel, types[day]);
+    }
+  });
+}
+
+async function loadDayTypes() {
+  // Local primero
+  try { applyDayTypes(JSON.parse(localStorage.getItem(DAYTYPE_LOCAL_KEY))); } catch(e) {}
+  // Luego nube
+  if (!CLOUD_CONFIGURED) return;
+  try {
+    const res = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + DAYTYPE_FB_KEY + '.json');
+    if (!res.ok) throw new Error();
+    const d = await res.json();
+    if (d) { try { localStorage.setItem(DAYTYPE_LOCAL_KEY, JSON.stringify(d)); } catch(e) {} applyDayTypes(d); }
+  } catch(e) {}
+  // Apply default styles on load for selects that haven't been overridden
+  document.querySelectorAll('.day-type-select').forEach(sel => {
+    applyDayTypeStyle(sel, sel.value);
+  });
+}
 
 // ── WEEKLY AVERAGE ──
 function recalcWeeklyAvg() {
@@ -1113,6 +1169,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadBatidoData();
   loadCompraData();
   loadSuplStateFromCloud();
+  loadDayTypes();
   // recalcTotalSemanal se llama desde applyCompraData
   // Fallback emoji si la imagen no carga
   document.querySelectorAll('.compra-img img').forEach(img => {
