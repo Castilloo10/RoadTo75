@@ -1079,19 +1079,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let lbState = { gallery: [], idx: 0 };
 
-  // Para cada producto: si tiene data-gallery, usar su primera URL como thumbnail
+  // Para cada producto: combinar foto principal + galería extra en galleryParsed
+  // El thumbnail (img.src) queda intacto; la galería incluye main + extras
   document.querySelectorAll('.compra-item').forEach(item => {
-    const raw = (item.dataset.gallery || '').trim();
-    if (!raw) return;
-    const urls = raw.split('|').map(s => s.trim()).filter(Boolean);
-    if (!urls.length) return;
     const img = item.querySelector('.compra-img img');
-    if (img) img.src = urls[0]; // primera URL del data-gallery = thumbnail
-    item.dataset.galleryParsed = JSON.stringify(urls);
+    const mainSrc = img ? (img.getAttribute('src') || '') : '';
+    const raw = (item.dataset.gallery || '').trim();
+    const extraUrls = raw ? raw.split('|').map(s => s.trim()).filter(Boolean) : [];
+    const allUrls = [mainSrc, ...extraUrls].filter(Boolean);
+    if (allUrls.length) item.dataset.galleryParsed = JSON.stringify(allUrls);
   });
 
   function openLightbox(gallery, label) {
-    lbState = { gallery, idx: 0 };
+    lbState = { gallery, idx: 0, label: label || '' };
     lbLabel.textContent = label || '';
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1100,7 +1100,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openLightbox = openLightbox;
 
   function renderLb() {
-    const { gallery, idx } = lbState;
+    const { gallery, idx, label } = lbState;
     lbImg.src = gallery[idx] || '';
     lbDots.innerHTML = '';
     if (gallery.length > 1) {
@@ -1110,6 +1110,11 @@ document.addEventListener('DOMContentLoaded', () => {
         dot.addEventListener('click', () => goTo(i));
         lbDots.appendChild(dot);
       });
+      // Mostrar "Nombre · Foto 2 de 3"
+      const prefix = label ? label + '  ·  ' : '';
+      lbLabel.textContent = prefix + 'Foto ' + (idx + 1) + ' de ' + gallery.length;
+    } else {
+      lbLabel.textContent = label || '';
     }
     const multi = gallery.length > 1;
     lbPrev.classList.toggle('visible', multi);
@@ -1153,15 +1158,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Math.abs(dx) > 40) dx < 0 ? goTo(lbState.idx + 1) : goTo(lbState.idx - 1);
   });
 
-  // Click en imagen abre lightbox con todas las URLs del data-gallery
+  // Click en imagen abre lightbox (galleryParsed ya incluye foto principal + extras)
   document.querySelectorAll('.compra-item').forEach(item => {
     const img = item.querySelector('.compra-img img');
     if (!img) return;
     img.addEventListener('click', () => {
       if (img.style.display === 'none') return;
-      const raw = item.dataset.galleryParsed;
-      const gallery = raw ? JSON.parse(raw) : [img.src];
-      openLightbox(gallery, item.querySelector('.name')?.textContent || '');
+      const stored  = item.dataset.galleryParsed;
+      const mainSrc = img.getAttribute('src') || '';
+      const gallery = stored ? JSON.parse(stored) : (mainSrc ? [mainSrc] : []);
+      if (gallery.length) openLightbox(gallery, item.querySelector('.name')?.textContent || '');
     });
   });
 
@@ -1485,20 +1491,34 @@ async function saveNewMeal(card) {
   const textarea = foodEl.querySelector('textarea');
   const lines    = textarea.value.trim().split('\n');
   if (!lines[0].trim()) { textarea.style.borderColor = 'var(--red)'; textarea.focus(); return; }
-  // Leer nombre y hora de los inputs
-  const nameInpEl = card.querySelector('.new-meal-name-input');
-  const timeInpEl = card.querySelector('.new-meal-time-input');
-  const mealName  = (nameInpEl && nameInpEl.value.trim()) ? nameInpEl.value.trim() : (lines[0].trim() || 'Comida extra');
-  const mealTime  = (timeInpEl && timeInpEl.value.trim()) ? timeInpEl.value.trim() : '';
-  // Capturar emoji elegido del picker
+  // Leer nombre, hora y emoji antes de confirmar
+  const nameInpEl   = card.querySelector('.new-meal-name-input');
+  const timeInpEl   = card.querySelector('.new-meal-time-input');
+  const mealName    = (nameInpEl && nameInpEl.value.trim()) ? nameInpEl.value.trim() : (lines[0].trim() || 'Comida extra');
+  const mealTime    = (timeInpEl && timeInpEl.value.trim()) ? timeInpEl.value.trim() : '';
   const chosenEmoji = card._getSelectedEmoji ? card._getSelectedEmoji() : '🍽️';
+  const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => Math.max(0, parseInt(i.value) || 0));
+
+  // Confirmar con resumen de lo que se va a añadir (igual que saveBatidoEdit)
+  const newChanges = [
+    { label: 'Nombre',      from: '—', to: mealName },
+    { label: 'Hora',        from: '—', to: mealTime || '—' },
+    { label: 'Emoji',       from: '—', to: chosenEmoji },
+    { label: 'Descripción', from: '—', to: lines.join('\n').trim().slice(0,80) },
+    { label: 'kcal',        from: '—', to: k },
+    { label: 'Prot g',      from: '—', to: p },
+    { label: 'Carbs g',     from: '—', to: c },
+    { label: 'Grasas g',    from: '—', to: f }
+  ];
+  if (!await confirmSave(newChanges)) return;
+
+  // Aplicar emoji al icono
   const iconEl = card.querySelector('.meal-icon');
   if (iconEl) iconEl.textContent = chosenEmoji;
-  const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => Math.max(0, parseInt(i.value) || 0));
   // Asignar id único a la nueva tarjeta
   const dayEl = card.closest('.day-content');
   card.id = dayEl.id + '-extra-' + Date.now();
-  // Reemplazar header con nombre y hora reales (eliminar inputs)
+  // Reemplazar header con nombre y hora reales
   const headerDiv = card.querySelector('.meal-header > div');
   if (headerDiv) {
     headerDiv.innerHTML = `<div class="meal-name">${escapeHtml(mealName)}</div><div class="meal-time">${escapeHtml(mealTime)}</div>`;
@@ -1516,7 +1536,18 @@ async function saveNewMeal(card) {
   card.querySelector('.meal-header').appendChild(editBtn);
   recalcDayTotal(card);
   recalcWeeklyAvg();
-  scheduleSave();
+
+  // Guardar inmediatamente en Firebase (igual que saveBatidoEdit)
+  const _snap = buildSnapshot();
+  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(_snap)); } catch(e) {}
+  if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida añadida'); return; }
+  setSyncStatus('saving', 'Guardando…');
+  fetch(FIREBASE_ENDPOINT, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap)
+  }).then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    setSyncStatus('saved', '✓ Comida añadida en la nube');
+  }).catch(() => setSyncStatus('error', '⚠ Error al guardar comida'));
 }
 
 // Recrear una comida extra guardada al restaurar el snapshot
@@ -1526,10 +1557,13 @@ function createRestoredExtraMeal(dayEl, id, saved) {
   const card = document.createElement('div');
   card.className = 'meal-card';
   card.id = id;
+  const _emoji = saved.emoji || '🍽️';
+  const _name  = saved.name  || 'Comida extra';
+  const _time  = saved.time  || '';
   card.innerHTML = `
     <div class="meal-header">
-      <div class="meal-icon d">🍽️</div>
-      <div><div class="meal-name">Comida extra</div><div class="meal-time"></div></div>
+      <div class="meal-icon d">${_emoji}</div>
+      <div><div class="meal-name">${_name}</div><div class="meal-time">${_time}</div></div>
     </div>
     <div class="meal-food">${saved.food || ''}</div>
     <div class="meal-macros">
@@ -1670,26 +1704,32 @@ async function saveEditMode(card) {
     } catch(e) {}
   }
 
+  // Leer nombre/hora/emoji actuales (antes de editar)
+  const nameInp = card.querySelector('.edit-meal-name-inp');
+  const timeInp = card.querySelector('.edit-meal-time-inp');
+  const newEmoji = card._getEditEmoji ? card._getEditEmoji() : (card._origEmoji || '');
+  const newName  = nameInp ? (nameInp.value.trim() || card._origName) : card._origName;
+  const newTime  = timeInp ? timeInp.value.trim() : card._origTime;
+
   const origText  = origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'').trim();
   const newText   = lines.join('\n').trim();
   const origPills = [...(origMacros.matchAll(/>([\d]+)</g))].map(m => parseInt(m[1]));
   const menuChanges = [];
+  if ((card._origName || '') !== newName)  menuChanges.push({ label: 'Nombre',      from: card._origName || '—', to: newName });
+  if ((card._origTime || '') !== newTime)  menuChanges.push({ label: 'Hora',        from: card._origTime || '—', to: newTime || '—' });
+  if ((card._origEmoji|| '') !== newEmoji) menuChanges.push({ label: 'Emoji',       from: card._origEmoji|| '—', to: newEmoji });
   if (origText !== newText) menuChanges.push({ label: 'Descripción', from: origText.slice(0,80), to: newText.slice(0,80) });
   ['kcal','Prot g','Carbs g','Grasas g'].forEach((lbl, i) => {
     const origN = origPills[i] ?? 0;
     if (origN !== [k,p,c,f][i]) menuChanges.push({ label: lbl, from: origN, to: [k,p,c,f][i] });
   });
   if (!await confirmSave(menuChanges)) return;
-  // Aplicar emoji si cambió
-  const newEmoji = card._getEditEmoji ? card._getEditEmoji() : null;
+
+  // Aplicar emoji
   const iconEl2 = card.querySelector('.meal-icon');
   if (newEmoji && iconEl2) iconEl2.textContent = newEmoji;
   if (iconEl2) { iconEl2.style.cursor = ''; iconEl2.title = ''; iconEl2.style.transform = ''; }
-  // Aplicar nombre y hora editados
-  const nameInp = card.querySelector('.edit-meal-name-inp');
-  const timeInp = card.querySelector('.edit-meal-time-inp');
-  const newName = nameInp ? nameInp.value.trim() || card._origName : card._origName;
-  const newTime = timeInp ? timeInp.value.trim() : card._origTime;
+  // Aplicar nombre y hora
   if (nameInp) { const el = document.createElement('div'); el.className='meal-name'; el.textContent=newName; nameInp.replaceWith(el); }
   if (timeInp) { const el = document.createElement('div'); el.className='meal-time'; el.textContent=newTime; timeInp.replaceWith(el); }
   // Limpiar picker panel
@@ -1700,7 +1740,18 @@ async function saveEditMode(card) {
   card.querySelector('.edit-btn').style.display = '';
   recalcDayTotal(card);
   recalcWeeklyAvg();
-  scheduleSave();
+
+  // Guardar inmediatamente en Firebase (igual que saveBatidoEdit)
+  const _snap = buildSnapshot();
+  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(_snap)); } catch(e) {}
+  if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida guardada'); return; }
+  setSyncStatus('saving', 'Guardando…');
+  fetch(FIREBASE_ENDPOINT, {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap)
+  }).then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    setSyncStatus('saved', '✓ Comida guardada en la nube');
+  }).catch(() => setSyncStatus('error', '⚠ Error al guardar comida'));
 }
 
 function cancelEditMode(card) {
@@ -1736,10 +1787,22 @@ function recalcDayTotal(card) {
 function buildSnapshot() {
   const data = {};
   document.querySelectorAll('.meal-card[id]').forEach(card => {
-    const foodEl = card.querySelector('.meal-food');
-    const pills = card.querySelectorAll('.meal-macros .pill');
+    const foodEl  = card.querySelector('.meal-food');
+    const pills   = card.querySelectorAll('.meal-macros .pill');
+    const nameEl  = card.querySelector('.meal-name');
+    const timeEl  = card.querySelector('.meal-time');
+    const iconEl  = card.querySelector('.meal-icon');
     if (!foodEl || pills.length < 4) return;
-    data[card.id] = { food: foodEl.innerHTML, kcal: parsePillNum(pills[0].textContent), prot: parsePillNum(pills[1].textContent), carb: parsePillNum(pills[2].textContent), fat: parsePillNum(pills[3].textContent) };
+    data[card.id] = {
+      food:  foodEl.innerHTML,
+      kcal:  parsePillNum(pills[0].textContent),
+      prot:  parsePillNum(pills[1].textContent),
+      carb:  parsePillNum(pills[2].textContent),
+      fat:   parsePillNum(pills[3].textContent),
+      name:  nameEl  ? nameEl.textContent.trim()  : '',
+      time:  timeEl  ? timeEl.textContent.trim()  : '',
+      emoji: iconEl  ? iconEl.textContent.trim()  : ''
+    };
   });
   return data;
 }
@@ -1758,10 +1821,16 @@ function applySnapshot(data) {
   Object.entries(data).forEach(([id, saved]) => {
     const card = document.getElementById(id);
     if (!card) return;
-    const foodEl = card.querySelector('.meal-food');
+    const foodEl   = card.querySelector('.meal-food');
     const macrosEl = card.querySelector('.meal-macros');
-    if (foodEl) foodEl.innerHTML = saved.food;
+    const nameEl   = card.querySelector('.meal-name');
+    const timeEl   = card.querySelector('.meal-time');
+    const iconEl   = card.querySelector('.meal-icon');
+    if (foodEl)   foodEl.innerHTML = saved.food;
     if (macrosEl) macrosEl.innerHTML = `<span class="pill kcal">${saved.kcal} kcal</span><span class="pill p">${saved.prot}g P</span><span class="pill c">${saved.carb}g C</span><span class="pill f">${saved.fat}g G</span>`;
+    if (nameEl  && saved.name)             nameEl.textContent  = saved.name;
+    if (timeEl  && saved.time  !== undefined) timeEl.textContent = saved.time;
+    if (iconEl  && saved.emoji)            iconEl.textContent  = saved.emoji;
   });
   document.querySelectorAll('.day-content').forEach(dayEl => { const c = dayEl.querySelector('.meal-card'); if (c) recalcDayTotal(c); });
   recalcWeeklyAvg();
@@ -2368,29 +2437,37 @@ function renderItemsToList(list, items) {
 }
 
 function attachLightboxToItems(items) {
-  const lb      = document.getElementById('lightbox');
-  const lbImg   = document.getElementById('lightbox-img');
-  const lbLabel = document.getElementById('lightbox-label');
-  const lbDots  = document.getElementById('lb-dots');
-  const lbPrev  = document.querySelector('.lb-nav.prev');
-  const lbNext  = document.querySelector('.lb-nav.next');
+  const lb = document.getElementById('lightbox');
   if (!lb) return;
   items.forEach(item => {
     const raw = (item.dataset.gallery || '').trim();
-    if (raw) {
-      const urls = raw.split('|').map(s => s.trim()).filter(Boolean);
-      if (urls.length && item.querySelector('.compra-img img')) {
-        item.querySelector('.compra-img img').src = urls[0];
-        item.dataset.galleryParsed = JSON.stringify(urls);
-      }
-    }
     const img = item.querySelector('.compra-img img');
     if (!img) return;
+
+    // Foto principal = img src (URL foto); galeria = main + extras
+    const mainSrc   = img.getAttribute('src') || '';
+    const extraUrls = raw ? raw.split('|').map(s => s.trim()).filter(Boolean) : [];
+    const allUrls   = [mainSrc, ...extraUrls].filter(Boolean);
+    if (allUrls.length) item.dataset.galleryParsed = JSON.stringify(allUrls);
+
+    // Indicador visual si hay mas de una foto
+    const imgWrap = item.querySelector('.compra-img');
+    if (imgWrap && allUrls.length > 1 && !imgWrap.querySelector('.gallery-badge')) {
+      const badge = document.createElement('span');
+      badge.className = 'gallery-badge';
+      badge.textContent = '🖼 ' + allUrls.length;
+      badge.style.cssText = 'position:absolute;bottom:1px;right:1px;background:rgba(0,0,0,.65);color:#fff;font-size:.45rem;font-weight:700;border-radius:3px;padding:1px 3px;line-height:1.4;pointer-events:none;letter-spacing:.3px';
+      imgWrap.style.position = 'relative';
+      imgWrap.appendChild(badge);
+    }
+
     img.addEventListener('click', () => {
       if (img.style.display === 'none') return;
-      const raw2 = item.dataset.galleryParsed;
-      const gallery = raw2 ? JSON.parse(raw2) : [img.src];
-      if (typeof openLightbox === 'function') openLightbox(gallery, item.querySelector('.name')?.textContent || '');
+      const stored  = item.dataset.galleryParsed;
+      const gallery = stored ? JSON.parse(stored) : (mainSrc ? [mainSrc] : []);
+      if (gallery.length && typeof openLightbox === 'function') {
+        openLightbox(gallery, item.querySelector('.name')?.textContent || '');
+      }
     });
   });
 }
@@ -2526,7 +2603,7 @@ async function toggleCompraEdit(btn) {
       </div>
       <div style="display:flex;flex-direction:column;gap:.22rem">
         <span class="compra-item-edit-lbl">Galería extra (URLs separadas por |)</span>
-        <input class="inp-img" type="text" value="${escapeHtml(it.gallery)}" placeholder="https://foto2.jpg|https://foto3.jpg">
+        <input class="inp-gallery" type="text" value="${escapeHtml(it.gallery)}" placeholder="https://foto2.jpg|https://foto3.jpg">
       </div>`;
     list.appendChild(row);
   });
@@ -2664,7 +2741,7 @@ function addCompraItem(btn) {
     </div>
     <div style="display:flex;flex-direction:column;gap:.22rem">
       <span class="compra-item-edit-lbl">Galería extra (URLs separadas por |)</span>
-      <input class="inp-img" type="text" value="" placeholder="https://foto2.jpg|https://foto3.jpg">
+      <input class="inp-gallery" type="text" value="" placeholder="https://foto2.jpg|https://foto3.jpg">
     </div>`;
   list.insertBefore(row, addRow);
   row.querySelector('.inp-name').focus();
@@ -2703,25 +2780,37 @@ async function saveCompraEdit(btn) {
     const rawPrice = (row.querySelector('.inp-price')?.value || '').trim().replace(/[€\s\u00a0]/g, '');
     const priceNum = parseFloat(rawPrice.replace(',', '.')) || 0;
     const price    = priceNum > 0 ? fmtPrice(priceNum) : '';
-    const img      = row.querySelectorAll('input[type=text]')[1]?.value.trim() || '';
-    const gallery  = row.querySelectorAll('input[type=text]')[2]?.value.trim() || '';
+    const img      = row.querySelector('.inp-img')?.value.trim() || '';
+    const gallery  = row.querySelector('.inp-gallery')?.value.trim() || '';
     if (name) items.push({ name, price, img, gallery });
   });
 
-  // Parse ORIGINAL items from the saved HTML (not the live DOM which was replaced)
-  const origItems = [];
-  if (card._origItemsHTML) {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = card._origItemsHTML;
-    tmp.querySelectorAll('.compra-item').forEach(it => {
-      const nameEl  = it.querySelector('.name');
-      const priceEl = it.querySelector('.price');
-      if (!nameEl) return;
-      origItems.push({ name: nameEl.textContent.trim(), price: (priceEl?.textContent || '').trim() });
-    });
-  }
+  // Usar _origItems (cargado desde Firebase/localStorage) como fuente de verdad
+  // Fallback: parsear desde HTML original si no hay datos de Firebase
+  let origItems = Array.isArray(card._origItems) && card._origItems.length > 0
+    ? card._origItems
+    : (() => {
+        const parsed = [];
+        if (card._origItemsHTML) {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = card._origItemsHTML;
+          tmp.querySelectorAll('.compra-item').forEach(it => {
+            const nameEl  = it.querySelector('.name');
+            const priceEl = it.querySelector('.price');
+            if (!nameEl) return;
+            const imgEl = it.querySelector('.compra-img img');
+            parsed.push({
+              name:    nameEl.textContent.trim(),
+              price:   (priceEl?.textContent || '').trim(),
+              img:     imgEl ? (imgEl.getAttribute('src') || '') : '',
+              gallery: it.dataset.gallery || ''
+            });
+          });
+        }
+        return parsed;
+      })();
 
-  // Build changes: compare by position and name
+  // Build changes: compare by name, including img and gallery
   const compraChanges = [];
   const origByName = Object.fromEntries(origItems.map(o => [o.name, o]));
   const newByName  = Object.fromEntries(items.map(i => [i.name, i]));
@@ -2731,8 +2820,10 @@ async function saveCompraEdit(btn) {
     const orig = origByName[item.name];
     if (!orig) {
       compraChanges.push({ label: 'Añadir', from: '—', to: item.name + (item.price ? ' · ' + item.price : '') });
-    } else if (orig.price !== item.price) {
-      compraChanges.push({ label: item.name, from: orig.price || '—', to: item.price || '—' });
+    } else {
+      if ((orig.price   || '') !== (item.price   || '')) compraChanges.push({ label: item.name + ' — precio',   from: orig.price   || '—', to: item.price   || '—' });
+      if ((orig.img     || '') !== (item.img     || '')) compraChanges.push({ label: item.name + ' — foto',     from: orig.img     || '—', to: item.img     || '—' });
+      if ((orig.gallery || '') !== (item.gallery || '')) compraChanges.push({ label: item.name + ' — galería',  from: orig.gallery || '—', to: item.gallery || '—' });
     }
   });
 
