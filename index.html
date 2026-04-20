@@ -220,7 +220,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .meal-card.batido-disabled .meal-header,
 .meal-card.batido-disabled .meal-food,
 .meal-card.batido-disabled .meal-macros{opacity:.45;pointer-events:none}
-.meal-card.batido-disabled::after{content:'⏸ Batido desactivado para este día';display:block;color:var(--red);font-size:.78rem;font-weight:700;font-style:italic;text-align:center;background:rgba(240,55,55,.13);border:1px solid rgba(240,55,55,.35);border-radius:7px;padding:.45rem .75rem;margin-top:.6rem}
+.meal-card.batido-disabled::after{content:'⏸ Batido desactivado para este día';display:block;color:#c97878;font-size:.78rem;font-weight:700;font-style:italic;text-align:center;background:rgba(240,55,55,.07);border:1px solid rgba(240,55,55,.2);border-radius:7px;padding:.45rem .75rem;margin-top:.6rem}
 .meal-card.batido-global-off .meal-header,
 .meal-card.batido-global-off .meal-food,
 .meal-card.batido-global-off .meal-macros{opacity:.45;pointer-events:none}
@@ -2569,7 +2569,7 @@ function applyBatidoActiveUI(active) {
   // Update all batido cards
   document.querySelectorAll('.meal-card').forEach(card => {
     const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
-    if (!name.includes('batido') || name.includes('merienda')) return;
+    if (!name.includes('batido')) return;
     card.classList.toggle('batido-global-off', !active);
     if (!active) { card.classList.remove('batido-disabled'); }
     const dayId = (card.closest('.day-content')?.id || '').replace('day-','');
@@ -2606,7 +2606,7 @@ function toggleBatidoDay(dayId) {
   if (!dayEl) return;
   dayEl.querySelectorAll('.meal-card').forEach(card => {
     const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
-    if (!name.includes('batido') || name.includes('merienda')) return;
+    if (!name.includes('batido')) return;
     card.classList.toggle('batido-disabled', newVal);
     updateBatidoDayBtn(card, dayId);
     recalcDayTotal(card);
@@ -2625,7 +2625,7 @@ async function loadBatidoActiveState() {
     if (!dayEl) return;
     dayEl.querySelectorAll('.meal-card').forEach(card => {
       const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
-      if (!name.includes('batido') || name.includes('merienda')) return;
+      if (!name.includes('batido')) return;
       card.classList.add('batido-disabled');
       updateBatidoDayBtn(card, dayId);
     });
@@ -2651,7 +2651,7 @@ async function loadBatidoActiveState() {
         // Reset all then apply
         document.querySelectorAll('.meal-card').forEach(card => {
           const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
-          if (!name.includes('batido') || name.includes('merienda')) return;
+          if (!name.includes('batido')) return;
           const dayId = (card.closest('.day-content')?.id || '').replace('day-','');
           const disabled = getBatidoGlobalActive() && !!daysData[dayId];
           card.classList.toggle('batido-disabled', disabled);
@@ -2685,7 +2685,7 @@ function syncBatidoToMenuCards(d) {
       if (!nameEl) return;
       const name = nameEl.textContent.trim().toLowerCase();
       // Detectar si es la tarjeta de Merienda/Batido
-      if (!name.includes('batido') || name.includes('merienda')) return;
+      if (!name.includes('batido')) return;
 
       // Solo actualizar si no está en modo edición
       if (card.classList.contains('editing')) return;
