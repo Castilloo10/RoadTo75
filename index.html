@@ -506,7 +506,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <div class="batido-edit-macros">
 <div class="macro-edit-item"><label class="lkcal" style="color:var(--accent3)">kcal</label><input id="be-kcal" min="0" type="number" value="0"/></div>
 <div class="macro-edit-item"><label class="lp" style="color:var(--accent)">Prot (g)</label><input id="be-prot" min="0" type="number" value="0"/></div>
-<div class="macro-edit-item"><label class="lc" style="color:var(--blue)">Carbs (g) / texto</label><input id="be-carb" style="width:100%" type="text" value=""/></div>
+<div class="macro-edit-item"><label class="lc" style="color:var(--blue)">Carbs (g)</label><input id="be-carb" style="width:100%" type="text" value=""/></div>
 <div class="macro-edit-item"><label class="lf" style="color:var(--red)">Grasas (g)</label><input id="be-fat" min="0" type="number" value="0"/></div>
 </div>
 <div class="batido-edit-actions">
@@ -548,22 +548,22 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="lun" onchange="saveDayType('lun',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">15:00h</div></div></div>
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno 20:00h</div></div></div>
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
@@ -575,22 +575,22 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="mar" onchange="saveDayType('mar',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">15:00</div></div></div>
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div></div>
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
@@ -602,22 +602,22 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="mie" onchange="saveDayType('mie',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso"  selected>💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div></div>
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
@@ -629,22 +629,22 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="jue" onchange="saveDayType('jue',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">08:00h</div></div></div>
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">16:30h</div></div></div>
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">20:30h</div></div></div>
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
@@ -656,22 +656,22 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="vie" onchange="saveDayType('vie',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno / 17:30h (Descanso)</div></div></div>
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
 <div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
 <div class="meal-food"></div>
 <div class="meal-macros"></div>
 </div>
@@ -1049,7 +1049,7 @@ function normalizeAccents(s) {
   return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 }
 function isBatidoCard(card) {
-  // Detectar por nombre del header (Merienda / Batido)
+  // Detectar por nombre del header (Merienda)
   const headerName = normalizeAccents(card.querySelector('.meal-name')?.textContent || '');
   if (headerName.includes('batido')) return true;
   // Detectar por Nombre del Plato (primer <strong> en meal-food)
@@ -2075,6 +2075,12 @@ function applySnapshot(data) {
     if (nameEl  && saved.name)             nameEl.textContent  = saved.name;
     if (timeEl  && saved.time  !== undefined) timeEl.textContent = saved.time;
     if (iconEl  && saved.emoji)            iconEl.textContent  = saved.emoji;
+    // Re-evaluar si la tarjeta es batido tras aplicar nombre/comida desde Firebase
+    if (isBatidoCard(card)) {
+      card.dataset.isBatido = '1';
+      const existingEditBtn = card.querySelector('.edit-btn');
+      if (existingEditBtn) existingEditBtn.remove();
+    }
   });
   document.querySelectorAll('.day-content').forEach(dayEl => {
     sortMealsByTime(dayEl);
@@ -2603,8 +2609,7 @@ function applyBatidoActiveUI(active) {
   if (macrosView) macrosView.style.opacity = active ? '' : '.4';
   // Update all batido cards
   document.querySelectorAll('.meal-card').forEach(card => {
-    const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
-    if (!name.includes('batido')) return;
+    if (!isBatidoCard(card)) return;
     card.classList.toggle('batido-global-off', !active);
     if (!active) { card.classList.remove('batido-disabled'); }
     const dayId = (card.closest('.day-content')?.id || '').replace('day-','');
@@ -2640,8 +2645,7 @@ function toggleBatidoDay(dayId) {
   const dayEl = document.getElementById('day-' + dayId);
   if (!dayEl) return;
   dayEl.querySelectorAll('.meal-card').forEach(card => {
-    const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
-    if (!name.includes('batido')) return;
+    if (!isBatidoCard(card)) return;
     card.classList.toggle('batido-disabled', newVal);
     updateBatidoDayBtn(card, dayId);
     recalcDayTotal(card);
@@ -2659,8 +2663,7 @@ async function loadBatidoActiveState() {
     const dayEl = document.getElementById('day-' + dayId);
     if (!dayEl) return;
     dayEl.querySelectorAll('.meal-card').forEach(card => {
-      const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
-      if (!name.includes('batido')) return;
+      if (!isBatidoCard(card)) return;
       card.classList.add('batido-disabled');
       updateBatidoDayBtn(card, dayId);
     });
@@ -2685,8 +2688,7 @@ async function loadBatidoActiveState() {
         try { localStorage.setItem('batido_days_disabled', JSON.stringify(daysData)); } catch(e) {}
         // Reset all then apply
         document.querySelectorAll('.meal-card').forEach(card => {
-          const name = card.querySelector('.meal-name')?.textContent?.trim().toLowerCase() || '';
-          if (!name.includes('batido')) return;
+          if (!isBatidoCard(card)) return;
           const dayId = (card.closest('.day-content')?.id || '').replace('day-','');
           const disabled = getBatidoGlobalActive() && !!daysData[dayId];
           card.classList.toggle('batido-disabled', disabled);
