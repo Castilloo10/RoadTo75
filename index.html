@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<link href="favicon.svg" rel="icon" type="image/svg+xml"/>
 <title>Plan de nutrición y muscular - RoadTo75</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
 <style>
 :root {
   --bg:#0d0f0e; --surface:#141716; --surface2:#1c1f1d; --border:#2a2e2b;
@@ -389,291 +390,279 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </style>
 </head>
 <body>
-
 <!-- LIGHTBOX + GALLERY -->
-<div id="lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada">
-  <div id="lightbox-inner">
-    <div id="lightbox-img-wrap">
-      <button class="lb-nav prev" aria-label="Foto anterior">&#8249;</button>
-      <button id="lightbox-close" aria-label="Cerrar">✕</button>
-      <img id="lightbox-img" src="" alt="">
-      <button class="lb-nav next" aria-label="Foto siguiente">&#8250;</button>
-    </div>
-    <div id="lightbox-footer">
-      <div id="lightbox-label"></div>
-      <div id="lb-dots"></div>
-    </div>
-  </div>
+<div aria-label="Vista ampliada" aria-modal="true" id="lightbox" role="dialog">
+<div id="lightbox-inner">
+<div id="lightbox-img-wrap">
+<button aria-label="Foto anterior" class="lb-nav prev">‹</button>
+<button aria-label="Cerrar" id="lightbox-close">✕</button>
+<img alt="" id="lightbox-img" src=""/>
+<button aria-label="Foto siguiente" class="lb-nav next">›</button>
 </div>
-
+<div id="lightbox-footer">
+<div id="lightbox-label"></div>
+<div id="lb-dots"></div>
+</div>
+</div>
+</div>
 <div id="sync-status"><span class="sync-dot"></span><span id="sync-msg">Sincronizando…</span></div>
-
 <!-- MODAL CONFIRM -->
-<div id="modal-confirm" role="dialog" aria-modal="true">
-  <div id="modal-confirm-box">
-    <div id="modal-confirm-title">Confirmar</div>
-    <div id="modal-confirm-body"></div>
-    <div class="modal-confirm-actions">
-      <button class="modal-btn-cancel" id="modal-btn-cancel">✕ Cancelar</button>
-      <button class="modal-btn-ok" id="modal-btn-ok">✓ Confirmar</button>
-    </div>
-  </div>
+<div aria-modal="true" id="modal-confirm" role="dialog">
+<div id="modal-confirm-box">
+<div id="modal-confirm-title">Confirmar</div>
+<div id="modal-confirm-body"></div>
+<div class="modal-confirm-actions">
+<button class="modal-btn-cancel" id="modal-btn-cancel">✕ Cancelar</button>
+<button class="modal-btn-ok" id="modal-btn-ok">✓ Confirmar</button>
 </div>
-
+</div>
+</div>
 <header>
-  <div class="header-inner">
-    <div class="logo">
-      <img src="sin_fondo.png" alt="Logo Plan Muscular">
-    </div>
-    <nav>
-      <button class="active" onclick="showSection('menu')">📋 Menú Semanal</button>
-      <button onclick="showSection('compra')">🛒 Lista Compra</button>
-      <button onclick="showSection('entreno')">💪 Entrenamiento</button>
-      <button onclick="showSection('progresion')">📈 Progresión</button>
-    </nav>
-  </div>
+<div class="header-inner">
+<div class="logo">
+<img alt="Logo Plan Muscular" src="sin_fondo.png"/>
+</div>
+<nav>
+<button class="active" onclick="showSection('menu')">📋 Menú Semanal</button>
+<button onclick="showSection('compra')">🛒 Lista Compra</button>
+<button onclick="showSection('entreno')">💪 Entrenamiento</button>
+<button onclick="showSection('progresion')">📈 Progresión</button>
+</nav>
+</div>
 </header>
-
 <!-- ══ MENÚ ══ -->
-<section id="menu" class="section active">
-  <div class="hero" style="padding-top:2rem">
-    <div>
-      <h1>PLAN DE<em> NUTRICIÓN </em>SEMANAL</h1>
-      <p class="hero-sub">Diseñado para hombre de 29 años · 60 kg · objetivo 75-80 kg<br>3-4 entrenos/semana · Superávit calórico controlado · Ingredientes Mercadona</p>
-    </div>
-  </div>
-  <div class="section" style="display:block;padding-top:0">
-    <div class="macro-overview">
-      <div class="macro-item"><div class="macro-val kcal" id="avg-kcal">2750</div><div class="macro-unit">kcal · media semanal</div></div>
-      <div class="macro-item"><div class="macro-val prot" id="avg-prot">165g</div><div class="macro-unit">proteína · media semanal</div></div>
-      <div class="macro-item"><div class="macro-val carb" id="avg-carb">300g</div><div class="macro-unit">carbohidratos · media semanal</div></div>
-      <div class="macro-item"><div class="macro-val fat" id="avg-fat">75g</div><div class="macro-unit">grasas · media semanal</div></div>
-    </div>
-    <div class="batido-box">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.25rem">
-        <h3 style="margin-bottom:0">🥤 SUPLEMENTACIÓN - BATIDO PROTÉICO DIARIO (Merienda / Post-Entreno)</h3>
-        <button class="edit-btn" id="batido-edit-btn" onclick="toggleBatidoEdit()">✏ Editar</button>
-      </div>
-      <p id="batido-desc-view" style="font-size:.9rem;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:2">
-        <strong id="batido-prot-dosis-view">35</strong>
-        <strong>g Proteína</strong> +
-        <strong id="batido-creat-dosis-view">3</strong>
-        <strong>g Creatina</strong> + <strong id="batido-extra-view">fruta (100g) + 300ml leche semidesnatada</strong>
-      </p>
-      <!-- inputs ocultos para que renderSupl() siga funcionando internamente -->
-      <input type="hidden" id="prot-dosis-input" value="35">
-      <input type="hidden" id="creat-dosis-input" value="3">
-      <div class="meal-macros" style="margin-top:.75rem" id="batido-macros-view">
-        <span class="pill kcal" id="bm-kcal">330 kcal</span><span class="pill p" id="bm-prot">37g P</span><span class="pill c" id="bm-carb">38g C (plátano) / 22g C (fresas)</span><span class="pill f" id="bm-fat">5g G</span>
-      </div>
-      <!-- PANEL DE EDICIÓN BATIDO -->
-      <div class="batido-edit-panel" id="batido-edit-panel">
-        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem">
-          <div class="batido-edit-row" style="flex:1;min-width:100px">
-            <label style="color:var(--accent)">g Proteína por batido</label>
-            <input type="number" id="be-prot-dosis" min="1" step="1" placeholder="35" value="35">
-          </div>
-          <div class="batido-edit-row" style="flex:1;min-width:100px">
-            <label style="color:var(--accent2)">g Creatina por batido</label>
-            <input type="number" id="be-creat-dosis" min="1" step="1" placeholder="3" value="3">
-          </div>
-        </div>
-        <div class="batido-edit-row">
-          <label>Resto de ingredientes (texto libre)</label>
-          <textarea id="be-extra" placeholder="fruta (100g) + 300ml leche semi">fruta (100g) + 300ml leche semi</textarea>
-        </div>
-        <div class="batido-edit-macros">
-          <div class="macro-edit-item"><label class="lkcal" style="color:var(--accent3)">kcal</label><input type="number" id="be-kcal" min="0" value="330"></div>
-          <div class="macro-edit-item"><label class="lp" style="color:var(--accent)">Prot (g)</label><input type="number" id="be-prot" min="0" value="37"></div>
-          <div class="macro-edit-item"><label class="lc" style="color:var(--blue)">Carbs (g) / texto</label><input type="text" id="be-carb" value="38g C (plátano) / 22g C (fresas)" style="width:100%"></div>
-          <div class="macro-edit-item"><label class="lf" style="color:var(--red)">Grasas (g)</label><input type="number" id="be-fat" min="0" value="5"></div>
-        </div>
-        <div class="batido-edit-actions">
-          <button class="btn-save-meal" onclick="saveBatidoEdit()">✓ Guardar</button>
-          <button class="btn-cancel-meal" onclick="cancelBatidoEdit()">✕ Cancelar</button>
-        </div>
-      </div>
-      <div class="batido-counter-row">
-        <button class="supl-count-btn minus" onclick="changeBatidos(-1)">−</button>
-        <div style="text-align:center">
-          <div class="batido-counter-label">Batidos tomados</div>
-          <div class="batido-total" id="batido-count">0</div>
-        </div>
-        <button class="supl-count-btn" onclick="changeBatidos(1)">+</button>
-        <button class="supl-reset-btn" onclick="resetBatidos()" style="margin-left:.5rem">↺ Resetear batidos tomados y restantes</button>
-      </div>
-      <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:.75rem">
-        <div style="text-align:center">
-          <div class="batido-counter-label">Total batidos según g indicados</div>
-          <div class="batido-total" id="batido-total-posibles" style="color:var(--text2)">—</div>
-        </div>
-        <div style="text-align:center">
-          <div class="batido-counter-label">Batidos restantes</div>
-          <div class="batido-total" id="batido-restantes" style="color:var(--accent2)">—</div>
-        </div>
-      </div>
-      <div class="supl-alert" id="batido-prot-alert"></div>
-      <div class="supl-alert" id="batido-creat-alert"></div>
-    </div>
-    <div class="day-tabs">
-      <button class="day-tab active" onclick="showDay('lun')">LUNES</button>
-      <button class="day-tab" onclick="showDay('mar')">MARTES</button>
-      <button class="day-tab" onclick="showDay('mie')">MIÉRCOLES</button>
-      <button class="day-tab" onclick="showDay('jue')">JUEVES</button>
-      <button class="day-tab" onclick="showDay('vie')">VIERNES</button>
-    </div>
-
-    <!-- LUNES -->
-    <div class="day-content active" id="day-lun">
-      <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Tren Superior A</div>
-      <div class="meals-grid">
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
-          <div class="meal-food"><strong>Avena con leche y huevos</strong><br>· 100g avena cocida con 300ml leche entera<br>· 3 huevos revueltos con AOVE<br>· 1 plátano mediano</div>
-          <div class="meal-macros"><span class="pill kcal">780 kcal</span><span class="pill p">38g P</span><span class="pill c">95g C</span><span class="pill f">22g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">15:00h</div></div></div>
-          <div class="meal-food"><strong>Pollo con arroz y verduras</strong><br>· 200g pechuga de pollo a la plancha<br>· 100g arroz blanco (en seco) hervido<br>· 200g brócoli congelado al vapor<br>· AOVE 1 cda + sal y limón</div>
-          <div class="meal-macros"><span class="pill kcal">790 kcal</span><span class="pill p">55g P</span><span class="pill c">85g C</span><span class="pill f">14g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno 20:00h</div></div></div>
-          <div class="meal-food"><strong>Batido diario (ver arriba)</strong><br>· 35g Whey + 3g creatina<br>· 1 plátano + 300ml leche semi</div>
-          <div class="meal-macros"><span class="pill kcal">330 kcal</span><span class="pill p">37g P</span><span class="pill c">38g C</span><span class="pill f">5g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
-          <div class="meal-food"><strong>Salmón con patata y ensalada</strong><br>· 200g lomo de salmón al horno<br>· 250g patatas cocidas con pimentón<br>· Ensalada: lechuga, tomate, cebolla, AOVE</div>
-          <div class="meal-macros"><span class="pill kcal">810 kcal</span><span class="pill p">42g P</span><span class="pill c">48g C</span><span class="pill f">34g G</span></div>
-        </div>
-      </div>
-      <div class="day-total"><span class="day-total-label">TOTAL LUNES</span><div class="day-total-macros"><span class="pill kcal">2710 kcal</span><span class="pill p">172g P</span><span class="pill c">266g C</span><span class="pill f">75g G</span></div></div>
-    </div>
-
-    <!-- MARTES -->
-    <div class="day-content" id="day-mar">
-      <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Pierna</div>
-      <div class="meals-grid">
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
-          <div class="meal-food"><strong>Tostadas con aguacate y huevo</strong><br>· 3 rebanadas pan integral tostado<br>· ½ aguacate maduro aplastado<br>· 3 huevos revueltos o a la plancha<br>· 1 yogur griego natural (125g)</div>
-          <div class="meal-macros"><span class="pill kcal">720 kcal</span><span class="pill p">36g P</span><span class="pill c">65g C</span><span class="pill f">30g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">15:00</div></div></div>
-          <div class="meal-food"><strong>Lentejas con chorizo y verdura</strong><br>· 200g lentejas cocidas (bote Mercadona)<br>· 50g chorizo bajo en grasa<br>· Zanahoria, cebolla, pimiento<br>· Pan integral (1 rebanada)</div>
-          <div class="meal-macros"><span class="pill kcal">750 kcal</span><span class="pill p">42g P</span><span class="pill c">80g C</span><span class="pill f">18g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div></div>
-          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 100g Gresas/frambuesas congeladas<br>· 300ml leche semidesnatada</div>
-          <div class="meal-macros"><span class="pill kcal">255 kcal</span><span class="pill p">36g P</span><span class="pill c">20g C</span><span class="pill f">5g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
-          <div class="meal-food"><strong>Pasta con atún y tomate</strong><br>· 100g pasta penne (seco)<br>· 2 latas atún en aceite (80g c/u)<br>· Tomate frito casero (3 cdas)<br>· Queso rallado Hacendado (20g)</div>
-          <div class="meal-macros"><span class="pill kcal">780 kcal</span><span class="pill p">48g P</span><span class="pill c">82g C</span><span class="pill f">20g G</span></div>
-        </div>
-      </div>
-      <div class="day-total"><span class="day-total-label">TOTAL MARTES</span><div class="day-total-macros"><span class="pill kcal">2505 kcal</span><span class="pill p">162g P</span><span class="pill c">247g C</span><span class="pill f">73g G</span></div></div>
-    </div>
-
-    <!-- MIÉRCOLES -->
-    <div class="day-content" id="day-mie">
-      <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span style="background:rgba(55,160,240,.15);color:var(--blue)" class="day-badge-train">💤 DESCANSO</span> &nbsp;·&nbsp; Calorías ligeramente inferiores</div>
-      <div class="meals-grid">
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
-          <div class="meal-food"><strong>Avena proteica con fruta</strong><br>· 100g avena + 300ml leche entera<br>· 1 plátano troceado encima<br>· 30g almendras crudas<br>· 1 cda miel</div>
-          <div class="meal-macros"><span class="pill kcal">780 kcal</span><span class="pill p">28g P</span><span class="pill c">100g C</span><span class="pill f">24g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
-          <div class="meal-food"><strong>Ternera con patata y pimientos</strong><br>· 200g carne picada magra de ternera<br>· 250g patatas al horno con especias<br>· 150g pimientos asados (bote)<br>· AOVE + ajo + perejil</div>
-          <div class="meal-macros"><span class="pill kcal">790 kcal</span><span class="pill p">50g P</span><span class="pill c">55g C</span><span class="pill f">26g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div></div>
-          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 1 plátano + 300ml leche semi</div>
-          <div class="meal-macros"><span class="pill kcal">330 kcal</span><span class="pill p">37g P</span><span class="pill c">38g C</span><span class="pill f">5g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
-          <div class="meal-food"><strong>Tortilla de 4 huevos con queso</strong><br>· 4 huevos + 30g queso Hacendado<br>· 100g jamón cocido en dados<br>· 2 rebanadas pan integral<br>· Tomate natural aliñado con AOVE</div>
-          <div class="meal-macros"><span class="pill kcal">760 kcal</span><span class="pill p">52g P</span><span class="pill c">38g C</span><span class="pill f">38g G</span></div>
-        </div>
-      </div>
-      <div class="day-total"><span class="day-total-label">TOTAL MIÉRCOLES</span><div class="day-total-macros"><span class="pill kcal">2660 kcal</span><span class="pill p">167g P</span><span class="pill c">231g C</span><span class="pill f">93g G</span></div></div>
-    </div>
-
-    <!-- JUEVES -->
-    <div class="day-content" id="day-jue">
-      <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Tren Superior B</div>
-      <div class="meals-grid">
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">08:00h</div></div></div>
-          <div class="meal-food"><strong>Overnight oats</strong><br>· 80g avena + 250ml leche entera<br>· 1 yogur griego (125g)<br>· 1 plátano + 1 cda de cacahuete natural<br><em style="font-size:.78rem;color:var(--muted)">Preparar la noche anterior en un tarro</em></div>
-          <div class="meal-macros"><span class="pill kcal">750 kcal</span><span class="pill p">32g P</span><span class="pill c">92g C</span><span class="pill f">22g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
-          <div class="meal-food"><strong>Arroz con pollo al curry</strong><br>· 200g contramuslo de pollo sin hueso<br>· 90g arroz basmati (en seco)<br>· Cebolla + pimiento + curry en polvo<br>· 100ml leche de coco (tetrabrik)</div>
-          <div class="meal-macros"><span class="pill kcal">790 kcal</span><span class="pill p">50g P</span><span class="pill c">78g C</span><span class="pill f">18g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">16:30h</div></div></div>
-          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 100g Grambuesas congeladas<br>· 300ml leche semidesnatada</div>
-          <div class="meal-macros"><span class="pill kcal">255 kcal</span><span class="pill p">36g P</span><span class="pill c">22g C</span><span class="pill f">5g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">20:30h</div></div></div>
-          <div class="meal-food"><strong>Merluza al horno con verduras</strong><br>· 250g Giletes merluza (congelada)<br>· 200g judías verdes congeladas<br>· 200g patata mediana cocida<br>· AOVE + ajo + pimentón</div>
-          <div class="meal-macros"><span class="pill kcal">660 kcal</span><span class="pill p">50g P</span><span class="pill c">52g C</span><span class="pill f">20g G</span></div>
-        </div>
-      </div>
-      <div class="day-total"><span class="day-total-label">TOTAL JUEVES</span><div class="day-total-macros"><span class="pill kcal">2455 kcal</span><span class="pill p">168g P</span><span class="pill c">244g C</span><span class="pill f">65g G</span></div></div>
-    </div>
-
-    <!-- VIERNES -->
-    <div class="day-content" id="day-vie">
-      <div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)">
-        <div><span class="day-badge-train">🏋️ DÍA ENTRENO</span> &nbsp;·&nbsp; Pierna</div>
-        <div style="margin-top:5px"><span style="display:inline-block;background:rgba(55,160,240,.15);color:var(--blue)" class="day-badge-train">💤 DESCANSO</span> &nbsp;·&nbsp; <em>Opcional</em> - Plan de entrenamiento de 3 días</div>
-      </div>
-      <div class="meals-grid">
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
-          <div class="meal-food"><strong>Avena + huevos + fruta</strong><br>· 100g avena con 300ml leche entera<br>· 3 huevos a la plancha con jamón<br>· 50g jamón cocido Hacendado<br>· 1 plátano</div>
-          <div class="meal-macros"><span class="pill kcal">820 kcal</span><span class="pill p">48g P</span><span class="pill c">90g C</span><span class="pill f">22g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
-          <div class="meal-food"><strong>Macarrones con carne y tomate</strong><br>· 150g macarrones (en seco)<br>· 150g carne picada mixta<br>· Tomate frito casero + cebolla<br>· 20g queso parmesano rallado</div>
-          <div class="meal-macros"><span class="pill kcal">850 kcal</span><span class="pill p">48g P</span><span class="pill c">98g C</span><span class="pill f">22g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno / 17:30h (Descanso)</div></div></div>
-          <div class="meal-food"><strong>Batido diario</strong><br>· 35g Whey + 3g creatina<br>· 1 plátano + 300ml leche semi</div>
-          <div class="meal-macros"><span class="pill kcal">330 kcal</span><span class="pill p">37g P</span><span class="pill c">38g C</span><span class="pill f">5g G</span></div>
-        </div>
-        <div class="meal-card">
-          <div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
-          <div class="meal-food"><strong>Pechuga al horno con boniato</strong><br>· 220g pechuga de pollo al horno<br>· 200g boniato asado con canela<br>· Brócoli al vapor (150g)<br>· AOVE + limón</div>
-          <div class="meal-macros"><span class="pill kcal">720 kcal</span><span class="pill p">55g P</span><span class="pill c">60g C</span><span class="pill f">14g G</span></div>
-        </div>
-      </div>
-      <div class="day-total"><span class="day-total-label">TOTAL VIERNES</span><div class="day-total-macros"><span class="pill kcal">2720 kcal</span><span class="pill p">188g P</span><span class="pill c">286g C</span><span class="pill f">63g G</span></div></div>
-    </div>
-  </div>
+<section class="section active" id="menu">
+<div class="hero" style="padding-top:2rem">
+<div>
+<h1>PLAN DE<em> NUTRICIÓN </em>SEMANAL</h1>
+<p class="hero-sub">Diseñado para hombre de 29 años · 60 kg · objetivo 75-80 kg<br/>3-4 entrenos/semana · Superávit calórico controlado · Ingredientes Mercadona</p>
+</div>
+</div>
+<div class="section" style="display:block;padding-top:0">
+<div class="macro-overview">
+<div class="macro-item"><div class="macro-val kcal" id="avg-kcal">—</div><div class="macro-unit">kcal · media semanal</div></div>
+<div class="macro-item"><div class="macro-val prot" id="avg-prot">—</div><div class="macro-unit">proteína · media semanal</div></div>
+<div class="macro-item"><div class="macro-val carb" id="avg-carb">—</div><div class="macro-unit">carbohidratos · media semanal</div></div>
+<div class="macro-item"><div class="macro-val fat" id="avg-fat">—</div><div class="macro-unit">grasas · media semanal</div></div>
+</div>
+<div class="batido-box">
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.25rem">
+<h3 style="margin-bottom:0">🥤 SUPLEMENTACIÓN - BATIDO PROTÉICO DIARIO (Merienda / Post-Entreno)</h3>
+<button class="edit-btn" id="batido-edit-btn" onclick="toggleBatidoEdit()">✏ Editar</button>
+</div>
+<p id="batido-desc-view" style="font-size:.9rem;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:2">
+<strong id="batido-prot-dosis-view">—</strong>
+<strong>g Proteína</strong> +
+        <strong id="batido-creat-dosis-view">—</strong>
+<strong>g Creatina</strong> + <strong id="batido-extra-view"></strong>
+</p>
+<!-- inputs ocultos para que renderSupl() siga funcionando internamente -->
+<input id="prot-dosis-input" type="hidden" value="35"/>
+<input id="creat-dosis-input" type="hidden" value="3"/>
+<div class="meal-macros" id="batido-macros-view" style="margin-top:.75rem">
+<span class="pill kcal" id="bm-kcal"></span><span class="pill p" id="bm-prot"></span><span class="pill c" id="bm-carb"></span><span class="pill f" id="bm-fat"></span>
+</div>
+<!-- PANEL DE EDICIÓN BATIDO -->
+<div class="batido-edit-panel" id="batido-edit-panel">
+<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem">
+<div class="batido-edit-row" style="flex:1;min-width:100px">
+<label style="color:var(--accent)">g Proteína por batido</label>
+<input id="be-prot-dosis" min="1" placeholder="35" step="1" type="number" value="35"/>
+</div>
+<div class="batido-edit-row" style="flex:1;min-width:100px">
+<label style="color:var(--accent2)">g Creatina por batido</label>
+<input id="be-creat-dosis" min="1" placeholder="3" step="1" type="number" value="3"/>
+</div>
+</div>
+<div class="batido-edit-row">
+<label>Resto de ingredientes (texto libre)</label>
+<textarea id="be-extra" placeholder="fruta (100g) + 300ml leche semi"></textarea>
+</div>
+<div class="batido-edit-macros">
+<div class="macro-edit-item"><label class="lkcal" style="color:var(--accent3)">kcal</label><input id="be-kcal" min="0" type="number" value="0"/></div>
+<div class="macro-edit-item"><label class="lp" style="color:var(--accent)">Prot (g)</label><input id="be-prot" min="0" type="number" value="0"/></div>
+<div class="macro-edit-item"><label class="lc" style="color:var(--blue)">Carbs (g) / texto</label><input id="be-carb" style="width:100%" type="text" value=""/></div>
+<div class="macro-edit-item"><label class="lf" style="color:var(--red)">Grasas (g)</label><input id="be-fat" min="0" type="number" value="0"/></div>
+</div>
+<div class="batido-edit-actions">
+<button class="btn-save-meal" onclick="saveBatidoEdit()">✓ Guardar</button>
+<button class="btn-cancel-meal" onclick="cancelBatidoEdit()">✕ Cancelar</button>
+</div>
+</div>
+<div class="batido-counter-row">
+<button class="supl-count-btn minus" onclick="changeBatidos(-1)">−</button>
+<div style="text-align:center">
+<div class="batido-counter-label">Batidos tomados</div>
+<div class="batido-total" id="batido-count">0</div>
+</div>
+<button class="supl-count-btn" onclick="changeBatidos(1)">+</button>
+<button class="supl-reset-btn" onclick="resetBatidos()" style="margin-left:.5rem">↺ Resetear batidos tomados y restantes</button>
+</div>
+<div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:.75rem">
+<div style="text-align:center">
+<div class="batido-counter-label">Total batidos según g indicados</div>
+<div class="batido-total" id="batido-total-posibles" style="color:var(--text2)">—</div>
+</div>
+<div style="text-align:center">
+<div class="batido-counter-label">Batidos restantes</div>
+<div class="batido-total" id="batido-restantes" style="color:var(--accent2)">—</div>
+</div>
+</div>
+<div class="supl-alert" id="batido-prot-alert"></div>
+<div class="supl-alert" id="batido-creat-alert"></div>
+</div>
+<div class="day-tabs">
+<button class="day-tab active" onclick="showDay('lun')">LUNES</button>
+<button class="day-tab" onclick="showDay('mar')">MARTES</button>
+<button class="day-tab" onclick="showDay('mie')">MIÉRCOLES</button>
+<button class="day-tab" onclick="showDay('jue')">JUEVES</button>
+<button class="day-tab" onclick="showDay('vie')">VIERNES</button>
+</div>
+<!-- LUNES -->
+<div class="day-content active" id="day-lun">
+<div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span>  ·  Tren Superior A</div>
+<div class="meals-grid">
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">15:00h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno 20:00h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+</div>
+<div class="day-total"><span class="day-total-label">TOTAL LUNES</span><div class="day-total-macros"></div></div>
+</div>
+<!-- MARTES -->
+<div class="day-content" id="day-mar">
+<div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span>  ·  Pierna</div>
+<div class="meals-grid">
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">11:00h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">15:00</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+</div>
+<div class="day-total"><span class="day-total-label">TOTAL MARTES</span><div class="day-total-macros"></div></div>
+</div>
+<!-- MIÉRCOLES -->
+<div class="day-content" id="day-mie">
+<div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train" style="background:rgba(55,160,240,.15);color:var(--blue)">💤 DESCANSO</span>  ·  Calorías ligeramente inferiores</div>
+<div class="meals-grid">
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">17:30h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+</div>
+<div class="day-total"><span class="day-total-label">TOTAL MIÉRCOLES</span><div class="day-total-macros"></div></div>
+</div>
+<!-- JUEVES -->
+<div class="day-content" id="day-jue">
+<div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)"><span class="day-badge-train">🏋️ DÍA ENTRENO</span>  ·  Tren Superior B</div>
+<div class="meals-grid">
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">08:00h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">16:30h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">20:30h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+</div>
+<div class="day-total"><span class="day-total-label">TOTAL JUEVES</span><div class="day-total-macros"></div></div>
+</div>
+<!-- VIERNES -->
+<div class="day-content" id="day-vie">
+<div style="margin-bottom:1rem;font-size:.85rem;color:var(--text2)">
+<div><span class="day-badge-train">🏋️ DÍA ENTRENO</span>  ·  Pierna</div>
+<div style="margin-top:5px"><span class="day-badge-train" style="display:inline-block;background:rgba(55,160,240,.15);color:var(--blue)">💤 DESCANSO</span>  ·  <em>Opcional</em> - Plan de entrenamiento de 3 días</div>
+</div>
+<div class="meals-grid">
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time">07:30h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time">13:30h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda / Batido</div><div class="meal-time">Post-entreno / 17:30h (Descanso)</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time">21:00h</div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+</div>
+<div class="day-total"><span class="day-total-label">TOTAL VIERNES</span><div class="day-total-macros"></div></div>
+</div>
+</div>
 </section>
-
 <!-- ══ COMPRA ══ -->
-<section id="compra" class="section">
-  <h1>LISTA DE LA <em>COMPRA SEMANAL</em></h1>
-  <p class="section-intro">Estimación semanal para 5 días · Mercadona · Precios Abril 2026</p>
-
-  <!--
+<section class="section" id="compra">
+<h1>LISTA DE LA <em>COMPRA SEMANAL</em></h1>
+<p class="section-intro">Estimación semanal para 5 días · Mercadona · Precios Abril 2026</p>
+<!--
   ─── CÓMO AÑADIR FOTOS EXTRA A UN PRODUCTO ───────────────────────────────────
   Añade el atributo  data-gallery="URL1|URL2|URL3"  al div.compra-item
   Separa cada URL con una barra vertical  |
@@ -681,253 +670,202 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
     <div class="compra-item" data-gallery="https://ejemplo.com/foto2.jpg|https://ejemplo.com/foto3.jpg">
   ─────────────────────────────────────────────────────────────────────────────
   -->
-  <div class="compra-grid">
-    <div class="compra-card" data-cat-id="proteinas">
-      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">🍗 PROTEÍNAS ANIMALES</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
-      <div class="compra-items-list">
-      <div class="compra-item" data-gallery="https://prod-mercadona.imgix.net/images/c0902c682f4d28953dc3dbf54cfbca00.jpg?fit=crop&h=600&w=600|https://prod-mercadona.imgix.net/images/5f79052c42e92bf7c963363bf179a40e.jpg?fit=crop&h=600&w=600"><span class="compra-img"><img src="https://prod-mercadona.imgix.net/images/c0902c682f4d28953dc3dbf54cfbca00.jpg?fit=crop&h=600&w=600" alt="" onerror="this.style.display='none'"></span><span class="name">Filetes pechuga de pollo</span><span class="price">4,75 €</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/56261-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Carne picada mixta (500g)</span><span class="price">3,50€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/62491-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Huevos L (docena)</span><span class="price">2,50€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/84611-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lomo salmón (pack 2 lomos, 400g)</span><span class="price">6,90€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/83141-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Filetes merluza congelada (600g)</span><span class="price">4,20€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/20401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Atún en aceite (pack 3x80g)</span><span class="price">2,30€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/43581-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Jamón cocido extra (200g)</span><span class="price">2,20€</span></div>
-      </div>
-    </div>
-    <div class="compra-card" data-cat-id="lacteos">
-      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--blue);margin-bottom:0">🥛 LÁCTEOS Y DERIVADOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
-      <div class="compra-items-list">
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/30101-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche entera (2L)</span><span class="price">1,60€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/30151-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche semidesnatada (2L)</span><span class="price">1,40€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/32011-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Yogur griego natural (4x125g)</span><span class="price">1,90€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/34811-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Queso semicurado rallado (150g)</span><span class="price">1,80€</span></div>
-      </div>
-    </div>
-    <div class="compra-card" data-cat-id="hidratos">
-      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent3);margin-bottom:0">🌾 HIDRATOS DE CARBONO</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
-      <div class="compra-items-list">
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/11801-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Avena tradicional 1kg (Hacendado)</span><span class="price">1,50€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/10501-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Arroz blanco 1kg</span><span class="price">1,10€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/10521-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Arroz basmati 500g</span><span class="price">1,20€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/11201-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pasta penne 500g</span><span class="price">0,75€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/11211-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Macarrones 500g</span><span class="price">0,65€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/14081-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pan integral (barra o molde)</span><span class="price">1,50€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/12101-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lentejas cocidas bote (400g)</span><span class="price">0,90€</span></div>
-      </div>
-    </div>
-    <div class="compra-card" data-cat-id="frutas">
-      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent2);margin-bottom:0">🥦 FRUTAS Y VERDURAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
-      <div class="compra-items-list">
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/91401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Plátanos (1,5kg)</span><span class="price">1,50€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/90511-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Fresas/frambuesas congeladas (750g)</span><span class="price">3,50€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/91841-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Brócoli congelado (750g)</span><span class="price">1,50€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/91771-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Judías verdes congeladas (750g)</span><span class="price">1,40€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/92031-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Patatas (2kg malla)</span><span class="price">1,90€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/92051-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Boniato (1kg)</span><span class="price">1,80€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/92241-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Tomates de pera (1kg)</span><span class="price">2,00€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/92141-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Lechuga iceberg</span><span class="price">0,80€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/92071-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Cebolla (1kg)</span><span class="price">0,80€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/91281-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Aguacates (2 ud)</span><span class="price">1,80€</span></div>
-      </div>
-    </div>
-    <div class="compra-card" data-cat-id="despensa">
-      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--red);margin-bottom:0">🧴 DESPENSA Y GRASAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
-      <div class="compra-items-list">
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/40201-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">AOVE (500ml, Hacendado)</span><span class="price">3,50€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/19781-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Almendras naturales (200g)</span><span class="price">2,50€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/19861-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Mantequilla cacahuete nat. (350g)</span><span class="price">3,90€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/40831-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Tomate frito Hacendado (400g)</span><span class="price">0,75€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/40881-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Pimientos asados bote</span><span class="price">1,20€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/30401-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Leche de coco (200ml tetrabrik)</span><span class="price">1,10€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/19311-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Miel (bote pequeño)</span><span class="price">2,50€</span></div>
-      <div class="compra-item"><span class="compra-img"><img src="https://tienda.mercadona.es/api/images/41191-0_1/400" alt="" onerror="this.style.display='none'"></span><span class="name">Especias: curry, pimentón, ajo</span><span class="price">3,00€</span></div>
-      </div>
-    </div>
-    <div class="compra-card" data-cat-id="suplementos">
-      <div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">💊 SUPLEMENTOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
-
-      <!-- PROTEÍNA -->
-      <div class="compra-items-list" id="supl-items-list">
-      <div class="compra-item supl-product-item" data-supl-id="prot" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-bottom:.75rem">
-        <div style="display:flex;align-items:center;gap:8px;width:100%">
-          <span class="compra-img supl-img-view" data-emoji="💪"><img id="prot-product-img" src="https://tienda.mercadona.es/api/images/55601-0_1/400" alt="" onerror="this.style.display='none'"></span>
-          <span class="name supl-name-view" id="prot-product-name">Proteína Whey Hacendado</span>
-          <span class="price" id="prot-price-view" style="margin-left:auto">—</span>
-        </div>
-        <div class="supl-tracker">
-          <div class="supl-row">
-            <span class="supl-label">Consumido:</span>
-            <span class="supl-num" id="prot-used">0</span>
-            <span class="supl-stock-label">g</span>
-            <span class="supl-remain" id="prot-remain">— g restantes</span>
-          </div>
-        </div>
-        <div class="supl-alert" id="prot-alert-el"></div>
-      </div>
-
-      <!-- CREATINA -->
-      <div class="compra-item supl-product-item" data-supl-id="creat" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-top:.75rem;border-top:1px solid var(--border);border-bottom:none">
-        <div style="display:flex;align-items:center;gap:8px;width:100%">
-          <span class="compra-img supl-img-view" data-emoji="💊"><img id="creat-product-img" src="https://tienda.mercadona.es/api/images/55611-0_1/400" alt="" onerror="this.style.display='none'"></span>
-          <span class="name supl-name-view" id="creat-product-name">Creatina Monohidrato Hacendado</span>
-          <span class="price" id="creat-price-view" style="margin-left:auto">—</span>
-        </div>
-        <div class="supl-tracker">
-          <div class="supl-row">
-            <span class="supl-label">Consumido:</span>
-            <span class="supl-num" id="creat-used">0</span>
-            <span class="supl-stock-label">g</span>
-            <span class="supl-remain" id="creat-remain">— g restantes</span>
-          </div>
-        </div>
-        <div class="supl-alert" id="creat-alert-el"></div>
-      </div>
-
-      <!-- BADGE BATIDOS UNIFICADO -->
-      <div style="margin-top:.75rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-        <span style="font-size:.8rem;color:var(--text2)">Batidos que puedes hacer:</span>
-        <span class="supl-batidos" id="supl-batidos-unified"></span>
-      </div>
-
-      <p id="supl-footer-note" style="font-size:.72rem;color:var(--muted);margin-top:.75rem;line-height:1.5">Usa "✏ Editar categoría" para indicar los gramos comprados y el precio del bote de cada suplemento.</p>
-      </div><!-- /compra-items-list -->
-    </div>
-  </div>
-  <div class="price-total">
-   <div class="label">TOTAL SEMANAL ESTIMADO <em style="font-size:1.3rem;color:var(--text2);margin-top:4px">(SIN SUPLEMENTOS)</em></div>
-    <div class="amount" id="compra-total-semanal">—</div>
-  </div>
-
-  <!-- ══ COSTE SUPLEMENTOS ══ -->
+<div class="compra-grid">
+<div class="compra-card" data-cat-id="proteinas">
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">🍗 PROTEÍNAS ANIMALES</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-items-list"></div>
+</div>
+<div class="compra-card" data-cat-id="lacteos">
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--blue);margin-bottom:0">🥛 LÁCTEOS Y DERIVADOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-items-list"></div>
+</div>
+<div class="compra-card" data-cat-id="hidratos">
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent3);margin-bottom:0">🌾 HIDRATOS DE CARBONO</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-items-list"></div>
+</div>
+<div class="compra-card" data-cat-id="frutas">
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent2);margin-bottom:0">🥦 FRUTAS Y VERDURAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-items-list"></div>
+</div>
+<div class="compra-card" data-cat-id="despensa">
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--red);margin-bottom:0">🧴 DESPENSA Y GRASAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-items-list"></div>
+</div>
+<div class="compra-card" data-cat-id="suplementos">
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">💊 SUPLEMENTOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<!-- PROTEÍNA -->
+<div class="compra-items-list" id="supl-items-list">
+<div class="compra-item supl-product-item" data-supl-id="prot" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-bottom:.75rem">
+<div style="display:flex;align-items:center;gap:8px;width:100%">
+<span class="compra-img supl-img-view" data-emoji="💪"><img alt="" id="prot-product-img" onerror="this.style.display='none'" src=""/></span>
+<span class="name supl-name-view" id="prot-product-name"></span>
+<span class="price" id="prot-price-view" style="margin-left:auto">—</span>
+</div>
+<div class="supl-tracker">
+<div class="supl-row">
+<span class="supl-label">Consumido:</span>
+<span class="supl-num" id="prot-used">0</span>
+<span class="supl-stock-label">g</span>
+<span class="supl-remain" id="prot-remain">— g restantes</span>
+</div>
+</div>
+<div class="supl-alert" id="prot-alert-el"></div>
+</div>
+<!-- CREATINA -->
+<div class="compra-item supl-product-item" data-supl-id="creat" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-top:.75rem;border-top:1px solid var(--border);border-bottom:none">
+<div style="display:flex;align-items:center;gap:8px;width:100%">
+<span class="compra-img supl-img-view" data-emoji="💊"><img alt="" id="creat-product-img" onerror="this.style.display='none'" src=""/></span>
+<span class="name supl-name-view" id="creat-product-name"></span>
+<span class="price" id="creat-price-view" style="margin-left:auto">—</span>
+</div>
+<div class="supl-tracker">
+<div class="supl-row">
+<span class="supl-label">Consumido:</span>
+<span class="supl-num" id="creat-used">0</span>
+<span class="supl-stock-label">g</span>
+<span class="supl-remain" id="creat-remain">— g restantes</span>
+</div>
+</div>
+<div class="supl-alert" id="creat-alert-el"></div>
+</div>
+<!-- BADGE BATIDOS UNIFICADO -->
+<div style="margin-top:.75rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+<span style="font-size:.8rem;color:var(--text2)">Batidos que puedes hacer:</span>
+<span class="supl-batidos" id="supl-batidos-unified"></span>
+</div>
+<p id="supl-footer-note" style="font-size:.72rem;color:var(--muted);margin-top:.75rem;line-height:1.5">Usa "✏ Editar categoría" para indicar los gramos comprados y el precio del bote de cada suplemento.</p>
+</div><!-- /compra-items-list -->
+</div>
+</div>
+<div class="price-total">
+<div class="label">TOTAL SEMANAL ESTIMADO <em style="font-size:1.3rem;color:var(--text2);margin-top:4px">(SIN SUPLEMENTOS)</em></div>
+<div class="amount" id="compra-total-semanal">—</div>
+</div>
+<!-- ══ COSTE SUPLEMENTOS ══ -->
 <div class="price-total price-total--supl" style="border-color:var(--accent2);margin-top:.75rem">
-  <div class="price-total--supl-label label">COSTE SUPLEMENTOS / MES · AÑO <em style="font-size:1rem;color:var(--text2)">(PRECIO SEGÚN GRAMOS INDICADOS)</em></div>
-  <div class="price-total--supl-amounts">
-    <div class="price-total--supl-col">
-      <div class="price-total--supl-period">/MES</div>
-      <div class="amount" style="color:var(--accent2)" id="supl-cost-mes">—</div>
-    </div>
-    <div class="price-total--supl-col">
-      <div class="price-total--supl-period">/AÑO</div>
-      <div class="amount" style="color:var(--accent3)" id="supl-cost-anio">—</div>
-    </div>
-  </div>
+<div class="price-total--supl-label label">COSTE SUPLEMENTOS / MES · AÑO <em style="font-size:1rem;color:var(--text2)">(PRECIO SEGÚN GRAMOS INDICADOS)</em></div>
+<div class="price-total--supl-amounts">
+<div class="price-total--supl-col">
+<div class="price-total--supl-period">/MES</div>
+<div class="amount" id="supl-cost-mes" style="color:var(--accent2)">—</div>
+</div>
+<div class="price-total--supl-col">
+<div class="price-total--supl-period">/AÑO</div>
+<div class="amount" id="supl-cost-anio" style="color:var(--accent3)">—</div>
+</div>
+</div>
 </div>
 </section>
-
 <!-- ══ ENTRENAMIENTO ══ -->
-<section id="entreno" class="section">
-  <h1>PLAN DE<em> ENTRENAMIENTO</em></h1>
-  <p class="section-intro">Hipertrofia · Progresión de cargas · Ejercicios compuestos prioritarios</p>
-  <div class="entreno-toggle">
-    <button class="etog-btn active" onclick="showPlan('3dias')">Plan 3 Días</button>
-    <button class="etog-btn" onclick="showPlan('4dias')">Plan 4 Días</button>
-  </div>
-
-  <div class="entreno-plan active" id="plan-3dias">
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2)">
-      <strong style="color:var(--text)">Estructura Push / Pull / Legs</strong> · Lunes – Miércoles – Viernes<br>
+<section class="section" id="entreno">
+<h1>PLAN DE<em> ENTRENAMIENTO</em></h1>
+<p class="section-intro">Hipertrofia · Progresión de cargas · Ejercicios compuestos prioritarios</p>
+<div class="entreno-toggle">
+<button class="etog-btn active" onclick="showPlan('3dias')">Plan 3 Días</button>
+<button class="etog-btn" onclick="showPlan('4dias')">Plan 4 Días</button>
+</div>
+<div class="entreno-plan active" id="plan-3dias">
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2)">
+<strong style="color:var(--text)">Estructura Push / Pull / Legs</strong> · Lunes – Miércoles – Viernes<br/>
       Cada músculo se trabaja 1 vez/semana con alto volumen. Ideal para el nivel principiante-intermedio.
     </div>
-    <div class="dias-entreno">
-      <div class="dia-entreno">
-        <div class="dia-entreno-header"><span class="dia-badge">PUSH</span><div><div class="dia-title">Día A · Empuje</div><div class="dia-sub">Pecho · Hombros · Tríceps · LUNES</div></div></div>
-        <div class="exercise"><div class="ex-name"><strong>Press de banca plano (barra)</strong>Compuesto principal de pecho</div><span class="ex-sets">4×6-8</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Press inclinado (mancuernas)</strong>Porción clavicular del pecho</div><span class="ex-sets">3×8-10</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Press militar (barra o mancuernas)</strong>Deltoides anterior y medial</div><span class="ex-sets">3×8-10</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Elevaciones laterales</strong>Amplitud de hombros</div><span class="ex-sets">3×12-15</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Fondos en paralelas</strong>Tríceps y pecho inferior</div><span class="ex-sets">3×8-10</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Extensión tríceps en polea</strong>Aislamiento de tríceps</div><span class="ex-sets">3×12-15</span></div>
-        <div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 90-120s entre series compuestas · 60s aislamiento</div>
-      </div>
-      <div class="dia-entreno">
-        <div class="dia-entreno-header"><span class="dia-badge pull">PULL</span><div><div class="dia-title">Día B · Tirón</div><div class="dia-sub">Espalda · Bíceps · MIÉRCOLES</div></div></div>
-        <div class="exercise"><div class="ex-name"><strong>Dominadas o jalón al pecho</strong>Dorsal ancho · compuesto clave</div><span class="ex-sets">4×6-8</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Remo con barra (Pendlay)</strong>Espalda media y trapecio</div><span class="ex-sets">4×6-8</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Remo en polea sentado</strong>Romboides y dorsal</div><span class="ex-sets">3×10-12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Face pulls en polea</strong>Deltoides posterior y manguito</div><span class="ex-sets">3×15</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Curl bíceps con barra Z</strong>Bíceps braquial</div><span class="ex-sets">3×10-12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Curl martillo mancuernas</strong>Braquial y braquiorradial</div><span class="ex-sets">3×12-15</span></div>
-        <div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 90-120s entre series compuestas · 60s aislamiento</div>
-      </div>
-      <div class="dia-entreno">
-        <div class="dia-entreno-header"><span class="dia-badge legs">LEGS</span><div><div class="dia-title">Día C · Piernas</div><div class="dia-sub">Cuádriceps · Isquios · Glúteos · VIERNES</div></div></div>
-        <div class="exercise"><div class="ex-name"><strong>Sentadilla con barra (trasera)</strong>Rey de los compuestos de pierna</div><span class="ex-sets">4×6-8</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Peso muerto rumano</strong>Isquiotibiales y glúteos</div><span class="ex-sets">3×8-10</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Prensa de piernas</strong>Cuádriceps con seguridad</div><span class="ex-sets">3×10-12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Extensión de cuádriceps (máquina)</strong>Aislamiento cuádriceps</div><span class="ex-sets">3×12-15</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Curl de isquiotibiales tumbado</strong>Femoral posterior</div><span class="ex-sets">3×12-15</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Gemelos de pie (máquina o barra)</strong>Gastrocnemio y sóleo</div><span class="ex-sets">4×12-15</span></div>
-        <div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 2-3 min sentadilla · 90s resto compuestos · 60s aislamiento</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="entreno-plan" id="plan-4dias">
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2)">
-      <strong style="color:var(--text)">Estructura Upper / Lower (2 días cada uno)</strong> · Lunes – Martes – Jueves – Viernes<br>
+<div class="dias-entreno">
+<div class="dia-entreno">
+<div class="dia-entreno-header"><span class="dia-badge">PUSH</span><div><div class="dia-title">Día A · Empuje</div><div class="dia-sub">Pecho · Hombros · Tríceps · LUNES</div></div></div>
+<div class="exercise"><div class="ex-name"><strong>Press de banca plano (barra)</strong>Compuesto principal de pecho</div><span class="ex-sets">4×6-8</span></div>
+<div class="exercise"><div class="ex-name"><strong>Press inclinado (mancuernas)</strong>Porción clavicular del pecho</div><span class="ex-sets">3×8-10</span></div>
+<div class="exercise"><div class="ex-name"><strong>Press militar (barra o mancuernas)</strong>Deltoides anterior y medial</div><span class="ex-sets">3×8-10</span></div>
+<div class="exercise"><div class="ex-name"><strong>Elevaciones laterales</strong>Amplitud de hombros</div><span class="ex-sets">3×12-15</span></div>
+<div class="exercise"><div class="ex-name"><strong>Fondos en paralelas</strong>Tríceps y pecho inferior</div><span class="ex-sets">3×8-10</span></div>
+<div class="exercise"><div class="ex-name"><strong>Extensión tríceps en polea</strong>Aislamiento de tríceps</div><span class="ex-sets">3×12-15</span></div>
+<div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 90-120s entre series compuestas · 60s aislamiento</div>
+</div>
+<div class="dia-entreno">
+<div class="dia-entreno-header"><span class="dia-badge pull">PULL</span><div><div class="dia-title">Día B · Tirón</div><div class="dia-sub">Espalda · Bíceps · MIÉRCOLES</div></div></div>
+<div class="exercise"><div class="ex-name"><strong>Dominadas o jalón al pecho</strong>Dorsal ancho · compuesto clave</div><span class="ex-sets">4×6-8</span></div>
+<div class="exercise"><div class="ex-name"><strong>Remo con barra (Pendlay)</strong>Espalda media y trapecio</div><span class="ex-sets">4×6-8</span></div>
+<div class="exercise"><div class="ex-name"><strong>Remo en polea sentado</strong>Romboides y dorsal</div><span class="ex-sets">3×10-12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Face pulls en polea</strong>Deltoides posterior y manguito</div><span class="ex-sets">3×15</span></div>
+<div class="exercise"><div class="ex-name"><strong>Curl bíceps con barra Z</strong>Bíceps braquial</div><span class="ex-sets">3×10-12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Curl martillo mancuernas</strong>Braquial y braquiorradial</div><span class="ex-sets">3×12-15</span></div>
+<div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 90-120s entre series compuestas · 60s aislamiento</div>
+</div>
+<div class="dia-entreno">
+<div class="dia-entreno-header"><span class="dia-badge legs">LEGS</span><div><div class="dia-title">Día C · Piernas</div><div class="dia-sub">Cuádriceps · Isquios · Glúteos · VIERNES</div></div></div>
+<div class="exercise"><div class="ex-name"><strong>Sentadilla con barra (trasera)</strong>Rey de los compuestos de pierna</div><span class="ex-sets">4×6-8</span></div>
+<div class="exercise"><div class="ex-name"><strong>Peso muerto rumano</strong>Isquiotibiales y glúteos</div><span class="ex-sets">3×8-10</span></div>
+<div class="exercise"><div class="ex-name"><strong>Prensa de piernas</strong>Cuádriceps con seguridad</div><span class="ex-sets">3×10-12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Extensión de cuádriceps (máquina)</strong>Aislamiento cuádriceps</div><span class="ex-sets">3×12-15</span></div>
+<div class="exercise"><div class="ex-name"><strong>Curl de isquiotibiales tumbado</strong>Femoral posterior</div><span class="ex-sets">3×12-15</span></div>
+<div class="exercise"><div class="ex-name"><strong>Gemelos de pie (máquina o barra)</strong>Gastrocnemio y sóleo</div><span class="ex-sets">4×12-15</span></div>
+<div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 2-3 min sentadilla · 90s resto compuestos · 60s aislamiento</div>
+</div>
+</div>
+</div>
+<div class="entreno-plan" id="plan-4dias">
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2)">
+<strong style="color:var(--text)">Estructura Upper / Lower (2 días cada uno)</strong> · Lunes – Martes – Jueves – Viernes<br/>
       Mayor frecuencia por grupo muscular (2×/semana). Óptimo para hipertrofia intermedia.
     </div>
-    <div class="dias-entreno">
-      <div class="dia-entreno">
-        <div class="dia-entreno-header"><span class="dia-badge upper">UPPER A</span><div><div class="dia-title">Tren Superior A</div><div class="dia-sub">Pecho/Tríceps énfasis · LUNES</div></div></div>
-        <div class="exercise"><div class="ex-name"><strong>Press de banca plano (barra)</strong>Compuesto principal</div><span class="ex-sets">4×5-7</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Remo con barra (Pendlay)</strong>Espalda media · antagonista</div><span class="ex-sets">4×6-8</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Press inclinado mancuernas</strong>Porción clavicular</div><span class="ex-sets">3×8-10</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Jalón al pecho agarre ancho</strong>Dorsal ancho</div><span class="ex-sets">3×10-12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Press militar mancuernas</strong>Deltoides</div><span class="ex-sets">3×10-12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Fondos en paralelas</strong>Tríceps</div><span class="ex-sets">3×8-10</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Curl bíceps barra</strong>Bíceps</div><span class="ex-sets">3×12</span></div>
-      </div>
-      <div class="dia-entreno">
-        <div class="dia-entreno-header"><span class="dia-badge lower">LOWER A</span><div><div class="dia-title">Tren Inferior A</div><div class="dia-sub">Cuádriceps énfasis · MARTES</div></div></div>
-        <div class="exercise"><div class="ex-name"><strong>Sentadilla con barra</strong>Compuesto principal de pierna</div><span class="ex-sets">4×5-7</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Peso muerto rumano</strong>Isquios y glúteos</div><span class="ex-sets">3×8-10</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Prensa de piernas</strong>Cuádriceps</div><span class="ex-sets">3×10-12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Extensión cuádriceps (máquina)</strong>Aislamiento cuádriceps</div><span class="ex-sets">3×12-15</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Curl isquiotibiales tumbado</strong>Femoral posterior</div><span class="ex-sets">3×12-15</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Gemelos de pie</strong>Gastrocnemio</div><span class="ex-sets">4×15</span></div>
-      </div>
-      <div class="dia-entreno">
-        <div class="dia-entreno-header"><span class="dia-badge upperB">UPPER B</span><div><div class="dia-title">Tren Superior B</div><div class="dia-sub">Espalda/Bíceps énfasis · JUEVES</div></div></div>
-        <div class="exercise"><div class="ex-name"><strong>Dominadas (o jalón neutro)</strong>Dorsal · compuesto principal</div><span class="ex-sets">4×6-8</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Press banca inclinado barra</strong>Pecho clavicular</div><span class="ex-sets">4×8-10</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Remo en polea sentado</strong>Romboides · espalda media</div><span class="ex-sets">3×10-12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Aperturas en polea alta</strong>Pecho aislado</div><span class="ex-sets">3×12-15</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Elevaciones laterales</strong>Deltoides medial</div><span class="ex-sets">3×15</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Curl martillo mancuernas</strong>Braquial y bíceps</div><span class="ex-sets">3×12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Extensión tríceps polea</strong>Tríceps largo</div><span class="ex-sets">3×12-15</span></div>
-      </div>
-      <div class="dia-entreno">
-        <div class="dia-entreno-header"><span class="dia-badge lowerB">LOWER B</span><div><div class="dia-title">Tren Inferior B</div><div class="dia-sub">Isquios/Glúteos énfasis · VIERNES</div></div></div>
-        <div class="exercise"><div class="ex-name"><strong>Peso muerto convencional</strong>Compuesto total posterior</div><span class="ex-sets">4×4-6</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Hip Thrust con barra</strong>Glúteo máximo</div><span class="ex-sets">4×10-12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Sentadilla búlgara (unilateral)</strong>Cuádriceps y glúteo</div><span class="ex-sets">3×10</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Leg press pies altos</strong>Isquios y glúteos</div><span class="ex-sets">3×12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Curl nórdico o máquina isquios</strong>Isquiotibiales</div><span class="ex-sets">3×10-12</span></div>
-        <div class="exercise"><div class="ex-name"><strong>Gemelos sentado (máquina)</strong>Sóleo</div><span class="ex-sets">4×15</span></div>
-      </div>
-    </div>
-  </div>
+<div class="dias-entreno">
+<div class="dia-entreno">
+<div class="dia-entreno-header"><span class="dia-badge upper">UPPER A</span><div><div class="dia-title">Tren Superior A</div><div class="dia-sub">Pecho/Tríceps énfasis · LUNES</div></div></div>
+<div class="exercise"><div class="ex-name"><strong>Press de banca plano (barra)</strong>Compuesto principal</div><span class="ex-sets">4×5-7</span></div>
+<div class="exercise"><div class="ex-name"><strong>Remo con barra (Pendlay)</strong>Espalda media · antagonista</div><span class="ex-sets">4×6-8</span></div>
+<div class="exercise"><div class="ex-name"><strong>Press inclinado mancuernas</strong>Porción clavicular</div><span class="ex-sets">3×8-10</span></div>
+<div class="exercise"><div class="ex-name"><strong>Jalón al pecho agarre ancho</strong>Dorsal ancho</div><span class="ex-sets">3×10-12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Press militar mancuernas</strong>Deltoides</div><span class="ex-sets">3×10-12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Fondos en paralelas</strong>Tríceps</div><span class="ex-sets">3×8-10</span></div>
+<div class="exercise"><div class="ex-name"><strong>Curl bíceps barra</strong>Bíceps</div><span class="ex-sets">3×12</span></div>
+</div>
+<div class="dia-entreno">
+<div class="dia-entreno-header"><span class="dia-badge lower">LOWER A</span><div><div class="dia-title">Tren Inferior A</div><div class="dia-sub">Cuádriceps énfasis · MARTES</div></div></div>
+<div class="exercise"><div class="ex-name"><strong>Sentadilla con barra</strong>Compuesto principal de pierna</div><span class="ex-sets">4×5-7</span></div>
+<div class="exercise"><div class="ex-name"><strong>Peso muerto rumano</strong>Isquios y glúteos</div><span class="ex-sets">3×8-10</span></div>
+<div class="exercise"><div class="ex-name"><strong>Prensa de piernas</strong>Cuádriceps</div><span class="ex-sets">3×10-12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Extensión cuádriceps (máquina)</strong>Aislamiento cuádriceps</div><span class="ex-sets">3×12-15</span></div>
+<div class="exercise"><div class="ex-name"><strong>Curl isquiotibiales tumbado</strong>Femoral posterior</div><span class="ex-sets">3×12-15</span></div>
+<div class="exercise"><div class="ex-name"><strong>Gemelos de pie</strong>Gastrocnemio</div><span class="ex-sets">4×15</span></div>
+</div>
+<div class="dia-entreno">
+<div class="dia-entreno-header"><span class="dia-badge upperB">UPPER B</span><div><div class="dia-title">Tren Superior B</div><div class="dia-sub">Espalda/Bíceps énfasis · JUEVES</div></div></div>
+<div class="exercise"><div class="ex-name"><strong>Dominadas (o jalón neutro)</strong>Dorsal · compuesto principal</div><span class="ex-sets">4×6-8</span></div>
+<div class="exercise"><div class="ex-name"><strong>Press banca inclinado barra</strong>Pecho clavicular</div><span class="ex-sets">4×8-10</span></div>
+<div class="exercise"><div class="ex-name"><strong>Remo en polea sentado</strong>Romboides · espalda media</div><span class="ex-sets">3×10-12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Aperturas en polea alta</strong>Pecho aislado</div><span class="ex-sets">3×12-15</span></div>
+<div class="exercise"><div class="ex-name"><strong>Elevaciones laterales</strong>Deltoides medial</div><span class="ex-sets">3×15</span></div>
+<div class="exercise"><div class="ex-name"><strong>Curl martillo mancuernas</strong>Braquial y bíceps</div><span class="ex-sets">3×12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Extensión tríceps polea</strong>Tríceps largo</div><span class="ex-sets">3×12-15</span></div>
+</div>
+<div class="dia-entreno">
+<div class="dia-entreno-header"><span class="dia-badge lowerB">LOWER B</span><div><div class="dia-title">Tren Inferior B</div><div class="dia-sub">Isquios/Glúteos énfasis · VIERNES</div></div></div>
+<div class="exercise"><div class="ex-name"><strong>Peso muerto convencional</strong>Compuesto total posterior</div><span class="ex-sets">4×4-6</span></div>
+<div class="exercise"><div class="ex-name"><strong>Hip Thrust con barra</strong>Glúteo máximo</div><span class="ex-sets">4×10-12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Sentadilla búlgara (unilateral)</strong>Cuádriceps y glúteo</div><span class="ex-sets">3×10</span></div>
+<div class="exercise"><div class="ex-name"><strong>Leg press pies altos</strong>Isquios y glúteos</div><span class="ex-sets">3×12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Curl nórdico o máquina isquios</strong>Isquiotibiales</div><span class="ex-sets">3×10-12</span></div>
+<div class="exercise"><div class="ex-name"><strong>Gemelos sentado (máquina)</strong>Sóleo</div><span class="ex-sets">4×15</span></div>
+</div>
+</div>
+</div>
 </section>
-
 <!-- ══ PROGRESIÓN ══ -->
-<section id="progresion" class="section">
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
-      <h1>REGISTRO DE<em> PESOS</em></h1>
-    </div>
-    <p class="section-intro">Anota tus pesos al terminar cada serie/ejercicio para asegurar la sobrecarga progresiva.</p>
-    <a href="https://www.notion.so/registroseries/344d8688427180d3b10cc21a7c402e96?v=c670445a3666472b99ca310374855cfd&source=copy_link" target="_blank" rel="noopener" style="display:block;text-decoration:none;color:inherit">
-      <div style="width:100%;min-height:280px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(135deg,rgba(55,240,168,.08),rgba(181,240,55,.05));padding:2.5rem 2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:border-color .2s,transform .2s" onmouseover="this.style.borderColor='var(--accent2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='translateY(0)'">
-        <div style="font-size:3rem;margin-bottom:.75rem">📊</div>
-        <h3 style="color:var(--accent2);margin-bottom:.5rem">Abrir registro en Notion</h3>
-        <p style="font-size:.88rem;color:var(--text2);max-width:480px;line-height:1.6;margin-bottom:1.25rem">La tabla completa con tu progresión de cargas está alojada en Notion. Notion no permite incrustar sus páginas dentro de otros sitios, así que se abre en una pestaña nueva.</p>
-        <span style="display:inline-block;background:var(--accent2);color:#0d0f0e;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:8px;letter-spacing:.3px">Ver registro completo →</span>
-      </div>
-    </a>
-  </div>
+<section class="section" id="progresion">
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+<h1>REGISTRO DE<em> PESOS</em></h1>
+</div>
+<p class="section-intro">Anota tus pesos al terminar cada serie/ejercicio para asegurar la sobrecarga progresiva.</p>
+<a href="https://www.notion.so/registroseries/344d8688427180d3b10cc21a7c402e96?v=c670445a3666472b99ca310374855cfd&amp;source=copy_link" rel="noopener" style="display:block;text-decoration:none;color:inherit" target="_blank">
+<div onmouseout="this.style.borderColor='var(--border)';this.style.transform='translateY(0)'" onmouseover="this.style.borderColor='var(--accent2)';this.style.transform='translateY(-2px)'" style="width:100%;min-height:280px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(135deg,rgba(55,240,168,.08),rgba(181,240,55,.05));padding:2.5rem 2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:border-color .2s,transform .2s">
+<div style="font-size:3rem;margin-bottom:.75rem">📊</div>
+<h3 style="color:var(--accent2);margin-bottom:.5rem">Abrir registro en Notion</h3>
+<p style="font-size:.88rem;color:var(--text2);max-width:480px;line-height:1.6;margin-bottom:1.25rem">La tabla completa con tu progresión de cargas está alojada en Notion. Notion no permite incrustar sus páginas dentro de otros sitios, así que se abre en una pestaña nueva.</p>
+<span style="display:inline-block;background:var(--accent2);color:#0d0f0e;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:8px;letter-spacing:.3px">Ver registro completo →</span>
+</div>
+</a>
+</div>
 </section>
-
 <script>
 // ══ CONFIGURACIÓN ══════════════════════════════
 const FIREBASE_URL = 'https://plan-muscular-default-rtdb.europe-west1.firebasedatabase.app/';
@@ -2838,7 +2776,7 @@ async function saveCompraEdit(btn) {
     }
   });
 
-  if (!await confirmSave(compraChanges)) return;
+  if (!await confirmSave(compraChanges.filter(c => c.label !== 'Eliminar'))) return;
 
   card.classList.remove('editing-compra');
   const editBtn = card.querySelector('.compra-edit-btn');
