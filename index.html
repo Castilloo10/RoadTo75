@@ -3640,6 +3640,13 @@ const BADGE_GROUPS = [
 let _peEditingPlanId = null;
 let _peDayCount = 0;
 
+// Returns a human-readable label for a badge val+custom combo
+function badgeDisplayLabel(val, customVal) {
+  if (val === 'custom') return customVal ? customVal.toUpperCase() : 'CUSTOM';
+  const found = BADGE_TYPES.find(b => b.val === val);
+  return found ? found.label : (val || '—').toUpperCase();
+}
+
 function badgeSelectHTML(selectedVal) {
   const badgeMap = Object.fromEntries(BADGE_TYPES.map(b => [b.val, b]));
   const groups = BADGE_GROUPS.map(g =>
@@ -3715,7 +3722,7 @@ function peBadgeSelectChanged(sel) {
       return;
     }
     if (hiddenInput) hiddenInput.value = val;
-    if (preview) { preview.textContent = '→ ' + val; preview.style.display = 'inline'; }
+    if (preview) { preview.textContent = val; preview.style.display = 'inline'; }
   }
 
   function onCan() {
@@ -3750,7 +3757,7 @@ function peAddDay(dayData) {
       <label class="plan-field-label">Tipo <span style="color:var(--accent)">*</span></label>
       <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
         ${badgeSelectHTML(d.badge || 'pecho')}
-        <span class="pe-badge-custom-preview" style="font-family:'Bebas Neue',sans-serif;font-size:.82rem;color:var(--accent2);display:${d.badge==='custom'&&d.badgeCustom?'inline':'none'}">${escapeHtml(d.badgeCustom||'')}</span>
+        <span class="pe-badge-custom-preview" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.5px;color:var(--accent2);display:${d.badge==='custom'&&d.badgeCustom?'inline':'none'}">${escapeHtml(d.badgeCustom||'')}</span>
       </div>
       <input class="pe-badge-custom" type="hidden" value="${escapeHtml(d.badgeCustom || '')}"/>
     </div>
@@ -4018,6 +4025,7 @@ async function savePlanModal() {
     if (data.estructura2) planChanges.push({ label: 'Descripción',   from: '—', to: data.estructura2 });
     planChanges.push({ label: 'Días de entrenamiento', from: '—', to: data.dias.length + ' día' + (data.dias.length === 1 ? '' : 's') });
     data.dias.forEach((d, i) => {
+      planChanges.push({ label: 'Día ' + (i+1) + ' — Tipo',   from: '—', to: badgeDisplayLabel(d.badge || '', d.badgeCustom || '') });
       planChanges.push({ label: 'Día ' + (i+1) + ' — Título', from: '—', to: d.titulo || '—' });
       if (d.ejercicios && d.ejercicios.length) {
         planChanges.push({ label: 'Día ' + (i+1) + ' — Ejercicios', from: '—', to: d.ejercicios.map(e => e.nombre).filter(Boolean).join(', ') });
@@ -4044,6 +4052,11 @@ async function savePlanModal() {
     // Compare exercises per day
     data.dias.forEach((d, i) => {
       const old = (oldData.dias || [])[i] || {};
+      // Badge/tipo
+      const oldBadgeLabel = badgeDisplayLabel(old.badge || '', old.badgeCustom || '');
+      const newBadgeLabel = badgeDisplayLabel(d.badge   || '', d.badgeCustom   || '');
+      if (oldBadgeLabel !== newBadgeLabel)
+        planChanges.push({ label: 'Día ' + (i+1) + ' — Tipo', from: oldBadgeLabel, to: newBadgeLabel });
       if ((old.titulo || '') !== (d.titulo || ''))
         planChanges.push({ label: 'Día ' + (i+1) + ' — Título',      from: old.titulo || '—',      to: d.titulo || '—' });
       if ((old.descripcion || '') !== (d.descripcion || ''))
