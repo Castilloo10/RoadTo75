@@ -23,11 +23,10 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
 
 /* HEADER */
-header{background:var(--surface);border-bottom:1px solid var(--border);top:0;z-index:100}
+header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
 .header-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:112px}
 .logo{display:flex;align-items:center;gap:16px;justify-self:end;margin-right:1.5rem}
 .logo img{height:100px;width:auto;display:block;border-radius:50%}
-.logo span{color:var(--text2);font-size:1rem;letter-spacing:1px;white-space:nowrap}
 nav{display:flex;gap:.25rem;flex-wrap:wrap;justify-content:center}
 nav button{background:transparent;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;padding:8px 16px;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap}
 nav button:hover{background:var(--surface2);color:var(--text)}
@@ -44,13 +43,6 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem}
 .hero-sub{color:var(--text2);font-size:.95rem;margin-top:1rem;line-height:1.7}
 .section-intro{color:var(--text2);font-size:.9rem;margin-bottom:2rem}
-.divider{border:none;border-top:1px solid var(--border);margin:2rem 0}
-
-/* STATS */
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;min-width:240px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center}
-.stat-card .val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--accent);line-height:1}
-.stat-card .lbl{font-size:.72rem;color:var(--text2);letter-spacing:.5px;text-transform:uppercase;margin-top:2px}
 
 /* MACROS */
 .macro-overview{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
@@ -74,7 +66,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .day-content{display:none} .day-content.active{display:block}
 
 /* MEAL CARDS */
-.meals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:1.25rem}
+.meals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:1.25rem;align-items:start}
 .meal-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:border-color .2s}
 .meal-card:hover{border-color:var(--accent)}
 .meal-header{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
@@ -96,9 +88,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .batido-box{background:linear-gradient(135deg,rgba(181,240,55,.08),rgba(55,240,168,.05));border:1px solid rgba(181,240,55,.25);border-radius:14px;padding:1.5rem;margin-bottom:2rem}
 .batido-box h3{color:var(--accent)}
 
-/* BADGE ENTRENO */
-.day-badge-train{display:inline-block;background:rgba(181,240,55,.15);color:var(--accent);font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.5px;text-transform:uppercase;margin-left:8px;vertical-align:middle}
-
 /* COMPRA */
 .compra-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:2rem}
 .compra-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
@@ -109,8 +98,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .compra-item .price{font-family:'JetBrains Mono',monospace;color:var(--accent3);font-size:.78rem;white-space:nowrap}
 .compra-img{width:36px;height:36px;border-radius:7px;object-fit:cover;flex-shrink:0;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;overflow:hidden}
 .compra-img img{width:100%;height:100%;object-fit:cover;border-radius:7px}
-.compra-img img.error{display:none}
-.compra-img.fallback::after{content:attr(data-emoji)}
 .price-total{background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;margin-top:1rem;flex-wrap:wrap;gap:.75rem}
 .price-total .label{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--text);flex:1;min-width:0}
 .price-total .amount{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--accent)}
@@ -137,19 +124,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .exercise:last-child{border-bottom:none}
 .ex-name{font-size:.83rem;color:var(--text2)} .ex-name strong{color:var(--text);display:block}
 .ex-sets{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);white-space:nowrap;font-weight:600}
-
-/* PROGRESION */
-.prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:2rem}
-.prog-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;border-top:3px solid var(--accent)}
-.prog-card h4{color:var(--accent);font-size:.8rem;margin-bottom:.5rem}
-.prog-card p{font-size:.84rem;color:var(--text2);line-height:1.65}
-.rule-box{background:linear-gradient(135deg,rgba(181,240,55,.08),transparent);border:1px solid rgba(181,240,55,.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
-.rule-box h3{color:var(--accent);margin-bottom:.5rem} .rule-box p{font-size:.88rem;color:var(--text2);line-height:1.7} .rule-box strong{color:var(--text)}
-.descanso-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
-.descanso-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;text-align:center}
-.descanso-icon{font-size:2rem;margin-bottom:.5rem}
-.descanso-card h4{color:var(--text);font-size:.88rem;margin-bottom:.4rem}
-.descanso-card p{font-size:.8rem;color:var(--text2);line-height:1.6}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem}
 
 /* EDIT MODE */
@@ -196,10 +170,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .batido-counter-row{display:flex;align-items:center;gap:.75rem;margin-top:1rem;flex-wrap:wrap}
 .batido-counter-label{font-size:.85rem;color:var(--text2)}
 .batido-total{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--accent);line-height:1}
-.supl-stock-row{display:flex;align-items:center;gap:6px;margin-top:.4rem;flex-wrap:wrap}
 .supl-stock-label{font-size:.75rem;color:var(--muted)}
-.supl-stock-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:3px 7px;width:80px;text-align:center}
-.supl-stock-input:focus{outline:none;border-color:var(--accent)}
 .supl-alert{display:none;margin-top:.6rem;border-radius:8px;padding:.6rem 1rem;font-size:.8rem;line-height:1.5}
 .supl-alert.orange{background:rgba(240,168,55,.12);border:1px solid rgba(240,168,55,.4);color:var(--accent3)}
 .supl-alert.red{background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.35);color:var(--red)}
@@ -247,18 +218,15 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .compra-card.editing-compra{border-color:var(--accent);box-shadow:0 0 0 2px rgba(181,240,55,.1)}
 .compra-item-edit{display:flex;flex-direction:column;gap:.4rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
 .compra-item-edit:last-of-type{border-bottom:none}
-.compra-item-edit-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .compra-item-edit input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.8rem;padding:4px 7px}
 .compra-item-edit input:focus{outline:none;border-color:var(--accent)}
 .compra-item-edit .inp-name{flex:2;min-width:120px}
-.compra-item-edit .inp-price{width:68px}
 .price-input-wrap{display:inline-flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:6px;overflow:hidden;flex-shrink:0}
 .price-input-wrap:focus-within{border-color:var(--accent)}
 .price-input-wrap .inp-price{background:transparent;border:none;border-radius:0;width:58px;padding:4px 2px 4px 7px;font-family:'JetBrains Mono',monospace;color:var(--accent3)}
 .price-input-wrap .inp-price:focus{outline:none}
 .price-eur-suffix{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent3);padding:0 6px 0 2px;user-select:none;line-height:1}
 .compra-item-edit .inp-img{flex:3;min-width:180px;font-size:.75rem}
-.compra-item-edit .inp-emoji{width:52px;text-align:center}
 .compra-item-edit-lbl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);white-space:nowrap}
 .btn-del-item{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:5px;padding:3px 7px;cursor:pointer;font-size:.78rem;transition:all .2s;flex-shrink:0}
 .btn-del-item:hover{border-color:var(--red);color:var(--red);background:rgba(240,55,55,.08)}
@@ -266,11 +234,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .btn-add-item{background:rgba(181,240,55,.1);border:1px dashed var(--accent);color:var(--accent);border-radius:7px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;transition:all .2s}
 .btn-add-item:hover{background:rgba(181,240,55,.2)}
 .compra-edit-actions{display:flex;gap:.5rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
-
-/* PRECIO EDITABLE SUPLEMENTOS */
-.supl-price-input{background:transparent;border:none;border-bottom:1px dashed var(--border);color:var(--accent3);font-family:'JetBrains Mono',monospace;font-size:.78rem;width:50px;text-align:right;padding:1px 2px}
-.supl-price-input:focus{outline:none;border-bottom-color:var(--accent)}
-.supl-price-input::-webkit-inner-spin-button,.supl-price-input::-webkit-outer-spin-button{-webkit-appearance:none}
 
 /* MODAL CONFIRM */
 #modal-confirm{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;justify-content:center;z-index:3000;padding:0;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -339,7 +302,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   .header-inner{grid-template-columns:auto 1fr;grid-template-rows:auto auto;height:auto;padding:.6rem 1rem;gap:.5rem}
   .logo{grid-column:1;grid-row:1}
   .logo img{height:48px}
-  .logo span{font-size:.85rem}
   nav{grid-column:1/-1;grid-row:2;gap:.15rem;justify-content:flex-start}
   nav button{font-size:.72rem;padding:5px 9px}
 
@@ -350,7 +312,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   /* MACROS OVERVIEW */
   .macro-overview{grid-template-columns:1fr 1fr;padding:1rem}
   .macro-val{font-size:1.8rem}
-  .stats-grid{grid-template-columns:1fr 1fr}
 
   /* SECTION PADDING */
   .section{padding:1rem}
@@ -390,10 +351,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   .dias-entreno{grid-template-columns:1fr}
   .entreno-toggle{width:100%}
   .etog-btn{flex:1;text-align:center;padding:8px 10px;font-size:.82rem}
-
-  /* PROGRESION */
-  .prog-grid{grid-template-columns:1fr}
-  .descanso-grid{grid-template-columns:1fr 1fr}
 
   /* EDIT FORMS */
   .macro-edit-row{gap:6px}
@@ -465,7 +422,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <div class="section" style="display:block;padding-top:0">
 <div class="macro-overview">
-<div class="macro-item"><div class="macro-val kcal" id="avg-kcal">—</div><div class="macro-unit">kcal · media semanal</div></div>
+<div class="macro-item"><div class="macro-val kcal" id="avg-kcal">—</div><div class="macro-unit">Calorías · media semanal</div></div>
 <div class="macro-item"><div class="macro-val prot" id="avg-prot">—</div><div class="macro-unit">proteína · media semanal</div></div>
 <div class="macro-item"><div class="macro-val carb" id="avg-carb">—</div><div class="macro-unit">carbohidratos · media semanal</div></div>
 <div class="macro-item"><div class="macro-val fat" id="avg-fat">—</div><div class="macro-unit">grasas · media semanal</div></div>
@@ -506,7 +463,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <div class="batido-edit-macros">
 <div class="macro-edit-item"><label class="lkcal" style="color:var(--accent3)">kcal</label><input id="be-kcal" min="0" type="number" value="0"/></div>
 <div class="macro-edit-item"><label class="lp" style="color:var(--accent)">Prot (g)</label><input id="be-prot" min="0" type="number" value="0"/></div>
-<div class="macro-edit-item"><label class="lc" style="color:var(--blue)">Carbs (g)</label><input id="be-carb" style="width:100%" type="text" value=""/></div>
+<div class="macro-edit-item"><label class="lc" style="color:var(--blue)">Carbs (g)</label><input id="be-carb" min="0" style="width:100%" type="number" value="0"/></div>
 <div class="macro-edit-item"><label class="lf" style="color:var(--red)">Grasas (g)</label><input id="be-fat" min="0" type="number" value="0"/></div>
 </div>
 <div class="batido-edit-actions">
@@ -966,10 +923,11 @@ function recalcWeeklyAvg() {
     days++;
   });
   if (!days) return;
-  document.getElementById('avg-kcal').textContent = Math.round(totK/days);
-  document.getElementById('avg-prot').textContent = Math.round(totP/days) + 'g';
-  document.getElementById('avg-carb').textContent = Math.round(totC/days) + 'g';
-  document.getElementById('avg-fat').textContent  = Math.round(totF/days) + 'g';
+  const _unit = u => '<span style="font-size:.52em;margin-left:.18em;opacity:.8">' + u + '</span>';
+  document.getElementById('avg-kcal').innerHTML = Math.round(totK/days) + _unit('kcal');
+  document.getElementById('avg-prot').innerHTML = Math.round(totP/days) + _unit('g');
+  document.getElementById('avg-carb').innerHTML = Math.round(totC/days) + _unit('g');
+  document.getElementById('avg-fat').innerHTML  = Math.round(totF/days) + _unit('g');
 }
 
 // ── SYNC STATUS ──
@@ -1264,20 +1222,6 @@ async function confirmSave(changes) {
 }
 
 // ── EMOJI PICKER COMPLETO ──
-// Emojis organizados por categoría (fallback offline)
-const EMOJI_CATEGORIES = {
-  '🍽️ Comida & Bebida': ['🍽️','🥗','🍳','🥞','🧆','🥙','🌮','🌯','🥪','🫔','🧇','🥓','🥚','🍲','🥘','🫕','🍛','🍜','🍝','🍠','🍢','🍣','🍤','🍱','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥨','🥯','🍞','🥐','🥖','🧀','🦐','🦑','🦞','🦀','🦪','🍙','🍘','🍥','🥮','🧁','🍰','🎂','🍮','🍭','🍬','🍫','🍿','🍩','🍪','🌰','🥜','🍯','🧂','🫓','🥫','🍱','🥟','🥠','🥡'],
-  '🥦 Verduras': ['🥦','🥕','🍅','🥑','🍆','🥔','🧅','🧄','🌽','🌶️','🫑','🥒','🥬','🫛','🌿','🌱','🌾','🫚','🫙','🥗','🪴'],
-  '🍎 Frutas': ['🍎','🍊','🍋','🍋‍🟩','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🫒','🍐','🍏','🍑','🍆'],
-  '🥛 Lácteos & Huevos': ['🥛','🧀','🥚','🍳','🧈','🫙','🍼','🥄'],
-  '☕ Bebidas': ['☕','🍵','🧃','🥤','🧋','🍺','🧉','🫖','🍶','🍾','🥂','🍷','🍸','🍹','🍻','🥃','🫗','🧊','💧'],
-  '🐟 Pescados & Mariscos': ['🐟','🐠','🐡','🦈','🐙','🦑','🦐','🦀','🦞','🦪','🐚','🍣','🍤','🍱'],
-  '🥩 Carnes': ['🥩','🍗','🍖','🌭','🥓','🍔','🍕','🫕','🍲','🥘'],
-  '🏋️ Deporte & Fitness': ['🏋️','💪','🤸','🧘','🏃','🚴','⚡','🔥','💥','🎯','🏆','🥇','⏱️','💦','🫀','🫁','🧠','🥊','🏅','⚽','🎽'],
-  '🌅 Momento del día': ['🌅','☀️','🌤️','🌙','🌛','⭐','🌟','✨','🌈','🌿','❄️','🔥','💫','🌄','🌇','🏙️','🌆'],
-  '😊 Otros': ['😋','🤤','👨‍🍳','👩‍🍳','🧑‍🍳','🛒','📦','⚖️','🫶','💚','💛','🧡','❤️','🟢','🔵','🟡','🟠','🔴','✅','⭐','🏠','🍀']
-};
-
 // Traducción de grupos de la API (emoji.json) a español con emoji representativo
 const API_GROUP_ES = {
   'Smileys & Emotion':  '😊 Caras y emociones',
@@ -1294,56 +1238,54 @@ const API_GROUP_ES = {
 
 // Nombres en español para búsqueda de emojis
 const EMOJI_ES_NAMES = {
-  '🍽️':'plato comida',   '🥗':'ensalada verde',    '🍳':'huevo frito sarten', '🥞':'tortitas crepes pancakes',
-  '🧆':'falafel croquetas','🥙':'kebab wrap sandwich','🌮':'taco mexicano',       '🌯':'burrito wrap',
-  '🥪':'bocadillo sandwich','🫔':'wrap tamal',        '🧇':'gofre waffle',        '🥓':'bacon tocino',
-  '🥚':'huevo',            '🍲':'olla estofado',      '🥘':'paella guiso cazuela','🫕':'fondue olla',
-  '🍛':'curry arroz',      '🍜':'ramen fideos',       '🍝':'pasta espagueti',     '🍠':'batata boniato',
-  '🍢':'brocheta pincho',  '🍣':'sushi',              '🍤':'gamba tempura frita', '🍱':'bento fiambrera',
-  '🥩':'carne filete',     '🍗':'muslo pollo',        '🍖':'costilla carne hueso','🌭':'perrito caliente hot dog',
-  '🍔':'hamburguesa',      '🍟':'patatas fritas',     '🍕':'pizza',               '🥨':'pretzel',
-  '🥯':'bagel pan',        '🍞':'pan barra',          '🥐':'croissant',           '🥖':'baguette pan',
-  '🧀':'queso',            '🦐':'gambas camarones',   '🦑':'calamar',             '🦞':'langosta bogavante',
-  '🦀':'cangrejo',         '🦪':'ostra mejillon',     '🍙':'bola arroz',          '🍘':'galleta arroz',
-  '🍥':'naruto kamaboko',  '🥮':'pastel luna',        '🧁':'magdalena cupcake',   '🍰':'tarta pastel',
-  '🎂':'tarta cumpleaños', '🍮':'flan pudding',       '🍭':'piruleta caramelo',   '🍬':'caramelo',
-  '🍫':'chocolate',        '🍿':'palomitas',          '🍩':'dona donut',          '🍪':'galleta cookie',
-  '🌰':'castana turrón',   '🥜':'cacahuetes frutos secos','🍯':'miel',            '🧂':'sal',
-  '🫓':'pan flatbread',    '🥫':'lata conserva',      '🥟':'empanadilla gyoza',   '🥠':'galleta suerte',
-  '🥡':'caja comida china','🥦':'brocoli brécol',     '🥕':'zanahoria',           '🍅':'tomate',
-  '🥑':'aguacate',         '🍆':'berenjena',           '🥔':'patata',              '🧅':'cebolla',
-  '🧄':'ajo',              '🌽':'maiz mazorca',        '🌶️':'guindilla pimiento picante','🫑':'pimiento',
-  '🥒':'pepino',           '🥬':'lechuga col espinaca','🫛':'guisante vaina',      '🌿':'hierbas cilantro',
-  '🌱':'brote germinado',  '🌾':'trigo cereal grano', '🫚':'aceite oliva',        '🫙':'tarro bote',
-  '🥗':'ensalada',         '🍎':'manzana roja',        '🍊':'naranja mandarina',   '🍋':'limon',
-  '🍌':'platano banana',   '🍉':'sandia',              '🍇':'uvas',                '🍓':'fresa',
-  '🫐':'arandanos',        '🍈':'melon',               '🍒':'cerezas',             '🍑':'melocoton',
-  '🥭':'mango',            '🍍':'pina anana',          '🥥':'coco',                '🥝':'kiwi',
-  '🫒':'aceituna oliva',   '🍐':'pera',                '🍏':'manzana verde',       '🥛':'leche',
-  '🧀':'queso',            '🥚':'huevo',               '🧈':'mantequilla',         '🍼':'biberon leche',
-  '🥄':'cuchara',          '☕':'cafe',                '🍵':'te infusion',         '🧃':'zumo zumo',
-  '🥤':'refresco bebida',  '🧋':'bubble tea',          '🍺':'cerveza',             '🧉':'mate',
-  '🫖':'tetera',           '🍶':'sake',                '🍾':'champan cava botella','🥂':'copas brindis',
-  '🍷':'vino tinto',       '🍸':'coctel martini',      '🍹':'coctel tropical',     '🍻':'jarras cerveza brindis',
-  '🥃':'whisky vaso',      '🫗':'vertiendo',           '🧊':'hielo cubitos',       '💧':'agua',
-  '🐟':'pez pescado',      '🐠':'pez tropical',        '🐡':'pez globo',           '🦈':'tiburon',
-  '🐙':'pulpo',            '🐚':'concha marisco',      '🏋️':'pesas gimnasio levantamiento','💪':'musculo biceps fuerza',
-  '🤸':'acrobata gimnasia','🧘':'yoga meditacion',     '🏃':'correr running jogging','🚴':'ciclismo bici',
-  '⚡':'energia rayo',      '🔥':'fuego calorias',      '💥':'explosion impacto',   '🎯':'diana objetivo',
-  '🏆':'trofeo campeon',   '🥇':'medalla oro primero', '⏱️':'cronometro tiempo',   '💦':'sudor agua gotas',
-  '🫀':'corazon organo',   '🫁':'pulmon respiracion',  '🧠':'cerebro mental',      '🥊':'boxeo guante',
-  '🏅':'medalla',          '⚽':'futbol balon',         '🎽':'camiseta deporte',    '🌅':'amanecer alba',
-  '☀️':'sol dia soleado',  '🌤️':'nublado sol',         '🌙':'luna noche',          '🌛':'luna cuarto',
-  '⭐':'estrella',          '🌟':'estrella brillante',  '✨':'destellos brillos',   '🌈':'arcoiris',
-  '🌿':'hoja planta',      '❄️':'nieve frio hielo',    '💫':'destello girando',    '🌄':'amanecer montanas',
-  '🌇':'atardecer ciudad', '🏙️':'ciudad skyline',      '🌆':'ciudad tarde',        '😋':'saboreando rico',
-  '🤤':'babeando hambre',  '👨‍🍳':'cocinero chef',      '👩‍🍳':'cocinera chef',    '🧑‍🍳':'cocinero chef',
-  '🛒':'carrito compra',   '📦':'caja paquete',        '⚖️':'bascula peso',        '🫶':'manos corazon',
-  '💚':'corazon verde',    '💛':'corazon amarillo',    '🧡':'corazon naranja',     '❤️':'corazon rojo amor',
-  '🟢':'circulo verde',    '🔵':'circulo azul',        '🟡':'circulo amarillo',    '🟠':'circulo naranja',
-  '🔴':'circulo rojo',     '✅':'check correcto ok',   '🍀':'trebol suerte',
+  '🍽️':'plato comida',  '🥗':'ensalada verde',  '🍳':'huevo frito sarten',  '🥞':'tortitas crepes pancakes',
+  '🧆':'falafel croquetas',  '🥙':'kebab wrap sandwich',  '🌮':'taco mexicano',  '🌯':'burrito wrap',
+  '🥪':'bocadillo sandwich',  '🫔':'wrap tamal',  '🧇':'gofre waffle',  '🥓':'bacon tocino',
+  '🥚':'huevo',  '🍲':'olla estofado',  '🥘':'paella guiso cazuela',  '🫕':'fondue olla',
+  '🍛':'curry arroz',  '🍜':'ramen fideos',  '🍝':'pasta espagueti',  '🍠':'batata boniato',
+  '🍢':'brocheta pincho',  '🍣':'sushi',  '🍤':'gamba tempura frita',  '🍱':'bento fiambrera',
+  '🥩':'carne filete',  '🍗':'muslo pollo',  '🍖':'costilla carne hueso',  '🌭':'perrito caliente hot dog',
+  '🍔':'hamburguesa',  '🍟':'patatas fritas',  '🍕':'pizza',  '🥨':'pretzel',
+  '🥯':'bagel pan',  '🍞':'pan barra',  '🥐':'croissant',  '🥖':'baguette pan',
+  '🧀':'queso',  '🦐':'gambas camarones',  '🦑':'calamar',  '🦞':'langosta bogavante',
+  '🦀':'cangrejo',  '🦪':'ostra mejillon',  '🍙':'bola arroz',  '🍘':'galleta arroz',
+  '🍥':'naruto kamaboko',  '🥮':'pastel luna',  '🧁':'magdalena cupcake',  '🍰':'tarta pastel',
+  '🎂':'tarta cumpleaños',  '🍮':'flan pudding',  '🍭':'piruleta caramelo',  '🍬':'caramelo',
+  '🍫':'chocolate',  '🍿':'palomitas',  '🍩':'dona donut',  '🍪':'galleta cookie',
+  '🌰':'castana turrón',  '🥜':'cacahuetes frutos secos',  '🍯':'miel',  '🧂':'sal',
+  '🫓':'pan flatbread',  '🥫':'lata conserva',  '🥟':'empanadilla gyoza',  '🥠':'galleta suerte',
+  '🥡':'caja comida china',  '🥦':'brocoli brécol',  '🥕':'zanahoria',  '🍅':'tomate',
+  '🥑':'aguacate',  '🍆':'berenjena',  '🥔':'patata',  '🧅':'cebolla',
+  '🧄':'ajo',  '🌽':'maiz mazorca',  '🌶️':'guindilla pimiento picante',  '🫑':'pimiento',
+  '🥒':'pepino',  '🥬':'lechuga col espinaca',  '🫛':'guisante vaina',  '🌿':'hierbas cilantro',
+  '🌱':'brote germinado',  '🌾':'trigo cereal grano',  '🫚':'aceite oliva',  '🫙':'tarro bote',
+  '🍎':'manzana roja',  '🍊':'naranja mandarina',  '🍋':'limon',  '🍌':'platano banana',
+  '🍉':'sandia',  '🍇':'uvas',  '🍓':'fresa',  '🫐':'arandanos',
+  '🍈':'melon',  '🍒':'cerezas',  '🍑':'melocoton',  '🥭':'mango',
+  '🍍':'pina anana',  '🥥':'coco',  '🥝':'kiwi',  '🫒':'aceituna oliva',
+  '🍐':'pera',  '🍏':'manzana verde',  '🥛':'leche',  '🧈':'mantequilla',
+  '🍼':'biberon leche',  '🥄':'cuchara',  '☕':'cafe',  '🍵':'te infusion',
+  '🧃':'zumo zumo',  '🥤':'refresco bebida',  '🧋':'bubble tea',  '🍺':'cerveza',
+  '🧉':'mate',  '🫖':'tetera',  '🍶':'sake',  '🍾':'champan cava botella',
+  '🥂':'copas brindis',  '🍷':'vino tinto',  '🍸':'coctel martini',  '🍹':'coctel tropical',
+  '🍻':'jarras cerveza brindis',  '🥃':'whisky vaso',  '🫗':'vertiendo',  '🧊':'hielo cubitos',
+  '💧':'agua',  '🐟':'pez pescado',  '🐠':'pez tropical',  '🐡':'pez globo',
+  '🦈':'tiburon',  '🐙':'pulpo',  '🐚':'concha marisco',  '🏋️':'pesas gimnasio levantamiento',
+  '💪':'musculo biceps fuerza',  '🤸':'acrobata gimnasia',  '🧘':'yoga meditacion',  '🏃':'correr running jogging',
+  '🚴':'ciclismo bici',  '⚡':'energia rayo',  '🔥':'fuego calorias',  '💥':'explosion impacto',
+  '🎯':'diana objetivo',  '🏆':'trofeo campeon',  '🥇':'medalla oro primero',  '⏱️':'cronometro tiempo',
+  '💦':'sudor agua gotas',  '🫀':'corazon organo',  '🫁':'pulmon respiracion',  '🧠':'cerebro mental',
+  '🥊':'boxeo guante',  '🏅':'medalla',  '⚽':'futbol balon',  '🎽':'camiseta deporte',
+  '🌅':'amanecer alba',  '☀️':'sol dia soleado',  '🌤️':'nublado sol',  '🌙':'luna noche',
+  '🌛':'luna cuarto',  '⭐':'estrella',  '🌟':'estrella brillante',  '✨':'destellos brillos',
+  '🌈':'arcoiris',  '❄️':'nieve frio hielo',  '💫':'destello girando',  '🌄':'amanecer montanas',
+  '🌇':'atardecer ciudad',  '🏙️':'ciudad skyline',  '🌆':'ciudad tarde',  '😋':'saboreando rico',
+  '🤤':'babeando hambre',  '👨‍🍳':'cocinero chef',  '👩‍🍳':'cocinera chef',  '🧑‍🍳':'cocinero chef',
+  '🛒':'carrito compra',  '📦':'caja paquete',  '⚖️':'bascula peso',  '🫶':'manos corazon',
+  '💚':'corazon verde',  '💛':'corazon amarillo',  '🧡':'corazon naranja',  '❤️':'corazon rojo amor',
+  '🟢':'circulo verde',  '🔵':'circulo azul',  '🟡':'circulo amarillo',  '🟠':'circulo naranja',
+  '🔴':'circulo rojo',  '✅':'check correcto ok',  '🍀':'trebol suerte'
 };
-
 
 // Cache global de emojis cargados
 let _emojiPickerCache = null;
@@ -1400,36 +1342,6 @@ async function loadEmojiData() {
 
 function buildEmojiPicker(pickerPanel, pickerGrid, searchInput, iconPreview, onSelect) {
   let selectedEmoji = '🍽️';
-  let currentEmojis = [];
-
-  function renderGrid(emojis) {
-    currentEmojis = emojis;
-    pickerGrid.innerHTML = '';
-    if (!emojis.length) {
-      pickerGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-size:.8rem;padding:.5rem">Sin resultados</div>';
-      return;
-    }
-    emojis.forEach(em => {
-      const btn = document.createElement('button');
-      btn.textContent = em;
-      btn.title = em;
-      btn.style.cssText = "background:transparent;border:2px solid transparent;border-radius:6px;font-size:1.25rem;padding:4px 2px;cursor:pointer;transition:background .1s,border-color .1s;line-height:1;aspect-ratio:1";
-      if (em === selectedEmoji) { btn.style.borderColor = 'var(--accent)'; btn.style.background = 'rgba(181,240,55,.15)'; }
-      btn.addEventListener('click', () => {
-        selectedEmoji = em;
-        iconPreview.textContent = em;
-        pickerGrid.querySelectorAll('button').forEach(b => { b.style.borderColor = 'transparent'; b.style.background = 'transparent'; });
-        btn.style.borderColor = 'var(--accent)';
-        btn.style.background = 'rgba(181,240,55,.15)';
-        pickerPanel.style.display = 'none';
-        iconPreview.style.transform = 'scale(1)';
-        onSelect(em);
-      });
-      btn.addEventListener('mouseenter', () => { if (em !== selectedEmoji) btn.style.background = 'rgba(255,255,255,.06)'; });
-      btn.addEventListener('mouseleave', () => { if (em !== selectedEmoji) btn.style.background = 'transparent'; });
-      pickerGrid.appendChild(btn);
-    });
-  }
 
   // Helper: añade un emoji como botón al grid
   function addEmojiBtn(em) {
@@ -1891,7 +1803,7 @@ function enterEditMode(card) {
   card._getEditEmoji = () => (iconEl ? iconEl.textContent.trim() : card._origEmoji);
 
   foodEl.innerHTML = `<textarea class="edit-textarea" placeholder="Nombre del plato\n· Ingrediente 1\n· Ingrediente 2"></textarea>`;
-  foodEl.querySelector('textarea').value = foodEl._origText || card._origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'');
+  foodEl.querySelector('textarea').value = card._origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'');
   macrosEl.innerHTML = `
     <div class="macro-edit-row">
       <div class="macro-edit-item"><label class="lkcal">kcal</label><input type="number" min="0" value="${kcal}" oninput="if(this.value<0)this.value=0"></div>
@@ -2239,7 +2151,6 @@ function renderSupl() {
 
   // ── badge unificado + alerta combinada en suplementos ──
   const unifiedEl  = document.getElementById('supl-batidos-unified');
-  const footerNote = document.getElementById('supl-footer-note');
 
   let totalPosibles = null;
   let missingMsg = [];
@@ -2285,12 +2196,7 @@ function renderSupl() {
     setAlert(document.getElementById('batido-creat-alert'), creatBatidosRest, 'creatina',  creatRest);
   }
 
-  // ── sincronizar inputs ──
-  const protInput  = document.getElementById('prot-stock-input');
-  const creatInput = document.getElementById('creat-stock-input');
-  if (protInput  && protStock  > 0) protInput.value  = protStock;
-  if (creatInput && creatStock > 0) creatInput.value = creatStock;
-
+  // ── sincronizar dosis (hidden inputs) ──
   const protDosisInput  = document.getElementById('prot-dosis-input');
   const creatDosisInput = document.getElementById('creat-dosis-input');
   if (protDosisInput)  protDosisInput.value  = protDosis;
@@ -2337,19 +2243,6 @@ async function resetBatidos() {
   persistBatidosCount(0);
 }
 
-async function resetSupl(type) {
-  const label = type === 'prot' ? 'proteína' : 'creatina';
-  if (!await mobileConfirm('Resetear stock', '¿Resetear el stock de ' + label + '?<br>Úsalo cuando hagas una nueva compra.')) return;
-  const s = loadSuplState();
-  if (type === 'prot') { s.protStock = 0; delete s.protStock; }
-  else { s.creatStock = 0; delete s.creatStock; }
-  saveSuplState(s);
-  const inputId = type === 'prot' ? 'prot-stock-input' : 'creat-stock-input';
-  const input = document.getElementById(inputId);
-  if (input) input.value = '';
-  renderSupl();
-}
-
 // ══ TOTAL SEMANAL ══
 function fmtPrice(n) {
   return n.toFixed(2).replace('.', ',') + '\u00a0€';
@@ -2364,12 +2257,7 @@ function recalcTotalSemanal() {
     });
   });
   const el = document.getElementById('compra-total-semanal');
-  if (el) el.textContent = total > 0 ? Math.round(total) + '\u00a0€' : '—';
-}
-
-// ══ COSTE SUPLEMENTOS ══
-function fmtEur(n) {
-  return fmtPrice(n);
+  if (el) el.textContent = total > 0 ? fmtPrice(total) : '—';
 }
 
 // ── PRECIO: normaliza decimales y bloquea negativos ──
@@ -2402,6 +2290,7 @@ function parsePriceStr(str) {
   return isNaN(n) || n < 0 ? 0 : n;
 }
 
+// ══ COSTE SUPLEMENTOS ══
 function renderCostSupl() {
   const s = loadSuplState();
   const protDosis   = s.protDosis  || 35;
@@ -2417,38 +2306,18 @@ function renderCostSupl() {
 
   const mesEl  = document.getElementById('supl-cost-mes');
   const anioEl = document.getElementById('supl-cost-anio');
-  if (mesEl)  mesEl.textContent  = totalMes > 0 ? fmtEur(totalMes)      : '—';
-  if (anioEl) anioEl.textContent = totalMes > 0 ? fmtEur(totalMes * 12) : '—';
+  if (mesEl)  mesEl.textContent  = totalMes > 0 ? fmtPrice(totalMes)      : '—';
+  if (anioEl) anioEl.textContent = totalMes > 0 ? fmtPrice(totalMes * 12) : '—';
 
   // Actualizar spans de precio visibles en cada producto
   const protPriceView  = document.getElementById('prot-price-view');
   const creatPriceView = document.getElementById('creat-price-view');
-  if (protPriceView)  protPriceView.textContent  = protPrecio  > 0 ? fmtEur(protPrecio)  : '—';
-  if (creatPriceView) creatPriceView.textContent = creatPrecio > 0 ? fmtEur(creatPrecio) : '—';
+  if (protPriceView)  protPriceView.textContent  = protPrecio  > 0 ? fmtPrice(protPrecio)  : '—';
+  if (creatPriceView) creatPriceView.textContent = creatPrecio > 0 ? fmtPrice(creatPrecio) : '—';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   renderSupl();
-
-  const protInput  = document.getElementById('prot-stock-input');
-  const creatInput = document.getElementById('creat-stock-input');
-  if (protInput)  protInput.addEventListener('input',  () => { const s = loadSuplState(); s.protStock  = Math.max(0, parseInt(protInput.value)  || 0); saveSuplState(s); renderSupl(); });
-  if (creatInput) creatInput.addEventListener('input', () => { const s = loadSuplState(); s.creatStock = Math.max(0, parseInt(creatInput.value) || 0); saveSuplState(s); renderSupl(); });
-
-  const protDosisInput  = document.getElementById('prot-dosis-input');
-  const creatDosisInput = document.getElementById('creat-dosis-input');
-  // dosis inputs are now hidden — managed via the batido edit panel
-
-  const protPrecioInput  = document.getElementById('prot-precio-input');
-  const creatPrecioInput = document.getElementById('creat-precio-input');
-  if (protPrecioInput) {
-    attachPriceNormalization(protPrecioInput);
-    protPrecioInput.addEventListener('input', () => { const s = loadSuplState(); s.protPrecio  = Math.max(0, parsePriceStr(protPrecioInput.value)  || 0); saveSuplState(s); renderCostSupl(); });
-  }
-  if (creatPrecioInput) {
-    attachPriceNormalization(creatPrecioInput);
-    creatPrecioInput.addEventListener('input', () => { const s = loadSuplState(); s.creatPrecio = Math.max(0, parsePriceStr(creatPrecioInput.value) || 0); saveSuplState(s); renderCostSupl(); });
-  }
 });
 // ══ BATIDO EDIT ══
 const BATIDO_FB_KEY = 'batido';
@@ -2468,7 +2337,7 @@ function toggleBatidoEdit() {
   document.getElementById('be-creat-dosis').value = document.getElementById('creat-dosis-input').value || '3';
   document.getElementById('be-kcal').value = parsePillNum(document.getElementById('bm-kcal').textContent);
   document.getElementById('be-prot').value = parsePillNum(document.getElementById('bm-prot').textContent);
-  document.getElementById('be-carb').value = document.getElementById('bm-carb').textContent.replace(/^/, '');
+  document.getElementById('be-carb').value = parsePillNum(document.getElementById('bm-carb').textContent);
   document.getElementById('be-fat').value  = parsePillNum(document.getElementById('bm-fat').textContent);
   // Guardar snapshot de los valores al abrir para comparar al guardar
   window._batidoOrigSnapshot = {
@@ -2477,7 +2346,7 @@ function toggleBatidoEdit() {
     extra:      extra,
     kcal:       parseInt(parsePillNum(document.getElementById('bm-kcal').textContent)) || 0,
     prot:       parseInt(parsePillNum(document.getElementById('bm-prot').textContent)) || 0,
-    carb:       document.getElementById('bm-carb').textContent.trim(),
+    carb:       parseInt(parsePillNum(document.getElementById('bm-carb').textContent)) || 0,
     fat:        parseInt(parsePillNum(document.getElementById('bm-fat').textContent))  || 0
   };
   panel.classList.add('open');
@@ -2495,7 +2364,7 @@ async function saveBatidoEdit() {
   const extra = document.getElementById('be-extra').value.trim() || 'fruta (100g) + 300ml leche semi';
   const kcal  = parseInt(document.getElementById('be-kcal').value) || 0;
   const prot  = parseInt(document.getElementById('be-prot').value) || 0;
-  const carb  = document.getElementById('be-carb').value.trim() || '0g C';
+  const carb  = Math.max(0, parseInt(document.getElementById('be-carb').value) || 0);
   const fat   = parseInt(document.getElementById('be-fat').value) || 0;
   // Comparar contra el snapshot guardado al abrir el panel
   const orig = window._batidoOrigSnapshot || {};
@@ -2505,7 +2374,7 @@ async function saveBatidoEdit() {
   if ((orig.extra      ?? '') !== extra)       _bCh.push({ label: 'Ingredientes extra', from: orig.extra      ?? '—', to: extra });
   if ((orig.kcal       ?? 0)  !== kcal)        _bCh.push({ label: 'kcal',              from: orig.kcal       ?? 0,   to: kcal });
   if ((orig.prot       ?? 0)  !== prot)        _bCh.push({ label: 'Proteína g',        from: orig.prot       ?? 0,   to: prot });
-  if ((orig.carb       ?? '') !== carb)        _bCh.push({ label: 'Carbos',            from: orig.carb       ?? '—', to: carb });
+  if ((orig.carb       ?? 0)  !== carb)        _bCh.push({ label: 'Carbos g',          from: orig.carb       ?? 0,   to: carb });
   if ((orig.fat        ?? 0)  !== fat)         _bCh.push({ label: 'Grasas g',          from: orig.fat        ?? 0,   to: fat });
   if (!await confirmSave(_bCh)) return;
 
@@ -2519,7 +2388,7 @@ async function saveBatidoEdit() {
   document.getElementById('batido-extra-view').textContent = extra;
   document.getElementById('bm-kcal').textContent = '' + kcal + ' kcal';
   document.getElementById('bm-prot').textContent = '' + prot + 'g P';
-  document.getElementById('bm-carb').textContent = '' + carb;
+  document.getElementById('bm-carb').textContent = '' + carb + 'g C';
   document.getElementById('bm-fat').textContent  = '' + fat + 'g G';
 
   // ── Sincronizar tarjetas de Merienda/Batido en cada día del menú ──
@@ -2720,7 +2589,6 @@ function syncBatidoToMenuCards(d) {
     dayEl.querySelectorAll('.meal-card').forEach(card => {
       const nameEl = card.querySelector('.meal-name');
       if (!nameEl) return;
-      const name = nameEl.textContent.trim().toLowerCase();
       // Detectar si es la tarjeta de Merienda/Batido (por header o por Nombre del Plato)
       if (!isBatidoCard(card)) return;
 
@@ -3070,7 +2938,7 @@ async function saveSuplEdit(btn) {
     const _pSt = id === 'prot' ? (fbSuplOrig.protStock   || 0) : (fbSuplOrig.creatStock   || 0);
     const _lbl = id === 'prot' ? 'Proteína' : 'Creatina';
     if (_pNm && _pNm !== name  && name)  _sCh.push({ label: 'Nombre ('  + _lbl + ')', from: _pNm,                      to: name });
-    if (_pPr !== price && price) _sCh.push({ label: 'Precio ('  + _lbl + ')', from: _pPr ? fmtEur(_pPr) : '—', to: fmtEur(price) });
+    if (_pPr !== price && price) _sCh.push({ label: 'Precio ('  + _lbl + ')', from: _pPr ? fmtPrice(_pPr) : '—', to: fmtPrice(price) });
     if (_pSt !== stock && stock) _sCh.push({ label: 'Compré ('  + _lbl + ')', from: _pSt ? _pSt + 'g' : '—',   to: stock + 'g' });
 
     // Actualizar suplState con precio y stock
@@ -3248,7 +3116,11 @@ async function saveCompraEdit(btn) {
         if ((origAtPos.img     || '') !== (item.img     || ''))    compraChanges.push({ label: item.name + ' — foto',    from: origAtPos.img   || '—', to: item.img   || '—' });
         if ((origAtPos.gallery || '') !== (item.gallery || ''))    compraChanges.push({ label: item.name + ' — galería', from: origAtPos.gallery || '—', to: item.gallery || '—' });
       } else {
-        compraChanges.push({ label: 'Añadir', from: '—', to: item.name + (item.price ? ' · ' + item.price : '') });
+        // Producto nuevo: mostrar cada campo por separado (igual que "añadir comida")
+        compraChanges.push({ label: 'Nombre',  from: '—', to: item.name });
+        if (item.price)   compraChanges.push({ label: 'Precio',  from: '—', to: item.price });
+        if (item.img)     compraChanges.push({ label: 'Foto',    from: '—', to: item.img });
+        if (item.gallery) compraChanges.push({ label: 'Galería', from: '—', to: item.gallery });
       }
     } else {
       if (normPrice(orig.price) !== normPrice(item.price)) compraChanges.push({ label: item.name + ' — precio',  from: orig.price   || '—', to: item.price   || '—' });
@@ -3264,7 +3136,7 @@ async function saveCompraEdit(btn) {
     }
   });
 
-  if (!await confirmSave(compraChanges.filter(c => c.label !== 'Eliminar'))) return;
+  if (!await confirmSave(compraChanges)) return;
 
   card.classList.remove('editing-compra');
   const editBtn = card.querySelector('.compra-edit-btn');
