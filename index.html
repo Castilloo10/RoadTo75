@@ -295,79 +295,134 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .compra-img{position:relative}
 .compra-img img{cursor:zoom-in;transition:opacity .2s,transform .2s}
 .compra-img img:hover{opacity:.82;transform:scale(1.1)}
-@media(max-width:600px){.lb-nav.prev{left:-44px}.lb-nav.next{right:-44px}.lb-nav{width:34px;height:34px;font-size:1.1rem}}
 
 @media(max-width:600px){
-  /* HEADER */
-  .header-inner{grid-template-columns:auto 1fr;grid-template-rows:auto auto;height:auto;padding:.6rem 1rem;gap:.5rem}
-  .logo{grid-column:1;grid-row:1}
-  .logo img{height:48px}
-  nav{grid-column:1/-1;grid-row:2;gap:.15rem;justify-content:flex-start}
-  nav button{font-size:.72rem;padding:5px 9px}
+  /* ── HEADER ── */
+  .header-inner{grid-template-columns:auto 1fr;grid-template-rows:auto auto;height:auto;padding:.55rem .75rem .45rem;gap:.4rem}
+  .logo{grid-column:1;grid-row:1;margin-right:0}
+  .logo img{height:42px}
+  nav{grid-column:1/-1;grid-row:2;gap:.2rem;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
+  nav::-webkit-scrollbar{display:none}
+  nav button{font-size:.72rem;padding:6px 10px;white-space:nowrap;flex-shrink:0;border-radius:7px}
 
-  /* HERO */
-  .hero{grid-template-columns:1fr;padding:1.5rem 1rem 1rem}
-  h1{font-size:clamp(2.2rem,10vw,3.5rem)}
+  /* ── HERO ── */
+  .hero{grid-template-columns:1fr;padding:1.25rem .75rem .75rem}
+  h1{font-size:clamp(2rem,9vw,3.2rem)}
+  .hero-sub{font-size:.82rem}
 
-  /* MACROS OVERVIEW */
-  .macro-overview{grid-template-columns:1fr 1fr;padding:1rem}
-  .macro-val{font-size:1.8rem}
+  /* ── SECTION ── */
+  .section{padding:.75rem}
 
-  /* SECTION PADDING */
-  .section{padding:1rem}
+  /* ── MACROS ── */
+  .macro-overview{grid-template-columns:1fr 1fr;padding:.85rem .75rem;gap:.6rem;margin-bottom:1.25rem}
+  .macro-val{font-size:1.75rem}
+  .macro-unit{font-size:.68rem}
 
-  /* BATIDO BOX */
-  .batido-box{padding:1rem}
-  .batido-counter-row{gap:.5rem}
-  #batido-desc-view{font-size:.82rem}
-
-  /* DAY TABS */
-  .day-tabs{gap:.2rem}
-  .day-tab{padding:6px 10px;font-size:.75rem}
-
-  /* MEAL CARDS */
-  .meals-grid{grid-template-columns:1fr}
-
-  /* DAY TOTAL */
-  .day-total{flex-direction:column;align-items:flex-start;gap:.5rem}
-  .day-total-macros{gap:.4rem}
-
-  /* COMPRA */
-  .compra-grid{grid-template-columns:1fr}
-  .compra-cat-header{flex-wrap:wrap;gap:.4rem}
-
-  /* PRICE TOTAL */
-  .price-total{flex-direction:column;align-items:flex-start;gap:.75rem;padding:1rem 1.25rem}
-  .price-total .label{font-size:1.4rem;line-height:1.2}
-  .price-total .amount{font-size:2.2rem}
-
-  /* COSTE SUPLEMENTOS */
-  .price-total--supl{flex-direction:column;align-items:flex-start;gap:.75rem}
-  .price-total--supl-label{font-size:1.3rem !important;line-height:1.2}
-  .price-total--supl-amounts{display:flex;gap:1.5rem;width:100%}
-  .price-total--supl-col{text-align:left}
-
-  /* ENTRENO */
-  .dias-entreno{grid-template-columns:1fr}
-  .entreno-toggle{width:100%}
-  .etog-btn{flex:1;text-align:center;padding:8px 10px;font-size:.82rem}
-
-  /* EDIT FORMS */
-  .macro-edit-row{gap:6px}
-  .meal-edit-actions{flex-wrap:wrap}
-  .btn-save-meal,.btn-cancel-meal{flex:1;text-align:center;padding:8px 10px}
-
-  /* COMPRA EDIT */
-  .compra-edit-actions{flex-wrap:wrap}
-  .compra-edit-actions button{flex:1;text-align:center}
-  .price-input-wrap{width:auto}
-
-  /* BATIDO EDIT */
+  /* ── BATIDO BOX ── */
+  .batido-box{padding:.85rem;margin-bottom:1.25rem}
+  .batido-box h3{font-size:1rem;line-height:1.3}
+  .batido-counter-row{gap:.5rem;margin-top:.75rem;flex-wrap:nowrap}
+  .batido-counter-label{font-size:.72rem}
+  .batido-total{font-size:1.5rem}
+  .supl-reset-btn{font-size:.65rem;padding:4px 7px;margin-left:0;margin-top:0}
+  #batido-desc-view{font-size:.8rem;gap:4px}
   .batido-edit-macros{gap:6px}
+  .batido-edit-panel{padding:.85rem}
 
-  /* SUPL TRACKER */
-  .supl-row{gap:.4rem}
-  .supl-reset-btn{margin-left:0;margin-top:.25rem}
+  /* ── DAY TABS ── */
+  .day-tabs{gap:.2rem;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:3px;margin-bottom:1rem}
+  .day-tabs::-webkit-scrollbar{display:none}
+  .day-tab{padding:7px 12px;font-size:.74rem;flex-shrink:0;border-radius:7px}
+
+  /* ── DAY TYPE ── */
+  .day-type-row{margin-bottom:.75rem !important}
+  .day-type-select{font-size:.72rem;padding:5px 26px 5px 9px}
+
+  /* ── MEAL CARDS ── */
+  .meals-grid{grid-template-columns:1fr;gap:.65rem;margin-bottom:.85rem}
+  .meal-card{padding:1rem}
+  .meal-food{font-size:.82rem}
+  .meal-macros{gap:4px;margin-top:.7rem}
+  .pill{font-size:.65rem;padding:2px 6px}
+
+  /* ── EDIT MEAL ── */
+  .edit-textarea{font-size:.82rem;min-height:80px}
+  .macro-edit-row{gap:5px}
+  .macro-edit-item input{font-size:.78rem;padding:3px 5px}
+  .meal-edit-actions{flex-wrap:wrap;gap:.4rem}
+  .btn-save-meal,.btn-cancel-meal{flex:1;text-align:center;padding:9px 10px;font-size:.82rem}
+
+  /* ── DAY TOTAL ── */
+  .day-total{flex-direction:column;align-items:flex-start;gap:.4rem;padding:.75rem 1rem}
+  .day-total-macros{gap:.35rem}
+
+  /* ── COMPRA ── */
+  .compra-grid{grid-template-columns:1fr;gap:.65rem;margin-bottom:1.25rem}
+  .compra-card{padding:1rem}
+  .compra-cat-header{flex-wrap:nowrap;gap:.4rem;align-items:center}
+  .compra-cat{font-size:1rem;margin-bottom:0}
+  .compra-edit-btn{font-size:.65rem;padding:4px 8px;flex-shrink:0}
+  .compra-item{font-size:.8rem;padding:5px 0}
+  .compra-item .name{font-size:.8rem}
+  .compra-item .price{font-size:.74rem}
+  .compra-img{width:32px;height:32px;font-size:1.1rem}
+
+  /* ── COMPRA EDIT ── */
+  .compra-item-edit input{font-size:.8rem}
+  .compra-add-row{margin-top:.6rem;padding-top:.6rem}
+  .btn-add-item{font-size:.78rem;padding:7px 12px}
+  .compra-edit-actions{flex-wrap:wrap;gap:.4rem}
+  .compra-edit-actions button{flex:1;text-align:center;font-size:.8rem;padding:8px 10px}
+  .price-input-wrap{width:auto}
+  .price-input-wrap .inp-price{width:52px}
+
+  /* ── SUPLEMENTOS ── */
+  .supl-tracker{gap:.55rem;margin-top:.85rem}
+  .supl-row{gap:.4rem;flex-wrap:nowrap}
+  .supl-label{font-size:.75rem;min-width:70px}
+  .supl-remain{font-size:.68rem;padding:2px 6px}
+  .supl-num{font-size:1.3rem;min-width:24px}
+  .supl-count-btn{width:28px;height:28px;font-size:1rem}
+  #supl-footer-note{font-size:.68rem}
+
+  /* ── PRICE TOTALS ── */
+  .price-total{flex-direction:column;align-items:flex-start;gap:.6rem;padding:.9rem 1rem;margin-top:.75rem}
+  .price-total .label{font-size:1.2rem;line-height:1.2}
+  .price-total .label em{font-size:.95rem}
+  .price-total .amount{font-size:2rem}
+  .price-total--supl{flex-direction:column;align-items:flex-start;gap:.6rem}
+  .price-total--supl-label{font-size:1.1rem !important;line-height:1.3}
+  .price-total--supl-label em{font-size:.8rem}
+  .price-total--supl-amounts{display:flex;gap:1.25rem;width:100%}
+  .price-total--supl-col{text-align:left}
+  .price-total--supl-period{font-size:.75rem}
+  #supl-cost-mes,#supl-cost-anio{font-size:1.9rem}
+
+  /* ── ENTRENAMIENTO ── */
+  .dias-entreno{grid-template-columns:1fr;gap:.65rem}
+  .dia-entreno{padding:1rem}
+  .entreno-toggle{width:100%;border-radius:9px}
+  .etog-btn{flex:1;text-align:center;padding:9px 10px;font-size:.82rem}
+  .exercise{padding:6px 0}
+  .ex-name{font-size:.8rem}
+  .ex-sets{font-size:.72rem}
+
+  /* ── SYNC STATUS ── */
+  #sync-status{bottom:.75rem;right:.75rem;left:.75rem;font-size:.7rem;padding:7px 12px;border-radius:9px}
+
+  /* ── MODAL ── */
+  #modal-confirm-box{padding:1.25rem 1.25rem 1.75rem}
+  #modal-confirm-title{font-size:1.2rem}
+  #modal-confirm-body{font-size:.82rem}
+  .modal-btn-ok,.modal-btn-cancel{padding:12px 16px;font-size:.92rem}
+
+  /* ── LIGHTBOX ── */
+  .lb-nav.prev{left:-38px}
+  .lb-nav.next{right:-38px}
+  .lb-nav{width:32px;height:32px;font-size:1rem}
+
+  /* ── CARD ── */
+  .card{padding:1rem}
 }
 </style>
 </head>
@@ -2245,6 +2300,9 @@ async function resetBatidos() {
 
 // ══ TOTAL SEMANAL ══
 function fmtPrice(n) {
+  return n.toFixed(2).replace('.', ',') + '\u00a0<span style="font-size:.65em;vertical-align:.1em">€</span>';
+}
+function fmtPricePlain(n) {
   return n.toFixed(2).replace('.', ',') + '\u00a0€';
 }
 
@@ -2257,7 +2315,7 @@ function recalcTotalSemanal() {
     });
   });
   const el = document.getElementById('compra-total-semanal');
-  if (el) el.textContent = total > 0 ? fmtPrice(total) : '—';
+  if (el) el.innerHTML = total > 0 ? fmtPrice(total) : '—';
 }
 
 // ── PRECIO: normaliza decimales y bloquea negativos ──
@@ -2306,14 +2364,14 @@ function renderCostSupl() {
 
   const mesEl  = document.getElementById('supl-cost-mes');
   const anioEl = document.getElementById('supl-cost-anio');
-  if (mesEl)  mesEl.textContent  = totalMes > 0 ? fmtPrice(totalMes)      : '—';
-  if (anioEl) anioEl.textContent = totalMes > 0 ? fmtPrice(totalMes * 12) : '—';
+  if (mesEl)  mesEl.innerHTML  = totalMes > 0 ? fmtPrice(totalMes)      : '—';
+  if (anioEl) anioEl.innerHTML = totalMes > 0 ? fmtPrice(totalMes * 12) : '—';
 
   // Actualizar spans de precio visibles en cada producto
   const protPriceView  = document.getElementById('prot-price-view');
   const creatPriceView = document.getElementById('creat-price-view');
-  if (protPriceView)  protPriceView.textContent  = protPrecio  > 0 ? fmtPrice(protPrecio)  : '—';
-  if (creatPriceView) creatPriceView.textContent = creatPrecio > 0 ? fmtPrice(creatPrecio) : '—';
+  if (protPriceView)  protPriceView.textContent  = protPrecio  > 0 ? fmtPricePlain(protPrecio)  : '—';
+  if (creatPriceView) creatPriceView.textContent = creatPrecio > 0 ? fmtPricePlain(creatPrecio) : '—';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -2710,7 +2768,7 @@ function renderItemsToList(list, items) {
     div.className = 'compra-item';
     if (it.gallery) div.dataset.gallery = it.gallery;
         const _priceNum = parsePriceStr(it.price);
-    const _priceDisplay = _priceNum > 0 ? fmtPrice(_priceNum) : escapeHtml(it.price || '');
+    const _priceDisplay = _priceNum > 0 ? fmtPricePlain(_priceNum) : escapeHtml(it.price || '');
     div.innerHTML = `<span class="compra-img"><img src="${escapeHtml(it.img || '')}" alt="" onerror="this.style.display='none'"></span><span class="name">${escapeHtml(it.name)}</span><span class="price">${_priceDisplay}</span>`;
     list.appendChild(div);
   });
