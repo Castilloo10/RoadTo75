@@ -116,9 +116,30 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .dia-entreno{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
 .dia-entreno-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
 .dia-badge{background:var(--accent);color:#0d0f0e;font-family:'Bebas Neue',sans-serif;font-size:.9rem;padding:3px 10px;border-radius:6px;letter-spacing:.5px}
-.dia-badge.pull{background:var(--blue)} .dia-badge.legs{background:var(--accent2)}
-.dia-badge.upper{background:var(--accent)} .dia-badge.lower{background:var(--accent3)}
-.dia-badge.upperB{background:var(--accent2)} .dia-badge.lowerB{background:var(--red)}
+/* Legacy classes (hardcoded plans) */
+.dia-badge.pull{background:var(--blue);color:#fff} .dia-badge.legs{background:var(--accent2);color:#0d0f0e}
+.dia-badge.upper{background:var(--accent);color:#0d0f0e} .dia-badge.lower{background:var(--accent3);color:#0d0f0e}
+.dia-badge.upperB{background:#b07af0;color:#fff} .dia-badge.lowerB{background:var(--red);color:#fff}
+/* Grupo muscular */
+.dia-badge.b-pecho{background:#37a8f0;color:#fff}
+.dia-badge.b-espalda{background:#37a8f0;color:#fff}
+.dia-badge.b-piernas{background:#37f0a8;color:#0a0a0a}
+.dia-badge.b-hombros{background:#f07020;color:#0d0f0e}
+.dia-badge.b-biceps{background:#f07020;color:#0d0f0e}
+.dia-badge.b-triceps{background:#f07020;color:#0d0f0e}
+.dia-badge.b-core{background:#37a8f0;color:#fff}
+.dia-badge.b-fullbody{background:#b5f037;color:#0a0a0a}
+/* Tipo de ejercicio */
+.dia-badge.b-fuerza{background:#e83050;color:#fff}
+.dia-badge.b-hipertrofia{background:#f0c428;color:#0a0a0a}
+.dia-badge.b-resistencia{background:#20b8d4;color:#0a0a0a}
+.dia-badge.b-cardio{background:#e84898;color:#fff}
+.dia-badge.b-movilidad{background:#30c860;color:#0a0a0a}
+/* Tipo de movimiento */
+.dia-badge.b-push{background:#d85818;color:#fff}
+.dia-badge.b-pull{background:#20d4c0;color:#0a0a0a}
+/* Custom */
+.dia-badge.b-custom{background:#c07af0;color:#fff}
 .dia-title{font-weight:700;font-size:.9rem} .dia-sub{font-size:.75rem;color:var(--muted)}
 .exercise{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);gap:.5rem}
 .exercise:last-child{border-bottom:none}
@@ -500,14 +521,14 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .cal-day:hover{border-color:var(--accent);background:var(--surface2)}
 .cal-day.today{border-color:var(--accent2);background:rgba(55,240,168,.08)}
 .cal-day.selected{border-color:var(--accent);background:rgba(181,240,55,.12)}
-.cal-day.other-month{opacity:.3;cursor:default;pointer-events:none}
+.cal-day.other-month{opacity:.18;cursor:default;pointer-events:none;border-color:transparent;background:transparent}
 .cal-day-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);line-height:1}
 .cal-day.today .cal-day-num{color:var(--accent2);font-weight:700}
 .cal-dot{width:6px;height:6px;border-radius:50%;margin-top:2px;flex-shrink:0}
 .cal-dot.log{background:var(--accent)}
 .cal-dot.rest{background:var(--blue)}
 .cal-badge{font-size:.46rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px;line-height:1.2}
-.cal-hdr{font-size:.6rem;font-weight:700;color:var(--muted);text-align:center;text-transform:uppercase;padding:3px 0;letter-spacing:.5px}
+.cal-hdr{font-size:.72rem;font-weight:700;color:var(--accent);text-align:center;text-transform:uppercase;padding:6px 0 8px;letter-spacing:1px}
 .reg-ex-row{display:flex;flex-direction:column;gap:.35rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.75rem}
 .reg-ex-name{font-size:.84rem;font-weight:700;color:var(--text)}
 .reg-ex-series{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);margin-bottom:.1rem}
@@ -1000,30 +1021,41 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <p class="section-intro">Selecciona un día del calendario, elige el plan y anota los pesos de cada ejercicio.</p>
 
 <!-- CALENDAR NAV -->
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;gap:.5rem;flex-wrap:wrap">
-  <button class="etog-btn" id="cal-prev" onclick="calNav(-1)" style="font-size:1.1rem;padding:6px 14px">&#8249;</button>
-  <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--accent);letter-spacing:1px;cursor:pointer" id="cal-month-label" onclick="calToggleFilter()"></div>
-  <button class="etog-btn" id="cal-next" onclick="calNav(1)" style="font-size:1.1rem;padding:6px 14px">&#8250;</button>
-  <button class="supl-reset-btn" onclick="calGoToday()" style="margin-left:auto;font-size:.82rem;padding:6px 16px;font-weight:700">Hoy</button>
+<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;flex-wrap:wrap">
+  <!-- Arrows + label + Hoy tightly left -->
+  <div style="display:inline-flex;align-items:center;gap:.4rem;flex-shrink:0">
+    <div style="display:inline-flex;align-items:center;gap:0">
+      <button class="etog-btn" id="cal-prev" onclick="calNav(-1)" style="font-size:1.1rem;padding:6px 8px;border-radius:7px 0 0 7px;border-right:none">&#8249;</button>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent);letter-spacing:1px;cursor:pointer;padding:0 10px;background:var(--surface2);border:1px solid var(--border);line-height:2rem;white-space:nowrap" id="cal-month-label" onclick="calToggleFilter()"></div>
+      <button class="etog-btn" id="cal-next" onclick="calNav(1)" style="font-size:1.1rem;padding:6px 8px;border-radius:0 7px 7px 0;border-left:none">&#8250;</button>
+    </div>
+    <button class="supl-reset-btn" onclick="calGoToday()" style="font-size:.82rem;padding:6px 14px;font-weight:700">Hoy</button>
+  </div>
+  <!-- Vista toggle right -->
+  <div style="display:flex;align-items:center;gap:.4rem;margin-left:auto;flex-wrap:wrap">
+    <span style="font-size:.7rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px">Vista:</span>
+    <button id="cal-view-month" onclick="calSetView('month')" class="etog-btn active" style="font-size:.78rem;padding:5px 11px">Mes</button>
+    <button id="cal-view-week"  onclick="calSetView('week')"  class="etog-btn"        style="font-size:.78rem;padding:5px 11px">Semana</button>
+  </div>
 </div>
-<!-- CALENDAR FILTER (month + year pickers) -->
-<div id="cal-filter" style="display:none;margin-bottom:1rem;background:var(--surface);border:1px solid var(--accent);border-radius:14px;padding:1.1rem 1.25rem">
-  <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
-    <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--accent);letter-spacing:.5px;white-space:nowrap;line-height:1;align-self:center">📅 IR A MES Y AÑO</span>
-    <select id="cal-filter-month" onchange="calApplyFilter()" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;padding:7px 28px 7px 12px;cursor:pointer;transition:border-color .2s;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 9px center">
+<!-- CALENDAR FILTER (inline below nav, fits content) -->
+<div id="cal-filter" style="display:none;margin-bottom:.75rem">
+  <div style="display:inline-flex;align-items:center;gap:.6rem;flex-wrap:wrap;background:var(--surface);border:1px solid var(--accent);border-radius:12px;padding:.6rem .9rem">
+    <span style="font-family:'Bebas Neue',sans-serif;font-size:1.25rem;color:var(--accent);letter-spacing:.5px;white-space:nowrap">📅 IR A</span>
+    <select id="cal-filter-month" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;padding:5px 24px 5px 10px;cursor:pointer;transition:border-color .2s;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 8px center">
       <option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option>
       <option value="3">Abril</option><option value="4">Mayo</option><option value="5">Junio</option>
       <option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option>
       <option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option>
     </select>
-    <select id="cal-filter-year" onchange="calApplyFilter()" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;padding:7px 28px 7px 12px;cursor:pointer;transition:border-color .2s;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 9px center"><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option><option value="2031">2031</option><option value="2032">2032</option><option value="2033">2033</option><option value="2034">2034</option><option value="2035">2035</option><option value="2036">2036</option><option value="2037">2037</option><option value="2038">2038</option><option value="2039">2039</option><option value="2040">2040</option></select>
-    <button onclick="calApplyFilter()" style="background:var(--accent);color:#0d0f0e;border:none;border-radius:8px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:opacity .2s">Ir</button>
-    <button onclick="calToggleFilter()" style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s;margin-left:auto">✕ Cerrar</button>
+    <select id="cal-filter-year" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;padding:5px 24px 5px 10px;cursor:pointer;transition:border-color .2s;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 8px center"><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option><option value="2031">2031</option><option value="2032">2032</option><option value="2033">2033</option><option value="2034">2034</option><option value="2035">2035</option><option value="2036">2036</option><option value="2037">2037</option><option value="2038">2038</option><option value="2039">2039</option><option value="2040">2040</option></select>
+    <button onclick="calApplyFilter()" style="background:var(--accent);color:#0d0f0e;border:none;border-radius:7px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer">Ir</button>
+    <button onclick="calToggleFilter()" style="background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:7px;padding:6px 12px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s">✕</button>
   </div>
 </div>
 
 <!-- CALENDAR GRID -->
-<div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1.5rem"></div>
+<div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1.5rem;margin-top:2rem"></div>
 
 <!-- DAY DETAIL PANEL -->
 <div id="reg-panel" style="display:none">
@@ -3676,27 +3708,25 @@ const ENTRENO_PLANS_LOCAL_KEY = 'planMuscular_entreno_plans_v1';
 // Badge groups: each entry has val (stored in Firebase), label (shown in badge), cls (CSS class)
 const BADGE_TYPES = [
   // Grupo muscular
-  { val:'pecho',      label:'PECHO',       cls:'push'   },
-  { val:'espalda',    label:'ESPALDA',     cls:'pull'   },
-  { val:'piernas',    label:'PIERNAS',     cls:'legs'   },
-  { val:'hombros',    label:'HOMBROS',     cls:'upper'  },
-  { val:'biceps',     label:'BÍCEPS',      cls:'upperB' },
-  { val:'triceps',    label:'TRÍCEPS',     cls:'lower'  },
-  { val:'core',       label:'CORE',        cls:'lowerB' },
-  { val:'fullbody',   label:'FULL BODY',   cls:'upper'  },
+  { val:'pecho',      label:'PECHO',       cls:'b-pecho'      },
+  { val:'espalda',    label:'ESPALDA',     cls:'b-espalda'    },
+  { val:'piernas',    label:'PIERNAS',     cls:'b-piernas'    },
+  { val:'hombros',    label:'HOMBRO',     cls:'b-hombros'    },
+  { val:'biceps',     label:'BÍCEPS',      cls:'b-biceps'     },
+  { val:'triceps',    label:'TRÍCEPS',     cls:'b-triceps'    },
+  { val:'core',       label:'CORE',        cls:'b-core'       },
+  { val:'fullbody',   label:'FULL BODY',   cls:'b-fullbody'   },
   // Tipo de ejercicio
-  { val:'fuerza',     label:'FUERZA',      cls:'upper'  },
-  { val:'hipertrofia',label:'HIPERTROFIA', cls:'push'   },
-  { val:'resistencia',label:'RESISTENCIA', cls:'lower'  },
-  { val:'cardio',     label:'CARDIO',      cls:'lowerB' },
-  { val:'movilidad',  label:'MOVILIDAD',   cls:'pull'   },
+  { val:'fuerza',     label:'FUERZA',      cls:'b-fuerza'     },
+  { val:'hipertrofia',label:'HIPERTROFIA', cls:'b-hipertrofia'},
+  { val:'resistencia',label:'RESISTENCIA', cls:'b-resistencia'},
+  { val:'cardio',     label:'CARDIO',      cls:'b-cardio'     },
+  { val:'movilidad',  label:'MOVILIDAD',   cls:'b-movilidad'  },
   // Tipo de movimiento
-  { val:'push',       label:'EMPUJE',      cls:'push'   },
-  { val:'pull',       label:'TIRÓN',       cls:'pull'   },
-  { val:'legs',       label:'PIERNA',      cls:'legs'   },
-  { val:'core_mov',   label:'CORE',        cls:'lowerB' },
+  { val:'push',       label:'EMPUJE',      cls:'b-push'       },
+  { val:'pull',       label:'TIRÓN',       cls:'b-pull'       },
   // Custom
-  { val:'custom',     label:'PERSONALIZADO', cls:''       },
+  { val:'custom',     label:'PERSONALIZADO', cls:'b-custom'   },
 ];
 
 // Grouped for the <select> dropdown
@@ -3711,7 +3741,7 @@ const BADGE_GROUPS = [
   },
   {
     label: 'Tipo de movimiento',
-    options: ['push','pull','legs','core_mov']
+    options: ['push','pull']
   },
   {
     label: 'Otro',
@@ -3756,14 +3786,70 @@ function resizeSelectToContent(sel, extraPx) {
   sel.style.width = Math.ceil(textWidth + (extraPx || 44)) + 'px';
 }
 
+// Badge val → color map for select highlight
+const BADGE_COLOR_MAP = {
+  // Grupo muscular — 8 únicos
+  'pecho':       '#37a8f0',  // azul (igual que espalda y core)
+  'espalda':     '#37a8f0',  // azul
+  'piernas':     '#37f0a8',  // verde agua
+  'hombros':     '#f07020',  // naranja
+  'biceps':      '#f07020',  // naranja (igual que hombros y triceps)
+  'triceps':     '#f07020',  // naranja (igual que hombros y biceps)
+  'core':        '#37a8f0',  // azul (igual que pecho y espalda)
+  'fullbody':    '#b5f037',  // verde lima
+  // Tipo de ejercicio — 5 únicos, distintos a grupo muscular
+  'fuerza':      '#e83050',  // carmesí
+  'hipertrofia': '#f0c428',  // dorado
+  'resistencia': '#20b8d4',  // cian azulado
+  'cardio':      '#e84898',  // rosa magenta
+  'movilidad':   '#30c860',  // verde medio
+  // Tipo de movimiento — 2 únicos, distintos a los demás
+  'push':        '#d85818',  // terracota
+  'pull':        '#20d4c0',  // cian
+  // Custom
+  'custom':      '#c07af0',  // lila
+};
+
 // Resizes a .plan-badge-select to fit its selected option text
 function resizeBadgeSelect(sel) {
   resizeSelectToContent(sel, 42);
 }
 
+// Apply color to badge select based on selected val
+// Text contrast per badge color (black or white)
+const BADGE_TEXT_MAP = {
+  'pecho':'#fff','espalda':'#fff','piernas':'#0d0f0e','hombros':'#0d0f0e',
+  'biceps':'#0d0f0e','triceps':'#0d0f0e','core':'#fff','fullbody':'#0d0f0e',
+  'fuerza':'#fff','hipertrofia':'#0d0f0e','resistencia':'#0d0f0e','cardio':'#fff','movilidad':'#0d0f0e',
+  'push':'#fff','pull':'#0d0f0e','custom':'#fff'
+};
+
+function applyBadgeSelectColor(sel) {
+  if (!sel) return;
+  const val = sel.value;
+  const col = BADGE_COLOR_MAP[val];
+  const txt = BADGE_TEXT_MAP[val];
+  if (col) {
+    sel.style.background = col;
+    sel.style.borderColor = col;
+    sel.style.color = txt || '#fff';
+    // Also recolor the dropdown arrow SVG to match text color
+    const arrowColor = encodeURIComponent(txt === '#fff' ? '#ffffff' : '#0d0f0e');
+    sel.style.backgroundImage = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='${arrowColor}'/%3E%3C/svg%3E")`;
+    sel.style.backgroundRepeat = 'no-repeat';
+    sel.style.backgroundPosition = 'right 5px center';
+  } else {
+    sel.style.background = '';
+    sel.style.backgroundImage = '';
+    sel.style.borderColor = '';
+    sel.style.color = '';
+  }
+}
+
 // Called when the badge type select changes inside a day box
 function peBadgeSelectChanged(sel) {
   resizeBadgeSelect(sel);
+  applyBadgeSelectColor(sel);
   const box = sel.closest('.plan-day-box');
   if (!box) return;
   const hiddenInput = box.querySelector('.pe-badge-custom');
@@ -3788,7 +3874,7 @@ function peBadgeSelectChanged(sel) {
 
   // If already has a value, just show it — no prompt needed
   if (existing) {
-    if (preview) { preview.textContent = '→ ' + existing; preview.style.display = 'inline'; }
+    if (preview) { preview.textContent = '→ ' + existing; preview.style.display = 'inline'; preview.style.color = '#c07af0'; }
     if (editBtn)  editBtn.style.display = 'inline-flex';
     return;
   }
@@ -3869,16 +3955,16 @@ function peOpenCustomBadgePrompt(sel, hiddenInput, preview, editBtn, previous) {
       ).then(confirmed => {
         if (!confirmed) {
           if (hiddenInput) hiddenInput.value = previous;
-          if (preview) { preview.textContent = '→ ' + previous; preview.style.display = 'inline'; }
+          if (preview) { preview.textContent = '→ ' + previous; preview.style.display = 'inline'; preview.style.color = '#c07af0'; }
           return;
         }
         if (hiddenInput) hiddenInput.value = val;
-        if (preview) { preview.textContent = '→ ' + val; preview.style.display = 'inline'; }
+        if (preview) { preview.textContent = '→ ' + val; preview.style.display = 'inline'; preview.style.color = '#c07af0'; }
         if (editBtn)  editBtn.style.display = 'inline-flex';
       });
     } else {
       if (hiddenInput) hiddenInput.value = val;
-      if (preview) { preview.textContent = '→ ' + val; preview.style.display = 'inline'; }
+      if (preview) { preview.textContent = '→ ' + val; preview.style.display = 'inline'; preview.style.color = '#c07af0'; }
       if (editBtn)  editBtn.style.display = 'inline-flex';
     }
   }
@@ -3892,7 +3978,7 @@ function peOpenCustomBadgePrompt(sel, hiddenInput, preview, editBtn, previous) {
       if (editBtn)  editBtn.style.display = 'none';
     } else {
       if (hiddenInput) hiddenInput.value = previous;
-      if (preview) { preview.textContent = '→ ' + previous; preview.style.display = 'inline'; }
+      if (preview) { preview.textContent = '→ ' + previous; preview.style.display = 'inline'; preview.style.color = '#c07af0'; }
       if (editBtn)  editBtn.style.display = 'inline-flex';
     }
   }
@@ -3921,7 +4007,7 @@ function peAddDay(dayData) {
       <label class="plan-field-label">Tipo <span style="color:var(--accent)">*</span></label>
       <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
         ${badgeSelectHTML(d.badge || 'pecho')}
-        <span class="pe-badge-custom-preview" style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;letter-spacing:.5px;color:var(--accent2);display:${d.badge==='custom'?'inline':'none'}">${d.badgeCustom ? '\u2192 ' + escapeHtml(d.badgeCustom) : ''}</span>
+        <span class="pe-badge-custom-preview" style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;letter-spacing:.5px;color:#c07af0;display:${d.badge==='custom'?'inline':'none'}">${d.badgeCustom ? '\u2192 ' + escapeHtml(d.badgeCustom) : ''}</span>
         <button class="pe-badge-custom-edit-btn" onclick="peOpenCustomPromptFromEditBtn(this)" style="display:${d.badge==='custom'?'inline-flex':'none'};background:rgba(181,240,55,.12);border:1px dashed rgba(181,240,55,.5);color:var(--accent);border-radius:7px;padding:4px 11px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;align-items:center;gap:4px;transition:all .2s" onmouseover="this.style.background='rgba(181,240,55,.22)';this.style.borderColor='var(--accent)'" onmouseout="this.style.background='rgba(181,240,55,.12)';this.style.borderColor='rgba(181,240,55,.5)'">✏ Cambiar nombre personalizado</button>
       </div>
       <input class="pe-badge-custom" type="hidden" value="${escapeHtml(d.badgeCustom || '')}"/>
@@ -3947,7 +4033,8 @@ function peAddDay(dayData) {
   const badgeSel = box.querySelector('.plan-badge-select');
   if (badgeSel) {
     resizeBadgeSelect(badgeSel);
-    badgeSel.addEventListener('change', () => { peBadgeSelectChanged(badgeSel); resizeBadgeSelect(badgeSel); });
+    applyBadgeSelectColor(badgeSel);
+    badgeSel.addEventListener('change', () => { peBadgeSelectChanged(badgeSel); resizeBadgeSelect(badgeSel); applyBadgeSelectColor(badgeSel); });
   }
 }
 
@@ -4031,7 +4118,7 @@ function peBuildPlanHTML(planId, data) {
   (data.dias || []).forEach(dia => {
     const bType = badgeMap[dia.badge] || { label: dia.badge.toUpperCase(), cls: '' };
     const badgeLabel = dia.badge === 'custom' && dia.badgeCustom ? dia.badgeCustom.toUpperCase() : bType.label;
-    const badgeCls   = dia.badge === 'custom' ? '' : bType.cls;
+    const badgeCls   = bType.cls || '';
     html += `<div class="dia-entreno">`;
     html += `<div class="dia-entreno-header"><span class="dia-badge ${badgeCls}">${escapeHtml(badgeLabel)}</span><div><div class="dia-title">${escapeHtml(dia.titulo)}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div></div>`;
     (dia.ejercicios || []).forEach(ex => {
@@ -4471,8 +4558,13 @@ const PLANES = {
 
 let calYear   = new Date().getFullYear();
 let calMonth  = new Date().getMonth();
+let calView   = 'month'; // 'month' | 'week'
+let calWeekOf = null;    // Date of Monday of current week (week view)
 let regCache  = {};  // { 'YYYY-MM-DD': {plan, exercises:{exName:{sets:[{kg,reps}]}, notes}} }
 let selDate   = null;
+
+const CAL_VIEW_FB_KEY = 'cal_view';
+const CAL_VIEW_LS_KEY = 'planMuscular_cal_view_v1';
 
 // ── Helpers ──
 function dateKey(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
@@ -4492,12 +4584,23 @@ async function loadRegCache() {
   if (pos && pos.y) {
     calYear  = pos.y;
     calMonth = pos.m ?? 0;
+    if (pos.wk) calWeekOf = new Date(pos.wk.replace(/-/g,'/'));
     // Clamp to minimum
     const minY = CAL_START.getFullYear(), minM = CAL_START.getMonth();
     if (calYear < minY || (calYear === minY && calMonth < minM)) {
       calYear = minY; calMonth = minM;
     }
   }
+  // Restore view preference
+  let savedView = null;
+  if (CLOUD_CONFIGURED) {
+    try {
+      const rv = await fetch(`${FB_BASE}/${CAL_VIEW_FB_KEY}.json`);
+      if (rv.ok) { const dv = await rv.json(); if (dv) savedView = dv; }
+    } catch(e) {}
+  }
+  if (!savedView) savedView = lsGet(CAL_VIEW_LS_KEY, null);
+  if (savedView === 'week' || savedView === 'month') calView = savedView;
   // Load registro data
   if (CLOUD_CONFIGURED) {
     try {
@@ -4523,23 +4626,43 @@ async function saveRegEntry(key, data) {
   } catch(e) { setSyncStatus('error','⚠ Error al guardar registro'); }
 }
 
+// ── Calendar helpers ──
+function makeDayCell(dateObj, isOtherMonth) {
+  const y = dateObj.getFullYear(), mo = dateObj.getMonth(), d = dateObj.getDate();
+  const key = dateKey(y, mo, d);
+  const entry = regCache[key];
+  const tk = todayKey();
+  const cell = document.createElement('div');
+  let cls = isOtherMonth ? 'cal-day other-month' : 'cal-day';
+  if (key === tk) cls += ' today';
+  if (key === selDate) cls += ' selected';
+  cell.className = cls;
+  if (!isOtherMonth) cell.onclick = () => openRegPanel(key);
+  let inner = `<span class="cal-day-num">${d}</span>`;
+  if (entry && !isOtherMonth) {
+    const planInfo = PLANES[entry.plan];
+    if (entry.plan === 'rest') {
+      inner += `<span class="cal-dot rest"></span><span class="cal-badge">descanso</span>`;
+    } else if (planInfo) {
+      inner += `<span class="cal-dot log"></span><span class="cal-badge">${planInfo.label}</span>`;
+    }
+  }
+  cell.innerHTML = inner;
+  return cell;
+}
+
 // ── Calendar render ──
 function renderCalendar() {
   const grid = document.getElementById('cal-grid');
   const lbl  = document.getElementById('cal-month-label');
   if (!grid || !lbl) return;
 
+  updateViewButtons();
+
   const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  lbl.textContent = months[calMonth] + ' ' + calYear;
-  lbl.title = 'Clic para ir a mes/año concreto';
-
-  // Only clamp at minimum (no upper limit)
-  const minY = CAL_START.getFullYear(), minM = CAL_START.getMonth();
-  document.getElementById('cal-prev').disabled = (calYear === minY && calMonth === minM);
-  document.getElementById('cal-next').disabled = false;
-
   grid.innerHTML = '';
-  // Header
+
+  // Header row (always the same)
   ['Lu','Ma','Mi','Ju','Vi','Sá','Do'].forEach(d => {
     const h = document.createElement('div');
     h.className = 'cal-hdr';
@@ -4547,70 +4670,125 @@ function renderCalendar() {
     grid.appendChild(h);
   });
 
-  const first = new Date(calYear, calMonth, 1);
-  const lastDay = new Date(calYear, calMonth+1, 0).getDate();
-  let startDow = first.getDay(); // 0=Sun
-  startDow = startDow === 0 ? 6 : startDow - 1; // Mon=0
+  if (calView === 'week') {
+    // ── WEEK VIEW ──
+    if (!calWeekOf) calWeekOf = getWeekMonday(new Date());
+    const sunday = new Date(calWeekOf);
+    sunday.setDate(sunday.getDate() + 6);
+    // Label: "15–21 Abril 2026" or "28 Abr – 4 May 2026"
+    const startLabel = calWeekOf.getDate() + (calWeekOf.getMonth() !== sunday.getMonth() ? ' ' + months[calWeekOf.getMonth()] : '');
+    const endLabel   = sunday.getDate() + ' ' + months[sunday.getMonth()] + ' ' + sunday.getFullYear();
+    lbl.textContent = startLabel + ' – ' + endLabel;
+    lbl.title = 'Clic para ir a mes/año concreto';
 
-  // Prev month fill
-  const prevLast = new Date(calYear, calMonth, 0).getDate();
-  for (let i = startDow - 1; i >= 0; i--) {
-    const cell = document.createElement('div');
-    cell.className = 'cal-day other-month';
-    cell.innerHTML = `<span class="cal-day-num">${prevLast - i}</span>`;
-    grid.appendChild(cell);
-  }
+    // Clamp prev
+    const minMonday = getWeekMonday(CAL_START);
+    document.getElementById('cal-prev').disabled = calWeekOf <= minMonday;
+    document.getElementById('cal-next').disabled = false;
 
-  // Current month
-  const tk = todayKey();
-  for (let d = 1; d <= lastDay; d++) {
-    const key = dateKey(calYear, calMonth, d);
-    const entry = regCache[key];
-    const cell = document.createElement('div');
-    let cls = 'cal-day';
-    if (key === tk) cls += ' today';
-    if (key === selDate) cls += ' selected';
-    cell.className = cls;
-    cell.onclick = () => openRegPanel(key);
-
-    let inner = `<span class="cal-day-num">${d}</span>`;
-    if (entry) {
-      const planInfo = PLANES[entry.plan];
-      if (entry.plan === 'rest') {
-        inner += `<span class="cal-dot rest"></span><span class="cal-badge">descanso</span>`;
-      } else if (planInfo) {
-        inner += `<span class="cal-dot log"></span><span class="cal-badge">${planInfo.label}</span>`;
-      }
+    // 7 day cells
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(calWeekOf);
+      d.setDate(d.getDate() + i);
+      grid.appendChild(makeDayCell(d, false));
     }
-    cell.innerHTML = inner;
-    grid.appendChild(cell);
-  }
 
-  // Next month fill
-  const total = startDow + lastDay;
-  const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
-  for (let i = 1; i <= remaining; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'cal-day other-month';
-    cell.innerHTML = `<span class="cal-day-num">${i}</span>`;
-    grid.appendChild(cell);
+  } else {
+    // ── MONTH VIEW ──
+    lbl.textContent = months[calMonth] + ' ' + calYear;
+    lbl.title = 'Clic para ir a mes/año concreto';
+
+    const minY = CAL_START.getFullYear(), minM = CAL_START.getMonth();
+    document.getElementById('cal-prev').disabled = (calYear === minY && calMonth === minM);
+    document.getElementById('cal-next').disabled = false;
+
+    const first = new Date(calYear, calMonth, 1);
+    const lastDay = new Date(calYear, calMonth+1, 0).getDate();
+    let startDow = first.getDay();
+    startDow = startDow === 0 ? 6 : startDow - 1; // Mon=0
+
+    // Prev month fill
+    const prevLast = new Date(calYear, calMonth, 0).getDate();
+    for (let i = startDow - 1; i >= 0; i--) {
+      const d = new Date(calYear, calMonth - 1, prevLast - i);
+      grid.appendChild(makeDayCell(d, true));
+    }
+
+    // Current month days
+    for (let d = 1; d <= lastDay; d++) {
+      grid.appendChild(makeDayCell(new Date(calYear, calMonth, d), false));
+    }
+
+    // Next month fill
+    const total = startDow + lastDay;
+    const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+    for (let i = 1; i <= remaining; i++) {
+      const d = new Date(calYear, calMonth + 1, i);
+      grid.appendChild(makeDayCell(d, true));
+    }
   }
 }
 
+function calSetView(view) {
+  calView = view;
+  // If switching to week view, set week to today's week or selected date's week
+  if (view === 'week') {
+    const ref = selDate ? new Date(selDate.replace(/-/g,'/')) : new Date();
+    calWeekOf = getWeekMonday(ref);
+    calYear  = calWeekOf.getFullYear();
+    calMonth = calWeekOf.getMonth();
+  }
+  // Save to localStorage + Firebase
+  lsSet(CAL_VIEW_LS_KEY, view);
+  if (CLOUD_CONFIGURED) {
+    fetch(`${FB_BASE}/${CAL_VIEW_FB_KEY}.json`, {
+      method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(view)
+    }).catch(()=>{});
+  }
+  updateViewButtons();
+  renderCalendar();
+}
+
+function updateViewButtons() {
+  const bm = document.getElementById('cal-view-month');
+  const bw = document.getElementById('cal-view-week');
+  if (!bm || !bw) return;
+  bm.classList.toggle('active', calView === 'month');
+  bw.classList.toggle('active', calView === 'week');
+}
+
+function getWeekMonday(date) {
+  const d = new Date(date);
+  const day = d.getDay(); // 0=Sun
+  const diff = day === 0 ? -6 : 1 - day; // Mon=0 offset
+  d.setDate(d.getDate() + diff);
+  d.setHours(0,0,0,0);
+  return d;
+}
+
 function calNav(delta) {
-  calMonth += delta;
-  if (calMonth < 0) { calMonth = 11; calYear--; }
-  if (calMonth > 11) { calMonth = 0; calYear++; }
-  // Only clamp at minimum
-  if (calYear < CAL_START.getFullYear() || (calYear === CAL_START.getFullYear() && calMonth < CAL_START.getMonth())) {
-    calYear = CAL_START.getFullYear(); calMonth = CAL_START.getMonth();
+  if (calView === 'week') {
+    if (!calWeekOf) calWeekOf = getWeekMonday(new Date());
+    calWeekOf.setDate(calWeekOf.getDate() + delta * 7);
+    // Clamp to minimum
+    const minMonday = getWeekMonday(CAL_START);
+    if (calWeekOf < minMonday) calWeekOf = new Date(minMonday);
+    calYear  = calWeekOf.getFullYear();
+    calMonth = calWeekOf.getMonth();
+  } else {
+    calMonth += delta;
+    if (calMonth < 0) { calMonth = 11; calYear--; }
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    if (calYear < CAL_START.getFullYear() || (calYear === CAL_START.getFullYear() && calMonth < CAL_START.getMonth())) {
+      calYear = CAL_START.getFullYear(); calMonth = CAL_START.getMonth();
+    }
   }
   calSavePosition();
   renderCalendar();
 }
 
 function calSavePosition() {
-  const pos = { y: calYear, m: calMonth };
+  const pos = { y: calYear, m: calMonth, wk: calWeekOf ? calWeekOf.toISOString().slice(0,10) : null };
   lsSet(CAL_POS_LS_KEY, pos);
   if (CLOUD_CONFIGURED) {
     fetch(`${FB_BASE}/${CAL_POS_FB_KEY}.json`, {
@@ -4659,11 +4837,14 @@ function calApplyFilter() {
   }
   calSavePosition();
   renderCalendar();
+  // Auto-close filter after navigating
+  calToggleFilter();
 }
 
 function calGoToday() {
   const t = new Date();
   calYear = t.getFullYear(); calMonth = t.getMonth();
+  calWeekOf = getWeekMonday(t);
   calSavePosition();
   renderCalendar();
 }
@@ -4781,14 +4962,14 @@ const _origShowSection = window.showSection;
 window.showSection = function(id) {
   _origShowSection(id);
   if (id === 'progresion') {
-    loadRegCache().then(() => renderCalendar());
+    loadRegCache().then(() => { updateViewButtons(); renderCalendar(); });
   }
 };
 
 // Also init if already on progresion at load
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('progresion')?.classList.contains('active')) {
-    loadRegCache().then(() => renderCalendar());
+    loadRegCache().then(() => { updateViewButtons(); renderCalendar(); });
   }
 });
 </script>
