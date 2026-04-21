@@ -236,7 +236,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .compra-edit-actions{display:flex;gap:.5rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
 
 /* MODAL CONFIRM */
-#modal-confirm{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;justify-content:center;z-index:3000;padding:0;opacity:0;pointer-events:none;transition:opacity .2s}
+#modal-confirm{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;justify-content:center;z-index:5000;padding:0;opacity:0;pointer-events:none;transition:opacity .2s}
 #modal-confirm.open{opacity:1;pointer-events:all}
 #modal-confirm-box{background:var(--surface);border:1px solid var(--border);border-radius:16px 16px 0 0;padding:1.5rem 1.5rem 2rem;width:100%;max-width:520px;max-height:80vh;overflow-y:auto;transform:translateY(20px);transition:transform .25s}
 #modal-confirm.open #modal-confirm-box{transform:translateY(0)}
@@ -320,30 +320,34 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 
   /* ── BATIDO BOX ── */
   .batido-box{padding:.85rem;margin-bottom:1.25rem}
-  .batido-box h3{font-size:1rem;line-height:1.3}
+  .batido-box h3{font-size:.95rem;line-height:1.3}
   .batido-counter-row{gap:.5rem;margin-top:.75rem;flex-wrap:nowrap}
   .batido-counter-label{font-size:.72rem}
   .batido-total{font-size:1.5rem}
   .supl-reset-btn{font-size:.65rem;padding:4px 7px;margin-left:0;margin-top:0}
-  #batido-desc-view{font-size:.8rem;gap:4px}
+  #batido-desc-view{font-size:.78rem;gap:4px;line-height:1.8}
   .batido-edit-macros{gap:6px}
   .batido-edit-panel{padding:.85rem}
+  .batido-edit-panel input,.batido-edit-panel textarea{font-size:.84rem}
 
   /* ── DAY TABS ── */
   .day-tabs{gap:.2rem;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:3px;margin-bottom:1rem}
   .day-tabs::-webkit-scrollbar{display:none}
-  .day-tab{padding:7px 12px;font-size:.74rem;flex-shrink:0;border-radius:7px}
+  .day-tab{padding:6px 11px;font-size:.72rem;flex-shrink:0;border-radius:7px}
 
   /* ── DAY TYPE ── */
-  .day-type-row{margin-bottom:.75rem !important}
-  .day-type-select{font-size:.72rem;padding:5px 26px 5px 9px}
+  .day-type-row{margin-bottom:.65rem !important}
+  .day-type-select{font-size:.68rem;padding:3px 22px 3px 7px;letter-spacing:.2px;background-position:right 6px center}
 
   /* ── MEAL CARDS ── */
   .meals-grid{grid-template-columns:1fr;gap:.65rem;margin-bottom:.85rem}
-  .meal-card{padding:1rem}
+  .meal-card{padding:.9rem}
   .meal-food{font-size:.82rem}
-  .meal-macros{gap:4px;margin-top:.7rem}
+  .meal-macros{gap:4px;margin-top:.65rem}
   .pill{font-size:.65rem;padding:2px 6px}
+  .meal-icon{width:32px;height:32px;font-size:1rem}
+  .meal-name{font-size:.85rem}
+  .meal-time{font-size:.68rem}
 
   /* ── EDIT MEAL ── */
   .edit-textarea{font-size:.82rem;min-height:80px}
@@ -353,14 +357,15 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   .btn-save-meal,.btn-cancel-meal{flex:1;text-align:center;padding:9px 10px;font-size:.82rem}
 
   /* ── DAY TOTAL ── */
-  .day-total{flex-direction:column;align-items:flex-start;gap:.4rem;padding:.75rem 1rem}
-  .day-total-macros{gap:.35rem}
+  .day-total{flex-direction:column;align-items:flex-start;gap:.35rem;padding:.7rem .9rem}
+  .day-total-label{font-size:.72rem}
+  .day-total-macros{gap:.3rem}
 
   /* ── COMPRA ── */
   .compra-grid{grid-template-columns:1fr;gap:.65rem;margin-bottom:1.25rem}
-  .compra-card{padding:1rem}
+  .compra-card{padding:.9rem}
   .compra-cat-header{flex-wrap:nowrap;gap:.4rem;align-items:center}
-  .compra-cat{font-size:1rem;margin-bottom:0}
+  .compra-cat{font-size:.95rem;margin-bottom:0}
   .compra-edit-btn{font-size:.65rem;padding:4px 8px;flex-shrink:0}
   .compra-item{font-size:.8rem;padding:5px 0}
   .compra-item .name{font-size:.8rem}
@@ -387,30 +392,49 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 
   /* ── PRICE TOTALS ── */
   .price-total{flex-direction:column;align-items:flex-start;gap:.6rem;padding:.9rem 1rem;margin-top:.75rem}
-  .price-total .label{font-size:1.2rem;line-height:1.2}
-  .price-total .label em{font-size:.95rem}
-  .price-total .amount{font-size:2rem}
+  .price-total .label{font-size:1.15rem;line-height:1.2}
+  .price-total .label em{font-size:.9rem}
+  .price-total .amount{font-size:1.9rem}
   .price-total--supl{flex-direction:column;align-items:flex-start;gap:.6rem}
-  .price-total--supl-label{font-size:1.1rem !important;line-height:1.3}
-  .price-total--supl-label em{font-size:.8rem}
+  .price-total--supl-label{font-size:1.05rem !important;line-height:1.3}
+  .price-total--supl-label em{font-size:.78rem}
   .price-total--supl-amounts{display:flex;gap:1.25rem;width:100%}
   .price-total--supl-col{text-align:left}
-  .price-total--supl-period{font-size:.75rem}
-  #supl-cost-mes,#supl-cost-anio{font-size:1.9rem}
+  .price-total--supl-period{font-size:.72rem}
+  #supl-cost-mes,#supl-cost-anio{font-size:1.75rem}
 
   /* ── ENTRENAMIENTO ── */
   .dias-entreno{grid-template-columns:1fr;gap:.65rem}
-  .dia-entreno{padding:1rem}
+  .dia-entreno{padding:.9rem}
+  .dia-entreno-header{gap:8px;margin-bottom:.75rem}
+  .dia-badge{font-size:.78rem;padding:2px 8px}
+  .dia-title{font-size:.85rem}
+  .dia-sub{font-size:.7rem}
   .entreno-toggle{width:100%;border-radius:9px}
-  .etog-btn{flex:1;text-align:center;padding:9px 10px;font-size:.82rem}
-  .exercise{padding:6px 0}
-  .ex-name{font-size:.8rem}
-  .ex-sets{font-size:.72rem}
+  .etog-btn{flex:1;text-align:center;padding:7px 8px;font-size:.78rem}
+  .exercise{padding:5px 0}
+  .ex-name{font-size:.78rem}
+  .ex-sets{font-size:.7rem}
+
+  /* ── PLAN EDITOR MODAL ── */
+  .plan-day-box{padding:.8rem}
+  .plan-day-header{margin-bottom:.65rem}
+  .plan-input{font-size:.84rem;padding:6px 9px}
+  .plan-badge-select{font-size:.78rem;padding:3px 24px 3px 8px}
+  .plan-field-label{font-size:.62rem}
+  .btn-add-day{font-size:.78rem;padding:6px 12px}
+  .btn-del-day{font-size:.68rem;padding:3px 8px}
+  .btn-add-ex{font-size:.74rem;padding:4px 10px}
+  .plan-ex-row .btn-del-ex{font-size:.75rem;padding:5px 9px}
+
+  /* ── ENTRENO PLAN BANNER ── */
+  #entreno-plan-banner{padding:1rem 1.1rem;margin-bottom:1.1rem}
+  #entreno-plan-banner-text{font-size:.86rem}
 
   /* ── SYNC STATUS ── */
   #sync-status{bottom:.75rem;right:.75rem;left:.75rem;font-size:.7rem;padding:7px 12px;border-radius:9px}
 
-  /* ── MODAL ── */
+  /* ── MODAL CONFIRM ── */
   #modal-confirm-box{padding:1.25rem 1.25rem 1.75rem}
   #modal-confirm-title{font-size:1.2rem}
   #modal-confirm-body{font-size:.82rem}
@@ -424,6 +448,47 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   /* ── CARD ── */
   .card{padding:1rem}
 }
+
+/* PLAN EDITOR MODAL */
+#modal-plan{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:flex-end;justify-content:center;z-index:4000;opacity:0;pointer-events:none;transition:opacity .2s}
+#modal-plan.open{opacity:1;pointer-events:all}
+#modal-plan-box{background:var(--surface);border:1px solid var(--border);border-radius:16px 16px 0 0;width:100%;max-width:720px;max-height:92vh;display:flex;flex-direction:column;transform:translateY(30px);transition:transform .25s}
+#modal-plan.open #modal-plan-box{transform:translateY(0)}
+@media(min-width:601px){
+  #modal-plan{align-items:center;padding:1.5rem}
+  #modal-plan-box{border-radius:16px;transform:scale(.95);max-height:90vh}
+  #modal-plan.open #modal-plan-box{transform:scale(1)}
+}
+#modal-plan-header{padding:1.25rem 1.5rem .75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+#modal-plan-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent);letter-spacing:.5px}
+#modal-plan-close{background:transparent;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:color .2s;line-height:1}
+#modal-plan-close:hover{color:var(--text)}
+#modal-plan-body{padding:1.25rem 1.5rem;overflow-y:auto;flex:1}
+#modal-plan-footer{padding:.75rem 1.5rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem;flex-shrink:0}
+@media(max-width:600px){
+  #modal-plan-header{padding:1rem 1rem .65rem}
+  #modal-plan-body{padding:1rem}
+  #modal-plan-footer{padding:.65rem 1rem 1.25rem;flex-wrap:wrap}
+  #modal-plan-footer button{flex:1}
+}
+.plan-field-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:3px;display:block}
+.plan-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;padding:7px 10px;transition:border-color .2s}
+.plan-input:focus{outline:none;border-color:var(--accent)}
+.plan-day-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:.85rem}
+.plan-day-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;gap:.5rem}
+.plan-day-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--accent2);letter-spacing:.5px}
+.plan-ex-row{display:grid;grid-template-columns:1fr 120px;gap:.5rem;margin-bottom:.5rem;align-items:start}
+@media(max-width:480px){.plan-ex-row{grid-template-columns:1fr}}
+.plan-ex-row .btn-del-ex{background:rgba(240,55,55,.08);border:1px solid rgba(240,55,55,.35);color:var(--red);border-radius:7px;padding:6px 12px;cursor:pointer;font-size:.82rem;font-weight:700;transition:all .2s;align-self:center;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.plan-ex-row .btn-del-ex:hover{background:rgba(240,55,55,.18);border-color:var(--red)}
+.btn-add-ex{background:rgba(181,240,55,.08);border:1px dashed rgba(181,240,55,.4);color:var(--accent);border-radius:7px;padding:5px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:.25rem}
+.btn-add-ex:hover{background:rgba(181,240,55,.15)}
+.btn-add-day{background:rgba(55,240,168,.08);border:1px dashed rgba(55,240,168,.4);color:var(--accent2);border-radius:8px;padding:7px 14px;font-size:.82rem;font-weight:700;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;transition:all .2s;margin-bottom:1rem}
+.btn-add-day:hover{background:rgba(55,240,168,.15)}
+.btn-del-day{background:transparent;border:1px solid rgba(240,55,55,.3);color:var(--red);border-radius:6px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap}
+.btn-del-day:hover{background:rgba(240,55,55,.08)}
+.plan-badge-select{appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;padding:4px 28px 4px 10px;cursor:pointer;letter-spacing:.5px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+.plan-badge-select:focus{outline:none;border-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -794,15 +859,25 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <section class="section" id="entreno">
 <h1>PLAN DE<em> ENTRENAMIENTO</em></h1>
 <p class="section-intro">Hipertrofia · Progresión de cargas · Ejercicios compuestos prioritarios</p>
-<div class="entreno-toggle">
-<button class="etog-btn active" onclick="showPlan('3dias')">Plan 3 Días</button>
-<button class="etog-btn" onclick="showPlan('4dias')">Plan 4 Días</button>
+<div id="entreno-plan-banner" style="display:none;background:linear-gradient(135deg,rgba(181,240,55,.08),rgba(55,240,168,.05));border:1px solid rgba(181,240,55,.25);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem">
+  <div id="entreno-plan-banner-text" style="font-size:.92rem;color:var(--text);line-height:1.7"></div>
+</div>
+<div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem">
+  <div class="entreno-toggle" id="entreno-toggle-bar" style="margin-bottom:0">
+    <button class="etog-btn active" onclick="showPlan('3dias')">Plan 3 Días</button>
+    <button class="etog-btn" onclick="showPlan('4dias')">Plan 4 Días</button>
+  </div>
+  <button onclick="openPlanModal()" style="background:rgba(181,240,55,.1);border:1px dashed rgba(181,240,55,.5);color:var(--accent);border-radius:8px;padding:8px 16px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap" onmouseover="this.style.background='rgba(181,240,55,.2)'" onmouseout="this.style.background='rgba(181,240,55,.1)'">+ Añadir plan nuevo</button>
 </div>
 <div class="entreno-plan active" id="plan-3dias">
-<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2)">
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1rem;font-size:.84rem;color:var(--text2)">
 <strong style="color:var(--text)">Estructura Push / Pull / Legs</strong> · Lunes – Miércoles – Viernes<br/>
       Cada músculo se trabaja 1 vez/semana con alto volumen. Ideal para el nivel principiante-intermedio.
     </div>
+<div style="display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:.85rem">
+  <button onclick="openPlanModal('3dias')" style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">✏ Editar plan</button>
+  <button onclick="deletePlan('3dias')" style="background:transparent;border:1px solid rgba(240,55,55,.35);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.08)'" onmouseout="this.style.background='transparent'">🗑 Eliminar plan</button>
+</div>
 <div class="dias-entreno">
 <div class="dia-entreno">
 <div class="dia-entreno-header"><span class="dia-badge">PUSH</span><div><div class="dia-title">Día A · Empuje</div><div class="dia-sub">Pecho · Hombros · Tríceps · LUNES</div></div></div>
@@ -837,10 +912,14 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 </div>
 <div class="entreno-plan" id="plan-4dias">
-<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2)">
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1rem;font-size:.84rem;color:var(--text2)">
 <strong style="color:var(--text)">Estructura Upper / Lower (2 días cada uno)</strong> · Lunes – Martes – Jueves – Viernes<br/>
       Mayor frecuencia por grupo muscular (2×/semana). Óptimo para hipertrofia intermedia.
     </div>
+<div style="display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:.85rem">
+  <button onclick="openPlanModal('4dias')" style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">✏ Editar plan</button>
+  <button onclick="deletePlan('4dias')" style="background:transparent;border:1px solid rgba(240,55,55,.35);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.08)'" onmouseout="this.style.background='transparent'">🗑 Eliminar plan</button>
+</div>
 <div class="dias-entreno">
 <div class="dia-entreno">
 <div class="dia-entreno-header"><span class="dia-badge upper">UPPER A</span><div><div class="dia-title">Tren Superior A</div><div class="dia-sub">Pecho/Tríceps énfasis · LUNES</div></div></div>
@@ -906,11 +985,37 @@ const FIREBASE_URL = 'https://plan-muscular-default-rtdb.europe-west1.firebaseda
 // ═══════════════════════════════════════════════
 
 const CLOUD_CONFIGURED = FIREBASE_URL.startsWith('https://');
-const FIREBASE_ENDPOINT = CLOUD_CONFIGURED ? FIREBASE_URL.replace(/\/$/, '') + '/menus.json' : null;
+const FB_BASE = FIREBASE_URL.replace(/\/$/, '');
+const FIREBASE_ENDPOINT = CLOUD_CONFIGURED ? FB_BASE + '/menus.json' : null;
 const LOCAL_KEY = 'planMuscular_menus_v1';
+
+// ── Storage helpers ──
+function lsGet(key, fallback = {}) {
+  try { return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback; } catch(e) { return fallback; }
+}
+function lsSet(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+}
+
+// ── DOM helpers ──
+// Returns the planId from an etog-btn's onclick attribute
+function getPlanIdFromBtn(btn) {
+  const m = (btn.getAttribute('onclick') || '').match(/showPlan\(['"]([^'"]+)['"]/);
+  return m ? m[1] : null;
+}
+// Activates a plan tab by planId (marks plan div + button active)
+function setPlanActive(planId) {
+  document.querySelectorAll('.entreno-plan').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#entreno-toggle-bar .etog-btn').forEach(b => b.classList.remove('active'));
+  const planEl = document.getElementById('plan-' + planId);
+  if (planEl) planEl.classList.add('active');
+  document.querySelectorAll('#entreno-toggle-bar .etog-btn').forEach(b => {
+    if (getPlanIdFromBtn(b) === planId) b.classList.add('active');
+  });
+}
+
 const DAYTYPE_LOCAL_KEY = 'planMuscular_dayTypes_v1';
 const DAYTYPE_FB_KEY = 'day_types';
-let saveTimer = null;
 
 // ── TIPO DE DÍA (ENTRENO / DESCANSO) ──
 function applyDayTypeStyle(sel, val) {
@@ -923,18 +1028,117 @@ async function saveDayType(day, val) {
   // Actualizar estilo visual
   const sel = document.querySelector('.day-type-select[data-day="' + day + '"]');
   applyDayTypeStyle(sel, val);
+  renderEntrenoBanner();
+  activateRecommendedPlan();
   // Guardar local
   let types = {};
-  try { types = JSON.parse(localStorage.getItem(DAYTYPE_LOCAL_KEY) || '{}'); } catch(e) {}
+  types = lsGet(DAYTYPE_LOCAL_KEY, {});
   types[day] = val;
-  try { localStorage.setItem(DAYTYPE_LOCAL_KEY, JSON.stringify(types)); } catch(e) {}
+  lsSet(DAYTYPE_LOCAL_KEY, types);
   // Guardar Firebase
   if (!CLOUD_CONFIGURED) return;
   try {
-    await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + DAYTYPE_FB_KEY + '.json', {
+    await fetch(FB_BASE + '/' + DAYTYPE_FB_KEY + '.json', {
       method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(types)
     });
   } catch(e) {}
+}
+
+const DAY_NAMES = { lun: 'Lunes', mar: 'Martes', mie: 'Miércoles', jue: 'Jueves', vie: 'Viernes' };
+
+// ── CACHÉ DE PLANES DE ENTRENAMIENTO ──
+// Se inicializa leyendo el DOM y se actualiza cuando Firebase carga/modifica/elimina planes.
+// Cualquier función futura de save/load/delete de planes debe llamar a updateEntrenoPlanesCache().
+function updateEntrenoPlanesCache() {
+  const planes = [];
+  document.querySelectorAll('.entreno-plan').forEach(planEl => {
+    const planId = planEl.id.replace(/^plan-/, '');
+    // Count actual training days in this plan
+    const dias = planEl.querySelectorAll('.dia-entreno').length;
+    // Get label from toggle button
+    let label = `Plan de ${dias} día${dias===1?'':'s'}`;
+    document.querySelectorAll('#entreno-toggle-bar .etog-btn').forEach(btn => {
+      if (getPlanIdFromBtn(btn) === planId) label = btn.textContent.trim();
+    });
+    if (dias > 0) planes.push({ dias, label, id: planEl.id });
+  });
+  window._entrenoPlanesCache = planes;
+}
+// Cache is initialized after DOMContentLoaded via loadEntrenoPlans → onEntrenoPlanesChanged
+
+function renderEntrenoBanner() {
+  const banner    = document.getElementById('entreno-plan-banner');
+  const bannerTxt = document.getElementById('entreno-plan-banner-text');
+  if (!banner || !bannerTxt) return;
+
+  // Leer días de entreno seleccionados
+  const entrenoSelects = document.querySelectorAll('.day-type-select');
+  const entrenoDays = [];
+  entrenoSelects.forEach(sel => {
+    if (sel.value === 'entreno') entrenoDays.push(DAY_NAMES[sel.dataset.day] || sel.dataset.day);
+  });
+  const n = entrenoDays.length;
+
+  // Leer planes desde la caché (se actualiza al cargar/crear/modificar/eliminar desde Firebase)
+  const planesDisponibles = window._entrenoPlanesCache
+    ? window._entrenoPlanesCache.map(p => p.dias).sort((a,b) => a-b)
+    : [];
+
+  banner.style.display = 'block';
+
+  // 0 días: sin entrenamiento
+  if (n === 0) {
+    banner.style.borderColor = 'rgba(240,55,55,.3)';
+    banner.style.background  = 'linear-gradient(135deg,rgba(240,55,55,.07),rgba(240,55,55,.03))';
+    bannerTxt.innerHTML = '<span style="font-size:1.4em;margin-right:.5rem">❌</span><span style="color:#f08080;font-weight:700;font-family:\'Bebas Neue\',sans-serif;font-size:1.25rem;letter-spacing:.4px">SIN DÍAS DE ENTRENAMIENTO</span><br><span style="font-size:.97rem">No has seleccionado ningún día de entrenamiento. Selecciona al menos un día como <strong>🏋️ DÍA ENTRENO</strong> en el menú semanal.</span>';
+    return;
+  }
+
+  const diasStr = entrenoDays.join(', ');
+  let icon, msg, color;
+
+  // ¿Existe un plan exacto para n días?
+  if (planesDisponibles.includes(n)) {
+    // Buscar la etiqueta del botón correspondiente
+    const _planEntry1 = window._entrenoPlanesCache && window._entrenoPlanesCache.find(p => p.dias === n);
+    let planLabel = _planEntry1 ? _planEntry1.label : `Plan de ${n} días`;
+
+    if (n <= 3) {
+      icon = '💪'; color = 'var(--accent)';
+      banner.style.borderColor = 'rgba(181,240,55,.25)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(181,240,55,.08),rgba(55,240,168,.05))';
+    } else if (n === 4) {
+      icon = '💪'; color = 'var(--accent2)';
+      banner.style.borderColor = 'rgba(55,240,168,.3)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(55,240,168,.08),rgba(181,240,55,.04))';
+    } else {
+      icon = '🔥'; color = 'var(--blue)';
+      banner.style.borderColor = 'rgba(55,160,240,.3)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(55,160,240,.08),rgba(55,160,240,.03))';
+    }
+    msg = `Vas a entrenar <strong>${n} día${n===1?'':'s'}</strong> (<em>${diasStr}</em>). Debes realizar los ejercicios del <strong>${planLabel}</strong>.`;
+
+  } else {
+    // No hay plan exacto: buscar el más cercano disponible
+    icon  = '⚠️'; color = 'var(--accent3)';
+    banner.style.borderColor = 'rgba(240,168,55,.35)';
+    banner.style.background  = 'linear-gradient(135deg,rgba(240,168,55,.08),rgba(240,168,55,.03))';
+
+    // Sugerencia: plan más cercano
+    let sugerencia = '';
+    if (planesDisponibles.length > 0) {
+      // plan con menor diferencia absoluta; si empate, el inferior
+      let mejor = planesDisponibles.reduce((prev, cur) =>
+        Math.abs(cur - n) < Math.abs(prev - n) ? cur : prev
+      );
+      const _planEntryMejor = window._entrenoPlanesCache && window._entrenoPlanesCache.find(p => p.dias === mejor);
+      let planLabel = _planEntryMejor ? _planEntryMejor.label : `Plan de ${mejor} días`;
+      sugerencia = ` El plan más cercano disponible es el <strong>${planLabel}</strong>.`;
+    }
+    msg = `Vas a entrenar <strong>${n} día${n===1?'':'s'}</strong> (<em>${diasStr}</em>). Actualmente no hay un plan de entrenamiento para exactamente ${n} días.${sugerencia}`;
+  }
+
+  bannerTxt.innerHTML = `<span style="font-size:1.1em;margin-right:.4rem">${icon}</span><span style="color:${color};font-weight:700;font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.4px">PLAN RECOMENDADO</span><br>${msg}`;
 }
 
 function applyDayTypes(types) {
@@ -946,23 +1150,27 @@ function applyDayTypes(types) {
       applyDayTypeStyle(sel, types[day]);
     }
   });
+  renderEntrenoBanner();
+  activateRecommendedPlan();
 }
 
 async function loadDayTypes() {
   // Local primero
-  try { applyDayTypes(JSON.parse(localStorage.getItem(DAYTYPE_LOCAL_KEY))); } catch(e) {}
+  const _dt = lsGet(DAYTYPE_LOCAL_KEY, null); if (_dt) applyDayTypes(_dt);
   // Luego nube
   if (!CLOUD_CONFIGURED) return;
   try {
-    const res = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + DAYTYPE_FB_KEY + '.json');
+    const res = await fetch(FB_BASE + '/' + DAYTYPE_FB_KEY + '.json');
     if (!res.ok) throw new Error();
     const d = await res.json();
-    if (d) { try { localStorage.setItem(DAYTYPE_LOCAL_KEY, JSON.stringify(d)); } catch(e) {} applyDayTypes(d); }
+    if (d) { lsSet(DAYTYPE_LOCAL_KEY, d); applyDayTypes(d); }
   } catch(e) {}
   // Apply default styles on load for selects that haven't been overridden
   document.querySelectorAll('.day-type-select').forEach(sel => {
     applyDayTypeStyle(sel, sel.value);
   });
+  renderEntrenoBanner();
+  activateRecommendedPlan();
 }
 
 // ── WEEKLY AVERAGE ──
@@ -1002,22 +1210,100 @@ function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => {
+    if ((b.getAttribute('onclick') || '').includes("'" + id + "'")) b.classList.add('active');
+  });
   try { sessionStorage.setItem('nav_section', id); } catch(e) {}
 }
 function showDay(id) {
   document.querySelectorAll('.day-content').forEach(d => d.classList.remove('active'));
   document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('day-' + id).classList.add('active');
-  event.target.classList.add('active');
+  document.querySelectorAll('.day-tab').forEach(t => {
+    if ((t.getAttribute('onclick') || '').includes("'" + id + "'")) t.classList.add('active');
+  });
   try { sessionStorage.setItem('nav_day', id); } catch(e) {}
 }
 function showPlan(id) {
-  document.querySelectorAll('.entreno-plan').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.etog-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('plan-' + id).classList.add('active');
-  event.target.classList.add('active');
+  setPlanActive(id);
   try { sessionStorage.setItem('nav_plan', id); } catch(e) {}
+}
+
+// Llamar tras añadir, modificar o eliminar un plan desde Firebase.
+// Actualiza la caché de planes y regenera el banner de recomendación.
+// Extrae el número de días del nombre de un botón/plan para ordenar
+function _planDiasFromLabel(label) {
+  const m = (label || '').match(/(\d+)/);
+  return m ? parseInt(m[1], 10) : 9999;
+}
+
+// Reordena los botones del tab y los divs .entreno-plan por número de días ASC
+function sortToggleBar() {
+  const toggleBar = document.getElementById('entreno-toggle-bar');
+  if (!toggleBar) return;
+
+  // Collect all buttons with their días count
+  const btns = Array.from(toggleBar.querySelectorAll('.etog-btn'));
+  btns.sort((a, b) => _planDiasFromLabel(a.textContent) - _planDiasFromLabel(b.textContent));
+  // Re-append in order (moves them in the DOM)
+  btns.forEach(b => toggleBar.appendChild(b));
+
+  // Also reorder the .entreno-plan divs to match tab order
+  const section = document.getElementById('entreno');
+  if (!section) return;
+  const planDivs = Array.from(section.querySelectorAll('.entreno-plan'));
+  // Map planId → días from button order
+  const planOrder = {};
+  btns.forEach((b, i) => {
+    const _pid = getPlanIdFromBtn(b); if (_pid) planOrder[_pid] = i;
+  });
+  planDivs.sort((a, b) => {
+    const idA = a.id.replace(/^plan-/, '');
+    const idB = b.id.replace(/^plan-/, '');
+    return (planOrder[idA] ?? 999) - (planOrder[idB] ?? 999);
+  });
+  // Find the insertion parent (entreno section, after the toggle bar wrapper)
+  const toggleWrapper = section.querySelector('div[style*="display:flex"]');
+  const insertAfter = toggleWrapper || section.querySelector('.entreno-toggle');
+  // Insert plans in correct order: append last-to-first right after insertAfter
+  // so final DOM order is first-to-last
+  if (insertAfter) {
+    planDivs.slice().reverse().forEach(d => insertAfter.after(d));
+  }
+}
+
+function getRecommendedPlanId() {
+  // Returns the planId (e.g. '3dias') of the recommended plan based on selected training days
+  const n = Array.from(document.querySelectorAll('.day-type-select'))
+    .filter(s => s.value === 'entreno').length;
+  if (n === 0 || !window._entrenoPlanesCache || !window._entrenoPlanesCache.length) return null;
+
+  const planesDisponibles = window._entrenoPlanesCache.map(p => p.dias).sort((a, b) => a - b);
+
+  // Exact match
+  let entry = window._entrenoPlanesCache.find(p => p.dias === n);
+  // Fallback: closest plan
+  if (!entry) {
+    const mejor = planesDisponibles.reduce((prev, cur) =>
+      Math.abs(cur - n) < Math.abs(prev - n) ? cur : prev
+    );
+    entry = window._entrenoPlanesCache.find(p => p.dias === mejor);
+  }
+  return entry ? entry.id.replace(/^plan-/, '') : null;
+}
+
+function activateRecommendedPlan() {
+  const planId = getRecommendedPlanId();
+  if (!planId || !document.getElementById('plan-' + planId)) return;
+  setPlanActive(planId);
+  try { sessionStorage.setItem('nav_plan', planId); } catch(e) {}
+}
+
+function onEntrenoPlanesChanged() {
+  updateEntrenoPlanesCache();
+  sortToggleBar();
+  renderEntrenoBanner();
+  activateRecommendedPlan();
 }
 
 function restoreNavState() {
@@ -1041,15 +1327,7 @@ function restoreNavState() {
         if (t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + day + "'")) t.classList.add('active');
       });
     }
-    const plan = sessionStorage.getItem('nav_plan');
-    if (plan && document.getElementById('plan-' + plan)) {
-      document.querySelectorAll('.entreno-plan').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.etog-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('plan-' + plan).classList.add('active');
-      document.querySelectorAll('.etog-btn').forEach(b => {
-        if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + plan + "'")) b.classList.add('active');
-      });
-    }
+    // Plan tab is auto-activated by activateRecommendedPlan() after loadEntrenoPlans() completes
   } catch(e) {}
 }
 
@@ -1076,13 +1354,15 @@ function isBatidoCard(card) {
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.day-content').forEach(dayEl => {
     const dayId = dayEl.id;
-    dayEl.querySelectorAll('.meal-card').forEach((card, i) => {
-      card.id = dayId + '-meal' + i;
+    let _mealIdx = 0;
+    dayEl.querySelectorAll('.meal-card').forEach((card) => {
       const _nameCheck = normalizeAccents(card.querySelector('.meal-name')?.textContent || '');
       if (_nameCheck.includes('batido')) {
-        // Tarjeta de batido: marcar y NO añadir botón editar
+        // Tarjeta de batido: ID legible fijo
+        card.id = dayId + '-batido';
         card.dataset.isBatido = '1';
       } else {
+        card.id = dayId + '-meal' + _mealIdx++;
         const btn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
         btn.addEventListener('click', () => enterEditMode(card));
         card.querySelector('.meal-header').appendChild(btn);
@@ -1226,6 +1506,10 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSuplStateFromCloud();
   loadDayTypes();
   loadBatidoActiveState();
+  loadEntrenoPlans();
+  // Modal-plan backdrop close (modal is after script, so use DOMContentLoaded)
+  const _mp = document.getElementById('modal-plan');
+  if (_mp) _mp.addEventListener('click', function(e){ if(e.target===this) closePlanModal(); });
   // recalcTotalSemanal se llama desde applyCompraData
   // Fallback emoji si la imagen no carga
   document.querySelectorAll('.compra-img img').forEach(img => {
@@ -1645,9 +1929,9 @@ async function deleteMeal(card, dayEl, toggleBtn) {
   // Eliminar del snapshot si tiene id
   if (card.id) {
     let data = {};
-    try { data = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); } catch(e) {}
+    data = lsGet(LOCAL_KEY, {});
     delete data[card.id];
-    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
+    lsSet(LOCAL_KEY, data);
     if (CLOUD_CONFIGURED) {
       try { await fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch(e) {}
     }
@@ -1712,7 +1996,17 @@ async function saveNewMeal(card) {
   }
   // Asignar id único a la nueva tarjeta
   const dayEl = card.closest('.day-content');
-  card.id = dayEl.id + '-extra-' + Date.now();
+  const _dayId = dayEl.id; // e.g. "day-lun"
+  const _isBatidoNew = normalizeAccents(mealName).includes('batido');
+  if (_isBatidoNew) {
+    // ID fijo y legible para tarjetas de batido
+    card.id = _dayId + '-batido';
+  } else {
+    // ID secuencial para comidas extra normales: day-lun-extra-1, day-lun-extra-2, ...
+    let _extraN = 1;
+    while (document.getElementById(_dayId + '-extra-' + _extraN)) _extraN++;
+    card.id = _dayId + '-extra-' + _extraN;
+  }
   // Reemplazar el div que contiene los inputs (segundo hijo de meal-header) con nombre y hora reales
   // IMPORTANTE: usar :last-child para coger el div de inputs, NO el div del icono (primer hijo)
   const headerDiv = card.querySelector('.meal-header > div:last-child');
@@ -1740,7 +2034,7 @@ async function saveNewMeal(card) {
 
   // Guardar inmediatamente en Firebase (igual que saveBatidoEdit)
   const _snap = buildSnapshot();
-  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(_snap)); } catch(e) {}
+  lsSet(LOCAL_KEY, _snap);
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida añadida'); return; }
   setSyncStatus('saving', 'Guardando…');
   fetch(FIREBASE_ENDPOINT, {
@@ -1898,7 +2192,7 @@ async function saveEditMode(card) {
     } catch(e) {}
   } else {
     try {
-      const lc = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}');
+      const lc = lsGet(LOCAL_KEY, {});
       if (lc[card.id]) {
         const fd = lc[card.id];
         origFood   = fd.food ?? origFood;
@@ -1953,7 +2247,7 @@ async function saveEditMode(card) {
 
   // Guardar inmediatamente en Firebase (igual que saveBatidoEdit)
   const _snap = buildSnapshot();
-  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(_snap)); } catch(e) {}
+  lsSet(LOCAL_KEY, _snap);
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida guardada'); return; }
   setSyncStatus('saving', 'Guardando…');
   fetch(FIREBASE_ENDPOINT, {
@@ -2020,10 +2314,43 @@ function buildSnapshot() {
 
 function applySnapshot(data) {
   if (!data) return;
-  // Recrear primero las comidas extra que no existen en el DOM
+
+  // ── Migrate legacy batido IDs (day-XXX-extra-TIMESTAMP) → day-XXX-batido ──
+  let migrated = false;
+  const migratedData = Object.assign({}, data);
+  Object.keys(data).forEach(id => {
+    // Match both old timestamp format and sequential extras that are batidos
+    const extraMatch = id.match(/^(day-[a-z]+)-extra-(.+)$/);
+    if (!extraMatch) return;
+    if (document.getElementById(id)) return; // already in DOM, no migration needed
+    const dayId = extraMatch[1];
+    const saved = data[id];
+    // Only migrate if content is a batido
+    const foodText = normalizeAccents((saved.food || '') + (saved.name || ''));
+    if (!foodText.includes('batido')) return;
+    const newId = dayId + '-batido';
+    if (!migratedData[newId]) {
+      migratedData[newId] = saved;
+      delete migratedData[id];
+      migrated = true;
+    }
+  });
+  if (migrated) {
+    // Persist migrated data
+    lsSet(LOCAL_KEY, migratedData);
+    if (CLOUD_CONFIGURED) {
+      fetch(FIREBASE_ENDPOINT, {
+        method: 'PUT', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(migratedData)
+      }).catch(() => {});
+    }
+    data = migratedData;
+  }
+
+  // Recrear primero las comidas extra (y batidos) que no existen en el DOM
   Object.entries(data).forEach(([id, saved]) => {
     if (document.getElementById(id)) return;
-    const match = id.match(/^(day-[a-z]+)-extra-/);
+    const match = id.match(/^(day-[a-z]+)-(extra-|batido)/);
     if (!match) return;
     const dayEl = document.getElementById(match[1]);
     if (dayEl) createRestoredExtraMeal(dayEl, id, saved);
@@ -2059,7 +2386,7 @@ function applySnapshot(data) {
 // ── CLOUD SYNC ──
 async function loadData() {
   let local = null;
-  try { local = JSON.parse(localStorage.getItem(LOCAL_KEY)); } catch(e) {}
+  local = lsGet(LOCAL_KEY, null);
   if (local) applySnapshot(local);
   if (!CLOUD_CONFIGURED) return;
   setSyncStatus('loading', 'Sincronizando…');
@@ -2067,29 +2394,10 @@ async function loadData() {
     const res = await fetch(FIREBASE_ENDPOINT);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const cloud = await res.json();
-    if (cloud) { try { localStorage.setItem(LOCAL_KEY, JSON.stringify(cloud)); } catch(e) {} applySnapshot(cloud); }
+    if (cloud) { lsSet(LOCAL_KEY, cloud); applySnapshot(cloud); }
     setSyncStatus('saved', '✓ Datos cargados');
   } catch(e) {
     setSyncStatus('error', 'Sin conexión — caché local');
-  }
-}
-
-function scheduleSave() {
-  clearTimeout(saveTimer);
-  setSyncStatus('saving', 'Guardando…');
-  saveTimer = setTimeout(persistData, 800);
-}
-
-async function persistData() {
-  const data = buildSnapshot();
-  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
-  if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Guardado'); return; }
-  try {
-    const res = await fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    setSyncStatus('saved', '✓ Guardado en la nube');
-  } catch(e) {
-    setSyncStatus('error', '⚠ Error al guardar');
   }
 }
 
@@ -2097,9 +2405,9 @@ async function resetDay(dayId) {
   if (!await mobileConfirm('Resetear día', '¿Resetear este día al menú original?<br>Se perderán los cambios locales y se restaurarán los datos guardados en la nube.')) return;
   // Eliminar sólo las claves de este día del localStorage
   let data = {};
-  try { data = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); } catch(e) {}
+  data = lsGet(LOCAL_KEY, {});
   document.getElementById(dayId)?.querySelectorAll('.meal-card[id]').forEach(c => delete data[c.id]);
-  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
+  lsSet(LOCAL_KEY, data);
   // NO tocar Firebase: al recargar, loadData() volverá a leer la nube
   // y rellenará las tarjetas con los datos que hay guardados en Firebase.
   location.reload();
@@ -2109,13 +2417,13 @@ const SUPL_KEY = 'suplTracker_v1';
 const SUPL_FB_KEY = 'supl_state';
 
 function loadSuplState() {
-  try { return JSON.parse(localStorage.getItem(SUPL_KEY) || '{}'); } catch(e) { return {}; }
+  return lsGet(SUPL_KEY, {});
 }
 function saveSuplState(s) {
-  try { localStorage.setItem(SUPL_KEY, JSON.stringify(s)); } catch(e) {}
+  lsSet(SUPL_KEY, s);
   // Sincronizar con Firebase de forma silenciosa
   if (!CLOUD_CONFIGURED) return;
-  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + SUPL_FB_KEY + '.json', {
+  fetch(FB_BASE + '/' + SUPL_FB_KEY + '.json', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(s)
@@ -2125,12 +2433,12 @@ function saveSuplState(s) {
 async function loadSuplStateFromCloud() {
   if (!CLOUD_CONFIGURED) return;
   try {
-    const res = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + SUPL_FB_KEY + '.json');
+    const res = await fetch(FB_BASE + '/' + SUPL_FB_KEY + '.json');
     if (!res.ok) throw new Error();
     const d = await res.json();
     if (d && typeof d === 'object') {
       // Fusionar: la nube tiene prioridad sobre localStorage
-      try { localStorage.setItem(SUPL_KEY, JSON.stringify(d)); } catch(e) {}
+      lsSet(SUPL_KEY, d);
       renderSupl();
     }
   } catch(e) {}
@@ -2282,7 +2590,7 @@ function changeBatidos(delta) {
 function persistBatidosCount(count) {
   try { localStorage.setItem('planMuscular_batidos_count', String(count)); } catch(e) {}
   if (!CLOUD_CONFIGURED) return;
-  fetch(FIREBASE_URL.replace(/\/$/, '') + '/batidos_count.json', {
+  fetch(FB_BASE + '/batidos_count.json', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(count)
@@ -2462,11 +2770,11 @@ async function saveBatidoEdit() {
   cancelBatidoEdit();
 
   const data = { extra, kcal, prot, carb, fat, protDosis, creatDosis };
-  try { localStorage.setItem(BATIDO_LOCAL_KEY, JSON.stringify(data)); } catch(e) {}
+  lsSet(BATIDO_LOCAL_KEY, data);
 
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Batido guardado'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_FB_KEY + '.json', {
+  fetch(FB_BASE + '/' + BATIDO_FB_KEY + '.json', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
@@ -2507,12 +2815,12 @@ function getBatidoGlobalActive() {
 function setBatidoGlobalActive(val) {
   try { localStorage.setItem('batido_global_active', val ? '1' : '0'); } catch(e) {}
   if (!CLOUD_CONFIGURED) return;
-  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_ACTIVE_FB_KEY + '.json', {
+  fetch(FB_BASE + '/' + BATIDO_ACTIVE_FB_KEY + '.json', {
     method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(val)
   }).catch(()=>{});
 }
 function getBatidoDaysDisabled() {
-  try { return JSON.parse(localStorage.getItem('batido_days_disabled') || '{}'); } catch(e) { return {}; }
+  return lsGet('batido_days_disabled', {});
 }
 function getBatidoDayDisabled(dayId) {
   return !!getBatidoDaysDisabled()[dayId];
@@ -2520,9 +2828,9 @@ function getBatidoDayDisabled(dayId) {
 function setBatidoDayDisabled(dayId, val) {
   const d = getBatidoDaysDisabled();
   if (val) d[dayId] = true; else delete d[dayId];
-  try { localStorage.setItem('batido_days_disabled', JSON.stringify(d)); } catch(e) {}
+  lsSet('batido_days_disabled', d);
   if (!CLOUD_CONFIGURED) return;
-  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_DAYS_FB_KEY + '.json', {
+  fetch(FB_BASE + '/' + BATIDO_DAYS_FB_KEY + '.json', {
     method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(d)
   }).catch(()=>{});
 }
@@ -2599,8 +2907,8 @@ async function loadBatidoActiveState() {
   // Load from Firebase
   try {
     const [rA, rD] = await Promise.all([
-      fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_ACTIVE_FB_KEY + '.json'),
-      fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_DAYS_FB_KEY + '.json')
+      fetch(FB_BASE + '/' + BATIDO_ACTIVE_FB_KEY + '.json'),
+      fetch(FB_BASE + '/' + BATIDO_DAYS_FB_KEY + '.json')
     ]);
     if (rA.ok) {
       const val = await rA.json();
@@ -2612,7 +2920,7 @@ async function loadBatidoActiveState() {
     if (rD.ok) {
       const daysData = await rD.json();
       if (daysData && typeof daysData === 'object') {
-        try { localStorage.setItem('batido_days_disabled', JSON.stringify(daysData)); } catch(e) {}
+        lsSet('batido_days_disabled', daysData);
         // Reset all then apply
         document.querySelectorAll('.meal-card').forEach(card => {
           if (!isBatidoCard(card)) return;
@@ -2707,7 +3015,7 @@ function syncBatidoToMenuCards(d) {
 }
 
 async function loadBatidoData() {
-  try { applyBatidoData(JSON.parse(localStorage.getItem(BATIDO_LOCAL_KEY))); } catch(e) {}
+  const _bd = lsGet(BATIDO_LOCAL_KEY, null); if (_bd) applyBatidoData(_bd);
   // Restaurar contador de batidos desde localStorage
   try {
     const _lc = parseInt(localStorage.getItem('planMuscular_batidos_count'));
@@ -2715,14 +3023,14 @@ async function loadBatidoData() {
   } catch(e) {}
   if (!CLOUD_CONFIGURED) return;
   try {
-    const res = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + BATIDO_FB_KEY + '.json');
+    const res = await fetch(FB_BASE + '/' + BATIDO_FB_KEY + '.json');
     if (!res.ok) throw new Error();
     const d = await res.json();
-    if (d) { try { localStorage.setItem(BATIDO_LOCAL_KEY, JSON.stringify(d)); } catch(e) {} applyBatidoData(d); }
+    if (d) { lsSet(BATIDO_LOCAL_KEY, d); applyBatidoData(d); }
   } catch(e) {}
   // Cargar contador desde Firebase (tiene prioridad sobre localStorage)
   try {
-    const _rc = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/batidos_count.json');
+    const _rc = await fetch(FB_BASE + '/batidos_count.json');
     if (_rc.ok) {
       const _cnt = await _rc.json();
       if (_cnt !== null && !isNaN(parseInt(_cnt))) {
@@ -2857,13 +3165,13 @@ async function toggleCompraEdit(btn) {
   let firebaseOrig = null;
   if (CLOUD_CONFIGURED && catId !== 'suplementos') {
     try {
-      const r = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + COMPRA_FB_KEY + '/' + catId + '.json');
+      const r = await fetch(FB_BASE + '/' + COMPRA_FB_KEY + '/' + catId + '.json');
       if (r.ok) firebaseOrig = await r.json();
     } catch(e) {}
   }
   if (!firebaseOrig && catId !== 'suplementos') {
     try {
-      const lc = JSON.parse(localStorage.getItem(COMPRA_LOCAL_KEY) || '{}');
+      const lc = lsGet(COMPRA_LOCAL_KEY, {});
       firebaseOrig = lc[catId] || null;
     } catch(e) {}
   }
@@ -2971,12 +3279,12 @@ async function saveSuplEdit(btn) {
   let fbSuplOrig = null;
   if (CLOUD_CONFIGURED) {
     try {
-      const r = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + SUPL_FB_KEY + '.json');
+      const r = await fetch(FB_BASE + '/' + SUPL_FB_KEY + '.json');
       if (r.ok) fbSuplOrig = await r.json();
     } catch(e) {}
   }
   if (!fbSuplOrig) {
-    try { fbSuplOrig = JSON.parse(localStorage.getItem(SUPL_KEY) || '{}'); } catch(e) { fbSuplOrig = {}; }
+    fbSuplOrig = lsGet(SUPL_KEY, {});
   }
 
   // Recopilar cambios para confirmación
@@ -3036,13 +3344,13 @@ async function saveSuplEdit(btn) {
 
   // Persistir en localStorage y Firebase
   let allCompra = {};
-  try { allCompra = JSON.parse(localStorage.getItem(COMPRA_LOCAL_KEY) || '{}'); } catch(e) {}
+  allCompra = lsGet(COMPRA_LOCAL_KEY, {});
   allCompra['suplementos'] = suplData;
-  try { localStorage.setItem(COMPRA_LOCAL_KEY, JSON.stringify(allCompra)); } catch(e) {}
+  lsSet(COMPRA_LOCAL_KEY, allCompra);
 
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Suplementos guardados'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + COMPRA_FB_KEY + '/suplementos.json', {
+  fetch(FB_BASE + '/' + COMPRA_FB_KEY + '/suplementos.json', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(suplData)
@@ -3204,13 +3512,13 @@ async function saveCompraEdit(btn) {
   recalcTotalSemanal();
 
   let allCompra = {};
-  try { allCompra = JSON.parse(localStorage.getItem(COMPRA_LOCAL_KEY) || '{}'); } catch(e) {}
+  allCompra = lsGet(COMPRA_LOCAL_KEY, {});
   allCompra[catId] = items;
-  try { localStorage.setItem(COMPRA_LOCAL_KEY, JSON.stringify(allCompra)); } catch(e) {}
+  lsSet(COMPRA_LOCAL_KEY, allCompra);
 
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Lista guardada'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + COMPRA_FB_KEY + '/' + catId + '.json', {
+  fetch(FB_BASE + '/' + COMPRA_FB_KEY + '/' + catId + '.json', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(items)
@@ -3265,15 +3573,567 @@ function applyCompraData(allCompra) {
 }
 
 async function loadCompraData() {
-  try { applyCompraData(JSON.parse(localStorage.getItem(COMPRA_LOCAL_KEY))); } catch(e) {}
+  const _cd = lsGet(COMPRA_LOCAL_KEY, null); if (_cd) applyCompraData(_cd);
   if (!CLOUD_CONFIGURED) return;
   try {
-    const res = await fetch(FIREBASE_URL.replace(/\/$/, '') + '/' + COMPRA_FB_KEY + '.json');
+    const res = await fetch(FB_BASE + '/' + COMPRA_FB_KEY + '.json');
     if (!res.ok) throw new Error();
     const d = await res.json();
-    if (d) { try { localStorage.setItem(COMPRA_LOCAL_KEY, JSON.stringify(d)); } catch(e) {} applyCompraData(d); }
+    if (d) { lsSet(COMPRA_LOCAL_KEY, d); applyCompraData(d); }
   } catch(e) {}
 }
+
+// ══════════════════════════════════════════════════════
+// ══ EDITOR DE PLANES DE ENTRENAMIENTO ══
+// ══════════════════════════════════════════════════════
+const ENTRENO_PLANS_FB_KEY = 'entreno_plans';
+const ENTRENO_PLANS_LOCAL_KEY = 'planMuscular_entreno_plans_v1';
+
+const BADGE_TYPES = [
+  { val:'push',   label:'PUSH',    cls:''},
+  { val:'pull',   label:'PULL',    cls:'pull'},
+  { val:'legs',   label:'LEGS',    cls:'legs'},
+  { val:'upper',  label:'UPPER A', cls:'upper'},
+  { val:'lower',  label:'LOWER A', cls:'lower'},
+  { val:'upperB', label:'UPPER B', cls:'upperB'},
+  { val:'lowerB', label:'LOWER B', cls:'lowerB'},
+  { val:'custom', label:'CUSTOM',  cls:''},
+];
+
+let _peEditingPlanId = null;
+let _peDayCount = 0;
+
+function badgeSelectHTML(selectedVal) {
+  return '<select class="plan-badge-select">' +
+    BADGE_TYPES.map(b => `<option value="${b.val}"${b.val===selectedVal?' selected':''}>${b.label}</option>`).join('') +
+    '</select>';
+}
+
+function peAddDay(dayData) {
+  _peDayCount++;
+  const d = dayData || {};
+  const container = document.getElementById('pe-dias-container');
+  const box = document.createElement('div');
+  box.className = 'plan-day-box';
+
+  const exRows = (d.ejercicios && d.ejercicios.length ? d.ejercicios : [{}]).map(ex => peExRowHTML(ex)).join('');
+
+  box.innerHTML = `
+    <div class="plan-day-header">
+      <div class="plan-day-title">DÍA ${_peDayCount}</div>
+      <button class="btn-del-day" onclick="peDelDay(this)">🗑 Eliminar día</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.75rem">
+      <div>
+        <label class="plan-field-label">Tipo <span style="color:var(--accent)">*</span></label>
+        ${badgeSelectHTML(d.badge || 'push')}
+      </div>
+      <div>
+        <label class="plan-field-label">Etiqueta personalizada <span style="color:var(--muted)">(si tipo es CUSTOM)</span></label>
+        <input class="plan-input pe-badge-custom" placeholder="ej. FULL BODY" type="text" value="${escapeHtml(d.badgeCustom || '')}"/>
+      </div>
+    </div>
+    <div style="margin-bottom:.6rem">
+      <label class="plan-field-label">Título <span style="color:var(--accent)">*</span></label>
+      <input class="plan-input pe-title" placeholder="ej. Día A · Empuje" type="text" value="${escapeHtml(d.titulo || '')}"/>
+    </div>
+    <div style="margin-bottom:.85rem">
+      <label class="plan-field-label">Descripción</label>
+      <input class="plan-input pe-desc" placeholder="ej. Pecho · Hombros · Tríceps · LUNES" type="text" value="${escapeHtml(d.descripcion || '')}"/>
+    </div>
+    <div class="plan-field-label" style="margin-bottom:.5rem">Ejercicios</div>
+    <div class="pe-ejercicios">${exRows}</div>
+    <button class="btn-add-ex" onclick="peAddEx(this)">+ Añadir ejercicio</button>
+    <div style="margin-top:.85rem">
+      <label class="plan-field-label">Comentario final <span style="color:var(--muted)">(opcional)</span></label>
+      <input class="plan-input pe-comentario" placeholder="ej. Descanso: 90-120s entre series compuestas · 60s aislamiento" type="text" value="${escapeHtml(d.comentario || '')}"/>
+    </div>`;
+  container.appendChild(box);
+}
+
+function peExRowHTML(ex) {
+  ex = ex || {};
+  return `<div class="plan-ex-row">
+    <div style="display:flex;flex-direction:column;gap:.35rem">
+      <input class="plan-input pe-ex-nombre" placeholder="Nombre del ejercicio" type="text" value="${escapeHtml(ex.nombre || '')}"/>
+      <input class="plan-input pe-ex-desc" placeholder="Descripción / grupo muscular" type="text" value="${escapeHtml(ex.desc || '')}" style="font-size:.8rem"/>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.35rem">
+      <input class="plan-input pe-ex-series" placeholder="ej. 4×6-8" type="text" value="${escapeHtml(ex.series || '')}"/>
+      <button class="btn-del-ex" onclick="peDelEx(this)">🗑</button>
+    </div>
+  </div>`;
+}
+
+function peAddEx(btn) {
+  const ejerciciosDiv = btn.previousElementSibling;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = peExRowHTML({});
+  ejerciciosDiv.appendChild(tmp.firstElementChild);
+}
+
+async function peDelEx(btn) {
+  const nombre = btn.closest('.plan-ex-row')?.querySelector('.pe-ex-nombre')?.value?.trim() || 'este ejercicio';
+  const ok = await mobileConfirm('Eliminar ejercicio', `¿Seguro que quieres eliminar <strong>${escapeHtml(nombre)}</strong>?`);
+  if (!ok) return;
+  btn.closest('.plan-ex-row').remove();
+}
+
+async function peDelDay(btn) {
+  const titulo = btn.closest('.plan-day-box')?.querySelector('.pe-title')?.value?.trim() || 'este día';
+  const ok = await mobileConfirm('Eliminar día', `¿Seguro que quieres eliminar el día <strong>${escapeHtml(titulo)}</strong> y todos sus ejercicios?`);
+  if (!ok) return;
+  btn.closest('.plan-day-box').remove();
+  // Re-number day titles
+  document.querySelectorAll('#pe-dias-container .plan-day-box').forEach((box, i) => {
+    const title = box.querySelector('.plan-day-title');
+    if (title) title.textContent = 'DÍA ' + (i + 1);
+  });
+  _peDayCount = document.querySelectorAll('#pe-dias-container .plan-day-box').length;
+}
+
+function peReadData() {
+  const nombre     = document.getElementById('pe-nombre').value.trim();
+  const estructura = document.getElementById('pe-estructura').value.trim();
+  const estructura2= document.getElementById('pe-estructura2').value.trim();
+  const dias = [];
+  document.querySelectorAll('#pe-dias-container .plan-day-box').forEach(box => {
+    const badgeSel    = box.querySelector('.plan-badge-select');
+    const badgeCustom = box.querySelector('.pe-badge-custom').value.trim();
+    const titulo      = box.querySelector('.pe-title').value.trim();
+    const descripcion = box.querySelector('.pe-desc').value.trim();
+    const comentario  = box.querySelector('.pe-comentario').value.trim();
+    const ejercicios  = [];
+    box.querySelectorAll('.plan-ex-row').forEach(row => {
+      const nombre  = row.querySelector('.pe-ex-nombre').value.trim();
+      const desc    = row.querySelector('.pe-ex-desc').value.trim();
+      const series  = row.querySelector('.pe-ex-series').value.trim();
+      if (nombre) ejercicios.push({ nombre, desc, series });
+    });
+    dias.push({ badge: badgeSel ? badgeSel.value : 'push', badgeCustom, titulo, descripcion, ejercicios, comentario });
+  });
+  return { nombre, estructura, estructura2, dias };
+}
+
+function peBuildPlanHTML(planId, data) {
+  const badgeMap = {};
+  BADGE_TYPES.forEach(b => { badgeMap[b.val] = { label: b.label, cls: b.cls }; });
+  let html = `<div class="entreno-plan" id="plan-${planId}" data-plan-firebase-id="${planId}">`;
+  html += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--text2)">`;
+  if (data.estructura)  html += `<strong style="color:var(--text)">${escapeHtml(data.estructura)}</strong>`;
+  if (data.estructura2) html += `<br/>${escapeHtml(data.estructura2)}`;
+  html += `</div>`;
+  html += `<div style="display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:.75rem">
+    <button onclick="openPlanModal('${planId}')" style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">✏ Editar plan</button>
+    <button onclick="deletePlan('${planId}')" style="background:transparent;border:1px solid rgba(240,55,55,.35);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.08)'" onmouseout="this.style.background='transparent'">🗑 Eliminar plan</button>
+  </div>`;
+  html += `<div class="dias-entreno">`;
+  (data.dias || []).forEach(dia => {
+    const bType = badgeMap[dia.badge] || { label: dia.badge.toUpperCase(), cls: '' };
+    const badgeLabel = dia.badge === 'custom' && dia.badgeCustom ? dia.badgeCustom.toUpperCase() : bType.label;
+    const badgeCls   = dia.badge === 'custom' ? '' : bType.cls;
+    html += `<div class="dia-entreno">`;
+    html += `<div class="dia-entreno-header"><span class="dia-badge ${badgeCls}">${escapeHtml(badgeLabel)}</span><div><div class="dia-title">${escapeHtml(dia.titulo)}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div></div>`;
+    (dia.ejercicios || []).forEach(ex => {
+      html += `<div class="exercise"><div class="ex-name"><strong>${escapeHtml(ex.nombre)}</strong>${escapeHtml(ex.desc)}</div><span class="ex-sets">${escapeHtml(ex.series)}</span></div>`;
+    });
+    if (dia.comentario) html += `<div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">${escapeHtml(dia.comentario)}</div>`;
+    html += `</div>`;
+  });
+  html += `</div></div>`;
+  return html;
+}
+
+function peReadDomPlan(planId) {
+  // Read a hardcoded plan from the DOM to pre-populate the editor
+  const planEl = document.getElementById('plan-' + planId);
+  if (!planEl) return null;
+
+  // estructura box: first child div
+  const estructuraBox = planEl.querySelector('div[style*="var(--surface)"]');
+  let estructura = '', estructura2 = '';
+  if (estructuraBox) {
+    const strong = estructuraBox.querySelector('strong');
+    if (strong) {
+      // text before <br>: strong + rest of first text node
+      estructura = strong.textContent.trim();
+      const afterStrong = strong.nextSibling;
+      if (afterStrong && afterStrong.nodeType === 3) estructura += afterStrong.textContent.replace(/^\s*·\s*/, ' · ').trimEnd();
+    }
+    // text after <br>: walk siblings skipping empty text nodes
+    const br = estructuraBox.querySelector('br');
+    if (br) {
+      let node = br.nextSibling;
+      while (node && !(node.textContent || '').trim()) node = node.nextSibling;
+      if (node) estructura2 = (node.textContent || '').trim();
+    }
+  }
+
+  // nombre: from toggle button
+  let nombre = planId;
+  document.querySelectorAll('#entreno-toggle-bar .etog-btn').forEach(b => {
+    if (getPlanIdFromBtn(b) === planId) nombre = b.textContent.trim();
+  });
+
+  // days
+  const BADGE_REVERSE = { '': 'push' };
+  BADGE_TYPES.forEach(b => { BADGE_REVERSE[b.cls] = b.val; BADGE_REVERSE[b.label] = b.val; });
+
+  const dias = [];
+  planEl.querySelectorAll('.dia-entreno').forEach(diaEl => {
+    const badge    = diaEl.querySelector('.dia-badge');
+    const badgeTxt = badge ? badge.textContent.trim() : '';
+    // Detect cls from className
+    let badgeVal = 'custom', badgeCustom = badgeTxt;
+    // Match by label text first (most reliable)
+    const matchedByLabel = BADGE_TYPES.find(bt => bt.label === badgeTxt);
+    if (matchedByLabel) {
+      badgeVal = matchedByLabel.val; badgeCustom = '';
+    } else {
+      // Match by CSS class
+      BADGE_TYPES.forEach(bt => {
+        if (bt.cls && badge && badge.classList.contains(bt.cls)) badgeVal = bt.val;
+      });
+    }
+
+    const titulo      = diaEl.querySelector('.dia-title') ? diaEl.querySelector('.dia-title').textContent.trim() : '';
+    const descripcion = diaEl.querySelector('.dia-sub')   ? diaEl.querySelector('.dia-sub').textContent.trim()   : '';
+
+    const ejercicios = [];
+    diaEl.querySelectorAll('.exercise').forEach(exEl => {
+      const strong = exEl.querySelector('strong');
+      const nombre = strong ? strong.textContent.trim() : '';
+      // desc is the text node after strong inside .ex-name
+      let desc = '';
+      const exName = exEl.querySelector('.ex-name');
+      if (exName && strong) {
+        desc = Array.from(exName.childNodes)
+          .filter(n => n !== strong && n.nodeType === 3)
+          .map(n => n.textContent.trim()).join('');
+      }
+      const series = exEl.querySelector('.ex-sets') ? exEl.querySelector('.ex-sets').textContent.trim() : '';
+      if (nombre) ejercicios.push({ nombre, desc, series });
+    });
+
+    // comentario: last div whose inline style references --muted
+    let comentario = '';
+    diaEl.querySelectorAll('div[style]').forEach(d => {
+      if ((d.getAttribute('style') || '').includes('--muted')) comentario = d.textContent.trim();
+    });
+
+    dias.push({ badge: badgeVal, badgeCustom, titulo, descripcion, ejercicios, comentario });
+  });
+
+  return { nombre, estructura, estructura2, dias };
+}
+
+function openPlanModal(planId) {
+  _peEditingPlanId = planId || null;
+  _peDayCount = 0;
+  document.getElementById('pe-dias-container').innerHTML = '';
+  document.getElementById('pe-nombre').value = '';
+  document.getElementById('pe-estructura').value = '';
+  document.getElementById('pe-estructura2').value = '';
+  document.getElementById('modal-plan-title').textContent = planId ? 'EDITAR PLAN' : 'NUEVO PLAN';
+
+  if (planId) {
+    // Try localStorage/Firebase data first
+    let allPlans = {};
+    allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
+    let data = allPlans[planId];
+    // Fallback: read from DOM (hardcoded plans)
+    if (!data) data = peReadDomPlan(planId);
+    if (data) {
+      document.getElementById('pe-nombre').value      = data.nombre      || '';
+      document.getElementById('pe-estructura').value  = data.estructura  || '';
+      document.getElementById('pe-estructura2').value = data.estructura2 || '';
+      (data.dias || []).forEach(d => peAddDay(d));
+    }
+    if (!data || !data.dias || !data.dias.length) peAddDay();
+  } else {
+    peAddDay();
+  }
+
+  const modal = document.getElementById('modal-plan');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePlanModal() {
+  document.getElementById('modal-plan').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function savePlanModal() {
+  const data = peReadData();
+  if (!data.nombre)       { alert('El plan necesita un nombre.');                       return; }
+  if (!data.dias.length)  { alert('El plan necesita al menos un día de entrenamiento.'); return; }
+
+  // Build a clean slug: "5dias", "6dias", etc. If that slot is taken, add a suffix
+  let planId = _peEditingPlanId;
+  if (!planId) {
+    const diasCount = data.dias.length;
+    const baseSlug  = diasCount + 'dias';
+    let candidate = baseSlug, suffix = 2;
+    while (document.getElementById('plan-' + candidate)) {
+      candidate = baseSlug + '_' + suffix++;
+    }
+    planId = candidate;
+  }
+
+  // Build confirmSave changes list (same pattern as meals/compra)
+  const isNew = !document.getElementById('plan-' + planId);
+  const planChanges = [];
+
+  if (isNew) {
+    // New plan: show all fields as "— → value"
+    planChanges.push({ label: 'Acción',  from: '—', to: 'Crear nuevo plan' });
+    planChanges.push({ label: 'Nombre',  from: '—', to: data.nombre });
+    if (data.estructura)  planChanges.push({ label: 'Estructura',    from: '—', to: data.estructura });
+    if (data.estructura2) planChanges.push({ label: 'Descripción',   from: '—', to: data.estructura2 });
+    planChanges.push({ label: 'Días de entrenamiento', from: '—', to: data.dias.length + ' día' + (data.dias.length === 1 ? '' : 's') });
+    data.dias.forEach((d, i) => {
+      planChanges.push({ label: 'Día ' + (i+1) + ' — Título', from: '—', to: d.titulo || '—' });
+      if (d.ejercicios && d.ejercicios.length) {
+        planChanges.push({ label: 'Día ' + (i+1) + ' — Ejercicios', from: '—', to: d.ejercicios.map(e => e.nombre).filter(Boolean).join(', ') });
+      }
+    });
+  } else {
+    // Editing: compare against stored data
+    let oldData = {};
+    oldData = lsGet(ENTRENO_PLANS_LOCAL_KEY, {})[planId] || {};
+    if (!oldData.nombre) oldData = peReadDomPlan(planId) || {};
+
+    if ((oldData.nombre || '') !== data.nombre)
+      planChanges.push({ label: 'Nombre',      from: oldData.nombre || '—',      to: data.nombre });
+    if ((oldData.estructura || '') !== data.estructura)
+      planChanges.push({ label: 'Estructura',  from: oldData.estructura || '—',  to: data.estructura || '—' });
+    if ((oldData.estructura2 || '') !== data.estructura2)
+      planChanges.push({ label: 'Descripción', from: oldData.estructura2 || '—', to: data.estructura2 || '—' });
+
+    const oldDias = (oldData.dias || []).length;
+    const newDias = data.dias.length;
+    if (oldDias !== newDias)
+      planChanges.push({ label: 'Nº de días', from: oldDias + ' día' + (oldDias===1?'':'s'), to: newDias + ' día' + (newDias===1?'':'s') });
+
+    // Compare exercises per day
+    data.dias.forEach((d, i) => {
+      const old = (oldData.dias || [])[i] || {};
+      if ((old.titulo || '') !== (d.titulo || ''))
+        planChanges.push({ label: 'Día ' + (i+1) + ' — Título',      from: old.titulo || '—',      to: d.titulo || '—' });
+      if ((old.descripcion || '') !== (d.descripcion || ''))
+        planChanges.push({ label: 'Día ' + (i+1) + ' — Descripción', from: old.descripcion || '—', to: d.descripcion || '—' });
+      const oldExNames = (old.ejercicios || []).map(e => e.nombre).join(', ');
+      const newExNames = (d.ejercicios   || []).map(e => e.nombre).join(', ');
+      if (oldExNames !== newExNames)
+        planChanges.push({ label: 'Día ' + (i+1) + ' — Ejercicios',  from: oldExNames || '—',      to: newExNames || '—' });
+      if ((old.comentario || '') !== (d.comentario || ''))
+        planChanges.push({ label: 'Día ' + (i+1) + ' — Comentario',  from: old.comentario || '—',  to: d.comentario || '—' });
+    });
+
+    if (!planChanges.length) planChanges.push({ label: 'Sin cambios detectados', from: '', to: '' });
+  }
+
+  if (!await confirmSave(planChanges)) return;
+
+  const saveBtn = document.getElementById('pe-btn-save');
+  saveBtn.textContent = 'Guardando…'; saveBtn.disabled = true;
+
+  const toggleBar = document.getElementById('entreno-toggle-bar');
+
+  // Save to localStorage
+  let allPlans = {};
+  allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
+  allPlans[planId] = data;
+  lsSet(ENTRENO_PLANS_LOCAL_KEY, allPlans);
+
+  // Build HTML
+  const tmp = document.createElement('div');
+  tmp.innerHTML = peBuildPlanHTML(planId, data);
+  const newPlanEl = tmp.firstElementChild;
+
+  const existing = document.getElementById('plan-' + planId);
+  if (existing) {
+    // Preserve active state
+    if (existing.classList.contains('active')) newPlanEl.classList.add('active');
+    existing.replaceWith(newPlanEl);
+    // Update toggle button label
+    document.querySelectorAll('.etog-btn').forEach(b => {
+      if (getPlanIdFromBtn(b) === planId) b.textContent = data.nombre;
+    });
+  } else {
+    // New plan: insert after last .entreno-plan, add toggle btn
+    const lastPlan = document.querySelector('#entreno .entreno-plan:last-of-type');
+    if (lastPlan) lastPlan.after(newPlanEl); else document.getElementById('entreno').appendChild(newPlanEl);
+    const btn = document.createElement('button');
+    btn.className = 'etog-btn';
+    btn.textContent = data.nombre;
+    btn.setAttribute('onclick', `showPlan('${planId}')`);
+    toggleBar.appendChild(btn);
+    // Auto-show the new plan
+    showPlan(planId);
+    btn.classList.add('active');
+  }
+
+  sortToggleBar();
+  onEntrenoPlanesChanged();
+
+  // Save to Firebase
+  if (CLOUD_CONFIGURED) {
+    setSyncStatus('saving', 'Guardando plan…');
+    try {
+      await fetch(FB_BASE + '/' + ENTRENO_PLANS_FB_KEY + '/' + planId + '.json', {
+        method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
+      });
+      setSyncStatus('saved', '✓ Plan guardado en la nube');
+    } catch(e) { setSyncStatus('error','⚠ Error al guardar el plan'); }
+  } else {
+    setSyncStatus('saved','✓ Plan guardado localmente');
+  }
+
+  saveBtn.textContent = '✓ Guardar plan'; saveBtn.disabled = false;
+  closePlanModal();
+}
+
+async function deletePlan(planId) {
+  let allPlans = {};
+  allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
+  const planName = (allPlans[planId] && allPlans[planId].nombre) || planId;
+  const ok = await mobileConfirm('Eliminar plan', `¿Seguro que quieres eliminar el plan <strong>${escapeHtml(planName)}</strong>?<br><br>Esta acción no se puede deshacer.`);
+  if (!ok) return;
+
+  const planEl = document.getElementById('plan-' + planId);
+  if (planEl) planEl.remove();
+  document.querySelectorAll('#entreno-toggle-bar .etog-btn').forEach(b => {
+    if (getPlanIdFromBtn(b) === planId) b.remove();
+  });
+  // Activate first remaining
+  const _fpBtn = document.querySelector('#entreno-toggle-bar .etog-btn');
+  if (_fpBtn) setPlanActive(getPlanIdFromBtn(_fpBtn));
+
+  delete allPlans[planId];
+  lsSet(ENTRENO_PLANS_LOCAL_KEY, allPlans);
+  onEntrenoPlanesChanged();
+
+  if (CLOUD_CONFIGURED) {
+    setSyncStatus('saving','Eliminando plan…');
+    try {
+      await fetch(FB_BASE + '/' + ENTRENO_PLANS_FB_KEY + '/' + planId + '.json', { method:'DELETE' });
+      setSyncStatus('saved','✓ Plan eliminado');
+    } catch(e) { setSyncStatus('error','⚠ Error al eliminar el plan'); }
+  } else {
+    setSyncStatus('saved','✓ Plan eliminado');
+  }
+}
+
+// Converts a legacy p_TIMESTAMP plan ID into a clean Ndias slug
+function _migrateOldPlanId(oldId, data, existingIds) {
+  if (!/^p_\d+$/.test(oldId)) return oldId; // already clean
+  const diasCount = (data.dias || []).length;
+  const base = diasCount + 'dias';
+  let candidate = base, suffix = 2;
+  while (existingIds.has(candidate)) candidate = base + '_' + suffix++;
+  return candidate;
+}
+
+async function loadEntrenoPlans() {
+  let allPlans = {};
+  allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
+  if (CLOUD_CONFIGURED) {
+    try {
+      const res = await fetch(FB_BASE + '/' + ENTRENO_PLANS_FB_KEY + '.json');
+      if (res.ok) {
+        const d = await res.json();
+        if (d && typeof d === 'object') {
+          allPlans = d;
+          lsSet(ENTRENO_PLANS_LOCAL_KEY, allPlans);
+        }
+      }
+    } catch(e) {}
+  }
+
+  // Migrate legacy timestamp IDs to clean slugs
+  const needsMigration = Object.keys(allPlans).filter(k => /^p_\d+$/.test(k));
+  if (needsMigration.length) {
+    const existingIds = new Set(Object.keys(allPlans).filter(k => !/^p_\d+$/.test(k)));
+    const migrations = {}; // oldId → newId
+    needsMigration.forEach(oldId => {
+      const newId = _migrateOldPlanId(oldId, allPlans[oldId], existingIds);
+      existingIds.add(newId);
+      migrations[oldId] = newId;
+    });
+    // Rebuild allPlans with new keys
+    const migratedPlans = {};
+    Object.entries(allPlans).forEach(([id, data]) => {
+      migratedPlans[migrations[id] || id] = data;
+    });
+    allPlans = migratedPlans;
+    lsSet(ENTRENO_PLANS_LOCAL_KEY, allPlans);
+    // Update Firebase: write new keys, delete old keys
+    if (CLOUD_CONFIGURED) {
+      const base = FB_BASE + '/' + ENTRENO_PLANS_FB_KEY;
+      await Promise.all(Object.entries(migrations).map(async ([oldId, newId]) => {
+        try {
+          await fetch(base + '/' + newId + '.json', {
+            method: 'PUT', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(allPlans[newId])
+          });
+          await fetch(base + '/' + oldId + '.json', { method: 'DELETE' });
+        } catch(e) {}
+      }));
+    }
+  }
+
+  const toggleBar = document.getElementById('entreno-toggle-bar');
+  Object.entries(allPlans).forEach(([planId, data]) => {
+    if (document.getElementById('plan-' + planId)) return;
+    const tmp = document.createElement('div');
+    tmp.innerHTML = peBuildPlanHTML(planId, data);
+    const lastPlan = document.querySelector('#entreno .entreno-plan:last-of-type');
+    if (lastPlan) lastPlan.after(tmp.firstElementChild);
+    const btn = document.createElement('button');
+    btn.className = 'etog-btn';
+    btn.textContent = data.nombre;
+    btn.setAttribute('onclick', `showPlan('${planId}')`);
+    toggleBar.appendChild(btn);
+  });
+  sortToggleBar();
+  onEntrenoPlanesChanged();
+}
+
+
+
 </script>
+
+<!-- ══ MODAL EDITOR DE PLAN ══ -->
+<div aria-modal="true" id="modal-plan" role="dialog">
+  <div id="modal-plan-box">
+    <div id="modal-plan-header">
+      <div id="modal-plan-title">NUEVO PLAN</div>
+      <button id="modal-plan-close" onclick="closePlanModal()" title="Cerrar">✕</button>
+    </div>
+    <div id="modal-plan-body">
+      <!-- Nombre del plan y estructura general -->
+      <div style="margin-bottom:1rem">
+        <label class="plan-field-label">Nombre del plan <span style="color:var(--accent)">*</span></label>
+        <input class="plan-input" id="pe-nombre" placeholder="ej. Plan 5 Días" type="text"/>
+      </div>
+      <div style="margin-bottom:1.25rem">
+        <label class="plan-field-label">Descripción de la estructura</label>
+        <input class="plan-input" id="pe-estructura" placeholder="ej. Estructura Push/Pull/Legs · Lunes – Miércoles – Viernes" type="text"/>
+        <div style="margin-top:.4rem">
+          <input class="plan-input" id="pe-estructura2" placeholder="ej. Cada músculo se trabaja 1 vez/semana con alto volumen." type="text" style="margin-top:.35rem"/>
+        </div>
+      </div>
+      <!-- Días del plan -->
+      <div id="pe-dias-container"></div>
+      <button class="btn-add-day" onclick="peAddDay()">+ Añadir día de entrenamiento</button>
+    </div>
+    <div id="modal-plan-footer">
+      <button class="modal-btn-cancel" onclick="closePlanModal()">✕ Cancelar</button>
+      <button class="modal-btn-ok" id="pe-btn-save" onclick="savePlanModal()">✓ Guardar plan</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
