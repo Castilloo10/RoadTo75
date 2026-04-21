@@ -127,8 +127,12 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem}
 
 /* EDIT MODE */
-.edit-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.72rem;padding:2px 8px;border-radius:5px;cursor:pointer;margin-left:auto;transition:all .2s;font-family:'DM Sans',sans-serif;white-space:nowrap}
-.edit-btn:hover{border-color:var(--accent);color:var(--accent)}
+.edit-btn{background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);font-size:.72rem;padding:3px 9px;border-radius:5px;cursor:pointer;margin-left:auto;transition:all .2s;font-family:'DM Sans',sans-serif;white-space:nowrap;font-weight:600}
+.edit-btn:hover{background:rgba(55,160,240,.2);border-color:var(--blue);color:var(--blue)}
+.edit-btn.del-variant{background:rgba(240,55,55,.1);border-color:rgba(240,55,55,.4);color:var(--red)}
+.edit-btn.del-variant:hover{background:rgba(240,55,55,.2);border-color:var(--red)}
+.edit-btn.add-variant{background:rgba(55,240,168,.08);border-color:rgba(55,240,168,.4);color:var(--accent2)}
+.edit-btn.add-variant:hover{background:rgba(55,240,168,.15);border-color:var(--accent2)}
 .meal-card.editing{border-color:var(--accent);box-shadow:0 0 0 2px rgba(181,240,55,.12)}
 .edit-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;line-height:1.65;padding:.6rem .75rem;resize:vertical;min-height:100px;margin-top:.25rem}
 .edit-textarea:focus{outline:none;border-color:var(--accent)}
@@ -144,14 +148,14 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .btn-save-meal:hover{opacity:.85}
 .btn-cancel-meal{background:transparent;border:1px solid var(--border);color:var(--text2);border-radius:7px;padding:6px 16px;font-size:.8rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:border-color .2s}
 .btn-cancel-meal:hover{border-color:var(--text2)}
-.reset-day-btn{background:transparent;border:none;color:var(--muted);font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;padding:2px 6px;border-radius:4px;transition:color .2s;margin-left:.5rem}
-.reset-day-btn:hover{color:var(--red)}
+.reset-day-btn{background:rgba(240,168,55,.1);border:1px solid rgba(240,168,55,.35);color:var(--accent3);font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;padding:2px 8px;border-radius:5px;transition:all .2s;margin-left:.5rem;font-weight:600}
+.reset-day-btn:hover{background:rgba(240,168,55,.2);border-color:var(--accent3);color:var(--accent3)}
 
 /* DAY TYPE SELECT */
 .day-type-select{appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;padding:4px 28px 4px 10px;cursor:pointer;letter-spacing:.4px;text-transform:uppercase;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;transition:border-color .2s,background-color .2s,color .2s}
 .day-type-select:focus{outline:none;border-color:var(--border)}
-.day-type-select.entreno{background-color:rgba(181,240,55,.15);border-color:rgba(181,240,55,.3);color:var(--accent);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b5f037'/%3E%3C/svg%3E")}
-.day-type-select.descanso{background-color:rgba(55,160,240,.12);border-color:rgba(55,160,240,.3);color:var(--blue);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2337a8f0'/%3E%3C/svg%3E")}
+.day-type-select.entreno{width:148px;background-color:rgba(181,240,55,.15);border-color:rgba(181,240,55,.3);color:var(--accent);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b5f037'/%3E%3C/svg%3E")}
+.day-type-select.descanso{width:130px;background-color:rgba(160,100,240,.12);border-color:rgba(160,100,240,.3);color:#b07af0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b07af0'/%3E%3C/svg%3E")}
 .day-type-select option{background:var(--surface2);color:var(--text);font-size:.85rem;text-transform:none;letter-spacing:0;font-weight:500}
 
 /* SUPLEMENTOS TRACKER */
@@ -165,8 +169,8 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .supl-num{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent);line-height:1;min-width:28px;text-align:center}
 .supl-remain{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);padding:3px 8px;background:var(--surface2);border-radius:6px;border:1px solid var(--border)}
 .supl-remain.warn{border-color:var(--red);color:var(--red);background:rgba(240,55,55,.08)}
-.supl-reset-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.7rem;padding:3px 8px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-left:auto}
-.supl-reset-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+.supl-reset-btn{background:rgba(240,168,55,.1);border:1px solid rgba(240,168,55,.35);color:var(--accent3);font-size:.7rem;padding:3px 8px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-left:auto;font-weight:600}
+.supl-reset-btn:hover{background:rgba(240,168,55,.2);border-color:var(--accent3);color:var(--accent3)}
 .batido-counter-row{display:flex;align-items:center;gap:.75rem;margin-top:1rem;flex-wrap:wrap}
 .batido-counter-label{font-size:.85rem;color:var(--text2)}
 .batido-total{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--accent);line-height:1}
@@ -213,8 +217,8 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 
 /* COMPRA EDIT MODE */
 .compra-cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
-.compra-edit-btn{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.7rem;padding:3px 9px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap}
-.compra-edit-btn:hover{border-color:var(--accent);color:var(--accent)}
+.compra-edit-btn{background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);font-size:.7rem;padding:3px 9px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;font-weight:600}
+.compra-edit-btn:hover{background:rgba(55,160,240,.2);border-color:var(--blue);color:var(--blue)}
 .compra-card.editing-compra{border-color:var(--accent);box-shadow:0 0 0 2px rgba(181,240,55,.1)}
 .compra-item-edit{display:flex;flex-direction:column;gap:.4rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
 .compra-item-edit:last-of-type{border-bottom:none}
@@ -228,11 +232,11 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .price-eur-suffix{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent3);padding:0 6px 0 2px;user-select:none;line-height:1}
 .compra-item-edit .inp-img{flex:3;min-width:180px;font-size:.75rem}
 .compra-item-edit-lbl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);white-space:nowrap}
-.btn-del-item{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:5px;padding:3px 7px;cursor:pointer;font-size:.78rem;transition:all .2s;flex-shrink:0}
-.btn-del-item:hover{border-color:var(--red);color:var(--red);background:rgba(240,55,55,.08)}
+.btn-del-item{background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:.75rem;font-weight:600;transition:all .2s;flex-shrink:0;font-family:'DM Sans',sans-serif}
+.btn-del-item:hover{background:rgba(240,55,55,.2);border-color:var(--red)}
 .compra-add-row{margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--border)}
-.btn-add-item{background:rgba(181,240,55,.1);border:1px dashed var(--accent);color:var(--accent);border-radius:7px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;transition:all .2s}
-.btn-add-item:hover{background:rgba(181,240,55,.2)}
+.btn-add-item{background:rgba(55,240,168,.08);border:1px dashed rgba(55,240,168,.4);color:var(--accent2);border-radius:7px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-add-item:hover{background:rgba(55,240,168,.15)}
 .compra-edit-actions{display:flex;gap:.5rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
 
 /* MODAL CONFIRM */
@@ -479,18 +483,41 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .plan-day-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--accent2);letter-spacing:.5px}
 .plan-ex-row{display:grid;grid-template-columns:1fr 120px;gap:.5rem;margin-bottom:.5rem;align-items:start}
 @media(max-width:480px){.plan-ex-row{grid-template-columns:1fr}}
-.plan-ex-row .btn-del-ex{background:rgba(240,55,55,.08);border:1px solid rgba(240,55,55,.35);color:var(--red);border-radius:7px;padding:6px 12px;cursor:pointer;font-size:.82rem;font-weight:700;transition:all .2s;align-self:center;white-space:nowrap;font-family:'DM Sans',sans-serif}
-.plan-ex-row .btn-del-ex:hover{background:rgba(240,55,55,.18);border-color:var(--red)}
+.plan-ex-row .btn-del-ex{background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:.75rem;font-weight:600;transition:all .2s;align-self:center;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.plan-ex-row .btn-del-ex:hover{background:rgba(240,55,55,.2);border-color:var(--red)}
 .btn-add-ex{background:rgba(181,240,55,.08);border:1px dashed rgba(181,240,55,.4);color:var(--accent);border-radius:7px;padding:5px 12px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:.25rem}
 .btn-add-ex:hover{background:rgba(181,240,55,.15)}
 .btn-add-day{background:rgba(55,240,168,.08);border:1px dashed rgba(55,240,168,.4);color:var(--accent2);border-radius:8px;padding:7px 14px;font-size:.82rem;font-weight:700;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;transition:all .2s;margin-bottom:1rem}
 .btn-add-day:hover{background:rgba(55,240,168,.15)}
-.btn-del-day{background:transparent;border:1px solid rgba(240,55,55,.3);color:var(--red);border-radius:6px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap}
+.btn-del-day{background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:6px;padding:4px 10px;font-size:.72rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap}
 .btn-del-day:hover{background:rgba(240,55,55,.08)}
-.plan-badge-select{appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;padding:4px 28px 4px 10px;cursor:pointer;letter-spacing:.5px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;min-width:160px}
+.plan-badge-select{appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;padding:4px 20px 4px 8px;cursor:pointer;letter-spacing:.5px;width:fit-content;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 5px center}
 .plan-badge-select:focus{outline:none;border-color:var(--accent)}
 .plan-badge-select optgroup{background:var(--surface2);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
 .plan-badge-select option{background:var(--surface2);color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.5px}
+/* CALENDAR */
+.cal-day{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 4px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px}
+.cal-day:hover{border-color:var(--accent);background:var(--surface2)}
+.cal-day.today{border-color:var(--accent2);background:rgba(55,240,168,.08)}
+.cal-day.selected{border-color:var(--accent);background:rgba(181,240,55,.12)}
+.cal-day.other-month{opacity:.3;cursor:default;pointer-events:none}
+.cal-day-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);line-height:1}
+.cal-day.today .cal-day-num{color:var(--accent2);font-weight:700}
+.cal-dot{width:6px;height:6px;border-radius:50%;margin-top:2px;flex-shrink:0}
+.cal-dot.log{background:var(--accent)}
+.cal-dot.rest{background:var(--blue)}
+.cal-badge{font-size:.46rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px;line-height:1.2}
+.cal-hdr{font-size:.6rem;font-weight:700;color:var(--muted);text-align:center;text-transform:uppercase;padding:3px 0;letter-spacing:.5px}
+.reg-ex-row{display:flex;flex-direction:column;gap:.35rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.75rem}
+.reg-ex-name{font-size:.84rem;font-weight:700;color:var(--text)}
+.reg-ex-series{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);margin-bottom:.1rem}
+.reg-ex-inputs{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+.reg-set-wrap{display:flex;align-items:center;gap:4px}
+.reg-set-wrap label{font-size:.62rem;color:var(--muted);white-space:nowrap}
+.reg-set-wrap input{background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:3px 7px;width:62px;text-align:center}
+.reg-set-wrap input:focus{outline:none;border-color:var(--accent)}
+.reg-notes{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.78rem;padding:4px 8px;resize:none;min-height:36px;margin-top:.35rem}
+.reg-notes:focus{outline:none;border-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -877,8 +904,8 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
       Cada músculo se trabaja 1 vez/semana con alto volumen. Ideal para el nivel principiante-intermedio.
     </div>
 <div style="display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:.85rem">
-  <button onclick="openPlanModal('3dias')" style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">✏ Editar plan</button>
-  <button onclick="deletePlan('3dias')" style="background:transparent;border:1px solid rgba(240,55,55,.35);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.08)'" onmouseout="this.style.background='transparent'">🗑 Eliminar plan</button>
+  <button onclick="openPlanModal('3dias')" style="background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(55,160,240,.2)';this.style.borderColor='var(--blue)'" onmouseout="this.style.background='rgba(55,160,240,.1)';this.style.borderColor='rgba(55,160,240,.35)'">✏ Editar plan</button>
+  <button onclick="deletePlan('3dias')" style="background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.2)';this.style.borderColor='var(--red)'" onmouseout="this.style.background='rgba(240,55,55,.1)';this.style.borderColor='rgba(240,55,55,.4)'">🗑 Eliminar plan</button>
 </div>
 <div class="dias-entreno">
 <div class="dia-entreno">
@@ -919,8 +946,8 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
       Mayor frecuencia por grupo muscular (2×/semana). Óptimo para hipertrofia intermedia.
     </div>
 <div style="display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:.85rem">
-  <button onclick="openPlanModal('4dias')" style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">✏ Editar plan</button>
-  <button onclick="deletePlan('4dias')" style="background:transparent;border:1px solid rgba(240,55,55,.35);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.08)'" onmouseout="this.style.background='transparent'">🗑 Eliminar plan</button>
+  <button onclick="openPlanModal('4dias')" style="background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(55,160,240,.2)';this.style.borderColor='var(--blue)'" onmouseout="this.style.background='rgba(55,160,240,.1)';this.style.borderColor='rgba(55,160,240,.35)'">✏ Editar plan</button>
+  <button onclick="deletePlan('4dias')" style="background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.2)';this.style.borderColor='var(--red)'" onmouseout="this.style.background='rgba(240,55,55,.1)';this.style.borderColor='rgba(240,55,55,.4)'">🗑 Eliminar plan</button>
 </div>
 <div class="dias-entreno">
 <div class="dia-entreno">
@@ -967,18 +994,74 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <!-- ══ PROGRESIÓN ══ -->
 <section class="section" id="progresion">
 <div class="card">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
-<h1>REGISTRO DE<em> PESOS</em></h1>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem">
+  <h1>REGISTRO DE<em> PESOS</em></h1>
 </div>
-<p class="section-intro">Anota tus pesos al terminar cada serie/ejercicio para asegurar la sobrecarga progresiva.</p>
-<a href="https://www.notion.so/registroseries/344d8688427180d3b10cc21a7c402e96?v=c670445a3666472b99ca310374855cfd&amp;source=copy_link" rel="noopener" style="display:block;text-decoration:none;color:inherit" target="_blank">
-<div onmouseout="this.style.borderColor='var(--border)';this.style.transform='translateY(0)'" onmouseover="this.style.borderColor='var(--accent2)';this.style.transform='translateY(-2px)'" style="width:100%;min-height:280px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(135deg,rgba(55,240,168,.08),rgba(181,240,55,.05));padding:2.5rem 2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:border-color .2s,transform .2s">
-<div style="font-size:3rem;margin-bottom:.75rem">📊</div>
-<h3 style="color:var(--accent2);margin-bottom:.5rem">Abrir registro en Notion</h3>
-<p style="font-size:.88rem;color:var(--text2);max-width:480px;line-height:1.6;margin-bottom:1.25rem">La tabla completa con tu progresión de cargas está alojada en Notion. Notion no permite incrustar sus páginas dentro de otros sitios, así que se abre en una pestaña nueva.</p>
-<span style="display:inline-block;background:var(--accent2);color:#0d0f0e;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:8px;letter-spacing:.3px">Ver registro completo →</span>
+<p class="section-intro">Selecciona un día del calendario, elige el plan y anota los pesos de cada ejercicio.</p>
+
+<!-- CALENDAR NAV -->
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;gap:.5rem;flex-wrap:wrap">
+  <button class="etog-btn" id="cal-prev" onclick="calNav(-1)" style="font-size:1.1rem;padding:6px 14px">&#8249;</button>
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--accent);letter-spacing:1px;cursor:pointer" id="cal-month-label" onclick="calToggleFilter()"></div>
+  <button class="etog-btn" id="cal-next" onclick="calNav(1)" style="font-size:1.1rem;padding:6px 14px">&#8250;</button>
+  <button class="supl-reset-btn" onclick="calGoToday()" style="margin-left:auto;font-size:.82rem;padding:6px 16px;font-weight:700">Hoy</button>
 </div>
-</a>
+<!-- CALENDAR FILTER (month + year pickers) -->
+<div id="cal-filter" style="display:none;margin-bottom:1rem;background:var(--surface);border:1px solid var(--accent);border-radius:14px;padding:1.1rem 1.25rem">
+  <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+    <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--accent);letter-spacing:.5px;white-space:nowrap;line-height:1;align-self:center">📅 IR A MES Y AÑO</span>
+    <select id="cal-filter-month" onchange="calApplyFilter()" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;padding:7px 28px 7px 12px;cursor:pointer;transition:border-color .2s;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 9px center">
+      <option value="0">Enero</option><option value="1">Febrero</option><option value="2">Marzo</option>
+      <option value="3">Abril</option><option value="4">Mayo</option><option value="5">Junio</option>
+      <option value="6">Julio</option><option value="7">Agosto</option><option value="8">Septiembre</option>
+      <option value="9">Octubre</option><option value="10">Noviembre</option><option value="11">Diciembre</option>
+    </select>
+    <select id="cal-filter-year" onchange="calApplyFilter()" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;padding:7px 28px 7px 12px;cursor:pointer;transition:border-color .2s;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 9px center"><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option><option value="2031">2031</option><option value="2032">2032</option><option value="2033">2033</option><option value="2034">2034</option><option value="2035">2035</option><option value="2036">2036</option><option value="2037">2037</option><option value="2038">2038</option><option value="2039">2039</option><option value="2040">2040</option></select>
+    <button onclick="calApplyFilter()" style="background:var(--accent);color:#0d0f0e;border:none;border-radius:8px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:opacity .2s">Ir</button>
+    <button onclick="calToggleFilter()" style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s;margin-left:auto">✕ Cerrar</button>
+  </div>
+</div>
+
+<!-- CALENDAR GRID -->
+<div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1.5rem"></div>
+
+<!-- DAY DETAIL PANEL -->
+<div id="reg-panel" style="display:none">
+  <hr style="border:none;border-top:1px solid var(--border);margin-bottom:1.25rem">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent2)" id="reg-day-title"></div>
+    <button class="btn-cancel-meal" onclick="closeRegPanel()" style="padding:5px 12px">✕ Cerrar</button>
+  </div>
+
+  <!-- PLAN SELECTOR -->
+  <div style="margin-bottom:1rem">
+    <div class="compra-item-edit-lbl" style="margin-bottom:.4rem">Plan de entrenamiento del día</div>
+    <div style="display:flex;gap:.4rem;flex-wrap:wrap" id="reg-plan-btns">
+      <button class="day-tab" onclick="selectRegPlan('push')"    data-plan="push">PUSH</button>
+      <button class="day-tab" onclick="selectRegPlan('pull')"    data-plan="pull">PULL</button>
+      <button class="day-tab" onclick="selectRegPlan('legs')"    data-plan="legs">LEGS</button>
+      <button class="day-tab" onclick="selectRegPlan('upperA')"  data-plan="upperA">UPPER A</button>
+      <button class="day-tab" onclick="selectRegPlan('lowerA')"  data-plan="lowerA">LOWER A</button>
+      <button class="day-tab" onclick="selectRegPlan('upperB')"  data-plan="upperB">UPPER B</button>
+      <button class="day-tab" onclick="selectRegPlan('lowerB')"  data-plan="lowerB">LOWER B</button>
+      <button class="day-tab" onclick="selectRegPlan('rest')"    data-plan="rest">💤 Descanso</button>
+    </div>
+  </div>
+
+  <!-- EXERCISES LOG -->
+  <div id="reg-exercises" style="display:none">
+    <div class="compra-item-edit-lbl" style="margin-bottom:.75rem">Registro de pesos</div>
+    <div id="reg-ex-list" style="display:flex;flex-direction:column;gap:.6rem"></div>
+    <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+      <button class="btn-save-meal" onclick="saveRegDay()">✓ Guardar registro</button>
+    </div>
+  </div>
+  <div id="reg-rest-msg" style="display:none;color:var(--blue);font-size:.9rem;padding:.75rem 0">💤 Día de descanso registrado.</div>
+  <div style="margin-top:.5rem;display:none" id="reg-save-actions">
+    <button class="btn-save-meal" onclick="saveRegDay()">✓ Guardar registro</button>
+  </div>
+</div>
+
 </div>
 </section>
 <script>
@@ -1383,10 +1466,9 @@ document.addEventListener('DOMContentLoaded', () => {
       firstLineEl.style.gap = '.5rem';
       const btnWrap = document.createElement('div');
       btnWrap.style.cssText = 'display:flex;gap:.4rem;margin-left:auto;flex-wrap:wrap';
-      const addBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '+ Añadir comida' });
+      const addBtn = Object.assign(document.createElement('button'), { className: 'edit-btn add-variant', textContent: '+ Añadir comida' });
       addBtn.addEventListener('click', () => addMealMode(dayEl));
-      const delBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '🗑 Eliminar comida' });
-      delBtn.style.cssText = 'color:var(--red);border-color:rgba(240,55,55,.35)';
+      const delBtn = Object.assign(document.createElement('button'), { className: 'edit-btn del-variant', textContent: '🗑 Eliminar comida' });
       delBtn.addEventListener('click', () => toggleDeleteMode(dayEl, delBtn));
       btnWrap.appendChild(addBtn);
       btnWrap.appendChild(delBtn);
@@ -1557,7 +1639,7 @@ async function confirmSave(changes) {
   const lines = changes.map(c => {
     const fromStr = (c.from !== undefined && c.from !== null && String(c.from).trim() !== '' && String(c.from) !== '—') ? String(c.from) : '—';
     const toStr   = (c.to   !== undefined && c.to   !== null && String(c.to).trim()   !== '' && String(c.to)   !== '—') ? String(c.to)   : '—';
-    return `<strong>${escapeHtml(c.label)}</strong><br>· Antes: ${escapeHtml(fromStr)}<br>· Después: ${escapeHtml(toStr)}`;
+    return `<strong>${escapeHtml(c.label)}</strong><br>· Antes: <span style="color:#f0c040">${escapeHtml(fromStr)}</span><br>· Después: <span style="color:#7ee87e">${escapeHtml(toStr)}</span>`;
   });
   return mobileConfirm('¿Confirmar cambios?', lines.join('<br><br>'));
 }
@@ -3609,12 +3691,12 @@ const BADGE_TYPES = [
   { val:'cardio',     label:'CARDIO',      cls:'lowerB' },
   { val:'movilidad',  label:'MOVILIDAD',   cls:'pull'   },
   // Tipo de movimiento
-  { val:'push',       label:'EMPUJE/PUSH', cls:'push'   },
-  { val:'pull',       label:'TIRÓN/PULL',  cls:'pull'   },
-  { val:'legs',       label:'PIERNA/LEGS', cls:'legs'   },
+  { val:'push',       label:'EMPUJE',      cls:'push'   },
+  { val:'pull',       label:'TIRÓN',       cls:'pull'   },
+  { val:'legs',       label:'PIERNA',      cls:'legs'   },
   { val:'core_mov',   label:'CORE',        cls:'lowerB' },
   // Custom
-  { val:'custom',     label:'CUSTOM',      cls:''       },
+  { val:'custom',     label:'PERSONALIZADO', cls:''       },
 ];
 
 // Grouped for the <select> dropdown
@@ -3642,7 +3724,7 @@ let _peDayCount = 0;
 
 // Returns a human-readable label for a badge val+custom combo
 function badgeDisplayLabel(val, customVal) {
-  if (val === 'custom') return customVal ? customVal.toUpperCase() : 'CUSTOM';
+  if (val === 'custom') return customVal ? customVal.toUpperCase() : 'PERSONALIZADO';
   const found = BADGE_TYPES.find(b => b.val === val);
   return found ? found.label : (val || '—').toUpperCase();
 }
@@ -3661,44 +3743,102 @@ function badgeSelectHTML(selectedVal) {
   return `<select class="plan-badge-select">${groups}</select>`;
 }
 
+// Resizes any select to fit its selected option text
+function resizeSelectToContent(sel, extraPx) {
+  if (!sel) return;
+  const text = sel.options[sel.selectedIndex]?.text || '';
+  const canvas = resizeSelectToContent._canvas || (resizeSelectToContent._canvas = document.createElement('canvas'));
+  const ctx = canvas.getContext('2d');
+  const fontSize = parseFloat(getComputedStyle(sel).fontSize) || 14;
+  const fontFamily = getComputedStyle(sel).fontFamily || 'DM Sans, sans-serif';
+  ctx.font = `700 ${fontSize}px ${fontFamily}`;
+  const textWidth = ctx.measureText(text).width;
+  sel.style.width = Math.ceil(textWidth + (extraPx || 44)) + 'px';
+}
+
+// Resizes a .plan-badge-select to fit its selected option text
+function resizeBadgeSelect(sel) {
+  resizeSelectToContent(sel, 42);
+}
+
 // Called when the badge type select changes inside a day box
 function peBadgeSelectChanged(sel) {
+  resizeBadgeSelect(sel);
   const box = sel.closest('.plan-day-box');
   if (!box) return;
   const hiddenInput = box.querySelector('.pe-badge-custom');
   const preview     = box.querySelector('.pe-badge-custom-preview');
+  const editBtn     = box.querySelector('.pe-badge-custom-edit-btn');
 
   if (sel.value !== 'custom') {
-    if (hiddenInput) hiddenInput.value = '';
+    // Save current custom value in dataset so we can restore it if user comes back
+    if (hiddenInput && hiddenInput.value) box.dataset.lastCustom = hiddenInput.value;
+    // Hide preview/button but DO NOT clear hiddenInput (keep value for restoration)
     if (preview) { preview.textContent = ''; preview.style.display = 'none'; }
+    if (editBtn)  editBtn.style.display = 'none';
     return;
   }
 
-  // Custom selected: inject input inside mobileConfirm body and intercept OK click
-  const current = hiddenInput ? hiddenInput.value : '';
-  const inputId = 'pe-custom-badge-input';
+  // Custom selected — restore last value if hidden input is empty
+  const restored = (!hiddenInput || !hiddenInput.value) && box.dataset.lastCustom
+    ? box.dataset.lastCustom : '';
+  if (restored && hiddenInput) hiddenInput.value = restored;
 
-  // Build modal manually so we can read the value on OK before the modal closes
+  const existing = hiddenInput ? hiddenInput.value : '';
+
+  // If already has a value, just show it — no prompt needed
+  if (existing) {
+    if (preview) { preview.textContent = '→ ' + existing; preview.style.display = 'inline'; }
+    if (editBtn)  editBtn.style.display = 'inline-flex';
+    return;
+  }
+
+  // No value yet — open prompt to enter one
+  if (preview) preview.style.display = 'inline';
+  if (editBtn) editBtn.style.display = 'inline-flex';
+
+  peOpenCustomBadgePrompt(sel, hiddenInput, preview, editBtn, existing);
+}
+
+// Called from the ✏ Cambiar button — always opens the prompt regardless of existing value
+function peOpenCustomPromptFromEditBtn(btn) {
+  const box         = btn.closest('.plan-day-box');
+  const sel         = box ? box.querySelector('.plan-badge-select') : null;
+  const hiddenInput = box ? box.querySelector('.pe-badge-custom') : null;
+  const preview     = box ? box.querySelector('.pe-badge-custom-preview') : null;
+  const editBtn     = btn;
+  if (!sel) return;
+  peOpenCustomBadgePrompt(sel, hiddenInput, preview, editBtn, hiddenInput ? hiddenInput.value : '');
+}
+
+// Opens the modal prompt to set/change the custom badge text
+function peOpenCustomBadgePrompt(sel, hiddenInput, preview, editBtn, previous) {
+  const inputId = 'pe-custom-badge-input';
   const modal   = document.getElementById('modal-confirm');
   const titleEl = document.getElementById('modal-confirm-title');
   const bodyEl  = document.getElementById('modal-confirm-body');
   const btnOk   = document.getElementById('modal-btn-ok');
   const btnCan  = document.getElementById('modal-btn-cancel');
 
-  titleEl.textContent = 'Etiqueta personalizada';
-  bodyEl.innerHTML = `Escribe el nombre que aparecerá en el badge del día:<br><br>
-    <input id="${inputId}" class="plan-input" type="text"
-      value="${escapeHtml(current)}"
-      placeholder="ej. FULLBODY, TÉCNICA…"
-      style="width:100%;margin-top:.25rem;font-size:1rem;letter-spacing:.5px;text-transform:uppercase"
-      maxlength="20"/>`;
+  titleEl.textContent = previous ? 'Cambiar etiqueta personalizada' : 'Etiqueta personalizada';
+  const _prevHtml = previous
+    ? ['<div style="font-size:.8rem;color:var(--text2);margin-bottom:.5rem">',
+       'Valor anterior: <strong style="color:#f0c040;letter-spacing:.5px">',
+       escapeHtml(previous), '</strong></div>'].join('')
+    : '';
+  const _ph = 'ej. Tipo personalizado';
+  bodyEl.innerHTML = _prevHtml +
+    'Escribe el nombre que aparecerá en el badge:<br><br>' +
+    '<input id="' + inputId + '" class="plan-input" type="text"' +
+    ' value=""' +
+    ' placeholder="' + _ph + '"' +
+    ' style="width:100%;margin-top:.25rem;font-size:1rem;letter-spacing:.5px;text-transform:uppercase"' +
+    ' maxlength="20"/>';
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  // Focus after render
   setTimeout(() => { const i = document.getElementById(inputId); if (i) { i.focus(); i.select(); } }, 80);
 
-  // Allow Enter key to confirm
   const onKeydown = e => { if (e.key === 'Enter') { e.preventDefault(); btnOk.click(); } };
   bodyEl.addEventListener('keydown', onKeydown);
 
@@ -3713,23 +3853,47 @@ function peBadgeSelectChanged(sel) {
 
   function onOk() {
     const inp = document.getElementById(inputId);
-    const val = (inp ? inp.value.trim() : '').toUpperCase();
+    const val = (inp ? inp.value.trim() : '').toUpperCase() || previous;
     closeModal();
     if (!val) {
       sel.value = 'pecho';
       if (hiddenInput) hiddenInput.value = '';
       if (preview) { preview.textContent = ''; preview.style.display = 'none'; }
+      if (editBtn)  editBtn.style.display = 'none';
       return;
     }
-    if (hiddenInput) hiddenInput.value = val;
-    if (preview) { preview.textContent = val; preview.style.display = 'inline'; }
+    if (previous && previous !== val) {
+      mobileConfirm(
+        '¿Confirmar cambio?',
+        'Etiqueta del badge:<br><br><strong>Antes:</strong> <span style="color:#f0c040">' + escapeHtml(previous) + '</span><br><strong>Después:</strong> <span style="color:#7ee87e">' + escapeHtml(val) + '</span>'
+      ).then(confirmed => {
+        if (!confirmed) {
+          if (hiddenInput) hiddenInput.value = previous;
+          if (preview) { preview.textContent = '→ ' + previous; preview.style.display = 'inline'; }
+          return;
+        }
+        if (hiddenInput) hiddenInput.value = val;
+        if (preview) { preview.textContent = '→ ' + val; preview.style.display = 'inline'; }
+        if (editBtn)  editBtn.style.display = 'inline-flex';
+      });
+    } else {
+      if (hiddenInput) hiddenInput.value = val;
+      if (preview) { preview.textContent = '→ ' + val; preview.style.display = 'inline'; }
+      if (editBtn)  editBtn.style.display = 'inline-flex';
+    }
   }
 
   function onCan() {
     closeModal();
-    if (!current) {
+    if (!previous) {
       sel.value = 'pecho';
+      if (hiddenInput) hiddenInput.value = '';
       if (preview) { preview.textContent = ''; preview.style.display = 'none'; }
+      if (editBtn)  editBtn.style.display = 'none';
+    } else {
+      if (hiddenInput) hiddenInput.value = previous;
+      if (preview) { preview.textContent = '→ ' + previous; preview.style.display = 'inline'; }
+      if (editBtn)  editBtn.style.display = 'inline-flex';
     }
   }
 
@@ -3757,7 +3921,8 @@ function peAddDay(dayData) {
       <label class="plan-field-label">Tipo <span style="color:var(--accent)">*</span></label>
       <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
         ${badgeSelectHTML(d.badge || 'pecho')}
-        <span class="pe-badge-custom-preview" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.5px;color:var(--accent2);display:${d.badge==='custom'&&d.badgeCustom?'inline':'none'}">${escapeHtml(d.badgeCustom||'')}</span>
+        <span class="pe-badge-custom-preview" style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;letter-spacing:.5px;color:var(--accent2);display:${d.badge==='custom'?'inline':'none'}">${d.badgeCustom ? '\u2192 ' + escapeHtml(d.badgeCustom) : ''}</span>
+        <button class="pe-badge-custom-edit-btn" onclick="peOpenCustomPromptFromEditBtn(this)" style="display:${d.badge==='custom'?'inline-flex':'none'};background:rgba(181,240,55,.12);border:1px dashed rgba(181,240,55,.5);color:var(--accent);border-radius:7px;padding:4px 11px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;align-items:center;gap:4px;transition:all .2s" onmouseover="this.style.background='rgba(181,240,55,.22)';this.style.borderColor='var(--accent)'" onmouseout="this.style.background='rgba(181,240,55,.12)';this.style.borderColor='rgba(181,240,55,.5)'">✏ Cambiar nombre personalizado</button>
       </div>
       <input class="pe-badge-custom" type="hidden" value="${escapeHtml(d.badgeCustom || '')}"/>
     </div>
@@ -3780,7 +3945,10 @@ function peAddDay(dayData) {
 
   // Hook the badge select: show custom prompt when 'custom' is chosen
   const badgeSel = box.querySelector('.plan-badge-select');
-  if (badgeSel) badgeSel.addEventListener('change', () => peBadgeSelectChanged(badgeSel));
+  if (badgeSel) {
+    resizeBadgeSelect(badgeSel);
+    badgeSel.addEventListener('change', () => { peBadgeSelectChanged(badgeSel); resizeBadgeSelect(badgeSel); });
+  }
 }
 
 function peExRowHTML(ex) {
@@ -3856,8 +4024,8 @@ function peBuildPlanHTML(planId, data) {
   if (data.estructura2) html += `<br/>${escapeHtml(data.estructura2)}`;
   html += `</div>`;
   html += `<div style="display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:.75rem">
-    <button onclick="openPlanModal('${planId}')" style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">✏ Editar plan</button>
-    <button onclick="deletePlan('${planId}')" style="background:transparent;border:1px solid rgba(240,55,55,.35);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.08)'" onmouseout="this.style.background='transparent'">🗑 Eliminar plan</button>
+    <button onclick="openPlanModal('${planId}')" style="background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(55,160,240,.2)';this.style.borderColor='var(--blue)'" onmouseout="this.style.background='rgba(55,160,240,.1)';this.style.borderColor='rgba(55,160,240,.35)'">✏ Editar plan</button>
+    <button onclick="deletePlan('${planId}')" style="background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.2)';this.style.borderColor='var(--red)'" onmouseout="this.style.background='rgba(240,55,55,.1)';this.style.borderColor='rgba(240,55,55,.4)'">🗑 Eliminar plan</button>
   </div>`;
   html += `<div class="dias-entreno">`;
   (data.dias || []).forEach(dia => {
@@ -4274,4 +4442,353 @@ async function loadEntrenoPlans() {
   </div>
 </div>
 </body>
-</html>
+<script>
+// ══ TRAINING LOG CALENDAR ══════════════════════════════════════════
+const REG_FB_KEY  = 'registro';
+const CAL_POS_FB_KEY = 'cal_position';
+const CAL_POS_LS_KEY = 'planMuscular_cal_pos_v1';
+const REG_LS_KEY  = 'planMuscular_registro_v1';
+const CAL_START   = new Date(2026, 0, 1);  // Min date: Jan 2026
+
+// Plan data
+const PLANES = {
+  push:   { label:'PUSH',    color:'var(--accent)',  desc:'Pecho · Hombros · Tríceps',
+    ex:[{n:'Press de banca plano (barra)',s:'4×6-8'},{n:'Press inclinado (mancuernas)',s:'3×8-10'},{n:'Press militar (barra o mancuernas)',s:'3×8-10'},{n:'Elevaciones laterales',s:'3×12-15'},{n:'Fondos en paralelas',s:'3×8-10'},{n:'Extensión tríceps en polea',s:'3×12-15'}]},
+  pull:   { label:'PULL',    color:'var(--blue)',    desc:'Espalda · Bíceps',
+    ex:[{n:'Dominadas o jalón al pecho',s:'4×6-8'},{n:'Remo con barra (Pendlay)',s:'4×6-8'},{n:'Remo en polea sentado',s:'3×10-12'},{n:'Face pulls en polea',s:'3×15'},{n:'Curl bíceps con barra Z',s:'3×10-12'},{n:'Curl martillo mancuernas',s:'3×12-15'}]},
+  legs:   { label:'LEGS',    color:'var(--accent2)', desc:'Cuádriceps · Isquios · Glúteos',
+    ex:[{n:'Sentadilla con barra (trasera)',s:'4×6-8'},{n:'Peso muerto rumano',s:'3×8-10'},{n:'Prensa de piernas',s:'3×10-12'},{n:'Extensión de cuádriceps (máquina)',s:'3×12-15'},{n:'Curl de isquiotibiales tumbado',s:'3×12-15'},{n:'Gemelos de pie (máquina o barra)',s:'4×12-15'}]},
+  upperA: { label:'UPPER A', color:'var(--accent)',  desc:'Pecho/Tríceps énfasis',
+    ex:[{n:'Press de banca plano (barra)',s:'4×5-7'},{n:'Remo con barra (Pendlay)',s:'4×6-8'},{n:'Press inclinado mancuernas',s:'3×8-10'},{n:'Jalón al pecho agarre ancho',s:'3×10-12'},{n:'Press militar mancuernas',s:'3×10-12'},{n:'Fondos en paralelas',s:'3×8-10'},{n:'Curl bíceps barra',s:'3×12'}]},
+  lowerA: { label:'LOWER A', color:'var(--accent3)', desc:'Cuádriceps énfasis',
+    ex:[{n:'Sentadilla con barra',s:'4×5-7'},{n:'Peso muerto rumano',s:'3×8-10'},{n:'Prensa de piernas',s:'3×10-12'},{n:'Extensión cuádriceps (máquina)',s:'3×12-15'},{n:'Curl isquiotibiales tumbado',s:'3×12-15'},{n:'Gemelos de pie',s:'4×15'}]},
+  upperB: { label:'UPPER B', color:'var(--accent2)', desc:'Espalda/Bíceps énfasis',
+    ex:[{n:'Dominadas (o jalón neutro)',s:'4×6-8'},{n:'Press banca inclinado barra',s:'4×8-10'},{n:'Remo en polea sentado',s:'3×10-12'},{n:'Aperturas en polea alta',s:'3×12-15'},{n:'Elevaciones laterales',s:'3×15'},{n:'Curl martillo mancuernas',s:'3×12'},{n:'Extensión tríceps polea',s:'3×12-15'}]},
+  lowerB: { label:'LOWER B', color:'var(--red)',     desc:'Isquios/Glúteos énfasis',
+    ex:[{n:'Peso muerto convencional',s:'4×4-6'},{n:'Hip Thrust con barra',s:'4×10-12'},{n:'Sentadilla búlgara (unilateral)',s:'3×10'},{n:'Leg press pies altos',s:'3×12'},{n:'Curl nórdico o máquina isquios',s:'3×10-12'},{n:'Gemelos sentado (máquina)',s:'4×15'}]},
+  rest:   { label:'💤 DESCANSO', color:'#b07af0', desc:'', ex:[] }
+};
+
+let calYear   = new Date().getFullYear();
+let calMonth  = new Date().getMonth();
+let regCache  = {};  // { 'YYYY-MM-DD': {plan, exercises:{exName:{sets:[{kg,reps}]}, notes}} }
+let selDate   = null;
+
+// ── Helpers ──
+function dateKey(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+function todayKey() { const t=new Date(); return dateKey(t.getFullYear(),t.getMonth(),t.getDate()); }
+
+// ── Load / Save ──
+async function loadRegCache() {
+  // Restore saved calendar position (Firebase has priority)
+  let pos = null;
+  if (CLOUD_CONFIGURED) {
+    try {
+      const rp = await fetch(`${FB_BASE}/${CAL_POS_FB_KEY}.json`);
+      if (rp.ok) { const dp = await rp.json(); if (dp && dp.y) pos = dp; }
+    } catch(e) {}
+  }
+  if (!pos) pos = lsGet(CAL_POS_LS_KEY, null);
+  if (pos && pos.y) {
+    calYear  = pos.y;
+    calMonth = pos.m ?? 0;
+    // Clamp to minimum
+    const minY = CAL_START.getFullYear(), minM = CAL_START.getMonth();
+    if (calYear < minY || (calYear === minY && calMonth < minM)) {
+      calYear = minY; calMonth = minM;
+    }
+  }
+  // Load registro data
+  if (CLOUD_CONFIGURED) {
+    try {
+      const r = await fetch(`${FB_BASE}/${REG_FB_KEY}.json`);
+      if (r.ok) { const d = await r.json(); if (d) { regCache = d; lsSet(REG_LS_KEY, d); return; } }
+    } catch(e) {}
+  }
+  regCache = lsGet(REG_LS_KEY, {});
+}
+
+async function saveRegEntry(key, data) {
+  regCache[key] = data;
+  lsSet(REG_LS_KEY, regCache);
+  renderCalendar();
+  if (!CLOUD_CONFIGURED) { setSyncStatus('saved','✓ Registro guardado'); return; }
+  setSyncStatus('saving','Guardando…');
+  try {
+    const r = await fetch(`${FB_BASE}/${REG_FB_KEY}/${key}.json`, {
+      method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
+    });
+    if (!r.ok) throw new Error();
+    setSyncStatus('saved','✓ Registro guardado en la nube');
+  } catch(e) { setSyncStatus('error','⚠ Error al guardar registro'); }
+}
+
+// ── Calendar render ──
+function renderCalendar() {
+  const grid = document.getElementById('cal-grid');
+  const lbl  = document.getElementById('cal-month-label');
+  if (!grid || !lbl) return;
+
+  const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  lbl.textContent = months[calMonth] + ' ' + calYear;
+  lbl.title = 'Clic para ir a mes/año concreto';
+
+  // Only clamp at minimum (no upper limit)
+  const minY = CAL_START.getFullYear(), minM = CAL_START.getMonth();
+  document.getElementById('cal-prev').disabled = (calYear === minY && calMonth === minM);
+  document.getElementById('cal-next').disabled = false;
+
+  grid.innerHTML = '';
+  // Header
+  ['Lu','Ma','Mi','Ju','Vi','Sá','Do'].forEach(d => {
+    const h = document.createElement('div');
+    h.className = 'cal-hdr';
+    h.textContent = d;
+    grid.appendChild(h);
+  });
+
+  const first = new Date(calYear, calMonth, 1);
+  const lastDay = new Date(calYear, calMonth+1, 0).getDate();
+  let startDow = first.getDay(); // 0=Sun
+  startDow = startDow === 0 ? 6 : startDow - 1; // Mon=0
+
+  // Prev month fill
+  const prevLast = new Date(calYear, calMonth, 0).getDate();
+  for (let i = startDow - 1; i >= 0; i--) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-day other-month';
+    cell.innerHTML = `<span class="cal-day-num">${prevLast - i}</span>`;
+    grid.appendChild(cell);
+  }
+
+  // Current month
+  const tk = todayKey();
+  for (let d = 1; d <= lastDay; d++) {
+    const key = dateKey(calYear, calMonth, d);
+    const entry = regCache[key];
+    const cell = document.createElement('div');
+    let cls = 'cal-day';
+    if (key === tk) cls += ' today';
+    if (key === selDate) cls += ' selected';
+    cell.className = cls;
+    cell.onclick = () => openRegPanel(key);
+
+    let inner = `<span class="cal-day-num">${d}</span>`;
+    if (entry) {
+      const planInfo = PLANES[entry.plan];
+      if (entry.plan === 'rest') {
+        inner += `<span class="cal-dot rest"></span><span class="cal-badge">descanso</span>`;
+      } else if (planInfo) {
+        inner += `<span class="cal-dot log"></span><span class="cal-badge">${planInfo.label}</span>`;
+      }
+    }
+    cell.innerHTML = inner;
+    grid.appendChild(cell);
+  }
+
+  // Next month fill
+  const total = startDow + lastDay;
+  const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (let i = 1; i <= remaining; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-day other-month';
+    cell.innerHTML = `<span class="cal-day-num">${i}</span>`;
+    grid.appendChild(cell);
+  }
+}
+
+function calNav(delta) {
+  calMonth += delta;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  // Only clamp at minimum
+  if (calYear < CAL_START.getFullYear() || (calYear === CAL_START.getFullYear() && calMonth < CAL_START.getMonth())) {
+    calYear = CAL_START.getFullYear(); calMonth = CAL_START.getMonth();
+  }
+  calSavePosition();
+  renderCalendar();
+}
+
+function calSavePosition() {
+  const pos = { y: calYear, m: calMonth };
+  lsSet(CAL_POS_LS_KEY, pos);
+  if (CLOUD_CONFIGURED) {
+    fetch(`${FB_BASE}/${CAL_POS_FB_KEY}.json`, {
+      method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(pos)
+    }).catch(()=>{});
+  }
+}
+
+let _calFilterOpen = false;
+function calToggleFilter() {
+  _calFilterOpen = !_calFilterOpen;
+  const f = document.getElementById('cal-filter');
+  if (!f) return;
+  f.style.display = _calFilterOpen ? 'flex' : 'none';
+  if (_calFilterOpen) {
+    const ms = document.getElementById('cal-filter-month');
+    const ys = document.getElementById('cal-filter-year');
+    if (ms) ms.value = calMonth;
+    if (ys) {
+      // Add current year option if not in list
+      if (!Array.from(ys.options).find(o => parseInt(o.value) === calYear)) {
+        const opt = document.createElement('option');
+        opt.value = calYear; opt.textContent = calYear;
+        // Insert in sorted position
+        const opts = Array.from(ys.options);
+        const after = opts.find(o => parseInt(o.value) > calYear);
+        if (after) ys.insertBefore(opt, after); else ys.appendChild(opt);
+      }
+      ys.value = calYear;
+    }
+  }
+}
+
+function calApplyFilter() {
+  const ms = document.getElementById('cal-filter-month');
+  const ys = document.getElementById('cal-filter-year');
+  if (!ms || !ys) return;
+  const m = parseInt(ms.value);
+  const y = parseInt(ys.value);
+  if (isNaN(m) || isNaN(y) || y < 1900 || y > 2200) return;
+  // Clamp to minimum
+  if (y < CAL_START.getFullYear() || (y === CAL_START.getFullYear() && m < CAL_START.getMonth())) {
+    calYear = CAL_START.getFullYear(); calMonth = CAL_START.getMonth();
+  } else {
+    calYear = y; calMonth = m;
+  }
+  calSavePosition();
+  renderCalendar();
+}
+
+function calGoToday() {
+  const t = new Date();
+  calYear = t.getFullYear(); calMonth = t.getMonth();
+  calSavePosition();
+  renderCalendar();
+}
+
+// ── Day panel ──
+function openRegPanel(key) {
+  selDate = key;
+  renderCalendar();
+  const [y, m, d] = key.split('-');
+  const days = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const dt = new Date(parseInt(y), parseInt(m)-1, parseInt(d));
+  document.getElementById('reg-day-title').textContent =
+    `${days[dt.getDay()].charAt(0).toUpperCase() + days[dt.getDay()].slice(1)} ${d}/${m}/${y}`;
+
+  const panel = document.getElementById('reg-panel');
+  panel.style.display = 'block';
+
+  // Reset plan selection
+  document.querySelectorAll('#reg-plan-btns .day-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('reg-exercises').style.display = 'none';
+  document.getElementById('reg-rest-msg').style.display = 'none';
+
+  // Load existing entry
+  const entry = regCache[key];
+  if (entry && entry.plan) {
+    selectRegPlan(entry.plan, entry);
+  }
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeRegPanel() {
+  document.getElementById('reg-panel').style.display = 'none';
+  selDate = null;
+  renderCalendar();
+}
+
+function selectRegPlan(planId, existingEntry) {
+  document.querySelectorAll('#reg-plan-btns .day-tab').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`#reg-plan-btns [data-plan="${planId}"]`);
+  if (btn) btn.classList.add('active');
+
+  const exDiv  = document.getElementById('reg-exercises');
+  const restMsg = document.getElementById('reg-rest-msg');
+  const list   = document.getElementById('reg-ex-list');
+
+  if (planId === 'rest') {
+    exDiv.style.display = 'none';
+    restMsg.style.display = 'block';
+    return;
+  }
+
+  restMsg.style.display = 'none';
+  const plan = PLANES[planId];
+  if (!plan || !plan.ex.length) { exDiv.style.display = 'none'; return; }
+
+  list.innerHTML = '';
+  plan.ex.forEach(ex => {
+    const saved = existingEntry?.exercises?.[ex.n] || {};
+    const setsCount = parseInt(ex.s.split('×')[0]) || 3;
+    let setsHtml = '';
+    for (let i = 0; i < setsCount; i++) {
+      const sv = saved.sets?.[i] || {};
+      setsHtml += `
+        <div class="reg-set-wrap">
+          <label>S${i+1}</label>
+          <input type="text" inputmode="decimal" placeholder="kg" value="${sv.kg || ''}" data-ex="${encodeURIComponent(ex.n)}" data-si="${i}" data-field="kg">
+        </div>`;
+    }
+    const notes = saved.notes || '';
+    const row = document.createElement('div');
+    row.className = 'reg-ex-row';
+    row.dataset.ex = ex.n;
+    row.innerHTML = `
+      <div class="reg-ex-name">${ex.n}</div>
+      <div class="reg-ex-series">${ex.s}</div>
+      <div class="reg-ex-inputs">${setsHtml}</div>
+      <textarea class="reg-notes" rows="1" placeholder="Notas opcionales…">${notes}</textarea>`;
+    list.appendChild(row);
+  });
+
+  exDiv.style.display = 'block';
+  exDiv.dataset.plan = planId;
+}
+
+async function saveRegDay() {
+  if (!selDate) return;
+  const planBtn = document.querySelector('#reg-plan-btns .day-tab.active');
+  if (!planBtn) { alert('Selecciona un plan para este día.'); return; }
+  const planId = planBtn.dataset.plan;
+
+  const data = { plan: planId, savedAt: new Date().toISOString() };
+
+  if (planId !== 'rest') {
+    const exercises = {};
+    document.querySelectorAll('#reg-ex-list .reg-ex-row').forEach(row => {
+      const exName = row.dataset.ex;
+      const sets = [];
+      row.querySelectorAll('input').forEach(inp => {
+        const si = parseInt(inp.dataset.si);
+        if (!sets[si]) sets[si] = {};
+        sets[si].kg = inp.value.trim();
+      });
+      const notes = row.querySelector('.reg-notes')?.value.trim() || '';
+      exercises[exName] = { sets, notes };
+    });
+    data.exercises = exercises;
+  }
+
+  await saveRegEntry(selDate, data);
+}
+
+// ── Init calendar on section show ──
+const _origShowSection = window.showSection;
+window.showSection = function(id) {
+  _origShowSection(id);
+  if (id === 'progresion') {
+    loadRegCache().then(() => renderCalendar());
+  }
+};
+
+// Also init if already on progresion at load
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('progresion')?.classList.contains('active')) {
+    loadRegCache().then(() => renderCalendar());
+  }
+});
+</script>
