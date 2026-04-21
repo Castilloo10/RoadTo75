@@ -487,8 +487,10 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .btn-add-day:hover{background:rgba(55,240,168,.15)}
 .btn-del-day{background:transparent;border:1px solid rgba(240,55,55,.3);color:var(--red);border-radius:6px;padding:3px 9px;font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap}
 .btn-del-day:hover{background:rgba(240,55,55,.08)}
-.plan-badge-select{appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;padding:4px 28px 4px 10px;cursor:pointer;letter-spacing:.5px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+.plan-badge-select{appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;padding:4px 28px 4px 10px;cursor:pointer;letter-spacing:.5px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;min-width:160px}
 .plan-badge-select:focus{outline:none;border-color:var(--accent)}
+.plan-badge-select optgroup{background:var(--surface2);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.plan-badge-select option{background:var(--surface2);color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.5px}
 </style>
 </head>
 <body>
@@ -3589,24 +3591,145 @@ async function loadCompraData() {
 const ENTRENO_PLANS_FB_KEY = 'entreno_plans';
 const ENTRENO_PLANS_LOCAL_KEY = 'planMuscular_entreno_plans_v1';
 
+// Badge groups: each entry has val (stored in Firebase), label (shown in badge), cls (CSS class)
 const BADGE_TYPES = [
-  { val:'push',   label:'PUSH',    cls:''},
-  { val:'pull',   label:'PULL',    cls:'pull'},
-  { val:'legs',   label:'LEGS',    cls:'legs'},
-  { val:'upper',  label:'UPPER A', cls:'upper'},
-  { val:'lower',  label:'LOWER A', cls:'lower'},
-  { val:'upperB', label:'UPPER B', cls:'upperB'},
-  { val:'lowerB', label:'LOWER B', cls:'lowerB'},
-  { val:'custom', label:'CUSTOM',  cls:''},
+  // Grupo muscular
+  { val:'pecho',      label:'PECHO',       cls:'push'   },
+  { val:'espalda',    label:'ESPALDA',     cls:'pull'   },
+  { val:'piernas',    label:'PIERNAS',     cls:'legs'   },
+  { val:'hombros',    label:'HOMBROS',     cls:'upper'  },
+  { val:'biceps',     label:'BÍCEPS',      cls:'upperB' },
+  { val:'triceps',    label:'TRÍCEPS',     cls:'lower'  },
+  { val:'core',       label:'CORE',        cls:'lowerB' },
+  { val:'fullbody',   label:'FULL BODY',   cls:'upper'  },
+  // Tipo de ejercicio
+  { val:'fuerza',     label:'FUERZA',      cls:'upper'  },
+  { val:'hipertrofia',label:'HIPERTROFIA', cls:'push'   },
+  { val:'resistencia',label:'RESISTENCIA', cls:'lower'  },
+  { val:'cardio',     label:'CARDIO',      cls:'lowerB' },
+  { val:'movilidad',  label:'MOVILIDAD',   cls:'pull'   },
+  // Tipo de movimiento
+  { val:'push',       label:'EMPUJE/PUSH', cls:'push'   },
+  { val:'pull',       label:'TIRÓN/PULL',  cls:'pull'   },
+  { val:'legs',       label:'PIERNA/LEGS', cls:'legs'   },
+  { val:'core_mov',   label:'CORE',        cls:'lowerB' },
+  // Custom
+  { val:'custom',     label:'CUSTOM',      cls:''       },
+];
+
+// Grouped for the <select> dropdown
+const BADGE_GROUPS = [
+  {
+    label: 'Grupo muscular',
+    options: ['pecho','espalda','piernas','hombros','biceps','triceps','core','fullbody']
+  },
+  {
+    label: 'Tipo de ejercicio',
+    options: ['fuerza','hipertrofia','resistencia','cardio','movilidad']
+  },
+  {
+    label: 'Tipo de movimiento',
+    options: ['push','pull','legs','core_mov']
+  },
+  {
+    label: 'Otro',
+    options: ['custom']
+  },
 ];
 
 let _peEditingPlanId = null;
 let _peDayCount = 0;
 
 function badgeSelectHTML(selectedVal) {
-  return '<select class="plan-badge-select">' +
-    BADGE_TYPES.map(b => `<option value="${b.val}"${b.val===selectedVal?' selected':''}>${b.label}</option>`).join('') +
-    '</select>';
+  const badgeMap = Object.fromEntries(BADGE_TYPES.map(b => [b.val, b]));
+  const groups = BADGE_GROUPS.map(g =>
+    `<optgroup label="${g.label}">` +
+    g.options.map(val => {
+      const b = badgeMap[val];
+      if (!b) return '';
+      return `<option value="${b.val}"${b.val === selectedVal ? ' selected' : ''}>${b.label}</option>`;
+    }).join('') +
+    '</optgroup>'
+  ).join('');
+  return `<select class="plan-badge-select">${groups}</select>`;
+}
+
+// Called when the badge type select changes inside a day box
+function peBadgeSelectChanged(sel) {
+  const box = sel.closest('.plan-day-box');
+  if (!box) return;
+  const hiddenInput = box.querySelector('.pe-badge-custom');
+  const preview     = box.querySelector('.pe-badge-custom-preview');
+
+  if (sel.value !== 'custom') {
+    if (hiddenInput) hiddenInput.value = '';
+    if (preview) { preview.textContent = ''; preview.style.display = 'none'; }
+    return;
+  }
+
+  // Custom selected: inject input inside mobileConfirm body and intercept OK click
+  const current = hiddenInput ? hiddenInput.value : '';
+  const inputId = 'pe-custom-badge-input';
+
+  // Build modal manually so we can read the value on OK before the modal closes
+  const modal   = document.getElementById('modal-confirm');
+  const titleEl = document.getElementById('modal-confirm-title');
+  const bodyEl  = document.getElementById('modal-confirm-body');
+  const btnOk   = document.getElementById('modal-btn-ok');
+  const btnCan  = document.getElementById('modal-btn-cancel');
+
+  titleEl.textContent = 'Etiqueta personalizada';
+  bodyEl.innerHTML = `Escribe el nombre que aparecerá en el badge del día:<br><br>
+    <input id="${inputId}" class="plan-input" type="text"
+      value="${escapeHtml(current)}"
+      placeholder="ej. FULLBODY, TÉCNICA…"
+      style="width:100%;margin-top:.25rem;font-size:1rem;letter-spacing:.5px;text-transform:uppercase"
+      maxlength="20"/>`;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Focus after render
+  setTimeout(() => { const i = document.getElementById(inputId); if (i) { i.focus(); i.select(); } }, 80);
+
+  // Allow Enter key to confirm
+  const onKeydown = e => { if (e.key === 'Enter') { e.preventDefault(); btnOk.click(); } };
+  bodyEl.addEventListener('keydown', onKeydown);
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    bodyEl.removeEventListener('keydown', onKeydown);
+    btnOk.removeEventListener('click', onOk);
+    btnCan.removeEventListener('click', onCan);
+    modal.removeEventListener('click', onBg);
+  }
+
+  function onOk() {
+    const inp = document.getElementById(inputId);
+    const val = (inp ? inp.value.trim() : '').toUpperCase();
+    closeModal();
+    if (!val) {
+      sel.value = 'pecho';
+      if (hiddenInput) hiddenInput.value = '';
+      if (preview) { preview.textContent = ''; preview.style.display = 'none'; }
+      return;
+    }
+    if (hiddenInput) hiddenInput.value = val;
+    if (preview) { preview.textContent = '→ ' + val; preview.style.display = 'inline'; }
+  }
+
+  function onCan() {
+    closeModal();
+    if (!current) {
+      sel.value = 'pecho';
+      if (preview) { preview.textContent = ''; preview.style.display = 'none'; }
+    }
+  }
+
+  const onBg = e => { if (e.target === modal) onCan(); };
+  btnOk.addEventListener('click', onOk);
+  btnCan.addEventListener('click', onCan);
+  modal.addEventListener('click', onBg);
 }
 
 function peAddDay(dayData) {
@@ -3623,15 +3746,13 @@ function peAddDay(dayData) {
       <div class="plan-day-title">DÍA ${_peDayCount}</div>
       <button class="btn-del-day" onclick="peDelDay(this)">🗑 Eliminar día</button>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.75rem">
-      <div>
-        <label class="plan-field-label">Tipo <span style="color:var(--accent)">*</span></label>
-        ${badgeSelectHTML(d.badge || 'push')}
+    <div style="margin-bottom:.75rem">
+      <label class="plan-field-label">Tipo <span style="color:var(--accent)">*</span></label>
+      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+        ${badgeSelectHTML(d.badge || 'pecho')}
+        <span class="pe-badge-custom-preview" style="font-family:'Bebas Neue',sans-serif;font-size:.82rem;color:var(--accent2);display:${d.badge==='custom'&&d.badgeCustom?'inline':'none'}">${escapeHtml(d.badgeCustom||'')}</span>
       </div>
-      <div>
-        <label class="plan-field-label">Etiqueta personalizada <span style="color:var(--muted)">(si tipo es CUSTOM)</span></label>
-        <input class="plan-input pe-badge-custom" placeholder="ej. FULL BODY" type="text" value="${escapeHtml(d.badgeCustom || '')}"/>
-      </div>
+      <input class="pe-badge-custom" type="hidden" value="${escapeHtml(d.badgeCustom || '')}"/>
     </div>
     <div style="margin-bottom:.6rem">
       <label class="plan-field-label">Título <span style="color:var(--accent)">*</span></label>
@@ -3649,6 +3770,10 @@ function peAddDay(dayData) {
       <input class="plan-input pe-comentario" placeholder="ej. Descanso: 90-120s entre series compuestas · 60s aislamiento" type="text" value="${escapeHtml(d.comentario || '')}"/>
     </div>`;
   container.appendChild(box);
+
+  // Hook the badge select: show custom prompt when 'custom' is chosen
+  const badgeSel = box.querySelector('.plan-badge-select');
+  if (badgeSel) badgeSel.addEventListener('change', () => peBadgeSelectChanged(badgeSel));
 }
 
 function peExRowHTML(ex) {
