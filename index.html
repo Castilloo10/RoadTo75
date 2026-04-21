@@ -18,7 +18,8 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 /* Prevent iOS zoom on input focus */
 @media(max-width:600px){
-  input,textarea,select{font-size:16px !important}
+  input,textarea,select:not(.day-type-select){font-size:16px !important}
+  .day-type-select:focus{font-size:16px !important}
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
 
@@ -337,7 +338,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 
   /* ── DAY TYPE ── */
   .day-type-row{margin-bottom:.65rem !important}
-  .day-type-select{font-size:.68rem;padding:3px 22px 3px 7px;letter-spacing:.2px;background-position:right 6px center}
+  .day-type-select{font-size:.68rem !important;padding:3px 20px 3px 7px;letter-spacing:.2px;background-position:right 6px center;font-weight:600}
 
   /* ── MEAL CARDS ── */
   .meals-grid{grid-template-columns:1fr;gap:.65rem;margin-bottom:.85rem}
