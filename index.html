@@ -1624,8 +1624,8 @@ function sortToggleBar() {
   btns.forEach(b => toggleBar.appendChild(b));
 
   // Re-check scroll hint after buttons change
-  if (window.innerWidth <= 600 && typeof applyAllScrollHints === 'function') {
-    setTimeout(applyAllScrollHints, 50);
+  if (window.innerWidth <= 600 && window.applyAllScrollHints) {
+    setTimeout(window.applyAllScrollHints, 50);
   }
 
   // Also reorder the .entreno-plan divs to match tab order
@@ -1935,12 +1935,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inject fade divs (pseudo-elements can't change per-context bg easily via JS)
     const fadeR = document.createElement('span'); fadeR.className = 'sh-fade-right'; wrap.appendChild(fadeR);
     const fadeL = document.createElement('span'); fadeL.className = 'sh-fade-left';  wrap.appendChild(fadeL);
+    // Inject real arrow elements (pseudo-elements can be hidden by child z-index stacking)
+    const arrowR = document.createElement('span');
+    arrowR.style.cssText = 'pointer-events:none;position:absolute;top:50%;right:10px;transform:translateY(-50%);font-size:1.1rem;font-weight:700;color:var(--text2);opacity:.9;z-index:4;line-height:1;transition:opacity .25s';
+    arrowR.textContent = '\u203a';
+    wrap.appendChild(arrowR);
+    const arrowL = document.createElement('span');
+    arrowL.style.cssText = 'pointer-events:none;position:absolute;top:50%;left:10px;transform:translateY(-50%);font-size:1.1rem;font-weight:700;color:var(--text2);opacity:0;z-index:4;line-height:1;transition:opacity .25s';
+    arrowL.textContent = '\u2039';
+    wrap.appendChild(arrowL);
     function update() {
       const atEnd   = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
       const atStart = el.scrollLeft <= 4;
       wrap.classList.toggle('scrolled-end',   atEnd);
       wrap.classList.toggle('scrolled-start', atStart);
       wrap.classList.toggle('has-left',       !atStart);
+      arrowR.style.opacity = atEnd   ? '0' : '.9';
+      arrowL.style.opacity = atStart ? '0' : '.9';
+    }
+    el.addEventListener('scroll', update, { passive: true });
+    new ResizeObserver(update).observe(el);
+    update();
+  }
+
+  // For elements that CANNOT be wrapped (have own bg/border/layout), inject indicators inside
+  function initScrollHintInline(el, bgColor) {
+    if (!el || el.dataset.scrollHint) return;
+    el.dataset.scrollHint = '1';
+    el.style.position = 'relative';
+    const bg = bgColor || 'var(--surface)';
+    const makeOverlay = (side) => {
+      const o = document.createElement('span');
+      o.style.cssText = `pointer-events:none;position:absolute;top:0;${side}:0;bottom:0;width:60px;` +
+        `display:flex;align-items:center;justify-content:${side==='right'?'flex-end':'flex-start'};` +
+        `padding-${side}:10px;z-index:20;transition:opacity .25s;` +
+        `background:linear-gradient(to ${side},transparent,${bg} 85%);` +
+        `font-size:1.1rem;font-weight:700;color:var(--text2)`;
+      o.textContent = side === 'right' ? '›' : '‹';
+      el.appendChild(o);
+      return o;
+    };
+    const oR = makeOverlay('right');
+    const oL = makeOverlay('left'); oL.style.opacity = '0';
+    function update() {
+      const atEnd   = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+      const atStart = el.scrollLeft <= 4;
+      oR.style.opacity = atEnd   ? '0' : '1';
+      oL.style.opacity = atStart ? '0' : '1';
     }
     el.addEventListener('scroll', update, { passive: true });
     new ResizeObserver(update).observe(el);
@@ -1999,21 +2040,18 @@ document.addEventListener('DOMContentLoaded', () => {
       initScrollHint(pickerGrid);
     }
 
-    // Toggle bar de planes de entrenamiento
+    // Toggle bar de planes de entrenamiento — tiene fondo propio, no se wrappea
     const toggleBar = document.getElementById('entreno-toggle-bar');
     if (toggleBar) {
-      // Always re-check scroll extent (new plans may have been added)
-      const wrap = toggleBar.parentNode && toggleBar.parentNode.classList.contains('scroll-hint-wrap')
-        ? toggleBar.parentNode : null;
       if (!toggleBar.dataset.scrollHint) {
         toggleBar.style.overflowX = 'auto';
         toggleBar.style.webkitOverflowScrolling = 'touch';
         toggleBar.style.scrollbarWidth = 'none';
         toggleBar.style.flexWrap = 'nowrap';
-        initScrollHint(toggleBar);
-      } else if (wrap) {
-        // Trigger update manually on existing wrap
-        const evt = new Event('scroll'); toggleBar.dispatchEvent(evt);
+        initScrollHintInline(toggleBar, 'var(--surface)');
+      } else {
+        // Re-trigger update for new plans
+        toggleBar.dispatchEvent(new Event('scroll'));
       }
     }
 
@@ -2053,6 +2091,19 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.webkitOverflowScrolling = 'touch';
         el.style.scrollbarWidth = 'none';
         initScrollHint(el);
+      }
+    });
+
+    // Grid de días de planes de entrenamiento (planes creados)
+    document.querySelectorAll('.dias-entreno').forEach(el => {
+      if (!el.dataset.scrollHint) {
+        el.style.overflowX = 'auto';
+        el.style.webkitOverflowScrolling = 'touch';
+        el.style.scrollbarWidth = 'none';
+        el.style.gridTemplateColumns = 'repeat(auto-fit,minmax(240px,1fr))';
+        initScrollHintInline(el, 'var(--bg)');
+      } else {
+        el.dispatchEvent(new Event('scroll'));
       }
     });
   }
