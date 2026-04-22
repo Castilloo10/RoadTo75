@@ -2040,15 +2040,47 @@ document.addEventListener('DOMContentLoaded', () => {
       initScrollHint(pickerGrid);
     }
 
-    // Toggle bar de planes de entrenamiento — tiene fondo propio, no se wrappea
+    // Toggle bar de planes de entrenamiento — igual que el nav principal:
+    // los overlays se añaden al PADRE para que no se desplacen con el scroll
     const toggleBar = document.getElementById('entreno-toggle-bar');
     if (toggleBar) {
+      toggleBar.style.overflowX = 'auto';
+      toggleBar.style.webkitOverflowScrolling = 'touch';
+      toggleBar.style.scrollbarWidth = 'none';
+      toggleBar.style.flexWrap = 'nowrap';
       if (!toggleBar.dataset.scrollHint) {
-        toggleBar.style.overflowX = 'auto';
-        toggleBar.style.webkitOverflowScrolling = 'touch';
-        toggleBar.style.scrollbarWidth = 'none';
-        toggleBar.style.flexWrap = 'nowrap';
-        initScrollHintInline(toggleBar, 'var(--surface)');
+        toggleBar.dataset.scrollHint = '1';
+        const tbParent = toggleBar.parentElement;
+        if (tbParent) {
+          tbParent.style.position = 'relative';
+          const makeOverlay = (side) => {
+            const o = document.createElement('div');
+            o.className = 'nav-scroll-hint ' + side + (side === 'left' ? ' hidden' : '');
+            o.textContent = side === 'right' ? '›' : '‹';
+            tbParent.appendChild(o);
+            return o;
+          };
+          const oR = makeOverlay('right');
+          const oL = makeOverlay('left');
+          function positionTbOverlays() {
+            const tbRect = toggleBar.getBoundingClientRect();
+            const pRect  = tbParent.getBoundingClientRect();
+            const top = tbRect.top - pRect.top;
+            const h   = tbRect.height;
+            [oR, oL].forEach(o => { o.style.top = top + 'px'; o.style.height = h + 'px'; });
+          }
+          function updateTb() {
+            const atEnd   = toggleBar.scrollLeft + toggleBar.clientWidth >= toggleBar.scrollWidth - 4;
+            const atStart = toggleBar.scrollLeft <= 4;
+            oR.classList.toggle('hidden',  atEnd);
+            oL.classList.toggle('hidden',  atStart);
+            oL.classList.toggle('visible', !atStart);
+            positionTbOverlays();
+          }
+          toggleBar.addEventListener('scroll', updateTb, { passive: true });
+          new ResizeObserver(updateTb).observe(toggleBar);
+          updateTb();
+        }
       } else {
         // Re-trigger update for new plans
         toggleBar.dispatchEvent(new Event('scroll'));
@@ -2096,12 +2128,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Grid de días de planes de entrenamiento (planes creados)
     document.querySelectorAll('.dias-entreno').forEach(el => {
+      el.style.overflowX = 'auto';
+      el.style.webkitOverflowScrolling = 'touch';
+      el.style.scrollbarWidth = 'none';
       if (!el.dataset.scrollHint) {
-        el.style.overflowX = 'auto';
-        el.style.webkitOverflowScrolling = 'touch';
-        el.style.scrollbarWidth = 'none';
-        el.style.gridTemplateColumns = 'repeat(auto-fit,minmax(240px,1fr))';
-        initScrollHintInline(el, 'var(--bg)');
+        el.dataset.scrollHint = '1';
+        const elParent = el.parentElement;
+        if (elParent) {
+          elParent.style.position = 'relative';
+          const makeOverlay = (side) => {
+            const o = document.createElement('div');
+            o.className = 'nav-scroll-hint ' + side + (side === 'left' ? ' hidden' : '');
+            o.textContent = side === 'right' ? '›' : '‹';
+            // Override background to match section bg (--bg), not --surface
+            const grad = `linear-gradient(to ${side},transparent,var(--bg) 90%)`;
+            o.style.background = grad;
+            elParent.appendChild(o);
+            return o;
+          };
+          const oR = makeOverlay('right');
+          const oL = makeOverlay('left');
+          function positionOverlays() {
+            const elRect = el.getBoundingClientRect();
+            const pRect  = elParent.getBoundingClientRect();
+            const top = elRect.top - pRect.top;
+            const h   = elRect.height;
+            [oR, oL].forEach(o => { o.style.top = top + 'px'; o.style.height = h + 'px'; });
+          }
+          function updateEl() {
+            const atEnd   = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+            const atStart = el.scrollLeft <= 4;
+            oR.classList.toggle('hidden',  atEnd);
+            oL.classList.toggle('hidden',  atStart);
+            oL.classList.toggle('visible', !atStart);
+            positionOverlays();
+          }
+          el.addEventListener('scroll', updateEl, { passive: true });
+          new ResizeObserver(updateEl).observe(el);
+          updateEl();
+        }
       } else {
         el.dispatchEvent(new Event('scroll'));
       }
