@@ -38,9 +38,7 @@ nav button.active{background:var(--accent);color:#0d0f0e;font-weight:700}
 .section.active{display:block}
 h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,5.5rem);line-height:.92;letter-spacing:1px}
 h1 em{color:var(--accent);font-style:normal}
-h2{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:1px;color:var(--accent);margin-bottom:.25rem}
 h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;color:var(--text);margin-bottom:.75rem}
-h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem}
 .hero-sub{color:var(--text2);font-size:.95rem;margin-top:1rem;line-height:1.7}
 .section-intro{color:var(--text2);font-size:.9rem;margin-bottom:2rem}
 
@@ -351,12 +349,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 
 /* ── SCROLL HINT — fade + arrow indicators (left & right) for scrollable rows ── */
 .scroll-hint-wrap{position:relative;display:block}
-/* RIGHT fade + arrow */
-.scroll-hint-wrap::after{
-  content:'›';pointer-events:none;position:absolute;top:50%;right:10px;
-  transform:translateY(-50%);font-size:1.1rem;font-weight:700;
-  color:var(--text2);opacity:.9;transition:opacity .25s;z-index:3;line-height:1
-}
+/* RIGHT fade */
 .scroll-hint-wrap .sh-fade-right{
   pointer-events:none;position:absolute;top:0;right:0;bottom:0;width:52px;
   background:linear-gradient(to right,transparent,rgba(20,23,22,.97) 90%);
@@ -364,7 +357,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 }
 .section .scroll-hint-wrap .sh-fade-right{background:linear-gradient(to right,transparent,rgba(13,15,14,.97) 90%)}
 .entreno-plan-banner .scroll-hint-wrap .sh-fade-right{background:linear-gradient(to right,transparent,rgba(13,15,14,.93) 90%)}
-/* LEFT fade + arrow */
+/* LEFT fade */
 .scroll-hint-wrap .sh-fade-left{
   pointer-events:none;position:absolute;top:0;left:0;bottom:0;width:52px;
   background:linear-gradient(to left,transparent,rgba(20,23,22,.97) 90%);
@@ -372,17 +365,9 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 }
 .section .scroll-hint-wrap .sh-fade-left{background:linear-gradient(to left,transparent,rgba(13,15,14,.97) 90%)}
 .entreno-plan-banner .scroll-hint-wrap .sh-fade-left{background:linear-gradient(to left,transparent,rgba(13,15,14,.93) 90%)}
-.scroll-hint-wrap::before{
-  content:'‹';pointer-events:none;position:absolute;top:50%;left:10px;
-  transform:translateY(-50%);font-size:1.1rem;font-weight:700;
-  color:var(--text2);opacity:0;transition:opacity .25s;z-index:3;line-height:1
-}
-/* State classes */
-.scroll-hint-wrap.scrolled-end::after{opacity:0}
+/* State classes — control fades (arrows managed by real DOM spans in JS) */
 .scroll-hint-wrap.scrolled-end .sh-fade-right{opacity:0}
-.scroll-hint-wrap.scrolled-start::before{opacity:0}
 .scroll-hint-wrap.scrolled-start .sh-fade-left{opacity:0}
-.scroll-hint-wrap.has-left::before{opacity:.9}
 .scroll-hint-wrap.has-left .sh-fade-left{opacity:1}
 
 /* Nav scroll hint overlays (injected via JS as children of header-inner) */
@@ -1952,36 +1937,6 @@ document.addEventListener('DOMContentLoaded', () => {
       wrap.classList.toggle('has-left',       !atStart);
       arrowR.style.opacity = atEnd   ? '0' : '.9';
       arrowL.style.opacity = atStart ? '0' : '.9';
-    }
-    el.addEventListener('scroll', update, { passive: true });
-    new ResizeObserver(update).observe(el);
-    update();
-  }
-
-  // For elements that CANNOT be wrapped (have own bg/border/layout), inject indicators inside
-  function initScrollHintInline(el, bgColor) {
-    if (!el || el.dataset.scrollHint) return;
-    el.dataset.scrollHint = '1';
-    el.style.position = 'relative';
-    const bg = bgColor || 'var(--surface)';
-    const makeOverlay = (side) => {
-      const o = document.createElement('span');
-      o.style.cssText = `pointer-events:none;position:absolute;top:0;${side}:0;bottom:0;width:60px;` +
-        `display:flex;align-items:center;justify-content:${side==='right'?'flex-end':'flex-start'};` +
-        `padding-${side}:10px;z-index:20;transition:opacity .25s;` +
-        `background:linear-gradient(to ${side},transparent,${bg} 85%);` +
-        `font-size:1.1rem;font-weight:700;color:var(--text2)`;
-      o.textContent = side === 'right' ? '›' : '‹';
-      el.appendChild(o);
-      return o;
-    };
-    const oR = makeOverlay('right');
-    const oL = makeOverlay('left'); oL.style.opacity = '0';
-    function update() {
-      const atEnd   = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
-      const atStart = el.scrollLeft <= 4;
-      oR.style.opacity = atEnd   ? '0' : '1';
-      oL.style.opacity = atStart ? '0' : '1';
     }
     el.addEventListener('scroll', update, { passive: true });
     new ResizeObserver(update).observe(el);
