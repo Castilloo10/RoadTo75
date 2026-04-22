@@ -368,28 +368,18 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 /* Entreno banner has its own bg */
 .entreno-plan-banner .scroll-hint-wrap::after{background:linear-gradient(to right,transparent,rgba(13,15,14,.93) 90%)}
 
-/* Nav scroll hint: applied directly on nav (grid item, cannot be wrapped) */
-@media(max-width:600px){
-  nav.has-scroll-hint{position:relative}
-  nav.has-scroll-hint::after{
-    content:'›';pointer-events:none;position:fixed;
-    right:.75rem;font-size:1rem;font-weight:700;color:var(--text2);
-    opacity:.85;transition:opacity .25s;z-index:200;line-height:1;
-    /* Vertically center in the nav row — header-inner row 2 */
-    top:calc(.55rem + 42px + .4rem + 50%);transform:translateY(-50%)
-  }
-  nav.has-scroll-hint.scrolled-end::after{opacity:0}
-  nav.has-scroll-hint::before{
-    content:'';pointer-events:none;position:fixed;
-    right:0;width:48px;
-    background:linear-gradient(to right,transparent,var(--surface) 90%);
-    opacity:1;transition:opacity .25s;z-index:199;
-    top:calc(.55rem + 42px + .4rem);
-    height:calc(100% - (.55rem + 42px + .4rem + .45rem));
-    max-height:36px
-  }
-  nav.has-scroll-hint.scrolled-end::before{opacity:0}
+/* Nav scroll hint overlay (injected via JS as child of header-inner) */
+.nav-scroll-hint{
+  pointer-events:none;
+  position:absolute;right:0;
+  width:52px;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:10px;
+  background:linear-gradient(to right,transparent,var(--surface) 90%);
+  z-index:101;transition:opacity .25s;
+  font-size:1.1rem;font-weight:700;color:var(--text2);
+  /* Will be sized via JS to match the nav row */
 }
+.nav-scroll-hint.hidden{opacity:0}
 
 @media(max-width:600px){
   /* ── HEADER ── */
@@ -1932,14 +1922,27 @@ document.addEventListener('DOMContentLoaded', () => {
   function applyAllScrollHints() {
     if (window.innerWidth > 600) return;
 
-    // Nav (menú principal) — es grid item, no se puede wrappear; usamos clase directa
+    // Nav (menú principal) — es grid item, no se puede wrappear
+    // Inyectamos un overlay real como hermano dentro de .header-inner
     const navEl = document.querySelector('nav');
-    if (navEl && !navEl.dataset.scrollHint) {
+    const headerInner = document.querySelector('.header-inner');
+    if (navEl && headerInner && !navEl.dataset.scrollHint) {
       navEl.dataset.scrollHint = '1';
-      navEl.classList.add('has-scroll-hint');
+      headerInner.style.position = 'relative';
+      const overlay = document.createElement('div');
+      overlay.className = 'nav-scroll-hint';
+      overlay.textContent = '›';
+      headerInner.appendChild(overlay);
+      function positionOverlay() {
+        const navRect = navEl.getBoundingClientRect();
+        const headerRect = headerInner.getBoundingClientRect();
+        overlay.style.top  = (navRect.top  - headerRect.top)  + 'px';
+        overlay.style.height = navRect.height + 'px';
+      }
       function updateNav() {
         const atEnd = navEl.scrollLeft + navEl.clientWidth >= navEl.scrollWidth - 4;
-        navEl.classList.toggle('scrolled-end', atEnd);
+        overlay.classList.toggle('hidden', atEnd);
+        positionOverlay();
       }
       navEl.addEventListener('scroll', updateNav, { passive: true });
       new ResizeObserver(updateNav).observe(navEl);
