@@ -179,6 +179,22 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .day-type-select.descanso{width:130px;background-color:rgba(160,100,240,.12);border-color:rgba(160,100,240,.3);color:#b07af0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b07af0'/%3E%3C/svg%3E")}
 .day-type-select option{background:var(--surface2);color:var(--text);font-size:.85rem;text-transform:none;letter-spacing:0;font-weight:500}
 
+/* ENTRENO DAY CARDS */
+.edc{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.6rem .5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem;transition:background .2s,border-color .2s;text-align:center}
+.edc.day-entreno{background:rgba(181,240,55,.1);border-color:rgba(181,240,55,.35)}
+.edc.day-descanso{background:rgba(160,100,240,.1);border-color:rgba(160,100,240,.3)}
+.edc-name{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:0;color:var(--text);line-height:1;text-align:center;width:100%;display:flex;align-items:center;justify-content:center;padding:0 0 0 .08em}
+.edc-emoji{width:1.1em;display:inline-block;text-align:center;flex-shrink:0}
+.edc-btn{width:100%;font-family:'DM Sans',sans-serif;font-size:.63rem;font-weight:700;padding:4px 2px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:all .18s;white-space:nowrap;line-height:1.3;text-align:center;display:flex;align-items:center;justify-content:center;gap:2px}
+.edc-btn:hover{border-color:var(--text2);color:var(--text)}
+.edc-btn.active-entreno{background:rgba(181,240,55,.18);border-color:rgba(181,240,55,.5);color:var(--accent)}
+.edc-btn.active-descanso{background:rgba(160,100,240,.18);border-color:rgba(160,100,240,.45);color:#b07af0}
+@media(max-width:600px){
+  .edc{padding:.45rem .2rem;border-radius:8px}
+  .edc-name{font-size:.9rem}
+  .edc-btn{font-size:.56rem;padding:3px 2px}
+}
+
 /* SUPLEMENTOS TRACKER */
 .supl-tracker{margin-top:1.1rem;display:flex;flex-direction:column;gap:.7rem}
 .supl-row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
@@ -672,7 +688,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- LUNES -->
 <div class="day-content active" id="day-lun">
-<div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="lun" onchange="saveDayType('lun',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
@@ -699,7 +714,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- MARTES -->
 <div class="day-content" id="day-mar">
-<div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="mar" onchange="saveDayType('mar',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
@@ -726,7 +740,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- MIÉRCOLES -->
 <div class="day-content" id="day-mie">
-<div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="mie" onchange="saveDayType('mie',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso"  selected>💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
@@ -753,7 +766,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- JUEVES -->
 <div class="day-content" id="day-jue">
-<div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="jue" onchange="saveDayType('jue',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
@@ -780,7 +792,6 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- VIERNES -->
 <div class="day-content" id="day-vie">
-<div class="day-type-row" style="margin-bottom:1rem"><select class="day-type-select" data-day="vie" onchange="saveDayType('vie',this.value)"><option value="entreno">🏋️ DÍA ENTRENO</option><option value="descanso">💤 DESCANSO</option></select></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
@@ -909,7 +920,39 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <section class="section" id="entreno">
 <h1>PLAN DE<em> ENTRENAMIENTO</em></h1>
 <p class="section-intro">Hipertrofia · Progresión de cargas · Ejercicios compuestos prioritarios</p>
-<div id="entreno-plan-banner" style="display:none;background:linear-gradient(135deg,rgba(181,240,55,.08),rgba(55,240,168,.05));border:1px solid rgba(181,240,55,.25);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem">
+<div id="entreno-plan-banner" style="background:linear-gradient(135deg,rgba(181,240,55,.08),rgba(55,240,168,.05));border:1px solid rgba(181,240,55,.25);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem">
+  <!-- ── SELECTOR DE DÍAS ── -->
+  <div id="entreno-dias-picker">
+    <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:.65rem">📅 Días a entrenar</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;margin-bottom:.9rem">
+      <div class="edc day-entreno" data-day="lun">
+        <div class="edc-name" style="padding-left:.42em;padding-right:0">LUNES</div>
+        <button class="edc-btn active-entreno" data-type="entreno" onclick="setEntrenoDay('lun','entreno')"><span class="edc-emoji">🏋️</span> Entreno</button>
+        <button class="edc-btn" data-type="descanso" onclick="setEntrenoDay('lun','descanso')"><span class="edc-emoji">💤</span> Descanso</button>
+      </div>
+      <div class="edc day-entreno" data-day="mar">
+        <div class="edc-name" style="padding-left:.31em;padding-right:0">MARTES</div>
+        <button class="edc-btn active-entreno" data-type="entreno" onclick="setEntrenoDay('mar','entreno')"><span class="edc-emoji">🏋️</span> Entreno</button>
+        <button class="edc-btn" data-type="descanso" onclick="setEntrenoDay('mar','descanso')"><span class="edc-emoji">💤</span> Descanso</button>
+      </div>
+      <div class="edc day-descanso" data-day="mie">
+        <div class="edc-name" style="padding-left:.28em;padding-right:0">MIÉRCOLES</div>
+        <button class="edc-btn" data-type="entreno" onclick="setEntrenoDay('mie','entreno')"><span class="edc-emoji">🏋️</span> Entreno</button>
+        <button class="edc-btn active-descanso" data-type="descanso" onclick="setEntrenoDay('mie','descanso')"><span class="edc-emoji">💤</span> Descanso</button>
+      </div>
+      <div class="edc day-entreno" data-day="jue">
+        <div class="edc-name" style="padding-left:.31em;padding-right:0">JUEVES</div>
+        <button class="edc-btn active-entreno" data-type="entreno" onclick="setEntrenoDay('jue','entreno')"><span class="edc-emoji">🏋️</span> Entreno</button>
+        <button class="edc-btn" data-type="descanso" onclick="setEntrenoDay('jue','descanso')"><span class="edc-emoji">💤</span> Descanso</button>
+      </div>
+      <div class="edc day-entreno" data-day="vie">
+        <div class="edc-name" style="padding-left:.31em;padding-right:0">VIERNES</div>
+        <button class="edc-btn active-entreno" data-type="entreno" onclick="setEntrenoDay('vie','entreno')"><span class="edc-emoji">🏋️</span> Entreno</button>
+        <button class="edc-btn" data-type="descanso" onclick="setEntrenoDay('vie','descanso')"><span class="edc-emoji">💤</span> Descanso</button>
+      </div>
+    </div>
+    <div style="height:1px;background:var(--border);margin-bottom:.9rem"></div>
+  </div>
   <div id="entreno-plan-banner-text" style="font-size:.92rem;color:var(--text);line-height:1.7"></div>
 </div>
 <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem">
@@ -1135,31 +1178,37 @@ const DAYTYPE_LOCAL_KEY = 'planMuscular_dayTypes_v1';
 const DAYTYPE_FB_KEY = 'day_types';
 
 // ── TIPO DE DÍA (ENTRENO / DESCANSO) ──
-function applyDayTypeStyle(sel, val) {
-  if (!sel) return;
-  sel.classList.toggle('entreno',  val === 'entreno');
-  sel.classList.toggle('descanso', val === 'descanso');
+// Estado global de los días de la semana de entrenamiento
+window._entrenoWeekTypes = { lun:'entreno', mar:'entreno', mie:'descanso', jue:'entreno', vie:'entreno' };
+
+function applyEntrenoWeekTypeCard(day, val) {
+  const card = document.querySelector('.edc[data-day="' + day + '"]');
+  if (!card) return;
+  card.classList.toggle('day-entreno',  val === 'entreno');
+  card.classList.toggle('day-descanso', val === 'descanso');
+  card.querySelectorAll('.edc-btn').forEach(btn => {
+    btn.classList.remove('active-entreno', 'active-descanso');
+    if (btn.dataset.type === val) btn.classList.add('active-' + val);
+  });
 }
 
-async function saveDayType(day, val) {
-  // Actualizar estilo visual
-  const sel = document.querySelector('.day-type-select[data-day="' + day + '"]');
-  applyDayTypeStyle(sel, val);
+function setEntrenoDay(day, val) {
+  window._entrenoWeekTypes[day] = val;
+  applyEntrenoWeekTypeCard(day, val);
   renderEntrenoBanner();
   activateRecommendedPlan();
   // Guardar local
-  let types = {};
-  types = lsGet(DAYTYPE_LOCAL_KEY, {});
-  types[day] = val;
-  lsSet(DAYTYPE_LOCAL_KEY, types);
+  lsSet(DAYTYPE_LOCAL_KEY, window._entrenoWeekTypes);
   // Guardar Firebase
   if (!CLOUD_CONFIGURED) return;
-  try {
-    await fetch(FB_BASE + '/' + DAYTYPE_FB_KEY + '.json', {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(types)
-    });
-  } catch(e) {}
+  fetch(FB_BASE + '/' + DAYTYPE_FB_KEY + '.json', {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(window._entrenoWeekTypes)
+  }).catch(() => {});
 }
+
+// Alias para compatibilidad
+async function saveDayType(day, val) { setEntrenoDay(day, val); }
 
 const DAY_NAMES = { lun: 'Lunes', mar: 'Martes', mie: 'Miércoles', jue: 'Jueves', vie: 'Viernes' };
 
@@ -1188,11 +1237,10 @@ function renderEntrenoBanner() {
   const bannerTxt = document.getElementById('entreno-plan-banner-text');
   if (!banner || !bannerTxt) return;
 
-  // Leer días de entreno seleccionados
-  const entrenoSelects = document.querySelectorAll('.day-type-select');
+  // Leer días de entreno seleccionados desde el estado global
   const entrenoDays = [];
-  entrenoSelects.forEach(sel => {
-    if (sel.value === 'entreno') entrenoDays.push(DAY_NAMES[sel.dataset.day] || sel.dataset.day);
+  Object.entries(window._entrenoWeekTypes).forEach(([day, val]) => {
+    if (val === 'entreno') entrenoDays.push(DAY_NAMES[day] || day);
   });
   const n = entrenoDays.length;
 
@@ -1207,7 +1255,7 @@ function renderEntrenoBanner() {
   if (n === 0) {
     banner.style.borderColor = 'rgba(240,55,55,.3)';
     banner.style.background  = 'linear-gradient(135deg,rgba(240,55,55,.07),rgba(240,55,55,.03))';
-    bannerTxt.innerHTML = '<span style="font-size:1.4em;margin-right:.5rem">❌</span><span style="color:#f08080;font-weight:700;font-family:\'Bebas Neue\',sans-serif;font-size:1.25rem;letter-spacing:.4px">SIN DÍAS DE ENTRENAMIENTO</span><br><span style="font-size:.97rem">No has seleccionado ningún día de entrenamiento. Selecciona al menos un día como <strong>🏋️ DÍA ENTRENO</strong> en el menú semanal.</span>';
+    bannerTxt.innerHTML = '<span style="font-size:1.4em;margin-right:.5rem">❌</span><span style="color:#f08080;font-weight:700;font-family:\'Bebas Neue\',sans-serif;font-size:1.25rem;letter-spacing:.4px">SIN DÍAS DE ENTRENAMIENTO</span><br><span style="font-size:.97rem">No has seleccionado ningún día de entrenamiento. Selecciona al menos un día como <strong>🏋️ DÍA ENTRENO</strong> arriba.</span>';
     return;
   }
 
@@ -1220,18 +1268,31 @@ function renderEntrenoBanner() {
     const _planEntry1 = window._entrenoPlanesCache && window._entrenoPlanesCache.find(p => p.dias === n);
     let planLabel = _planEntry1 ? _planEntry1.label : `Plan de ${n} días`;
 
-    if (n <= 3) {
-      icon = '💪'; color = 'var(--accent)';
-      banner.style.borderColor = 'rgba(181,240,55,.25)';
-      banner.style.background  = 'linear-gradient(135deg,rgba(181,240,55,.08),rgba(55,240,168,.05))';
-    } else if (n === 4) {
+    if (n === 1) {
+      // 1 día — naranja: "algo es algo"
+      icon = '💪'; color = 'var(--accent3)';
+      banner.style.borderColor = 'rgba(240,168,55,.35)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(240,168,55,.1),rgba(240,100,55,.05))';
+    } else if (n === 2) {
+      // 2 días — azul eléctrico: arrancando
+      icon = '💪'; color = 'var(--blue)';
+      banner.style.borderColor = 'rgba(55,160,240,.35)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(55,160,240,.1),rgba(55,200,240,.05))';
+    } else if (n === 3) {
+      // 3 días — cyan/turquesa: buen ritmo
       icon = '💪'; color = 'var(--accent2)';
-      banner.style.borderColor = 'rgba(55,240,168,.3)';
-      banner.style.background  = 'linear-gradient(135deg,rgba(55,240,168,.08),rgba(181,240,55,.04))';
+      banner.style.borderColor = 'rgba(55,240,168,.35)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(55,240,168,.1),rgba(55,240,200,.05))';
+    } else if (n === 4) {
+      // 4 días — violeta: nivel serio
+      icon = '🔥'; color = '#c07af0';
+      banner.style.borderColor = 'rgba(192,122,240,.35)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(192,122,240,.1),rgba(160,80,240,.05))';
     } else {
-      icon = '🔥'; color = 'var(--blue)';
-      banner.style.borderColor = 'rgba(55,160,240,.3)';
-      banner.style.background  = 'linear-gradient(135deg,rgba(55,160,240,.08),rgba(55,160,240,.03))';
+      // 5+ días — dorado: modo bestia
+      icon = '🔥'; color = '#f0c428';
+      banner.style.borderColor = 'rgba(240,196,40,.4)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(240,196,40,.12),rgba(240,160,30,.05))';
     }
     msg = `Vas a entrenar <strong>${n} día${n===1?'':'s'}</strong> (<em>${diasStr}</em>). Debes realizar los ejercicios del <strong>${planLabel}</strong>.`;
 
@@ -1260,12 +1321,9 @@ function renderEntrenoBanner() {
 
 function applyDayTypes(types) {
   if (!types || typeof types !== 'object') return;
-  document.querySelectorAll('.day-type-select').forEach(sel => {
-    const day = sel.dataset.day;
-    if (types[day]) {
-      sel.value = types[day];
-      applyDayTypeStyle(sel, types[day]);
-    }
+  Object.keys(types).forEach(day => {
+    window._entrenoWeekTypes[day] = types[day];
+    applyEntrenoWeekTypeCard(day, types[day]);
   });
   renderEntrenoBanner();
   activateRecommendedPlan();
@@ -1273,19 +1331,26 @@ function applyDayTypes(types) {
 
 async function loadDayTypes() {
   // Local primero
-  const _dt = lsGet(DAYTYPE_LOCAL_KEY, null); if (_dt) applyDayTypes(_dt);
+  const _dt = lsGet(DAYTYPE_LOCAL_KEY, null);
+  if (_dt) applyDayTypes(_dt);
+  else {
+    // Aplicar estado por defecto
+    Object.keys(window._entrenoWeekTypes).forEach(day => applyEntrenoWeekTypeCard(day, window._entrenoWeekTypes[day]));
+  }
   // Luego nube
-  if (!CLOUD_CONFIGURED) return;
+  if (!CLOUD_CONFIGURED) {
+    renderEntrenoBanner();
+    activateRecommendedPlan();
+    return;
+  }
   try {
     const res = await fetch(FB_BASE + '/' + DAYTYPE_FB_KEY + '.json');
     if (!res.ok) throw new Error();
     const d = await res.json();
     if (d) { lsSet(DAYTYPE_LOCAL_KEY, d); applyDayTypes(d); }
   } catch(e) {}
-  // Apply default styles on load for selects that haven't been overridden
-  document.querySelectorAll('.day-type-select').forEach(sel => {
-    applyDayTypeStyle(sel, sel.value);
-  });
+  // Asegurar que el estado visual es correcto
+  Object.keys(window._entrenoWeekTypes).forEach(day => applyEntrenoWeekTypeCard(day, window._entrenoWeekTypes[day]));
   renderEntrenoBanner();
   activateRecommendedPlan();
 }
@@ -1391,8 +1456,7 @@ function sortToggleBar() {
 
 function getRecommendedPlanId() {
   // Returns the planId (e.g. '3dias') of the recommended plan based on selected training days
-  const n = Array.from(document.querySelectorAll('.day-type-select'))
-    .filter(s => s.value === 'entreno').length;
+  const n = Object.values(window._entrenoWeekTypes).filter(v => v === 'entreno').length;
   if (n === 0 || !window._entrenoPlanesCache || !window._entrenoPlanesCache.length) return null;
 
   const planesDisponibles = window._entrenoPlanesCache.map(p => p.dias).sort((a, b) => a - b);
@@ -3420,7 +3484,7 @@ async function saveSuplEdit(btn) {
     const _pSt = id === 'prot' ? (fbSuplOrig.protStock   || 0) : (fbSuplOrig.creatStock   || 0);
     const _lbl = id === 'prot' ? 'Proteína' : 'Creatina';
     if (_pNm && _pNm !== name  && name)  _sCh.push({ label: 'Nombre ('  + _lbl + ')', from: _pNm,                      to: name });
-    if (_pPr !== price && price) _sCh.push({ label: 'Precio ('  + _lbl + ')', from: _pPr ? fmtPrice(_pPr) : '—', to: fmtPrice(price) });
+    if (_pPr !== price && price) _sCh.push({ label: 'Precio ('  + _lbl + ')', from: _pPr ? fmtPricePlain(_pPr) : '—', to: fmtPricePlain(price) });
     if (_pSt !== stock && stock) _sCh.push({ label: 'Compré ('  + _lbl + ')', from: _pSt ? _pSt + 'g' : '—',   to: stock + 'g' });
 
     // Actualizar suplState con precio y stock
@@ -3545,9 +3609,10 @@ async function saveCompraEdit(btn) {
     const rawPrice = (row.querySelector('.inp-price')?.value || '').trim().replace(/[€\s\u00a0]/g, '');
     const priceNum = parseFloat(rawPrice.replace(',', '.')) || 0;
     const price    = priceNum > 0 ? fmtPrice(priceNum) : '';
+    const pricePlain = priceNum > 0 ? fmtPricePlain(priceNum) : '';
     const img      = row.querySelector('.inp-img')?.value.trim() || '';
     const gallery  = row.querySelector('.inp-gallery')?.value.trim() || '';
-    if (name) items.push({ name, price, img, gallery });
+    if (name) items.push({ name, price, pricePlain, img, gallery });
   });
 
   // Usar _origItems (cargado desde Firebase/localStorage) como fuente de verdad
@@ -3594,18 +3659,18 @@ async function saveCompraEdit(btn) {
         // Rename detected
         renamedOrigNames.add(origAtPos.name);
         compraChanges.push({ label: 'Nombre', from: origAtPos.name, to: item.name });
-        if (normPrice(origAtPos.price) !== normPrice(item.price)) compraChanges.push({ label: item.name + ' — precio',  from: origAtPos.price || '—', to: item.price || '—' });
+        if (normPrice(origAtPos.price) !== normPrice(item.price)) compraChanges.push({ label: item.name + ' — precio',  from: fmtPricePlain(parsePriceStr(origAtPos.price || '') || 0) || '—', to: item.pricePlain || '—' });
         if ((origAtPos.img     || '') !== (item.img     || ''))    compraChanges.push({ label: item.name + ' — foto',    from: origAtPos.img   || '—', to: item.img   || '—' });
         if ((origAtPos.gallery || '') !== (item.gallery || ''))    compraChanges.push({ label: item.name + ' — galería', from: origAtPos.gallery || '—', to: item.gallery || '—' });
       } else {
         // Producto nuevo: mostrar cada campo por separado (igual que "añadir comida")
         compraChanges.push({ label: 'Nombre',  from: '—', to: item.name });
-        if (item.price)   compraChanges.push({ label: 'Precio',  from: '—', to: item.price });
+        if (item.pricePlain)   compraChanges.push({ label: 'Precio',  from: '—', to: item.pricePlain });
         if (item.img)     compraChanges.push({ label: 'Foto',    from: '—', to: item.img });
         if (item.gallery) compraChanges.push({ label: 'Galería', from: '—', to: item.gallery });
       }
     } else {
-      if (normPrice(orig.price) !== normPrice(item.price)) compraChanges.push({ label: item.name + ' — precio',  from: orig.price   || '—', to: item.price   || '—' });
+      if (normPrice(orig.price) !== normPrice(item.price)) compraChanges.push({ label: item.name + ' — precio',  from: fmtPricePlain(parsePriceStr(orig.price || '') || 0) || '—', to: item.pricePlain || '—' });
       if ((orig.img     || '') !== (item.img     || ''))   compraChanges.push({ label: item.name + ' — foto',    from: orig.img     || '—', to: item.img     || '—' });
       if ((orig.gallery || '') !== (item.gallery || ''))   compraChanges.push({ label: item.name + ' — galería', from: orig.gallery || '—', to: item.gallery || '—' });
     }
@@ -4000,7 +4065,19 @@ function peAddDay(dayData) {
 
   box.innerHTML = `
     <div class="plan-day-header">
-      <div class="plan-day-title">DÍA ${_peDayCount}</div>
+      <div style="display:flex;align-items:center;gap:.6rem;flex:1;min-width:0">
+        <div class="plan-day-title">DÍA ${_peDayCount}</div>
+        <select class="pe-diaSemana" style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;padding:3px 8px;cursor:pointer;text-transform:uppercase;letter-spacing:.3px;transition:border-color .2s">
+          <option value="">— Día —</option>
+          <option value="LUNES"     ${(d.diaSemana||'')==='LUNES'     ?'selected':''}>LUNES</option>
+          <option value="MARTES"    ${(d.diaSemana||'')==='MARTES'    ?'selected':''}>MARTES</option>
+          <option value="MIÉRCOLES" ${(d.diaSemana||'')==='MIÉRCOLES' ?'selected':''}>MIÉRCOLES</option>
+          <option value="JUEVES"    ${(d.diaSemana||'')==='JUEVES'    ?'selected':''}>JUEVES</option>
+          <option value="VIERNES"   ${(d.diaSemana||'')==='VIERNES'   ?'selected':''}>VIERNES</option>
+          <option value="SÁBADO"    ${(d.diaSemana||'')==='SÁBADO'    ?'selected':''}>SÁBADO</option>
+          <option value="DOMINGO"   ${(d.diaSemana||'')==='DOMINGO'   ?'selected':''}>DOMINGO</option>
+        </select>
+      </div>
       <button class="btn-del-day" onclick="peDelDay(this)">🗑 Eliminar día</button>
     </div>
     <div style="margin-bottom:.75rem">
@@ -4018,7 +4095,7 @@ function peAddDay(dayData) {
     </div>
     <div style="margin-bottom:.85rem">
       <label class="plan-field-label">Descripción</label>
-      <input class="plan-input pe-desc" placeholder="ej. Pecho · Hombros · Tríceps · LUNES" type="text" value="${escapeHtml(d.descripcion || '')}"/>
+      <input class="plan-input pe-desc" placeholder="ej. Pecho · Hombros · Tríceps" type="text" value="${escapeHtml(d.descripcion || '')}"/>
     </div>
     <div class="plan-field-label" style="margin-bottom:.5rem">Ejercicios</div>
     <div class="pe-ejercicios">${exRows}</div>
@@ -4089,6 +4166,7 @@ function peReadData() {
     const badgeCustom = box.querySelector('.pe-badge-custom').value.trim();
     const titulo      = box.querySelector('.pe-title').value.trim();
     const descripcion = box.querySelector('.pe-desc').value.trim();
+    const diaSemana   = box.querySelector('.pe-diaSemana').value.trim();
     const comentario  = box.querySelector('.pe-comentario').value.trim();
     const ejercicios  = [];
     box.querySelectorAll('.plan-ex-row').forEach(row => {
@@ -4097,7 +4175,7 @@ function peReadData() {
       const series  = row.querySelector('.pe-ex-series').value.trim();
       if (nombre) ejercicios.push({ nombre, desc, series });
     });
-    dias.push({ badge: badgeSel ? badgeSel.value : 'push', badgeCustom, titulo, descripcion, ejercicios, comentario });
+    dias.push({ badge: badgeSel ? badgeSel.value : 'push', badgeCustom, titulo, descripcion, diaSemana, ejercicios, comentario });
   });
   return { nombre, estructura, estructura2, dias };
 }
@@ -4120,7 +4198,8 @@ function peBuildPlanHTML(planId, data) {
     const badgeLabel = dia.badge === 'custom' && dia.badgeCustom ? dia.badgeCustom.toUpperCase() : bType.label;
     const badgeCls   = bType.cls || '';
     html += `<div class="dia-entreno">`;
-    html += `<div class="dia-entreno-header"><span class="dia-badge ${badgeCls}">${escapeHtml(badgeLabel)}</span><div><div class="dia-title">${escapeHtml(dia.titulo)}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div></div>`;
+    const diaSemanaHTML = dia.diaSemana ? `<span style="font-family:'Bebas Neue',sans-serif;font-size:.78rem;letter-spacing:.5px;background:rgba(55,160,240,.15);border:1px solid rgba(55,160,240,.35);border-radius:5px;padding:2px 8px;color:var(--blue);margin-left:.5rem;vertical-align:middle">${escapeHtml(dia.diaSemana)}</span>` : '';
+    html += `<div class="dia-entreno-header"><span class="dia-badge ${badgeCls}">${escapeHtml(badgeLabel)}</span><div><div class="dia-title" style="display:flex;align-items:center;gap:.3rem;flex-wrap:wrap">${escapeHtml(dia.titulo)}${diaSemanaHTML}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div></div>`;
     (dia.ejercicios || []).forEach(ex => {
       html += `<div class="exercise"><div class="ex-name"><strong>${escapeHtml(ex.nombre)}</strong>${escapeHtml(ex.desc)}</div><span class="ex-sets">${escapeHtml(ex.series)}</span></div>`;
     });
@@ -4183,7 +4262,10 @@ function peReadDomPlan(planId) {
       });
     }
 
-    const titulo      = diaEl.querySelector('.dia-title') ? diaEl.querySelector('.dia-title').textContent.trim() : '';
+    const tituloEl    = diaEl.querySelector('.dia-title');
+    const diaSemanaSpan = tituloEl ? tituloEl.querySelector('span') : null;
+    const diaSemana   = diaSemanaSpan ? diaSemanaSpan.textContent.trim() : '';
+    const titulo      = tituloEl ? tituloEl.childNodes[0].textContent.trim() : '';
     const descripcion = diaEl.querySelector('.dia-sub')   ? diaEl.querySelector('.dia-sub').textContent.trim()   : '';
 
     const ejercicios = [];
@@ -4208,7 +4290,7 @@ function peReadDomPlan(planId) {
       if ((d.getAttribute('style') || '').includes('--muted')) comentario = d.textContent.trim();
     });
 
-    dias.push({ badge: badgeVal, badgeCustom, titulo, descripcion, ejercicios, comentario });
+    dias.push({ badge: badgeVal, badgeCustom, titulo, descripcion, diaSemana, ejercicios, comentario });
   });
 
   return { nombre, estructura, estructura2, dias };
@@ -4274,7 +4356,6 @@ async function savePlanModal() {
 
   if (isNew) {
     // New plan: show all fields as "— → value"
-    planChanges.push({ label: 'Acción',  from: '—', to: 'Crear nuevo plan' });
     planChanges.push({ label: 'Nombre',  from: '—', to: data.nombre });
     if (data.estructura)  planChanges.push({ label: 'Estructura',    from: '—', to: data.estructura });
     if (data.estructura2) planChanges.push({ label: 'Descripción',   from: '—', to: data.estructura2 });
@@ -4282,14 +4363,21 @@ async function savePlanModal() {
     data.dias.forEach((d, i) => {
       planChanges.push({ label: 'Día ' + (i+1) + ' — Tipo',   from: '—', to: badgeDisplayLabel(d.badge || '', d.badgeCustom || '') });
       planChanges.push({ label: 'Día ' + (i+1) + ' — Título', from: '—', to: d.titulo || '—' });
+      if (d.diaSemana) planChanges.push({ label: 'Día ' + (i+1) + ' — Día semana', from: '—', to: d.diaSemana });
       if (d.ejercicios && d.ejercicios.length) {
         planChanges.push({ label: 'Día ' + (i+1) + ' — Ejercicios', from: '—', to: d.ejercicios.map(e => e.nombre).filter(Boolean).join(', ') });
       }
     });
   } else {
-    // Editing: compare against stored data
+    // Editing: fetch from Firebase first, fallback to localStorage then DOM
     let oldData = {};
-    oldData = lsGet(ENTRENO_PLANS_LOCAL_KEY, {})[planId] || {};
+    if (CLOUD_CONFIGURED) {
+      try {
+        const fbRes = await fetch(FB_BASE + '/' + ENTRENO_PLANS_FB_KEY + '/' + planId + '.json');
+        if (fbRes.ok) { const fbData = await fbRes.json(); if (fbData) oldData = fbData; }
+      } catch(e) {}
+    }
+    if (!oldData.nombre) oldData = lsGet(ENTRENO_PLANS_LOCAL_KEY, {})[planId] || {};
     if (!oldData.nombre) oldData = peReadDomPlan(planId) || {};
 
     if ((oldData.nombre || '') !== data.nombre)
@@ -4307,7 +4395,6 @@ async function savePlanModal() {
     // Compare exercises per day
     data.dias.forEach((d, i) => {
       const old = (oldData.dias || [])[i] || {};
-      // Badge/tipo
       const oldBadgeLabel = badgeDisplayLabel(old.badge || '', old.badgeCustom || '');
       const newBadgeLabel = badgeDisplayLabel(d.badge   || '', d.badgeCustom   || '');
       if (oldBadgeLabel !== newBadgeLabel)
@@ -4316,6 +4403,8 @@ async function savePlanModal() {
         planChanges.push({ label: 'Día ' + (i+1) + ' — Título',      from: old.titulo || '—',      to: d.titulo || '—' });
       if ((old.descripcion || '') !== (d.descripcion || ''))
         planChanges.push({ label: 'Día ' + (i+1) + ' — Descripción', from: old.descripcion || '—', to: d.descripcion || '—' });
+      if ((old.diaSemana || '') !== (d.diaSemana || ''))
+        planChanges.push({ label: 'Día ' + (i+1) + ' — Día semana',  from: old.diaSemana || '—',   to: d.diaSemana || '—' });
       const oldExNames = (old.ejercicios || []).map(e => e.nombre).join(', ');
       const newExNames = (d.ejercicios   || []).map(e => e.nombre).join(', ');
       if (oldExNames !== newExNames)
