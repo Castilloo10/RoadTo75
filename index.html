@@ -62,7 +62,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .day-tabs{display:flex;gap:.25rem;margin-bottom:-0.5rem;flex-wrap:wrap}
 .day-tab{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all .18s}
 .day-tab:hover{border-color:var(--accent);color:var(--accent)}
-.day-tab.active{background:var(--accent);border-color:var(--accent);color:#0d0f0e}
+.day-tab.active{background:#d85818;border-color:#d85818;color:#fff}
 .day-content{display:none} .day-content.active{display:block}
 .meal-btn-row{display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:0;margin-top:.5rem;width:100%;box-sizing:border-box}
 .meal-btn-row .edit-btn{margin-left:0}
@@ -125,7 +125,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .dias-entreno{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
 .dia-entreno{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
 .dia-entreno-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
-.dia-badge{background:var(--accent);color:#0d0f0e;font-family:'Bebas Neue',sans-serif;font-size:.9rem;padding:3px 10px;border-radius:6px;letter-spacing:.5px}
+.dia-badge{background:var(--accent);color:#0d0f0e;font-family:'Bebas Neue',sans-serif;font-size:.9rem;font-weight:400;padding:3px 10px;border-radius:6px;letter-spacing:.5px;white-space:nowrap;flex-shrink:0}
 /* Legacy classes (hardcoded plans) */
 .dia-badge.pull{background:var(--blue);color:#fff} .dia-badge.legs{background:var(--accent2);color:#0d0f0e}
 .dia-badge.upper{background:var(--accent);color:#0d0f0e} .dia-badge.lower{background:var(--accent3);color:#0d0f0e}
@@ -146,11 +146,13 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .dia-badge.b-cardio{background:#e84898;color:#fff}
 .dia-badge.b-movilidad{background:#30c860;color:#0a0a0a}
 /* Tipo de movimiento */
-.dia-badge.b-push{background:#d85818;color:#fff}
+/* EMPUJE nuevo color: índigo violeta, distinto a todos los demás tipos */
+.dia-badge.b-push{background:#6644cc;color:#fff}
 .dia-badge.b-pull{background:#20d4c0;color:#0a0a0a}
 /* Custom */
 .dia-badge.b-custom{background:#c07af0;color:#fff}
-.dia-title{font-weight:700;font-size:.9rem} .dia-sub{font-size:.75rem;color:var(--muted)}
+.dia-title{font-weight:400;font-size:.9rem} .dia-sub{font-size:.75rem;color:var(--muted)}
+.dia-day-badge{font-family:'Bebas Neue',sans-serif;font-size:.9rem;font-weight:400;letter-spacing:.5px;background:#d85818;border-radius:6px;padding:3px 10px;color:#fff;white-space:nowrap;flex-shrink:0;margin-left:auto}
 .exercise{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);gap:.5rem}
 .exercise:last-child{border-bottom:none}
 .ex-name{font-size:.83rem;color:var(--text2)} .ex-name strong{color:var(--text);display:block}
@@ -185,7 +187,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 /* DAY TYPE SELECT */
 .day-type-select{appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;padding:4px 28px 4px 10px;cursor:pointer;letter-spacing:.4px;text-transform:uppercase;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;transition:border-color .2s,background-color .2s,color .2s}
 .day-type-select:focus{outline:none;border-color:var(--border)}
-.day-type-select.entreno{width:148px;background-color:rgba(181,240,55,.15);border-color:rgba(181,240,55,.3);color:var(--accent);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b5f037'/%3E%3C/svg%3E")}
+.day-type-select.entreno{width:148px;background-color:rgba(216,88,24,.15);border-color:rgba(216,88,24,.4);color:#d85818;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23d85818'/%3E%3C/svg%3E")}
 .day-type-select.descanso{width:130px;background-color:rgba(160,100,240,.12);border-color:rgba(160,100,240,.3);color:#b07af0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b07af0'/%3E%3C/svg%3E")}
 .day-type-select option{background:var(--surface2);color:var(--text);font-size:.85rem;text-transform:none;letter-spacing:0;font-weight:500}
 
@@ -346,6 +348,25 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .compra-img{position:relative}
 .compra-img img{cursor:zoom-in;transition:opacity .2s,transform .2s}
 .compra-img img:hover{opacity:.82;transform:scale(1.1)}
+
+/* ── SCROLL HINT — fade + arrow indicator for horizontally scrollable rows ── */
+.scroll-hint-wrap{position:relative;display:block}
+.scroll-hint-wrap::after{
+  content:'';pointer-events:none;position:absolute;top:0;right:0;bottom:0;
+  width:52px;
+  background:linear-gradient(to right,transparent,rgba(13,15,14,.92) 90%);
+  opacity:1;transition:opacity .25s;z-index:2
+}
+.scroll-hint-wrap::before{
+  content:'›';pointer-events:none;position:absolute;top:50%;right:10px;
+  transform:translateY(-50%);font-size:1.1rem;font-weight:700;
+  color:var(--text2);opacity:.9;transition:opacity .25s;z-index:3;line-height:1
+}
+.scroll-hint-wrap.scrolled-end::after,.scroll-hint-wrap.scrolled-end::before{opacity:0}
+/* Header nav sits on --surface bg */
+header .scroll-hint-wrap::after{background:linear-gradient(to right,transparent,rgba(20,23,22,.95) 90%)}
+/* Banner entreno has its own gradient bg — use lighter overlay */
+.entreno-plan-banner .scroll-hint-wrap::after{background:linear-gradient(to right,transparent,rgba(13,15,14,.88) 90%)}
 
 @media(max-width:600px){
   /* ── HEADER ── */
@@ -540,8 +561,9 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .btn-del-day:hover{background:rgba(240,55,55,.08)}
 .plan-badge-select{appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;padding:4px 20px 4px 8px;cursor:pointer;letter-spacing:.5px;width:fit-content;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 5px center}
 .plan-badge-select:focus{outline:none;border-color:var(--accent)}
-.plan-badge-select optgroup{background:var(--surface2);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
-.plan-badge-select option{background:var(--surface2);color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.5px}
+.plan-badge-select optgroup,.pe-diaSemana optgroup{background:var(--surface2);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.plan-badge-select option,.pe-diaSemana option{background:var(--surface2);color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.5px}
+.pe-diaSemana option{background:var(--surface2) !important;color:var(--text) !important}
 /* CALENDAR */
 .cal-day{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 4px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px}
 .cal-day:hover{border-color:var(--accent);background:var(--surface2)}
@@ -1828,6 +1850,29 @@ document.addEventListener('DOMContentLoaded', () => {
   loadBatidoActiveState();
   loadEntrenoPlans();
   loadWeekendExcluded();
+
+  // Procesar planes hardcodeados: extraer día de dia-sub y mostrarlo como badge naranja
+  const DIAS_SEMANA = ['LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO','DOMINGO'];
+  document.querySelectorAll('.dia-entreno').forEach(diaEl => {
+    const titleEl = diaEl.querySelector('.dia-title');
+    const subEl   = diaEl.querySelector('.dia-sub');
+    if (!titleEl || !subEl) return;
+    // Skip if already has a badge
+    if (titleEl.querySelector('.dia-day-badge')) return;
+    // Find day in dia-sub text
+    const subText = subEl.textContent.trim();
+    const found = DIAS_SEMANA.find(d => subText.toUpperCase().endsWith('· ' + d) || subText.toUpperCase().endsWith(d));
+    if (!found) return;
+    // Remove day from dia-sub
+    subEl.textContent = subText.replace(new RegExp('\\s*·?\\s*' + found + '$', 'i'), '').replace(/\s*·\s*$/, '').trim();
+    // Add badge to dia-entreno-header (not inside dia-title)
+    const headerEl = diaEl.querySelector('.dia-entreno-header');
+    if (!headerEl) return;
+    const badge = document.createElement('span');
+    badge.className = 'dia-day-badge';
+    badge.textContent = found;
+    headerEl.appendChild(badge);
+  });
   // Modal-plan backdrop close (modal is after script, so use DOMContentLoaded)
   const _mp = document.getElementById('modal-plan');
   if (_mp) _mp.addEventListener('click', function(e){ if(e.target===this) closePlanModal(); });
@@ -1841,6 +1886,130 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // Restaurar pestaña/sección donde estaba el usuario
   restoreNavState();
+
+  // ── SCROLL HINTS ──
+  // Aplica indicador de scroll (fade + flecha) en filas con overflow-x en móvil
+  function initScrollHint(el) {
+    if (!el || el.dataset.scrollHint) return;
+    el.dataset.scrollHint = '1';
+    const wrap = document.createElement('div');
+    wrap.className = 'scroll-hint-wrap';
+    el.parentNode.insertBefore(wrap, el);
+    wrap.appendChild(el);
+    function update() {
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+      wrap.classList.toggle('scrolled-end', atEnd);
+    }
+    el.addEventListener('scroll', update, { passive: true });
+    // Also update on resize
+    new ResizeObserver(update).observe(el);
+    update();
+  }
+
+  function applyAllScrollHints() {
+    if (window.innerWidth > 600) return;
+
+    // Nav (menú principal)
+    initScrollHint(document.querySelector('nav'));
+
+    // Días comidas
+    initScrollHint(document.querySelector('.day-tabs'));
+
+    // Picker 7 días entreno
+    const pickerGrid = document.querySelector('#entreno-dias-picker > div[style*="grid-template-columns"]');
+    if (pickerGrid && !pickerGrid.dataset.scrollHint) {
+      pickerGrid.style.overflowX = 'auto';
+      pickerGrid.style.webkitOverflowScrolling = 'touch';
+      pickerGrid.style.scrollbarWidth = 'none';
+      pickerGrid.style.gridTemplateColumns = 'repeat(7,minmax(68px,1fr))';
+      pickerGrid.style.paddingBottom = '3px';
+      initScrollHint(pickerGrid);
+    }
+
+    // Toggle bar de planes de entrenamiento
+    const toggleBar = document.getElementById('entreno-toggle-bar');
+    if (toggleBar && !toggleBar.dataset.scrollHint) {
+      toggleBar.style.overflowX = 'auto';
+      toggleBar.style.webkitOverflowScrolling = 'touch';
+      toggleBar.style.scrollbarWidth = 'none';
+      toggleBar.style.flexWrap = 'nowrap';
+      initScrollHint(toggleBar);
+    }
+
+    // Fila de batido counter
+    const batidoCounter = document.querySelector('.batido-counter-row');
+    if (batidoCounter && !batidoCounter.dataset.scrollHint) {
+      batidoCounter.style.overflowX = 'auto';
+      batidoCounter.style.webkitOverflowScrolling = 'touch';
+      batidoCounter.style.scrollbarWidth = 'none';
+      initScrollHint(batidoCounter);
+    }
+
+    // Filas de suplementos (supl-row)
+    document.querySelectorAll('.supl-row').forEach(el => {
+      if (!el.dataset.scrollHint) {
+        el.style.overflowX = 'auto';
+        el.style.webkitOverflowScrolling = 'touch';
+        el.style.scrollbarWidth = 'none';
+        initScrollHint(el);
+      }
+    });
+
+    // Botones de plan en registro de progresión
+    const regPlanBtns = document.getElementById('reg-plan-btns');
+    if (regPlanBtns && !regPlanBtns.dataset.scrollHint) {
+      regPlanBtns.style.overflowX = 'auto';
+      regPlanBtns.style.webkitOverflowScrolling = 'touch';
+      regPlanBtns.style.scrollbarWidth = 'none';
+      regPlanBtns.style.flexWrap = 'nowrap';
+      initScrollHint(regPlanBtns);
+    }
+
+    // Macros de resumen semanal y pills de macros de día
+    document.querySelectorAll('.day-total-macros, .meal-macros, .day-total').forEach(el => {
+      if (!el.dataset.scrollHint && el.scrollWidth > el.clientWidth + 4) {
+        el.style.overflowX = 'auto';
+        el.style.webkitOverflowScrolling = 'touch';
+        el.style.scrollbarWidth = 'none';
+        initScrollHint(el);
+      }
+    });
+  }
+
+  applyAllScrollHints();
+  // Re-apply when switching sections (day-tabs visible state changes)
+  const _origShowSection2 = window.showSection;
+  window.showSection = function(id) {
+    _origShowSection2(id);
+    requestAnimationFrame(applyAllScrollHints);
+  };
+
+  // ── ENFORCE POSITIVE NUMBERS ──
+  // Delegación global: fuerza solo números positivos en inputs de precio y macros
+  document.addEventListener('input', e => {
+    const el = e.target;
+    // Precio (type=text inputmode=decimal): solo dígitos, coma o punto
+    if (el.classList.contains('inp-price')) {
+      const pos = el.selectionStart;
+      const cleaned = el.value.replace(/[^\d,\.]/g, '');
+      if (cleaned !== el.value) { el.value = cleaned; try { el.setSelectionRange(pos - 1, pos - 1); } catch(_){} }
+      return;
+    }
+    // Macros / stock / dosis (type=number): no negativos
+    if (el.type === 'number') {
+      if (el.value !== '' && parseFloat(el.value) < 0) el.value = 0;
+    }
+  }, true);
+  // Bloquear teclas inválidas: '-', '+', 'e', 'E' en type=number; y cualquier no-dígito en inp-price
+  document.addEventListener('keydown', e => {
+    const el = e.target;
+    if (el.type === 'number' && (e.key === '-' || e.key === '+' || e.key === 'e' || e.key === 'E')) {
+      e.preventDefault();
+    }
+    if (el.classList.contains('inp-price') && (e.key === '-' || e.key === '+' || e.key === 'e' || e.key === 'E')) {
+      e.preventDefault();
+    }
+  }, true);
 });
 
 // ── CONFIRM SAVE HELPER ──
@@ -4170,7 +4339,7 @@ const BADGE_COLOR_MAP = {
   'cardio':      '#e84898',  // rosa magenta
   'movilidad':   '#30c860',  // verde medio
   // Tipo de movimiento — 2 únicos, distintos a los demás
-  'push':        '#d85818',  // terracota
+  'push':        '#6644cc',  // índigo violeta (distinto a todos los demás)
   'pull':        '#20d4c0',  // cian
   // Custom
   'custom':      '#c07af0',  // lila
@@ -4212,8 +4381,28 @@ function applyBadgeSelectColor(sel) {
   }
 }
 
+// Apply push/EMPUJE color to día-semana select when a day is selected
+function applyDiaSelectColor(sel) {
+  if (!sel) return;
+  if (sel.value) {
+    sel.style.backgroundColor = '#d85818';
+    sel.style.borderColor = '#d85818';
+    sel.style.color = '#fff';
+    sel.style.backgroundImage = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23ffffff'/%3E%3C/svg%3E\")";
+    sel.style.backgroundRepeat = 'no-repeat';
+    sel.style.backgroundPosition = 'right 8px center';
+  } else {
+    sel.style.backgroundColor = '';
+    sel.style.borderColor = '';
+    sel.style.color = '';
+    sel.style.backgroundImage = '';
+  }
+}
+
 // Called when the badge type select changes inside a day box
 function peBadgeSelectChanged(sel) {
+  // Track the previously selected (non-custom) value for restoration
+  if (sel.value !== 'custom') sel.dataset.prevVal = sel.value;
   resizeBadgeSelect(sel);
   applyBadgeSelectColor(sel);
   const box = sel.closest('.plan-day-box');
@@ -4230,6 +4419,9 @@ function peBadgeSelectChanged(sel) {
     if (editBtn)  editBtn.style.display = 'none';
     return;
   }
+
+  // Save the badge type that was selected BEFORE switching to custom
+  box.dataset.prevBadgeVal = sel.dataset.prevVal || 'pecho';
 
   // Custom selected — restore last value if hidden input is empty
   const restored = (!hiddenInput || !hiddenInput.value) && box.dataset.lastCustom
@@ -4255,7 +4447,7 @@ function peBadgeSelectChanged(sel) {
 // Called from the ✏ Cambiar button — always opens the prompt regardless of existing value
 function peOpenCustomPromptFromEditBtn(btn) {
   const box         = btn.closest('.plan-day-box');
-  const sel         = box ? box.querySelector('.plan-badge-select') : null;
+  const sel         = box ? box.querySelector('.plan-badge-select:not(.pe-diaSemana)') : null;
   const hiddenInput = box ? box.querySelector('.pe-badge-custom') : null;
   const preview     = box ? box.querySelector('.pe-badge-custom-preview') : null;
   const editBtn     = btn;
@@ -4308,7 +4500,11 @@ function peOpenCustomBadgePrompt(sel, hiddenInput, preview, editBtn, previous) {
     const val = (inp ? inp.value.trim() : '').toUpperCase() || previous;
     closeModal();
     if (!val) {
-      sel.value = 'pecho';
+      const box = sel.closest('.plan-day-box');
+      const prevVal = (box && box.dataset.prevBadgeVal) || sel.dataset.prevVal || 'pecho';
+      sel.value = prevVal;
+      resizeBadgeSelect(sel);
+      applyBadgeSelectColor(sel);
       if (hiddenInput) hiddenInput.value = '';
       if (preview) { preview.textContent = ''; preview.style.display = 'none'; }
       if (editBtn)  editBtn.style.display = 'none';
@@ -4338,7 +4534,11 @@ function peOpenCustomBadgePrompt(sel, hiddenInput, preview, editBtn, previous) {
   function onCan() {
     closeModal();
     if (!previous) {
-      sel.value = 'pecho';
+      const box = sel.closest('.plan-day-box');
+      const prevVal = (box && box.dataset.prevBadgeVal) || sel.dataset.prevVal || 'pecho';
+      sel.value = prevVal;
+      resizeBadgeSelect(sel);
+      applyBadgeSelectColor(sel);
       if (hiddenInput) hiddenInput.value = '';
       if (preview) { preview.textContent = ''; preview.style.display = 'none'; }
       if (editBtn)  editBtn.style.display = 'none';
@@ -4367,18 +4567,17 @@ function peAddDay(dayData) {
   box.innerHTML = `
     <div class="plan-day-header">
       <div style="display:flex;align-items:center;gap:.6rem;flex:1;min-width:0">
-        <div class="plan-day-title">DÍA ${_peDayCount}</div>
-        <select class="pe-diaSemana" style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;padding:3px 8px;cursor:pointer;text-transform:uppercase;letter-spacing:.3px;transition:border-color .2s">
-          <option value="">— Día —</option>
-          <option value="LUNES"     ${(d.diaSemana||'')==='LUNES'     ?'selected':''}>LUNES</option>
+        <select class="pe-diaSemana" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'Bebas Neue',sans-serif;font-size:.85rem;font-weight:400;padding:3px 28px 3px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:background-color .2s,border-color .2s,color .2s;background-repeat:no-repeat;background-position:right 8px center">
+          <optgroup label="DÍA DE LA SEMANA">
+          <option value="LUNES"     ${(d.diaSemana||'LUNES')==='LUNES'     ?'selected':''}>LUNES</option>
           <option value="MARTES"    ${(d.diaSemana||'')==='MARTES'    ?'selected':''}>MARTES</option>
           <option value="MIÉRCOLES" ${(d.diaSemana||'')==='MIÉRCOLES' ?'selected':''}>MIÉRCOLES</option>
           <option value="JUEVES"    ${(d.diaSemana||'')==='JUEVES'    ?'selected':''}>JUEVES</option>
           <option value="VIERNES"   ${(d.diaSemana||'')==='VIERNES'   ?'selected':''}>VIERNES</option>
           <option value="SÁBADO"    ${(d.diaSemana||'')==='SÁBADO'    ?'selected':''}>SÁBADO</option>
           <option value="DOMINGO"   ${(d.diaSemana||'')==='DOMINGO'   ?'selected':''}>DOMINGO</option>
+          </optgroup>
         </select>
-        <span class="pe-dia-badge" style="font-family:'Bebas Neue',sans-serif;font-size:.82rem;letter-spacing:.5px;background:rgba(181,240,55,.15);border:1px solid rgba(181,240,55,.4);color:var(--accent);border-radius:5px;padding:2px 9px;margin-left:auto;display:${d.diaSemana?'inline':'none'};white-space:nowrap">${escapeHtml(d.diaSemana||'')}</span>
       </div>
       <button class="btn-del-day" onclick="peDelDay(this)">🗑 Eliminar día</button>
     </div>
@@ -4408,20 +4607,18 @@ function peAddDay(dayData) {
     </div>`;
   container.appendChild(box);
 
-  // Live-update day badge when select changes
+  // Live-update dia select color when day changes
   const diaSel = box.querySelector('.pe-diaSemana');
-  const diaBadge = box.querySelector('.pe-dia-badge');
-  if (diaSel && diaBadge) {
-    diaSel.addEventListener('change', () => {
-      const v = diaSel.value;
-      diaBadge.textContent = v;
-      diaBadge.style.display = v ? 'inline' : 'none';
-    });
+  if (diaSel) {
+    applyDiaSelectColor(diaSel);
+    resizeSelectToContent(diaSel, 42);
+    diaSel.addEventListener('change', () => { applyDiaSelectColor(diaSel); resizeSelectToContent(diaSel, 42); });
   }
 
   // Hook the badge select: show custom prompt when 'custom' is chosen
-  const badgeSel = box.querySelector('.plan-badge-select');
+  const badgeSel = box.querySelector('.plan-badge-select:not(.pe-diaSemana)');
   if (badgeSel) {
+    badgeSel.dataset.prevVal = badgeSel.value;
     resizeBadgeSelect(badgeSel);
     applyBadgeSelectColor(badgeSel);
     badgeSel.addEventListener('change', () => { peBadgeSelectChanged(badgeSel); resizeBadgeSelect(badgeSel); applyBadgeSelectColor(badgeSel); });
@@ -4475,7 +4672,7 @@ function peReadData() {
   const estructura2= document.getElementById('pe-estructura2').value.trim();
   const dias = [];
   document.querySelectorAll('#pe-dias-container .plan-day-box').forEach(box => {
-    const badgeSel    = box.querySelector('.plan-badge-select');
+    const badgeSel    = box.querySelector('.plan-badge-select:not(.pe-diaSemana)');
     const badgeCustom = box.querySelector('.pe-badge-custom').value.trim();
     const titulo      = box.querySelector('.pe-title').value.trim();
     const descripcion = box.querySelector('.pe-desc').value.trim();
@@ -4511,8 +4708,8 @@ function peBuildPlanHTML(planId, data) {
     const badgeLabel = dia.badge === 'custom' && dia.badgeCustom ? dia.badgeCustom.toUpperCase() : bType.label;
     const badgeCls   = bType.cls || '';
     html += `<div class="dia-entreno">`;
-    const diaSemanaHTML = dia.diaSemana ? `<span style="font-family:'Bebas Neue',sans-serif;font-size:.78rem;letter-spacing:.5px;background:rgba(181,240,55,.15);border:1px solid rgba(181,240,55,.4);border-radius:5px;padding:2px 9px;color:var(--accent);margin-left:auto;white-space:nowrap">${escapeHtml(dia.diaSemana)}</span>` : '';
-    html += `<div class="dia-entreno-header"><span class="dia-badge ${badgeCls}">${escapeHtml(badgeLabel)}</span><div style="flex:1;min-width:0"><div class="dia-title" style="display:flex;align-items:center;gap:.3rem;flex-wrap:nowrap;width:100%">${escapeHtml(dia.titulo)}${diaSemanaHTML}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div></div>`;
+    const diaSemanaHTML = dia.diaSemana ? `<span class="dia-day-badge">${escapeHtml(dia.diaSemana)}</span>` : '';
+    html += `<div class="dia-entreno-header"><span class="dia-badge ${badgeCls}">${escapeHtml(badgeLabel)}</span><div style="flex:1;min-width:0"><div class="dia-title">${escapeHtml(dia.titulo)}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div>${diaSemanaHTML}</div>`;
     (dia.ejercicios || []).forEach(ex => {
       html += `<div class="exercise"><div class="ex-name"><strong>${escapeHtml(ex.nombre)}</strong>${escapeHtml(ex.desc)}</div><span class="ex-sets">${escapeHtml(ex.series)}</span></div>`;
     });
@@ -4648,8 +4845,19 @@ function closePlanModal() {
 
 async function savePlanModal() {
   const data = peReadData();
-  if (!data.nombre)       { alert('El plan necesita un nombre.');                       return; }
-  if (!data.dias.length)  { alert('El plan necesita al menos un día de entrenamiento.'); return; }
+
+  // ── Validación ──
+  const missing = [];
+  if (!data.nombre) missing.push('• <strong>Nombre del plan</strong>');
+  if (!data.dias.length) missing.push('• <strong>Al menos un día de entrenamiento</strong>');
+  else data.dias.forEach((d, i) => {
+    if (!d.titulo) missing.push(`• <strong>Título del día ${i + 1}</strong>`);
+  });
+  if (missing.length) {
+    await mobileConfirm('Faltan campos obligatorios',
+      'Para guardar el plan necesitas rellenar:<br><br>' + missing.join('<br>'));
+    return;
+  }
 
   // Build a clean slug: "5dias", "6dias", etc. If that slot is taken, add a suffix
   let planId = _peEditingPlanId;
