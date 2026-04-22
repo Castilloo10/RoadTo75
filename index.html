@@ -389,13 +389,14 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .nav-scroll-hint{
   pointer-events:none;position:absolute;
   width:52px;display:flex;align-items:center;
-  z-index:101;transition:opacity .25s;
+  z-index:101;transition:opacity .25s;opacity:1;
   font-size:1.1rem;font-weight:700;color:var(--text2)
 }
 .nav-scroll-hint.right{right:0;justify-content:flex-end;padding-right:10px;
   background:linear-gradient(to right,transparent,var(--surface) 90%)}
 .nav-scroll-hint.left{left:0;justify-content:flex-start;padding-left:10px;
   background:linear-gradient(to left,transparent,var(--surface) 90%);opacity:0}
+.nav-scroll-hint.visible{opacity:1 !important}
 .nav-scroll-hint.hidden{opacity:0 !important}
 
 @media(max-width:600px){
@@ -1622,6 +1623,11 @@ function sortToggleBar() {
   // Re-append in order (moves them in the DOM)
   btns.forEach(b => toggleBar.appendChild(b));
 
+  // Re-check scroll hint after buttons change
+  if (window.innerWidth <= 600 && typeof applyAllScrollHints === 'function') {
+    setTimeout(applyAllScrollHints, 50);
+  }
+
   // Also reorder the .entreno-plan divs to match tab order
   const section = document.getElementById('entreno');
   if (!section) return;
@@ -1970,7 +1976,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const atEnd   = navEl.scrollLeft + navEl.clientWidth >= navEl.scrollWidth - 4;
         const atStart = navEl.scrollLeft <= 4;
         overlayR.classList.toggle('hidden', atEnd);
-        overlayL.classList.toggle('hidden', atStart);
+        overlayL.classList.toggle('hidden',  atStart);
+        overlayL.classList.toggle('visible', !atStart);
         positionOverlays();
       }
       navEl.addEventListener('scroll', updateNav, { passive: true });
@@ -1994,12 +2001,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Toggle bar de planes de entrenamiento
     const toggleBar = document.getElementById('entreno-toggle-bar');
-    if (toggleBar && !toggleBar.dataset.scrollHint) {
-      toggleBar.style.overflowX = 'auto';
-      toggleBar.style.webkitOverflowScrolling = 'touch';
-      toggleBar.style.scrollbarWidth = 'none';
-      toggleBar.style.flexWrap = 'nowrap';
-      initScrollHint(toggleBar);
+    if (toggleBar) {
+      // Always re-check scroll extent (new plans may have been added)
+      const wrap = toggleBar.parentNode && toggleBar.parentNode.classList.contains('scroll-hint-wrap')
+        ? toggleBar.parentNode : null;
+      if (!toggleBar.dataset.scrollHint) {
+        toggleBar.style.overflowX = 'auto';
+        toggleBar.style.webkitOverflowScrolling = 'touch';
+        toggleBar.style.scrollbarWidth = 'none';
+        toggleBar.style.flexWrap = 'nowrap';
+        initScrollHint(toggleBar);
+      } else if (wrap) {
+        // Trigger update manually on existing wrap
+        const evt = new Event('scroll'); toggleBar.dispatchEvent(evt);
+      }
     }
 
     // Fila de batido counter
@@ -2043,6 +2058,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   applyAllScrollHints();
+  window.applyAllScrollHints = applyAllScrollHints;
   // Re-apply when switching sections (day-tabs visible state changes)
   const _origShowSection2 = window.showSection;
   window.showSection = function(id) {
