@@ -59,14 +59,24 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 .pill.f{background:rgba(240,55,55,.15);color:var(--red)}
 
 /* TABS */
-.day-tabs{display:flex;gap:.25rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.day-tabs{display:flex;gap:.25rem;margin-bottom:-0.5rem;flex-wrap:wrap}
 .day-tab{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all .18s}
 .day-tab:hover{border-color:var(--accent);color:var(--accent)}
 .day-tab.active{background:var(--accent);border-color:var(--accent);color:#0d0f0e}
 .day-content{display:none} .day-content.active{display:block}
+.meal-btn-row{display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:0;margin-top:.5rem;width:100%;box-sizing:border-box}
+.meal-btn-row .edit-btn{margin-left:0}
+/* Botón excluir día de media */
+.btn-exclude-day{font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:5px;cursor:pointer;transition:all .2s;white-space:nowrap;border:1px solid rgba(181,240,55,.4);background:rgba(181,240,55,.1);color:var(--accent)}
+.btn-exclude-day:hover{background:rgba(181,240,55,.18)}
+.btn-exclude-day.excluded{border-color:rgba(240,55,55,.4);background:rgba(240,55,55,.1);color:var(--red)}
+.btn-exclude-day.excluded:hover{background:rgba(240,55,55,.2)}
+/* Día excluido de la media */
+.day-content[data-excluded="1"] .day-total{opacity:.45}
+.day-content[data-excluded="1"] .day-total-label::after{content:' (excluido de media)';font-size:.65em;color:var(--red);font-family:'DM Sans',sans-serif;font-weight:600;letter-spacing:0}
 
 /* MEAL CARDS */
-.meals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:1.25rem;align-items:start}
+.meals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:1.25rem;margin-top:.3rem;align-items:start}
 .meal-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:border-color .2s}
 .meal-card:hover{border-color:var(--accent)}
 .meal-header{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
@@ -685,9 +695,12 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 <button class="day-tab" onclick="showDay('mie')">MIÉRCOLES</button>
 <button class="day-tab" onclick="showDay('jue')">JUEVES</button>
 <button class="day-tab" onclick="showDay('vie')">VIERNES</button>
+<button class="day-tab" onclick="showDay('sab')">SÁBADO</button>
+<button class="day-tab" onclick="showDay('dom')">DOMINGO</button>
 </div>
 <!-- LUNES -->
 <div class="day-content active" id="day-lun">
+<div class="meal-btn-row" id="btn-row-lun"></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
@@ -714,6 +727,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- MARTES -->
 <div class="day-content" id="day-mar">
+<div class="meal-btn-row" id="btn-row-mar"></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
@@ -740,6 +754,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- MIÉRCOLES -->
 <div class="day-content" id="day-mie">
+<div class="meal-btn-row" id="btn-row-mie"></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
@@ -766,6 +781,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- JUEVES -->
 <div class="day-content" id="day-jue">
+<div class="meal-btn-row" id="btn-row-jue"></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
@@ -792,6 +808,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <!-- VIERNES -->
 <div class="day-content" id="day-vie">
+<div class="meal-btn-row" id="btn-row-vie"></div>
 <div class="meals-grid">
 <div class="meal-card">
 <div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
@@ -816,6 +833,60 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
 </div>
 <div class="day-total"><span class="day-total-label">TOTAL VIERNES</span><div class="day-total-macros"></div></div>
 </div>
+<!-- SÁBADO -->
+<div class="day-content" id="day-sab">
+<div class="meal-btn-row" id="btn-row-sab"></div>
+<div class="meals-grid">
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+</div>
+<div class="day-total"><span class="day-total-label">TOTAL SÁBADO</span><div class="day-total-macros"></div></div>
+</div>
+<!-- DOMINGO -->
+<div class="day-content" id="day-dom">
+<div class="meal-btn-row" id="btn-row-dom"></div>
+<div class="meals-grid">
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+<div class="meal-card">
+<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
+<div class="meal-food"></div>
+<div class="meal-macros"></div>
+</div>
+</div>
+<div class="day-total"><span class="day-total-label">TOTAL DOMINGO</span><div class="day-total-macros"></div></div>
+</div>
 </div>
 </section>
 <!-- ══ COMPRA ══ -->
@@ -832,11 +903,11 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   -->
 <div class="compra-grid">
 <div class="compra-card" data-cat-id="proteinas">
-<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">🍗 PROTEÍNAS ANIMALES</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-cat-header"><div class="compra-cat" style="color:#f09050;margin-bottom:0">🍗 PROTEÍNAS ANIMALES</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
 <div class="compra-card" data-cat-id="lacteos">
-<div class="compra-cat-header"><div class="compra-cat" style="color:var(--blue);margin-bottom:0">🥛 LÁCTEOS Y DERIVADOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-cat-header"><div class="compra-cat" style="color:#b07af0;margin-bottom:0">🥛 LÁCTEOS Y DERIVADOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
 <div class="compra-card" data-cat-id="hidratos">
@@ -924,7 +995,7 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
   <!-- ── SELECTOR DE DÍAS ── -->
   <div id="entreno-dias-picker">
     <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:.65rem">📅 Días a entrenar</div>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;margin-bottom:.9rem">
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;margin-bottom:.9rem">
       <div class="edc day-entreno" data-day="lun">
         <div class="edc-name" style="padding-left:.42em;padding-right:0">LUNES</div>
         <button class="edc-btn active-entreno" data-type="entreno" onclick="setEntrenoDay('lun','entreno')"><span class="edc-emoji">🏋️</span> Entreno</button>
@@ -949,6 +1020,16 @@ h4{font-size:.9rem;font-weight:700;color:var(--text2);text-transform:uppercase;l
         <div class="edc-name" style="padding-left:.31em;padding-right:0">VIERNES</div>
         <button class="edc-btn active-entreno" data-type="entreno" onclick="setEntrenoDay('vie','entreno')"><span class="edc-emoji">🏋️</span> Entreno</button>
         <button class="edc-btn" data-type="descanso" onclick="setEntrenoDay('vie','descanso')"><span class="edc-emoji">💤</span> Descanso</button>
+      </div>
+      <div class="edc day-descanso" data-day="sab">
+        <div class="edc-name">SÁBADO</div>
+        <button class="edc-btn" data-type="entreno" onclick="setEntrenoDay('sab','entreno')"><span class="edc-emoji">🏋️</span> Entreno</button>
+        <button class="edc-btn active-descanso" data-type="descanso" onclick="setEntrenoDay('sab','descanso')"><span class="edc-emoji">💤</span> Descanso</button>
+      </div>
+      <div class="edc day-descanso" data-day="dom">
+        <div class="edc-name">DOMINGO</div>
+        <button class="edc-btn" data-type="entreno" onclick="setEntrenoDay('dom','entreno')"><span class="edc-emoji">🏋️</span> Entreno</button>
+        <button class="edc-btn active-descanso" data-type="descanso" onclick="setEntrenoDay('dom','descanso')"><span class="edc-emoji">💤</span> Descanso</button>
       </div>
     </div>
     <div style="height:1px;background:var(--border);margin-bottom:.9rem"></div>
@@ -1179,7 +1260,7 @@ const DAYTYPE_FB_KEY = 'day_types';
 
 // ── TIPO DE DÍA (ENTRENO / DESCANSO) ──
 // Estado global de los días de la semana de entrenamiento
-window._entrenoWeekTypes = { lun:'entreno', mar:'entreno', mie:'descanso', jue:'entreno', vie:'entreno' };
+window._entrenoWeekTypes = { lun:'entreno', mar:'entreno', mie:'descanso', jue:'entreno', vie:'entreno', sab:'descanso', dom:'descanso' };
 
 function applyEntrenoWeekTypeCard(day, val) {
   const card = document.querySelector('.edc[data-day="' + day + '"]');
@@ -1210,7 +1291,7 @@ function setEntrenoDay(day, val) {
 // Alias para compatibilidad
 async function saveDayType(day, val) { setEntrenoDay(day, val); }
 
-const DAY_NAMES = { lun: 'Lunes', mar: 'Martes', mie: 'Miércoles', jue: 'Jueves', vie: 'Viernes' };
+const DAY_NAMES = { lun: 'Lunes', mar: 'Martes', mie: 'Miércoles', jue: 'Jueves', vie: 'Viernes', sab: 'Sábado', dom: 'Domingo' };
 
 // ── CACHÉ DE PLANES DE ENTRENAMIENTO ──
 // Se inicializa leyendo el DOM y se actualiza cuando Firebase carga/modifica/elimina planes.
@@ -1269,30 +1350,40 @@ function renderEntrenoBanner() {
     let planLabel = _planEntry1 ? _planEntry1.label : `Plan de ${n} días`;
 
     if (n === 1) {
-      // 1 día — naranja: "algo es algo"
-      icon = '💪'; color = 'var(--accent3)';
-      banner.style.borderColor = 'rgba(240,168,55,.35)';
-      banner.style.background  = 'linear-gradient(135deg,rgba(240,168,55,.1),rgba(240,100,55,.05))';
+      // 1 día — rojo: mínimo, algo es algo
+      icon = '😤'; color = '#f03737';
+      banner.style.borderColor = 'rgba(240,55,55,.4)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(240,55,55,.1),rgba(240,55,55,.04))';
     } else if (n === 2) {
-      // 2 días — azul eléctrico: arrancando
-      icon = '💪'; color = 'var(--blue)';
-      banner.style.borderColor = 'rgba(55,160,240,.35)';
-      banner.style.background  = 'linear-gradient(135deg,rgba(55,160,240,.1),rgba(55,200,240,.05))';
+      // 2 días — naranja-rojo: arrancando
+      icon = '💪'; color = '#f06828';
+      banner.style.borderColor = 'rgba(240,104,40,.38)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(240,104,40,.1),rgba(240,80,30,.04))';
     } else if (n === 3) {
-      // 3 días — cyan/turquesa: buen ritmo
-      icon = '💪'; color = 'var(--accent2)';
-      banner.style.borderColor = 'rgba(55,240,168,.35)';
-      banner.style.background  = 'linear-gradient(135deg,rgba(55,240,168,.1),rgba(55,240,200,.05))';
+      // 3 días — naranja: buen comienzo
+      icon = '💪'; color = 'var(--accent3)';
+      banner.style.borderColor = 'rgba(240,168,55,.38)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(240,168,55,.1),rgba(240,140,40,.04))';
     } else if (n === 4) {
-      // 4 días — violeta: nivel serio
-      icon = '🔥'; color = '#c07af0';
-      banner.style.borderColor = 'rgba(192,122,240,.35)';
-      banner.style.background  = 'linear-gradient(135deg,rgba(192,122,240,.1),rgba(160,80,240,.05))';
-    } else {
-      // 5+ días — dorado: modo bestia
+      // 4 días — dorado: nivel sólido
       icon = '🔥'; color = '#f0c428';
       banner.style.borderColor = 'rgba(240,196,40,.4)';
-      banner.style.background  = 'linear-gradient(135deg,rgba(240,196,40,.12),rgba(240,160,30,.05))';
+      banner.style.background  = 'linear-gradient(135deg,rgba(240,196,40,.12),rgba(240,180,30,.04))';
+    } else if (n === 5) {
+      // 5 días — cyan: nivel alto
+      icon = '🔥'; color = 'var(--accent2)';
+      banner.style.borderColor = 'rgba(55,240,168,.4)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(55,240,168,.1),rgba(55,220,160,.04))';
+    } else if (n === 6) {
+      // 6 días — violeta: modo bestia
+      icon = '🔥'; color = '#c07af0';
+      banner.style.borderColor = 'rgba(192,122,240,.4)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(192,122,240,.12),rgba(160,80,240,.04))';
+    } else {
+      // 7 días — verde lima: semana perfecta ⚡
+      icon = '⚡'; color = 'var(--accent)';
+      banner.style.borderColor = 'rgba(181,240,55,.5)';
+      banner.style.background  = 'linear-gradient(135deg,rgba(181,240,55,.15),rgba(55,240,168,.05))';
     }
     msg = `Vas a entrenar <strong>${n} día${n===1?'':'s'}</strong> (<em>${diasStr}</em>). Debes realizar los ejercicios del <strong>${planLabel}</strong>.`;
 
@@ -1356,9 +1447,14 @@ async function loadDayTypes() {
 }
 
 // ── WEEKLY AVERAGE ──
+const WEEKEND_EXCLUDED_KEY = 'planMuscular_weekendExcluded_v1';
+const WEEKEND_EXCLUDED_FB_KEY = 'weekend_excluded';
+
 function recalcWeeklyAvg() {
   let totK=0, totP=0, totC=0, totF=0, days=0;
   document.querySelectorAll('.day-total-macros').forEach(el => {
+    const dayContent = el.closest('.day-content');
+    if (dayContent && dayContent.dataset.excluded === '1') return;
     const pills = el.querySelectorAll('.pill');
     if (pills.length < 4) return;
     totK += +parsePillNum(pills[0].textContent);
@@ -1373,6 +1469,50 @@ function recalcWeeklyAvg() {
   document.getElementById('avg-prot').innerHTML = Math.round(totP/days) + _unit('g');
   document.getElementById('avg-carb').innerHTML = Math.round(totC/days) + _unit('g');
   document.getElementById('avg-fat').innerHTML  = Math.round(totF/days) + _unit('g');
+}
+
+function applyWeekendExcluded(data) {
+  ['sab', 'dom'].forEach(dayId2 => {
+    const isExcluded = !!(data && data[dayId2]);
+    const dayEl = document.getElementById('day-' + dayId2);
+    if (dayEl) dayEl.dataset.excluded = isExcluded ? '1' : '0';
+    // Button is now inside day-total, not btn-row
+    const btn = dayEl ? dayEl.querySelector('.btn-exclude-day') : null;
+    if (btn) {
+      btn.textContent = isExcluded ? '✕ Excluir macros de media semanal' : '✓ Incluir macros en media semanal';
+      btn.classList.toggle('excluded', isExcluded);
+    }
+  });
+  recalcWeeklyAvg();
+}
+
+function toggleExcludeDay(dayId, btn) {
+  const dayEl = document.getElementById('day-' + dayId);
+  if (!dayEl) return;
+  const excluded = dayEl.dataset.excluded === '1';
+  const saved = lsGet(WEEKEND_EXCLUDED_KEY, {});
+  saved[dayId] = !excluded;
+  lsSet(WEEKEND_EXCLUDED_KEY, saved);
+  applyWeekendExcluded(saved);
+  // Guardar Firebase
+  if (CLOUD_CONFIGURED) {
+    fetch(FB_BASE + '/' + WEEKEND_EXCLUDED_FB_KEY + '.json', {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(saved)
+    }).catch(() => {});
+  }
+}
+
+async function loadWeekendExcluded() {
+  const local = lsGet(WEEKEND_EXCLUDED_KEY, null);
+  if (local) applyWeekendExcluded(local);
+  if (!CLOUD_CONFIGURED) return;
+  try {
+    const res = await fetch(FB_BASE + '/' + WEEKEND_EXCLUDED_FB_KEY + '.json');
+    if (!res.ok) throw new Error();
+    const d = await res.json();
+    if (d) { lsSet(WEEKEND_EXCLUDED_KEY, d); applyWeekendExcluded(d); }
+  } catch(e) {}
 }
 
 // ── SYNC STATUS ──
@@ -1539,9 +1679,10 @@ document.addEventListener('DOMContentLoaded', () => {
     dayEl.querySelectorAll('.meal-card').forEach((card) => {
       const _nameCheck = normalizeAccents(card.querySelector('.meal-name')?.textContent || '');
       if (_nameCheck.includes('batido')) {
-        // Tarjeta de batido: ID legible fijo
+        // Tarjeta de batido: ID legible fijo + botón edición limitada
         card.id = dayId + '-batido';
         card.dataset.isBatido = '1';
+        ensureBatidoEditBtn(card);
       } else {
         card.id = dayId + '-meal' + _mealIdx++;
         const btn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
@@ -1549,32 +1690,31 @@ document.addEventListener('DOMContentLoaded', () => {
         card.querySelector('.meal-header').appendChild(btn);
       }
     });
-    // Botón «Añadir comida» y «Eliminar comida» en la fila del badge del día
-    const badgeRow = dayEl.querySelector('div[style*="margin-bottom:1rem"]');
-    if (badgeRow) {
-      // Si el badgeRow tiene divs hijos (caso viernes con dos líneas), usar el primer div hijo
-      // para no romper el layout de líneas múltiples. Si no, usar el propio badgeRow.
-      const firstLineEl = badgeRow.querySelector(':scope > div') || badgeRow;
-      firstLineEl.style.display = 'flex';
-      firstLineEl.style.justifyContent = 'space-between';
-      firstLineEl.style.alignItems = 'center';
-      firstLineEl.style.flexWrap = 'wrap';
-      firstLineEl.style.gap = '.5rem';
-      const btnWrap = document.createElement('div');
-      btnWrap.style.cssText = 'display:flex;gap:.4rem;margin-left:auto;flex-wrap:wrap';
+    // Botón «Añadir comida» y «Eliminar comida» en el contenedor fijo de cada día
+    const dayId2 = dayEl.id.replace('day-', '');
+    const btnRow = document.getElementById('btn-row-' + dayId2);
+    if (btnRow) {
+      btnRow.style.cssText = 'display:flex;flex-direction:row;justify-content:flex-end;align-items:center;gap:.4rem;margin-bottom:0;margin-top:.5rem;width:100%;box-sizing:border-box;';
       const addBtn = Object.assign(document.createElement('button'), { className: 'edit-btn add-variant', textContent: '+ Añadir comida' });
       addBtn.addEventListener('click', () => addMealMode(dayEl));
       const delBtn = Object.assign(document.createElement('button'), { className: 'edit-btn del-variant', textContent: '🗑 Eliminar comida' });
       delBtn.addEventListener('click', () => toggleDeleteMode(dayEl, delBtn));
-      btnWrap.appendChild(addBtn);
-      btnWrap.appendChild(delBtn);
-      firstLineEl.appendChild(btnWrap);
+      btnRow.appendChild(addBtn);
+      btnRow.appendChild(delBtn);
     }
     const lbl = dayEl.querySelector('.day-total-label');
     if (lbl) {
       const rb = Object.assign(document.createElement('button'), { className: 'reset-day-btn', textContent: '↺ Resetear' });
       rb.addEventListener('click', () => resetDay(dayId));
       lbl.parentNode.insertBefore(rb, lbl.nextSibling);
+      // Botón excluir macros de media (solo sábado y domingo), al lado del Resetear
+      if (dayId2 === 'sab' || dayId2 === 'dom') {
+        const exBtn = document.createElement('button');
+        exBtn.className = 'btn-exclude-day';
+        exBtn.textContent = '✓ Incluir macros en media semanal';
+        exBtn.addEventListener('click', () => toggleExcludeDay(dayId2, exBtn));
+        rb.after(exBtn);
+      }
     }
   });
   // ── LIGHTBOX (solo lectura, galería por código vía data-gallery) ──
@@ -1687,6 +1827,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadDayTypes();
   loadBatidoActiveState();
   loadEntrenoPlans();
+  loadWeekendExcluded();
   // Modal-plan backdrop close (modal is after script, so use DOMContentLoaded)
   const _mp = document.getElementById('modal-plan');
   if (_mp) _mp.addEventListener('click', function(e){ if(e.target===this) closePlanModal(); });
@@ -1732,7 +1873,16 @@ function mobileConfirm(title, body) {
 
 async function confirmSave(changes) {
   if (!changes || !changes.length) return true;
-  const lines = changes.map(c => {
+  // Filter out "no changes" marker entries (from and to both empty strings)
+  const realChanges = changes.filter(c =>
+    !(String(c.from ?? '').trim() === '' && String(c.to ?? '').trim() === '')
+  );
+  if (!realChanges.length) {
+    // All entries are "no changes" markers — show informational modal only
+    await mobileConfirm('Sin cambios', '<span style="color:var(--text2);font-size:.9rem">Sin cambios detectados</span>');
+    return true;
+  }
+  const lines = realChanges.map(c => {
     const fromStr = (c.from !== undefined && c.from !== null && String(c.from).trim() !== '' && String(c.from) !== '—') ? String(c.from) : '—';
     const toStr   = (c.to   !== undefined && c.to   !== null && String(c.to).trim()   !== '' && String(c.to)   !== '—') ? String(c.to)   : '—';
     return `<strong>${escapeHtml(c.label)}</strong><br>· Antes: <span style="color:#f0c040">${escapeHtml(fromStr)}</span><br>· Después: <span style="color:#7ee87e">${escapeHtml(toStr)}</span>`;
@@ -2248,14 +2398,27 @@ function createRestoredExtraMeal(dayEl, id, saved) {
       <span class="pill f">${saved.fat}g G</span>
     </div>`;
   grid.appendChild(card);
-  // Añadir botón editar solo si NO es tarjeta de batido
-  if (!normalizeAccents(_name).includes('batido')) {
+  if (isBatidoCard(card)) {
+    card.dataset.isBatido = '1';
+    ensureBatidoEditBtn(card);
+  } else {
     const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
     editBtn.addEventListener('click', () => enterEditMode(card));
     card.querySelector('.meal-header').appendChild(editBtn);
-  } else {
-    card.dataset.isBatido = '1';
   }
+}
+
+// Garantiza que una tarjeta batido tiene el botón de edición limitado,
+// independientemente de cómo haya sido creada (HTML, Firebase, snapshot…)
+function ensureBatidoEditBtn(card) {
+  // Quitar botón de edición completa si existe
+  card.querySelector('.edit-btn:not(.batido-edit-btn)')?.remove();
+  if (card.querySelector('.batido-edit-btn')) return; // ya existe
+  const bEditBtn = Object.assign(document.createElement('button'), {
+    className: 'edit-btn batido-edit-btn', textContent: '✏ Editar nombre/hora'
+  });
+  bEditBtn.addEventListener('click', () => enterBatidoEditMode(card));
+  card.querySelector('.meal-header').appendChild(bEditBtn);
 }
 
 // ── EDIT MODE ──
@@ -2404,6 +2567,7 @@ async function saveEditMode(card) {
     const origN = origPills[i] ?? 0;
     if (origN !== [k,p,c,f][i]) menuChanges.push({ label: lbl, from: origN, to: [k,p,c,f][i] });
   });
+  if (!menuChanges.length) menuChanges.push({ label: 'Sin cambios detectados', from: '', to: '' });
   if (!await confirmSave(menuChanges)) return;
 
   // Aplicar emoji
@@ -2452,6 +2616,128 @@ function cancelEditMode(card) {
   card.querySelector('.meal-macros').innerHTML = card._origMacros;
   card.classList.remove('editing');
   card.querySelector('.edit-btn').style.display = '';
+}
+
+// ── EDICIÓN LIMITADA BATIDO (nombre header, hora y nombre de plato) ──
+function enterBatidoEditMode(card) {
+  if (card.classList.contains('editing')) return;
+  card.classList.add('editing');
+  const nameEl  = card.querySelector('.meal-name');
+  const timeEl  = card.querySelector('.meal-time');
+  const foodEl  = card.querySelector('.meal-food');
+  const editBtn = card.querySelector('.batido-edit-btn');
+  card._origName = nameEl ? nameEl.textContent.trim() : '';
+  card._origTime = timeEl ? timeEl.textContent.trim() : '';
+  card._origFood = foodEl ? foodEl.innerHTML : '';
+
+  // Extraer el Nombre de Plato (primer <strong>) del meal-food
+  const tmp = document.createElement('div');
+  tmp.innerHTML = card._origFood;
+  card._origPlatoName = tmp.querySelector('strong')?.textContent.trim() || '';
+
+  if (nameEl) {
+    const inp = document.createElement('input');
+    inp.type = 'text'; inp.className = 'edit-meal-name-inp'; inp.value = card._origName; inp.maxLength = 40;
+    inp.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;padding:3px 7px;width:100%;margin-bottom:3px";
+    nameEl.replaceWith(inp);
+  }
+  if (timeEl) {
+    const inp2 = document.createElement('input');
+    inp2.type = 'time'; inp2.className = 'edit-meal-time-inp'; inp2.value = timeStrToInputVal(card._origTime);
+    inp2.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:2px 7px;width:100%;color-scheme:dark";
+    timeEl.replaceWith(inp2);
+  }
+
+  // Campo Nombre de Plato encima del meal-food existente
+  const platoInp = document.createElement('input');
+  platoInp.type = 'text'; platoInp.className = 'edit-meal-plato-inp'; platoInp.value = card._origPlatoName; platoInp.maxLength = 60;
+  platoInp.placeholder = 'Nombre del plato (negrita)';
+  platoInp.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;padding:4px 8px;width:100%;margin-bottom:.4rem";
+  foodEl.before(platoInp);
+
+  // Botones guardar/cancelar
+  const actionsDiv = document.createElement('div');
+  actionsDiv.className = 'meal-edit-actions batido-edit-actions';
+  actionsDiv.innerHTML = `<button class="btn-save-meal">✓ Guardar</button><button class="btn-cancel-meal">✕ Cancelar</button>`;
+  actionsDiv.querySelector('.btn-save-meal').addEventListener('click', () => saveBatidoCardEdit(card));
+  actionsDiv.querySelector('.btn-cancel-meal').addEventListener('click', () => cancelBatidoEditMode(card));
+  foodEl.after(actionsDiv);
+  if (editBtn) editBtn.style.display = 'none';
+}
+
+function cancelBatidoEditMode(card) {
+  const nameInp  = card.querySelector('.edit-meal-name-inp');
+  const timeInp  = card.querySelector('.edit-meal-time-inp');
+  const platoInp = card.querySelector('.edit-meal-plato-inp');
+  if (nameInp)  { const el = document.createElement('div'); el.className='meal-name'; el.textContent=card._origName||''; nameInp.replaceWith(el); }
+  if (timeInp)  { const el = document.createElement('div'); el.className='meal-time'; el.textContent=card._origTime||''; timeInp.replaceWith(el); }
+  platoInp?.remove();
+  card.querySelector('.batido-edit-actions')?.remove();
+  card.classList.remove('editing');
+  const editBtn = card.querySelector('.batido-edit-btn');
+  if (editBtn) editBtn.style.display = '';
+}
+
+async function saveBatidoCardEdit(card) {
+  const nameInp  = card.querySelector('.edit-meal-name-inp');
+  const timeInp  = card.querySelector('.edit-meal-time-inp');
+  const platoInp = card.querySelector('.edit-meal-plato-inp');
+  const newName      = nameInp  ? nameInp.value.trim()  || card._origName      : card._origName;
+  const newTime      = timeInp  ? inputValToTimeStr(timeInp.value.trim())       : card._origTime;
+  const newPlatoName = platoInp ? platoInp.value.trim() || card._origPlatoName  : card._origPlatoName;
+
+  const changes = [];
+  if (card._origName      !== newName)      changes.push({ label: 'Nombre',        from: card._origName      || '—', to: newName });
+  if (card._origTime      !== newTime)      changes.push({ label: 'Hora',          from: card._origTime      || '—', to: newTime || '—' });
+  if (card._origPlatoName !== newPlatoName) changes.push({ label: 'Nombre de plato', from: card._origPlatoName || '—', to: newPlatoName });
+  if (!changes.length) changes.push({ label: 'Sin cambios detectados', from: '', to: '' });
+  if (!await confirmSave(changes)) { cancelBatidoEditMode(card); return; }
+
+  // Restaurar inputs → elementos
+  const nameEl = document.createElement('div'); nameEl.className = 'meal-name'; nameEl.textContent = newName;
+  nameInp?.replaceWith(nameEl);
+  const timeEl = document.createElement('div'); timeEl.className = 'meal-time'; timeEl.textContent = newTime;
+  timeInp?.replaceWith(timeEl);
+  platoInp?.remove();
+  card.querySelector('.batido-edit-actions')?.remove();
+
+  // Actualizar el <strong> en meal-food con el nuevo nombre de plato
+  const foodEl = card.querySelector('.meal-food');
+  if (foodEl) {
+    const strongEl = foodEl.querySelector('strong');
+    if (strongEl) strongEl.textContent = newPlatoName;
+    else foodEl.innerHTML = `<strong>${escapeHtml(newPlatoName)}</strong>` + (foodEl.innerHTML ? '<br>' + foodEl.innerHTML : '');
+  }
+
+  card.classList.remove('editing');
+
+  // ¿El nuevo nombre ya no es batido? → convertir a tarjeta normal
+  if (!normalizeAccents(newName).includes('batido') && !normalizeAccents(newPlatoName).includes('batido')) {
+    card.dataset.isBatido = '';
+    delete card.dataset.isBatido;
+    card.classList.remove('batido-disabled', 'batido-global-off');
+    card.querySelector('.batido-day-toggle')?.remove();
+    card.querySelector('.meal-food').innerHTML = '';
+    card.querySelector('.meal-macros').innerHTML = '';
+    const oldBtn = card.querySelector('.batido-edit-btn');
+    if (oldBtn) oldBtn.remove();
+    const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
+    editBtn.addEventListener('click', () => enterEditMode(card));
+    card.querySelector('.meal-header').appendChild(editBtn);
+    const _snap = buildSnapshot(); lsSet(LOCAL_KEY, _snap);
+    if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
+    setSyncStatus('saved', '✓ Tarjeta convertida a comida normal');
+    sortMealsByTime(card.closest('.day-content'));
+    return;
+  }
+
+  // Sigue siendo batido
+  const editBtn = card.querySelector('.batido-edit-btn');
+  if (editBtn) editBtn.style.display = '';
+  const _snap = buildSnapshot(); lsSet(LOCAL_KEY, _snap);
+  if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
+  setSyncStatus('saved', '✓ Batido actualizado');
+  sortMealsByTime(card.closest('.day-content'));
 }
 
 // ── RECALC TOTAL ──
@@ -2552,8 +2838,7 @@ function applySnapshot(data) {
     // Re-evaluar si la tarjeta es batido tras aplicar nombre/comida desde Firebase
     if (isBatidoCard(card)) {
       card.dataset.isBatido = '1';
-      const existingEditBtn = card.querySelector('.edit-btn');
-      if (existingEditBtn) existingEditBtn.remove();
+      ensureBatidoEditBtn(card);
     }
   });
   document.querySelectorAll('.day-content').forEach(dayEl => {
@@ -2561,6 +2846,11 @@ function applySnapshot(data) {
     const c = dayEl.querySelector('.meal-card'); if (c) recalcDayTotal(c);
   });
   recalcWeeklyAvg();
+  // Re-aplicar datos del batido SIEMPRE al final del snapshot,
+  // para que el contenido del batido sea el de los ajustes actuales
+  // y no el que estaba guardado en el snapshot de menús.
+  const _bdSnap = lsGet(BATIDO_LOCAL_KEY, null);
+  if (_bdSnap) syncBatidoToMenuCards(_bdSnap);
 }
 
 // ── CLOUD SYNC ──
@@ -2574,7 +2864,14 @@ async function loadData() {
     const res = await fetch(FIREBASE_ENDPOINT);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const cloud = await res.json();
-    if (cloud) { lsSet(LOCAL_KEY, cloud); applySnapshot(cloud); }
+    if (cloud) {
+      lsSet(LOCAL_KEY, cloud);
+      applySnapshot(cloud);
+      // Tras aplicar el snapshot de la nube, re-aplicar también los datos del batido
+      // para garantizar que el texto del batido sea el de Firebase y no el del snapshot.
+      const _bd = lsGet(BATIDO_LOCAL_KEY, null);
+      if (_bd) syncBatidoToMenuCards(_bd);
+    }
     setSyncStatus('saved', '✓ Datos cargados');
   } catch(e) {
     setSyncStatus('error', 'Sin conexión — caché local');
@@ -2922,6 +3219,7 @@ async function saveBatidoEdit() {
   if ((orig.prot       ?? 0)  !== prot)        _bCh.push({ label: 'Proteína g',        from: orig.prot       ?? 0,   to: prot });
   if ((orig.carb       ?? 0)  !== carb)        _bCh.push({ label: 'Carbos g',          from: orig.carb       ?? 0,   to: carb });
   if ((orig.fat        ?? 0)  !== fat)         _bCh.push({ label: 'Grasas g',          from: orig.fat        ?? 0,   to: fat });
+  if (!_bCh.length) _bCh.push({ label: 'Sin cambios detectados', from: '', to: '' });
   if (!await confirmSave(_bCh)) return;
 
   // Actualizar spans de dosis visibles
@@ -3157,10 +3455,11 @@ function syncBatidoToMenuCards(d) {
         foodEl.innerHTML = `<strong>${nombrePlato}</strong><br>${descText}`;
       }
 
-      // Quitar el botón "✏ Editar comida" si existe y marcar la tarjeta
-      const existingEditBtn = card.querySelector('.edit-btn');
+      // Reemplazar botón editar normal por el limitado de batido
+      const existingEditBtn = card.querySelector('.edit-btn:not(.batido-edit-btn)');
       if (existingEditBtn) existingEditBtn.remove();
       card.dataset.isBatido = '1';
+      ensureBatidoEditBtn(card);
 
       // Añadir botón toggle por día si no existe
       if (!card.querySelector('.batido-day-toggle')) {
@@ -3492,6 +3791,7 @@ async function saveSuplEdit(btn) {
     if (id === 'creat') { s.creatPrecio = price; if (stock > 0) s.creatStock = stock; }
   });
 
+  if (!_sCh.length) _sCh.push({ label: 'Sin cambios detectados', from: '', to: '' });
   if (!await confirmSave(_sCh)) return;
   saveSuplState(s);
 
@@ -3683,6 +3983,7 @@ async function saveCompraEdit(btn) {
     }
   });
 
+  if (!compraChanges.length) compraChanges.push({ label: 'Sin cambios detectados', from: '', to: '' });
   if (!await confirmSave(compraChanges)) return;
 
   card.classList.remove('editing-compra');
@@ -4077,6 +4378,7 @@ function peAddDay(dayData) {
           <option value="SÁBADO"    ${(d.diaSemana||'')==='SÁBADO'    ?'selected':''}>SÁBADO</option>
           <option value="DOMINGO"   ${(d.diaSemana||'')==='DOMINGO'   ?'selected':''}>DOMINGO</option>
         </select>
+        <span class="pe-dia-badge" style="font-family:'Bebas Neue',sans-serif;font-size:.82rem;letter-spacing:.5px;background:rgba(181,240,55,.15);border:1px solid rgba(181,240,55,.4);color:var(--accent);border-radius:5px;padding:2px 9px;margin-left:auto;display:${d.diaSemana?'inline':'none'};white-space:nowrap">${escapeHtml(d.diaSemana||'')}</span>
       </div>
       <button class="btn-del-day" onclick="peDelDay(this)">🗑 Eliminar día</button>
     </div>
@@ -4105,6 +4407,17 @@ function peAddDay(dayData) {
       <input class="plan-input pe-comentario" placeholder="ej. Descanso: 90-120s entre series compuestas · 60s aislamiento" type="text" value="${escapeHtml(d.comentario || '')}"/>
     </div>`;
   container.appendChild(box);
+
+  // Live-update day badge when select changes
+  const diaSel = box.querySelector('.pe-diaSemana');
+  const diaBadge = box.querySelector('.pe-dia-badge');
+  if (diaSel && diaBadge) {
+    diaSel.addEventListener('change', () => {
+      const v = diaSel.value;
+      diaBadge.textContent = v;
+      diaBadge.style.display = v ? 'inline' : 'none';
+    });
+  }
 
   // Hook the badge select: show custom prompt when 'custom' is chosen
   const badgeSel = box.querySelector('.plan-badge-select');
@@ -4198,8 +4511,8 @@ function peBuildPlanHTML(planId, data) {
     const badgeLabel = dia.badge === 'custom' && dia.badgeCustom ? dia.badgeCustom.toUpperCase() : bType.label;
     const badgeCls   = bType.cls || '';
     html += `<div class="dia-entreno">`;
-    const diaSemanaHTML = dia.diaSemana ? `<span style="font-family:'Bebas Neue',sans-serif;font-size:.78rem;letter-spacing:.5px;background:rgba(55,160,240,.15);border:1px solid rgba(55,160,240,.35);border-radius:5px;padding:2px 8px;color:var(--blue);margin-left:.5rem;vertical-align:middle">${escapeHtml(dia.diaSemana)}</span>` : '';
-    html += `<div class="dia-entreno-header"><span class="dia-badge ${badgeCls}">${escapeHtml(badgeLabel)}</span><div><div class="dia-title" style="display:flex;align-items:center;gap:.3rem;flex-wrap:wrap">${escapeHtml(dia.titulo)}${diaSemanaHTML}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div></div>`;
+    const diaSemanaHTML = dia.diaSemana ? `<span style="font-family:'Bebas Neue',sans-serif;font-size:.78rem;letter-spacing:.5px;background:rgba(181,240,55,.15);border:1px solid rgba(181,240,55,.4);border-radius:5px;padding:2px 9px;color:var(--accent);margin-left:auto;white-space:nowrap">${escapeHtml(dia.diaSemana)}</span>` : '';
+    html += `<div class="dia-entreno-header"><span class="dia-badge ${badgeCls}">${escapeHtml(badgeLabel)}</span><div style="flex:1;min-width:0"><div class="dia-title" style="display:flex;align-items:center;gap:.3rem;flex-wrap:nowrap;width:100%">${escapeHtml(dia.titulo)}${diaSemanaHTML}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div></div>`;
     (dia.ejercicios || []).forEach(ex => {
       html += `<div class="exercise"><div class="ex-name"><strong>${escapeHtml(ex.nombre)}</strong>${escapeHtml(ex.desc)}</div><span class="ex-sets">${escapeHtml(ex.series)}</span></div>`;
     });
