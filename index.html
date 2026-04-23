@@ -16,11 +16,13 @@
   --muted:#6b7068; --text:#e8ede9; --text2:#9fa89d; --red:#f03737; --blue:#37a8f0;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+button,select,input[type=button],input[type=submit],a,summary{touch-action:manipulation}
 /* Prevent iOS zoom on input focus */
 @media(max-width:600px){
   input,textarea,select:not(.day-type-select){font-size:16px !important}
 }
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:100dvh;line-height:1.6;padding-bottom:env(safe-area-inset-bottom);overflow-x:hidden}
 
 /* HEADER */
 header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
@@ -292,7 +294,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 #modal-confirm-box{background:var(--surface);border:1px solid var(--border);border-radius:16px 16px 0 0;padding:1.5rem 1.5rem 2rem;width:100%;max-width:520px;max-height:80vh;overflow-y:auto;transform:translateY(20px);transition:transform .25s}
 #modal-confirm.open #modal-confirm-box{transform:translateY(0)}
 #modal-confirm-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--accent);margin-bottom:.75rem;letter-spacing:.5px}
-#modal-confirm-body{font-size:.85rem;color:var(--text2);line-height:1.7;margin-bottom:1.25rem;max-height:45vh;overflow-y:auto}
+#modal-confirm-body{font-size:.85rem;color:var(--text2);line-height:1.7;margin-bottom:1.25rem;max-height:45vh;overflow-y:auto;overscroll-behavior:contain}
 #modal-confirm-body strong{color:var(--text)}
 .modal-confirm-actions{display:flex;gap:.75rem}
 .modal-btn-ok{background:var(--accent);color:#0d0f0e;border:none;border-radius:10px;padding:14px 24px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .2s;flex:1}
@@ -424,7 +426,6 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   .day-tab{padding:6px 11px;font-size:.72rem;flex-shrink:0;border-radius:7px}
 
   /* ── DAY TYPE ── */
-  .day-type-row{margin-bottom:.65rem !important}
   .day-type-select{font-size:.68rem !important;padding:3px 20px 3px 7px;letter-spacing:.2px;background-position:right 6px center;font-weight:600}
 
   /* ── MEAL CARDS ── */
@@ -475,7 +476,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   .supl-label{font-size:.75rem;min-width:70px}
   .supl-remain{font-size:.68rem;padding:2px 6px}
   .supl-num{font-size:1.3rem;min-width:24px}
-  .supl-count-btn{width:28px;height:28px;font-size:1rem}
+  .supl-count-btn{width:34px;height:34px;font-size:1.1rem}
   #supl-footer-note{font-size:.68rem}
 
   /* ── PRICE TOTALS ── */
@@ -520,21 +521,39 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   #entreno-plan-banner-text{font-size:.86rem}
 
   /* ── SYNC STATUS ── */
-  #sync-status{bottom:.75rem;right:.75rem;left:.75rem;font-size:.7rem;padding:7px 12px;border-radius:9px}
+  #sync-status{bottom:calc(.75rem + env(safe-area-inset-bottom));right:.75rem;left:.75rem;font-size:.7rem;padding:7px 12px;border-radius:9px}
 
   /* ── MODAL CONFIRM ── */
-  #modal-confirm-box{padding:1.25rem 1.25rem 1.75rem}
+  #modal-confirm-box{padding:1.25rem 1.25rem 1.75rem;max-height:85dvh}
   #modal-confirm-title{font-size:1.2rem}
-  #modal-confirm-body{font-size:.82rem}
-  .modal-btn-ok,.modal-btn-cancel{padding:12px 16px;font-size:.92rem}
+  #modal-confirm-body{font-size:.82rem;max-height:55dvh}
+  .modal-btn-ok,.modal-btn-cancel{padding:12px 16px;font-size:.92rem;min-height:44px}
 
   /* ── LIGHTBOX ── */
   .lb-nav.prev{left:-38px}
   .lb-nav.next{right:-38px}
-  .lb-nav{width:32px;height:32px;font-size:1rem}
+  .lb-nav{width:38px;height:38px;font-size:1.1rem}
 
   /* ── CARD ── */
   .card{padding:1rem}
+
+  /* ── CALENDARIO (legibilidad) ── */
+  .cal-day{min-height:52px;padding:5px 2px;gap:2px}
+  .cal-day-num{font-size:.78rem}
+  .cal-badge{font-size:.5rem}
+  .cal-hdr{font-size:.68rem;padding:4px 0 6px;letter-spacing:.8px}
+
+  /* ── REGISTRO DE PESOS ── */
+  .reg-ex-row{padding:.65rem;gap:.3rem}
+  .reg-ex-name{font-size:.82rem;line-height:1.3}
+  .reg-ex-series{font-size:.68rem}
+  .reg-ex-inputs{gap:.35rem}
+  .reg-set-wrap label{font-size:.58rem}
+  .reg-set-wrap input{font-size:16px;padding:5px 6px;width:58px;min-height:36px;text-align:center}
+  .reg-notes{min-height:40px;padding:6px 8px}
+
+  /* ── PLAN MODAL (dvh para que respete URL bar de móviles) ── */
+  #modal-plan-box{max-height:92dvh}
 }
 
 /* PLAN EDITOR MODAL */
@@ -551,7 +570,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 #modal-plan-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent);letter-spacing:.5px}
 #modal-plan-close{background:transparent;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:color .2s;line-height:1}
 #modal-plan-close:hover{color:var(--text)}
-#modal-plan-body{padding:1.25rem 1.5rem;overflow-y:auto;flex:1}
+#modal-plan-body{padding:1.25rem 1.5rem;overflow-y:auto;overscroll-behavior:contain;flex:1}
 #modal-plan-footer{padding:.75rem 1.5rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem;flex-shrink:0}
 @media(max-width:600px){
   #modal-plan-header{padding:1rem 1rem .65rem}
@@ -963,11 +982,11 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <div class="compra-card" data-cat-id="suplementos">
 <div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">💊 SUPLEMENTOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <!-- PROTEÍNA -->
-<div class="compra-items-list" id="supl-items-list">
+<div class="compra-items-list">
 <div class="compra-item supl-product-item" data-supl-id="prot" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-bottom:.75rem">
 <div style="display:flex;align-items:center;gap:8px;width:100%">
-<span class="compra-img supl-img-view" data-emoji="💪"><img alt="" id="prot-product-img" onerror="this.style.display='none'" src=""/></span>
-<span class="name supl-name-view" id="prot-product-name"></span>
+<span class="compra-img supl-img-view" data-emoji="💪"><img alt="" onerror="this.style.display='none'" src=""/></span>
+<span class="name supl-name-view"></span>
 <span class="price" id="prot-price-view" style="margin-left:auto">—</span>
 </div>
 <div class="supl-tracker">
@@ -983,8 +1002,8 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <!-- CREATINA -->
 <div class="compra-item supl-product-item" data-supl-id="creat" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-top:.75rem;border-top:1px solid var(--border);border-bottom:none">
 <div style="display:flex;align-items:center;gap:8px;width:100%">
-<span class="compra-img supl-img-view" data-emoji="💊"><img alt="" id="creat-product-img" onerror="this.style.display='none'" src=""/></span>
-<span class="name supl-name-view" id="creat-product-name"></span>
+<span class="compra-img supl-img-view" data-emoji="💊"><img alt="" onerror="this.style.display='none'" src=""/></span>
+<span class="name supl-name-view"></span>
 <span class="price" id="creat-price-view" style="margin-left:auto">—</span>
 </div>
 <div class="supl-tracker">
@@ -1251,9 +1270,6 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
     </div>
   </div>
   <div id="reg-rest-msg" style="display:none;color:var(--blue);font-size:.9rem;padding:.75rem 0">💤 Día de descanso registrado.</div>
-  <div style="margin-top:.5rem;display:none" id="reg-save-actions">
-    <button class="btn-save-meal" onclick="saveRegDay()">✓ Guardar registro</button>
-  </div>
 </div>
 
 </div>
@@ -2580,8 +2596,7 @@ async function deleteMeal(card, dayEl, toggleBtn) {
   if (!confirmed) return;
   // Eliminar del snapshot si tiene id
   if (card.id) {
-    let data = {};
-    data = lsGet(LOCAL_KEY, {});
+    let data = lsGet(LOCAL_KEY, {});
     delete data[card.id];
     lsSet(LOCAL_KEY, data);
     if (CLOUD_CONFIGURED) {
@@ -2709,8 +2724,8 @@ function createRestoredExtraMeal(dayEl, id, saved) {
   const _time  = saved.time  || '';
   card.innerHTML = `
     <div class="meal-header">
-      <div class="meal-icon d">${_emoji}</div>
-      <div><div class="meal-name">${_name}</div><div class="meal-time">${_time}</div></div>
+      <div class="meal-icon d">${escapeHtml(_emoji)}</div>
+      <div><div class="meal-name">${escapeHtml(_name)}</div><div class="meal-time">${escapeHtml(_time)}</div></div>
     </div>
     <div class="meal-food">${saved.food || ''}</div>
     <div class="meal-macros">
@@ -2806,12 +2821,14 @@ function enterEditMode(card) {
   });
 
   if (iconEl) {
-    iconEl.addEventListener('click', function _togglePicker() {
+    const _togglePicker = () => {
       const open = pickerPanel.style.display !== 'none';
       pickerPanel.style.display = open ? 'none' : 'block';
       iconEl.style.transform = open ? 'scale(1)' : 'scale(1.15)';
       if (!open) { searchInput.value = ''; searchInput.focus(); }
-    });
+    };
+    iconEl.addEventListener('click', _togglePicker);
+    card._iconPickerHandler = _togglePicker;
   }
 
   card._getEditEmoji = () => (iconEl ? iconEl.textContent.trim() : card._origEmoji);
@@ -2894,8 +2911,11 @@ async function saveEditMode(card) {
 
   // Aplicar emoji
   const iconEl2 = card.querySelector('.meal-icon');
-  if (newEmoji && iconEl2) iconEl2.textContent = newEmoji;
-  if (iconEl2) { iconEl2.style.cursor = ''; iconEl2.title = ''; iconEl2.style.transform = ''; }
+  if (iconEl2) {
+    if (card._iconPickerHandler) { iconEl2.removeEventListener('click', card._iconPickerHandler); delete card._iconPickerHandler; }
+    if (newEmoji) iconEl2.textContent = newEmoji;
+    iconEl2.style.cursor = ''; iconEl2.title = ''; iconEl2.style.transform = '';
+  }
   // Aplicar nombre y hora
   if (nameInp) { const el = document.createElement('div'); el.className='meal-name'; el.textContent=newName; nameInp.replaceWith(el); }
   if (timeInp) { const el = document.createElement('div'); el.className='meal-time'; el.textContent=newTime; timeInp.replaceWith(el); }
@@ -2927,7 +2947,11 @@ async function saveEditMode(card) {
 function cancelEditMode(card) {
   // Restaurar emoji original
   const iconEl = card.querySelector('.meal-icon');
-  if (iconEl && card._origEmoji) { iconEl.textContent = card._origEmoji; iconEl.style.cursor = ''; iconEl.title = ''; iconEl.style.transform = ''; }
+  if (iconEl) {
+    if (card._iconPickerHandler) { iconEl.removeEventListener('click', card._iconPickerHandler); delete card._iconPickerHandler; }
+    if (card._origEmoji) { iconEl.textContent = card._origEmoji; }
+    iconEl.style.cursor = ''; iconEl.title = ''; iconEl.style.transform = '';
+  }
   // Restaurar nombre y hora originales
   const nameInp = card.querySelector('.edit-meal-name-inp');
   const timeInp = card.querySelector('.edit-meal-time-inp');
@@ -3177,8 +3201,7 @@ function applySnapshot(data) {
 
 // ── CLOUD SYNC ──
 async function loadData() {
-  let local = null;
-  local = lsGet(LOCAL_KEY, null);
+  let local = lsGet(LOCAL_KEY, null);
   if (local) applySnapshot(local);
   if (!CLOUD_CONFIGURED) return;
   setSyncStatus('loading', 'Sincronizando…');
@@ -3203,8 +3226,7 @@ async function loadData() {
 async function resetDay(dayId) {
   if (!await mobileConfirm('Resetear día', '¿Resetear este día al menú original?<br>Se perderán los cambios locales y se restaurarán los datos guardados en la nube.')) return;
   // Eliminar sólo las claves de este día del localStorage
-  let data = {};
-  data = lsGet(LOCAL_KEY, {});
+  let data = lsGet(LOCAL_KEY, {});
   document.getElementById(dayId)?.querySelectorAll('.meal-card[id]').forEach(c => delete data[c.id]);
   lsSet(LOCAL_KEY, data);
   // NO tocar Firebase: al recargar, loadData() volverá a leer la nube
@@ -3589,7 +3611,7 @@ function applyBatidoData(d) {
   if (d.extra) document.getElementById('batido-extra-view').textContent = d.extra;
   if (d.kcal !== undefined) document.getElementById('bm-kcal').textContent = '' + d.kcal + ' kcal';
   if (d.prot !== undefined) document.getElementById('bm-prot').textContent = '' + d.prot + 'g P';
-  if (d.carb) document.getElementById('bm-carb').textContent = '' + d.carb;
+  if (d.carb !== undefined) document.getElementById('bm-carb').textContent = '' + d.carb + 'g C';
   if (d.fat  !== undefined) document.getElementById('bm-fat').textContent  = '' + d.fat  + 'g G';
   if (d.protDosis) {
     document.getElementById('batido-prot-dosis-view').textContent = d.protDosis;
@@ -3744,7 +3766,7 @@ function syncBatidoToMenuCards(d) {
   const creatDosis = d.creatDosis || 3;
   const kcal       = d.kcal       !== undefined ? d.kcal : null;
   const prot       = d.prot       !== undefined ? d.prot : null;
-  const carb       = d.carb       || null;
+  const carb       = d.carb       !== undefined ? d.carb : null;
   const fat        = d.fat        !== undefined ? d.fat  : null;
 
   // Descripción visible del batido: solo los ingredientes (SIN el nombre del plato)
@@ -4120,6 +4142,8 @@ async function saveSuplEdit(btn) {
   // Restaurar HTML original de la lista y aplicar los nuevos valores visuales
   if (card._origItemsHTML !== undefined) {
     list.innerHTML = card._origItemsHTML;
+    attachLightboxToItems(list.querySelectorAll('.compra-item'));
+    attachImgFallback(list.querySelectorAll('.compra-img img'));
   }
   Object.entries(suplData).forEach(([id, d]) => {
     const item = list.querySelector(`.supl-product-item[data-supl-id="${id}"]`)
@@ -4145,8 +4169,7 @@ async function saveSuplEdit(btn) {
   renderCostSupl();
 
   // Persistir en localStorage y Firebase
-  let allCompra = {};
-  allCompra = lsGet(COMPRA_LOCAL_KEY, {});
+  let allCompra = lsGet(COMPRA_LOCAL_KEY, {});
   allCompra['suplementos'] = suplData;
   lsSet(COMPRA_LOCAL_KEY, allCompra);
 
@@ -4315,8 +4338,7 @@ async function saveCompraEdit(btn) {
   renderItemsToList(list, items);
   recalcTotalSemanal();
 
-  let allCompra = {};
-  allCompra = lsGet(COMPRA_LOCAL_KEY, {});
+  let allCompra = lsGet(COMPRA_LOCAL_KEY, {});
   allCompra[catId] = items;
   lsSet(COMPRA_LOCAL_KEY, allCompra);
 
@@ -4970,8 +4992,7 @@ function openPlanModal(planId) {
 
   if (planId) {
     // Try localStorage/Firebase data first
-    let allPlans = {};
-    allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
+    let allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
     let data = allPlans[planId];
     // Fallback: read from DOM (hardcoded plans)
     if (!data) data = peReadDomPlan(planId);
@@ -5098,8 +5119,7 @@ async function savePlanModal() {
   const toggleBar = document.getElementById('entreno-toggle-bar');
 
   // Save to localStorage
-  let allPlans = {};
-  allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
+  let allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
   allPlans[planId] = data;
   lsSet(ENTRENO_PLANS_LOCAL_KEY, allPlans);
 
@@ -5152,8 +5172,7 @@ async function savePlanModal() {
 }
 
 async function deletePlan(planId) {
-  let allPlans = {};
-  allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
+  let allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
   const planName = (allPlans[planId] && allPlans[planId].nombre) || planId;
   const ok = await mobileConfirm('Eliminar plan', `¿Seguro que quieres eliminar el plan <strong>${escapeHtml(planName)}</strong>?<br><br>Esta acción no se puede deshacer.`);
   if (!ok) return;
@@ -5193,8 +5212,7 @@ function _migrateOldPlanId(oldId, data, existingIds) {
 }
 
 async function loadEntrenoPlans() {
-  let allPlans = {};
-  allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
+  let allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
   if (CLOUD_CONFIGURED) {
     try {
       const res = await fetch(FB_BASE + '/' + ENTRENO_PLANS_FB_KEY + '.json');
