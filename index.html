@@ -20,7 +20,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
 button,select,input[type=button],input[type=submit],a,summary{touch-action:manipulation}
 /* Prevent iOS zoom on input focus */
 @media(max-width:600px){
-  input,textarea,select:not(.day-type-select){font-size:16px !important}
+  input,textarea,select{font-size:16px !important}
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;min-height:100dvh;line-height:1.6;padding-bottom:env(safe-area-inset-bottom);overflow-x:hidden}
 
@@ -183,13 +183,6 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .btn-cancel-meal:hover{border-color:var(--text2)}
 .reset-day-btn{background:rgba(240,168,55,.1);border:1px solid rgba(240,168,55,.35);color:var(--accent3);font-size:.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;padding:2px 8px;border-radius:5px;transition:all .2s;margin-left:.5rem;font-weight:600}
 .reset-day-btn:hover{background:rgba(240,168,55,.2);border-color:var(--accent3);color:var(--accent3)}
-
-/* DAY TYPE SELECT */
-.day-type-select{appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;padding:4px 28px 4px 10px;cursor:pointer;letter-spacing:.4px;text-transform:uppercase;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;transition:border-color .2s,background-color .2s,color .2s}
-.day-type-select:focus{outline:none;border-color:var(--border)}
-.day-type-select.entreno{width:148px;background-color:rgba(216,88,24,.15);border-color:rgba(216,88,24,.4);color:#d85818;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23d85818'/%3E%3C/svg%3E")}
-.day-type-select.descanso{width:130px;background-color:rgba(160,100,240,.12);border-color:rgba(160,100,240,.3);color:#b07af0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23b07af0'/%3E%3C/svg%3E")}
-.day-type-select option{background:var(--surface2);color:var(--text);font-size:.85rem;text-transform:none;letter-spacing:0;font-weight:500}
 
 /* ENTRENO DAY CARDS */
 .edc{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.85rem .6rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45rem;transition:background .2s,border-color .2s;text-align:center}
@@ -429,9 +422,6 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   .day-tabs{gap:.2rem;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:3px;margin-bottom:1rem}
   .day-tabs::-webkit-scrollbar{display:none}
   .day-tab{padding:6px 11px;font-size:.72rem;flex-shrink:0;border-radius:7px}
-
-  /* ── DAY TYPE ── */
-  .day-type-select{font-size:.68rem !important;padding:3px 20px 3px 7px;letter-spacing:.2px;background-position:right 6px center;font-weight:600}
 
   /* ── MEAL CARDS ── */
   .meals-grid{grid-template-columns:1fr;gap:.65rem;margin-bottom:.85rem}
