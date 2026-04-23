@@ -206,10 +206,10 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   .edc-name{font-size:.9rem}
   .edc-btn{font-size:.68rem;padding:5px 3px}
   /* Picker días entreno: celdas más grandes con scroll horizontal correcto */
-  #entreno-dias-picker > div[style*="grid-template-columns"]{grid-template-columns:repeat(7,90px) !important;width:max-content;gap:.45rem !important}
-  #entreno-dias-picker .edc{padding:.85rem .5rem;border-radius:9px;width:90px;box-sizing:border-box}
+  #entreno-dias-picker > div[style*="grid-template-columns"]{grid-template-columns:repeat(7,96px) !important;width:max-content;gap:.45rem !important}
+  #entreno-dias-picker .edc{padding:.85rem .4rem;border-radius:9px;width:96px;box-sizing:border-box}
   #entreno-dias-picker .edc-name{font-size:1rem}
-  #entreno-dias-picker .edc-btn{font-size:.73rem;padding:6px 4px}
+  #entreno-dias-picker .edc-btn{font-size:.72rem;padding:9px 6px;gap:4px;letter-spacing:.2px}
 }
 
 /* SUPLEMENTOS TRACKER */
@@ -2011,7 +2011,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pickerGrid = document.querySelector('#entreno-dias-picker > div[style*="grid-template-columns"]');
     if (pickerGrid && !pickerGrid.dataset.scrollHint) {
       // En móvil: el grid tiene ancho fijo, el padre hace scroll
-      pickerGrid.style.gridTemplateColumns = 'repeat(7,90px)';
+      pickerGrid.style.gridTemplateColumns = 'repeat(7,96px)';
       pickerGrid.style.width = 'max-content';
       pickerGrid.style.paddingBottom = '3px';
       // Convertir el padre en el scrollable y aplicar hint sobre él
