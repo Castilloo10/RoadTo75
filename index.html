@@ -156,7 +156,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .exercise{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);gap:.5rem}
 .exercise:last-child{border-bottom:none}
 .ex-name{font-size:.83rem;color:var(--text2)} .ex-name strong{color:var(--text);display:block}
-.ex-sets{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);white-space:nowrap;font-weight:600}
+.ex-sets{font-family:'JetBrains Mono',monospace;font-size:.9rem;color:var(--accent);white-space:nowrap;font-weight:600}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem}
 
 /* EDIT MODE */
@@ -192,19 +192,24 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .day-type-select option{background:var(--surface2);color:var(--text);font-size:.85rem;text-transform:none;letter-spacing:0;font-weight:500}
 
 /* ENTRENO DAY CARDS */
-.edc{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.6rem .5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem;transition:background .2s,border-color .2s;text-align:center}
+.edc{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.85rem .6rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45rem;transition:background .2s,border-color .2s;text-align:center}
 .edc.day-entreno{background:rgba(181,240,55,.1);border-color:rgba(181,240,55,.35)}
 .edc.day-descanso{background:rgba(160,100,240,.1);border-color:rgba(160,100,240,.3)}
 .edc-name{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:0;color:var(--text);line-height:1;text-align:center;width:100%;display:flex;align-items:center;justify-content:center;padding:0 0 0 .08em}
 .edc-emoji{width:1.1em;display:inline-block;text-align:center;flex-shrink:0}
-.edc-btn{width:100%;font-family:'DM Sans',sans-serif;font-size:.63rem;font-weight:700;padding:4px 2px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:all .18s;white-space:nowrap;line-height:1.3;text-align:center;display:flex;align-items:center;justify-content:center;gap:2px}
+.edc-btn{width:100%;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;padding:6px 4px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:all .18s;white-space:nowrap;line-height:1.3;text-align:center;display:flex;align-items:center;justify-content:center;gap:2px}
 .edc-btn:hover{border-color:var(--text2);color:var(--text)}
 .edc-btn.active-entreno{background:rgba(181,240,55,.18);border-color:rgba(181,240,55,.5);color:var(--accent)}
 .edc-btn.active-descanso{background:rgba(160,100,240,.18);border-color:rgba(160,100,240,.45);color:#b07af0}
 @media(max-width:600px){
-  .edc{padding:.45rem .2rem;border-radius:8px}
+  .edc{padding:.65rem .35rem;border-radius:8px}
   .edc-name{font-size:.9rem}
-  .edc-btn{font-size:.56rem;padding:3px 2px}
+  .edc-btn{font-size:.68rem;padding:5px 3px}
+  /* Picker días entreno: celdas más grandes con scroll horizontal correcto */
+  #entreno-dias-picker > div[style*="grid-template-columns"]{grid-template-columns:repeat(7,90px) !important;width:max-content;gap:.45rem !important}
+  #entreno-dias-picker .edc{padding:.85rem .5rem;border-radius:9px;width:90px;box-sizing:border-box}
+  #entreno-dias-picker .edc-name{font-size:1rem}
+  #entreno-dias-picker .edc-btn{font-size:.73rem;padding:6px 4px}
 }
 
 /* SUPLEMENTOS TRACKER */
@@ -487,16 +492,17 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   .price-total .label em{font-size:.9rem !important}
   .price-total .amount{font-size:1.9rem}
   .price-total--supl{flex-direction:column;align-items:flex-start;gap:.6rem}
-  .price-total--supl-label{font-size:.88rem !important;line-height:1.3}
-  .price-total--supl-label em{font-size:.58rem !important;white-space:nowrap;vertical-align:middle}
+  .price-total--supl-label{font-size:1.15rem !important;line-height:1.2}
+  .price-total--supl-label em{font-size:.9rem !important;white-space:nowrap;vertical-align:middle}
   .price-total--supl-amounts{display:flex;gap:1.25rem;width:100%}
   .price-total--supl-col{text-align:left}
   .price-total--supl-period{font-size:.72rem}
   #supl-cost-mes,#supl-cost-anio{font-size:1.75rem}
 
   /* ── ENTRENAMIENTO ── */
-  .dias-entreno{grid-template-columns:1fr;gap:.65rem}
-  .dia-entreno{padding:.9rem}
+  .dias-entreno{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.65rem;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .dias-entreno::-webkit-scrollbar{display:none}
+  .dia-entreno{min-width:280px;padding:1.1rem}
   .dia-entreno-header{gap:8px;margin-bottom:.75rem}
   .dia-badge{font-size:.78rem;padding:2px 8px}
   .dia-title{font-size:.85rem}
@@ -505,7 +511,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   .etog-btn{flex:1;text-align:center;padding:7px 8px;font-size:.78rem}
   .exercise{padding:5px 0}
   .ex-name{font-size:.78rem}
-  .ex-sets{font-size:.7rem}
+  .ex-sets{font-size:.9rem}
 
   /* ── PLAN EDITOR MODAL ── */
   .plan-day-box{padding:.8rem}
@@ -1885,9 +1891,8 @@ document.addEventListener('DOMContentLoaded', () => {
   loadBatidoData();
   loadCompraData();
   loadSuplStateFromCloud();
-  loadDayTypes();
   loadBatidoActiveState();
-  loadEntrenoPlans();
+  Promise.all([loadDayTypes(), loadEntrenoPlans()]).then(() => activateRecommendedPlan());
   loadWeekendExcluded();
 
   // Procesar planes hardcodeados: extraer día de dia-sub y mostrarlo como badge naranja
@@ -2005,12 +2010,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Picker 7 días entreno
     const pickerGrid = document.querySelector('#entreno-dias-picker > div[style*="grid-template-columns"]');
     if (pickerGrid && !pickerGrid.dataset.scrollHint) {
-      pickerGrid.style.overflowX = 'auto';
-      pickerGrid.style.webkitOverflowScrolling = 'touch';
-      pickerGrid.style.scrollbarWidth = 'none';
-      pickerGrid.style.gridTemplateColumns = 'repeat(7,minmax(68px,1fr))';
+      // En móvil: el grid tiene ancho fijo, el padre hace scroll
+      pickerGrid.style.gridTemplateColumns = 'repeat(7,90px)';
+      pickerGrid.style.width = 'max-content';
       pickerGrid.style.paddingBottom = '3px';
-      initScrollHint(pickerGrid);
+      // Convertir el padre en el scrollable y aplicar hint sobre él
+      const pickerParent = pickerGrid.parentElement;
+      if (pickerParent) {
+        pickerParent.style.overflowX = 'auto';
+        pickerParent.style.webkitOverflowScrolling = 'touch';
+        pickerParent.style.scrollbarWidth = 'none';
+        pickerParent.dataset.scrollHint || initScrollHint(pickerParent);
+      }
+      pickerGrid.dataset.scrollHint = '1';
     }
 
     // Toggle bar de planes de entrenamiento — igual que el nav principal:
