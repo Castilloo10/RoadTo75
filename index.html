@@ -446,9 +446,11 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   .btn-save-meal,.btn-cancel-meal{flex:1;text-align:center;padding:9px 10px;font-size:.82rem}
 
   /* ── DAY TOTAL ── */
-  .day-total{flex-direction:column;align-items:flex-start;gap:.35rem;padding:.7rem .9rem}
-  .day-total-label{font-size:.72rem}
-  .day-total-macros{gap:.3rem}
+  .day-total{display:grid;grid-template-columns:1fr auto;align-items:center;gap:.35rem .5rem;padding:.7rem .9rem}
+  .day-total-label{font-size:.76rem;grid-column:1;grid-row:1}
+  .day-total .reset-day-btn{grid-column:2;grid-row:1;margin-left:0;font-size:.76rem;padding:4px 10px}
+  .day-total .btn-exclude-day{grid-column:1/-1}
+  .day-total-macros{gap:.3rem;grid-column:1/-1}
 
   /* ── COMPRA ── */
   .compra-grid{grid-template-columns:1fr;gap:.65rem;margin-bottom:1.25rem}
@@ -482,11 +484,11 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   /* ── PRICE TOTALS ── */
   .price-total{flex-direction:column;align-items:flex-start;gap:.6rem;padding:.9rem 1rem;margin-top:.75rem}
   .price-total .label{font-size:1.15rem;line-height:1.2}
-  .price-total .label em{font-size:.9rem}
+  .price-total .label em{font-size:.9rem !important}
   .price-total .amount{font-size:1.9rem}
   .price-total--supl{flex-direction:column;align-items:flex-start;gap:.6rem}
-  .price-total--supl-label{font-size:1.05rem !important;line-height:1.3}
-  .price-total--supl-label em{font-size:.78rem}
+  .price-total--supl-label{font-size:.88rem !important;line-height:1.3}
+  .price-total--supl-label em{font-size:.58rem !important;white-space:nowrap;vertical-align:middle}
   .price-total--supl-amounts{display:flex;gap:1.25rem;width:100%}
   .price-total--supl-col{text-align:left}
   .price-total--supl-period{font-size:.72rem}
@@ -960,27 +962,27 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   -->
 <div class="compra-grid">
 <div class="compra-card" data-cat-id="proteinas">
-<div class="compra-cat-header"><div class="compra-cat" style="color:#f09050;margin-bottom:0">🍗 PROTEÍNAS ANIMALES</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-cat-header"><div class="compra-cat" style="color:#f09050;margin-bottom:0">🍗PROTEÍNAS ANIMALES</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
 <div class="compra-card" data-cat-id="lacteos">
-<div class="compra-cat-header"><div class="compra-cat" style="color:#b07af0;margin-bottom:0">🥛 LÁCTEOS Y DERIVADOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-cat-header"><div class="compra-cat" style="color:#b07af0;margin-bottom:0">🥛LÁCTEOS Y DERIVADOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
 <div class="compra-card" data-cat-id="hidratos">
-<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent3);margin-bottom:0">🌾 HIDRATOS DE CARBONO</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent3);margin-bottom:0">🌾HIDRATOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
 <div class="compra-card" data-cat-id="frutas">
-<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent2);margin-bottom:0">🥦 FRUTAS Y VERDURAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent2);margin-bottom:0">🥦FRUTAS Y VERDURAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
 <div class="compra-card" data-cat-id="despensa">
-<div class="compra-cat-header"><div class="compra-cat" style="color:var(--red);margin-bottom:0">🧴 DESPENSA Y GRASAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--red);margin-bottom:0">🧴DESPENSA Y GRASAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
 <div class="compra-card" data-cat-id="suplementos">
-<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">💊 SUPLEMENTOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">💊SUPLEMENTACIÓN</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <!-- PROTEÍNA -->
 <div class="compra-items-list">
 <div class="compra-item supl-product-item" data-supl-id="prot" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-bottom:.75rem">
@@ -1029,9 +1031,9 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <div class="label">TOTAL SEMANAL ESTIMADO <em style="font-size:1.3rem;color:var(--text2);margin-top:4px">(SIN SUPLEMENTOS)</em></div>
 <div class="amount" id="compra-total-semanal">—</div>
 </div>
-<!-- ══ COSTE SUPLEMENTOS ══ -->
+<!-- ══ COSTE SUPLEMENTACIÓN ══ -->
 <div class="price-total price-total--supl" style="border-color:var(--accent2);margin-top:.75rem">
-<div class="price-total--supl-label label">COSTE SUPLEMENTOS / MES · AÑO <em style="font-size:1rem;color:var(--text2)">(PRECIO SEGÚN GRAMOS INDICADOS)</em></div>
+<div class="price-total--supl-label label">COSTE SUPLEMENTACIÓN / MES · AÑO <em style="font-size:1.3rem;color:var(--text2)">(SEGÚN GRAMOS INDICADOS)</em></div>
 <div class="price-total--supl-amounts">
 <div class="price-total--supl-col">
 <div class="price-total--supl-period">/MES</div>
@@ -1644,8 +1646,8 @@ function sortToggleBar() {
     return (planOrder[idA] ?? 999) - (planOrder[idB] ?? 999);
   });
   // Find the insertion parent (entreno section, after the toggle bar wrapper)
-  const toggleWrapper = section.querySelector('div[style*="display:flex"]');
-  const insertAfter = toggleWrapper || section.querySelector('.entreno-toggle');
+  const insertTarget = section.querySelector('#entreno-toggle-bar');
+  const insertAfter = (insertTarget && insertTarget.parentElement !== section ? insertTarget.parentElement : insertTarget) || section.querySelector('.entreno-toggle');
   // Insert plans in correct order: append last-to-first right after insertAfter
   // so final DOM order is first-to-last
   if (insertAfter) {
