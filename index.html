@@ -4491,7 +4491,7 @@ function peExerciseSelectHTML(currentValue, dayBadge) {
   };
   const allInScope = types.flatMap(t => EXERCISES_BY_TYPE[t] || []);
   const curInScope = cur && allInScope.includes(cur);
-  let html = `<select class="plan-input pe-ex-nombre">`;
+  let html = `<select class="plan-badge-select pe-ex-nombre" style="width:100%">`;
   html += `<option value=""${cur ? '' : ' selected'}>-- Selecciona un ejercicio --</option>`;
   if (cur && !curInScope) {
     html += `<option value="${escapeHtml(cur)}" selected>${escapeHtml(cur)}</option>`;
@@ -5113,6 +5113,31 @@ async function savePlanModal() {
   const isNew = !document.getElementById('plan-' + planId);
   const planChanges = [];
 
+  // Devuelve cambios por ejercicio (nuevo / eliminado / modificado en nombre/desc/series)
+  function _peExerciseChanges(oldEx, newEx, dayIdx) {
+    const out = [];
+    const prefix = 'Día ' + (dayIdx + 1) + ' · Ej.';
+    const fmt = (name, ser) => (name || '') + ((ser || '') ? ' · ' + ser : '');
+    const max = Math.max((oldEx || []).length, (newEx || []).length);
+    for (let j = 0; j < max; j++) {
+      const o = (oldEx || [])[j] || {};
+      const n = (newEx || [])[j] || {};
+      const oName = (o.nombre || '').trim();
+      const nName = (n.nombre || '').trim();
+      const oDesc = (o.desc   || '').trim();
+      const nDesc = (n.desc   || '').trim();
+      const oSer  = (o.series || '').trim();
+      const nSer  = (n.series || '').trim();
+      if (!oName && !nName) continue;
+      if (!oName && nName)  { out.push({ label: prefix + ' ' + (j+1) + ' (nuevo)',     from: '—',               to: fmt(nName, nSer) }); continue; }
+      if (oName && !nName)  { out.push({ label: prefix + ' ' + (j+1) + ' (eliminado)', from: fmt(oName, oSer),  to: '—' });              continue; }
+      if (oName !== nName)  out.push({ label: prefix + ' ' + (j+1) + ' — Nombre',      from: oName,             to: nName });
+      if (oDesc !== nDesc)  out.push({ label: prefix + ' ' + (j+1) + ' — Descripción', from: oDesc || '—',      to: nDesc || '—' });
+      if (oSer  !== nSer)   out.push({ label: prefix + ' ' + (j+1) + ' — Series',      from: oSer  || '—',      to: nSer  || '—' });
+    }
+    return out;
+  }
+
   if (isNew) {
     // New plan: show all fields as "— → value"
     planChanges.push({ label: 'Nombre',  from: '—', to: data.nombre });
@@ -5123,9 +5148,8 @@ async function savePlanModal() {
       planChanges.push({ label: 'Día ' + (i+1) + ' — Tipo',   from: '—', to: badgeDisplayLabel(d.badge || '', d.badgeCustom || '') });
       planChanges.push({ label: 'Día ' + (i+1) + ' — Título', from: '—', to: d.titulo || '—' });
       if (d.diaSemana) planChanges.push({ label: 'Día ' + (i+1) + ' — Día semana', from: '—', to: d.diaSemana });
-      if (d.ejercicios && d.ejercicios.length) {
-        planChanges.push({ label: 'Día ' + (i+1) + ' — Ejercicios', from: '—', to: d.ejercicios.map(e => e.nombre).filter(Boolean).join(', ') });
-      }
+      // Ejercicios uno a uno (ya se muestran como "nuevo" al tener oldEx vacío)
+      _peExerciseChanges([], d.ejercicios || [], i).forEach(c => planChanges.push(c));
     });
   } else {
     // Editing: fetch from Firebase first, fallback to localStorage then DOM
@@ -5164,10 +5188,8 @@ async function savePlanModal() {
         planChanges.push({ label: 'Día ' + (i+1) + ' — Descripción', from: old.descripcion || '—', to: d.descripcion || '—' });
       if ((old.diaSemana || '') !== (d.diaSemana || ''))
         planChanges.push({ label: 'Día ' + (i+1) + ' — Día semana',  from: old.diaSemana || '—',   to: d.diaSemana || '—' });
-      const oldExNames = (old.ejercicios || []).map(e => e.nombre).join(', ');
-      const newExNames = (d.ejercicios   || []).map(e => e.nombre).join(', ');
-      if (oldExNames !== newExNames)
-        planChanges.push({ label: 'Día ' + (i+1) + ' — Ejercicios',  from: oldExNames || '—',      to: newExNames || '—' });
+      // Ejercicios: solo los que han cambiado (nuevo / eliminado / nombre / desc / series)
+      _peExerciseChanges(old.ejercicios || [], d.ejercicios || [], i).forEach(c => planChanges.push(c));
       if ((old.comentario || '') !== (d.comentario || ''))
         planChanges.push({ label: 'Día ' + (i+1) + ' — Comentario',  from: old.comentario || '—',  to: d.comentario || '—' });
     });
