@@ -580,9 +580,11 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .plan-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;padding:7px 10px;transition:border-color .2s}
 .plan-input:focus{outline:none;border-color:var(--accent)}
 .plan-day-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:.85rem}
-.plan-day-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;gap:.5rem}
+.plan-day-header{display:flex;align-items:center;flex-wrap:wrap;margin-bottom:.85rem;gap:.5rem}
 .plan-day-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--accent2);letter-spacing:.5px}
-.plan-ex-row{display:grid;grid-template-columns:1fr 120px;gap:.5rem;margin-bottom:.5rem;align-items:start}
+.plan-day-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.6rem;margin-bottom:.5rem}
+.pe-plan-head{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:.9rem 1rem;margin-bottom:1.25rem;display:flex;flex-direction:column;gap:.75rem}
+.plan-ex-row{display:grid;grid-template-columns:1fr 210px;gap:.6rem;margin-bottom:.5rem;align-items:start;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;padding:.55rem .65rem}
 @media(max-width:480px){.plan-ex-row{grid-template-columns:1fr}}
 .plan-ex-row .btn-del-ex{background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:.75rem;font-weight:600;transition:all .2s;align-self:center;white-space:nowrap;font-family:'DM Sans',sans-serif}
 .plan-ex-row .btn-del-ex:hover{background:rgba(240,55,55,.2);border-color:var(--red)}
@@ -4510,6 +4512,49 @@ function peExerciseSelectHTML(currentValue, dayBadge) {
   return html;
 }
 
+// ── Helpers para series/reps con selectores ──
+// Parsea "4×6-8" / "3x10" / "2X12-15" → {s:'4', r1:'6', r2:'8'}
+function peParseSeries(str) {
+  const m = /^(\d+)\s*[×xX*]\s*(\d+)(?:\s*[-–]\s*(\d+))?\s*$/.exec((str || '').trim());
+  return m ? { s: m[1], r1: m[2], r2: m[3] || '' } : { s:'', r1:'', r2:'' };
+}
+// Serializa a "S×R" o "S×R1-R2" (cadena vacía si faltan S o R1)
+function peFormatSeries(s, r1, r2) {
+  const S = String(s || '').trim(), R1 = String(r1 || '').trim(), R2 = String(r2 || '').trim();
+  if (!S || !R1) return '';
+  if (R2 && parseInt(R2) > parseInt(R1)) return S + '×' + R1 + '-' + R2;
+  return S + '×' + R1;
+}
+// Genera <option> de 1..max (con placeholder "—")
+function peNumOptions(max, selected) {
+  const sel = String(selected || '');
+  let html = `<option value="">—</option>`;
+  for (let i = 1; i <= max; i++) {
+    html += `<option value="${i}"${String(i) === sel ? ' selected' : ''}>${i}</option>`;
+  }
+  return html;
+}
+// Muestra/oculta el select de reps2 según el checkbox "Rango"
+function peRangoToggle(chk) {
+  const row = chk.closest('.plan-ex-row'); if (!row) return;
+  const wrap = row.querySelector('.pe-ex-reps2-wrap'); if (!wrap) return;
+  wrap.style.display = chk.checked ? 'inline-flex' : 'none';
+  if (chk.checked) peRepsSync(row.querySelector('.pe-ex-reps1'));
+}
+// Valida que reps2 > reps1 (auto-ajusta reps2 = min(300, reps1+1))
+function peRepsSync(el) {
+  if (!el) return;
+  const row = el.closest('.plan-ex-row'); if (!row) return;
+  const chk = row.querySelector('.pe-ex-rango');
+  if (!chk || !chk.checked) return;
+  const r1 = row.querySelector('.pe-ex-reps1');
+  const r2 = row.querySelector('.pe-ex-reps2');
+  if (!r1 || !r2) return;
+  const v1 = parseInt(r1.value) || 0;
+  const v2 = parseInt(r2.value) || 0;
+  if (v1 && v2 <= v1) r2.value = String(Math.min(300, v1 + 1));
+}
+
 let _peEditingPlanId = null;
 let _peDayCount = 0;
 
@@ -4801,39 +4846,34 @@ function peAddDay(dayData) {
 
   box.innerHTML = `
     <div class="plan-day-header">
-      <div style="display:flex;align-items:center;gap:.6rem;flex:1;min-width:0">
-        <select class="pe-diaSemana" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'Bebas Neue',sans-serif;font-size:.85rem;font-weight:400;padding:3px 28px 3px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:background-color .2s,border-color .2s,color .2s;background-repeat:no-repeat;background-position:right 8px center">
-          <optgroup label="DÍA DE LA SEMANA">
-          <option value="LUNES"     ${(d.diaSemana||'LUNES')==='LUNES'     ?'selected':''}>LUNES</option>
-          <option value="MARTES"    ${(d.diaSemana||'')==='MARTES'    ?'selected':''}>MARTES</option>
-          <option value="MIÉRCOLES" ${(d.diaSemana||'')==='MIÉRCOLES' ?'selected':''}>MIÉRCOLES</option>
-          <option value="JUEVES"    ${(d.diaSemana||'')==='JUEVES'    ?'selected':''}>JUEVES</option>
-          <option value="VIERNES"   ${(d.diaSemana||'')==='VIERNES'   ?'selected':''}>VIERNES</option>
-          <option value="SÁBADO"    ${(d.diaSemana||'')==='SÁBADO'    ?'selected':''}>SÁBADO</option>
-          <option value="DOMINGO"   ${(d.diaSemana||'')==='DOMINGO'   ?'selected':''}>DOMINGO</option>
-          </optgroup>
-        </select>
-      </div>
-      <button class="btn-del-day" onclick="peDelDay(this)">🗑 Eliminar día</button>
-    </div>
-    <div style="margin-bottom:.75rem">
-      <label class="plan-field-label">Tipo <span style="color:var(--accent)">*</span></label>
-      <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
-        ${badgeSelectHTML(d.badge || 'pecho')}
+      <select class="pe-diaSemana" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'Bebas Neue',sans-serif;font-size:.85rem;font-weight:400;padding:3px 28px 3px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:background-color .2s,border-color .2s,color .2s;background-repeat:no-repeat;background-position:right 8px center">
+        <optgroup label="DÍA DE LA SEMANA">
+        <option value="LUNES"     ${(d.diaSemana||'LUNES')==='LUNES'     ?'selected':''}>LUNES</option>
+        <option value="MARTES"    ${(d.diaSemana||'')==='MARTES'    ?'selected':''}>MARTES</option>
+        <option value="MIÉRCOLES" ${(d.diaSemana||'')==='MIÉRCOLES' ?'selected':''}>MIÉRCOLES</option>
+        <option value="JUEVES"    ${(d.diaSemana||'')==='JUEVES'    ?'selected':''}>JUEVES</option>
+        <option value="VIERNES"   ${(d.diaSemana||'')==='VIERNES'   ?'selected':''}>VIERNES</option>
+        <option value="SÁBADO"    ${(d.diaSemana||'')==='SÁBADO'    ?'selected':''}>SÁBADO</option>
+        <option value="DOMINGO"   ${(d.diaSemana||'')==='DOMINGO'   ?'selected':''}>DOMINGO</option>
+        </optgroup>
+      </select>
+      ${badgeSelectHTML(d.badge || 'pecho')}
         <span class="pe-badge-custom-preview" style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;letter-spacing:.5px;color:#c07af0;display:${d.badge==='custom'?'inline':'none'}">${d.badgeCustom ? '\u2192 ' + escapeHtml(d.badgeCustom) : ''}</span>
-        <button class="pe-badge-custom-edit-btn" onclick="peOpenCustomPromptFromEditBtn(this)" style="display:${d.badge==='custom'?'inline-flex':'none'};background:rgba(181,240,55,.12);border:1px dashed rgba(181,240,55,.5);color:var(--accent);border-radius:7px;padding:4px 11px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;align-items:center;gap:4px;transition:all .2s" onmouseover="this.style.background='rgba(181,240,55,.22)';this.style.borderColor='var(--accent)'" onmouseout="this.style.background='rgba(181,240,55,.12)';this.style.borderColor='rgba(181,240,55,.5)'">✏ Cambiar nombre personalizado</button>
-      </div>
+        <button class="pe-badge-custom-edit-btn" onclick="peOpenCustomPromptFromEditBtn(this)" style="display:${d.badge==='custom'?'inline-flex':'none'};background:rgba(181,240,55,.12);border:1px dashed rgba(181,240,55,.5);color:var(--accent);border-radius:7px;padding:4px 11px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;align-items:center;gap:4px;transition:all .2s" onmouseover="this.style.background='rgba(181,240,55,.22)';this.style.borderColor='var(--accent)'" onmouseout="this.style.background='rgba(181,240,55,.12)';this.style.borderColor='rgba(181,240,55,.5)'">✏ Cambiar nombre</button>
       <input class="pe-badge-custom" type="hidden" value="${escapeHtml(d.badgeCustom || '')}"/>
+      <button class="btn-del-day" onclick="peDelDay(this)" style="margin-left:auto">🗑 Eliminar día</button>
     </div>
-    <div style="margin-bottom:.6rem">
-      <label class="plan-field-label">Título <span style="color:var(--accent)">*</span></label>
-      <input class="plan-input pe-title" placeholder="ej. Día A · Empuje" type="text" value="${escapeHtml(d.titulo || '')}"/>
+    <div class="plan-day-info">
+      <div>
+        <label class="plan-field-label">Título <span style="color:var(--accent)">*</span></label>
+        <input class="plan-input pe-title" placeholder="ej. Día A · Empuje" type="text" value="${escapeHtml(d.titulo || '')}"/>
+      </div>
+      <div>
+        <label class="plan-field-label">Descripción</label>
+        <input class="plan-input pe-desc" placeholder="ej. Pecho · Hombros · Tríceps" type="text" value="${escapeHtml(d.descripcion || '')}"/>
+      </div>
     </div>
-    <div style="margin-bottom:.85rem">
-      <label class="plan-field-label">Descripción</label>
-      <input class="plan-input pe-desc" placeholder="ej. Pecho · Hombros · Tríceps" type="text" value="${escapeHtml(d.descripcion || '')}"/>
-    </div>
-    <div class="plan-field-label" style="margin-bottom:.5rem">Ejercicios</div>
+    <div class="plan-field-label" style="margin:.25rem 0 .5rem">Ejercicios</div>
     <div class="pe-ejercicios">${exRows}</div>
     <button class="btn-add-ex" onclick="peAddEx(this)">+ Añadir ejercicio</button>
     <div style="margin-top:.85rem">
@@ -4862,15 +4902,33 @@ function peAddDay(dayData) {
 
 function peExRowHTML(ex, dayBadge) {
   ex = ex || {};
-  const badge = dayBadge || 'pecho';
+  const badge = dayBadge || 'empuje';
+  const p = peParseSeries(ex.series || '');
+  const hasRango = !!p.r2;
+  const numStyle = 'padding:4px 6px;font-size:.9rem;min-width:52px;width:auto;font-family:\'Bebas Neue\',sans-serif;letter-spacing:.5px';
+  const sep = 'color:var(--text2);font-weight:700;font-size:1rem;font-family:\'Bebas Neue\',sans-serif';
   return `<div class="plan-ex-row">
     <div style="display:flex;flex-direction:column;gap:.35rem">
       ${peExerciseSelectHTML(ex.nombre || '', badge)}
       <input class="plan-input pe-ex-desc" placeholder="Descripción / grupo muscular" type="text" value="${escapeHtml(ex.desc || '')}" style="font-size:.8rem"/>
     </div>
-    <div style="display:flex;flex-direction:column;gap:.35rem">
-      <input class="plan-input pe-ex-series" placeholder="ej. 4×6-8" type="text" value="${escapeHtml(ex.series || '')}"/>
-      <button class="btn-del-ex" onclick="peDelEx(this)">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.4rem">
+      <div style="display:flex;align-items:center;gap:5px;flex-wrap:nowrap">
+        <select class="plan-input pe-ex-series-num" style="${numStyle}">${peNumOptions(100, p.s)}</select>
+        <span style="${sep}">×</span>
+        <select class="plan-input pe-ex-reps1" onchange="peRepsSync(this)" style="${numStyle}">${peNumOptions(300, p.r1)}</select>
+        <span class="pe-ex-reps2-wrap" style="display:${hasRango ? 'inline-flex' : 'none'};align-items:center;gap:5px">
+          <span style="${sep}">–</span>
+          <select class="plan-input pe-ex-reps2" onchange="peRepsSync(this)" style="${numStyle}">${peNumOptions(300, p.r2)}</select>
+        </span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+        <label style="display:inline-flex;align-items:center;gap:5px;font-size:.72rem;color:var(--text2);cursor:pointer;user-select:none">
+          <input type="checkbox" class="pe-ex-rango" onchange="peRangoToggle(this)"${hasRango ? ' checked' : ''}/>
+          Rango
+        </label>
+        <button class="btn-del-ex" onclick="peDelEx(this)">🗑</button>
+      </div>
     </div>
   </div>`;
 }
@@ -4919,9 +4977,17 @@ function peReadData() {
     const comentario  = box.querySelector('.pe-comentario').value.trim();
     const ejercicios  = [];
     box.querySelectorAll('.plan-ex-row').forEach(row => {
-      const nombre  = row.querySelector('.pe-ex-nombre').value.trim();
-      const desc    = row.querySelector('.pe-ex-desc').value.trim();
-      const series  = row.querySelector('.pe-ex-series').value.trim();
+      const nombre = row.querySelector('.pe-ex-nombre').value.trim();
+      const desc   = row.querySelector('.pe-ex-desc').value.trim();
+      const sSel   = row.querySelector('.pe-ex-series-num');
+      const r1Sel  = row.querySelector('.pe-ex-reps1');
+      const rango  = row.querySelector('.pe-ex-rango');
+      const r2Sel  = row.querySelector('.pe-ex-reps2');
+      const series = peFormatSeries(
+        sSel  ? sSel.value  : '',
+        r1Sel ? r1Sel.value : '',
+        (rango && rango.checked && r2Sel) ? r2Sel.value : ''
+      );
       if (nombre) ejercicios.push({ nombre, desc, series });
     });
     dias.push({ badge: badgeSel ? badgeSel.value : 'empuje', badgeCustom, titulo, descripcion, diaSemana, ejercicios, comentario });
@@ -5403,16 +5469,16 @@ async function loadEntrenoPlans() {
       <button id="modal-plan-close" onclick="closePlanModal()" title="Cerrar">✕</button>
     </div>
     <div id="modal-plan-body">
-      <!-- Nombre del plan y estructura general -->
-      <div style="margin-bottom:1rem">
-        <label class="plan-field-label">Nombre del plan <span style="color:var(--accent)">*</span></label>
-        <input class="plan-input" id="pe-nombre" placeholder="ej. Plan 5 Días" type="text"/>
-      </div>
-      <div style="margin-bottom:1.25rem">
-        <label class="plan-field-label">Descripción de la estructura</label>
-        <input class="plan-input" id="pe-estructura" placeholder="ej. Estructura Push/Pull/Legs · Lunes – Miércoles – Viernes" type="text"/>
-        <div style="margin-top:.4rem">
-          <input class="plan-input" id="pe-estructura2" placeholder="ej. Cada músculo se trabaja 1 vez/semana con alto volumen." type="text" style="margin-top:.35rem"/>
+      <!-- Cabecera del plan: nombre + estructura agrupados -->
+      <div class="pe-plan-head">
+        <div>
+          <label class="plan-field-label">Nombre del plan <span style="color:var(--accent)">*</span></label>
+          <input class="plan-input" id="pe-nombre" placeholder="ej. Plan 5 Días" type="text"/>
+        </div>
+        <div>
+          <label class="plan-field-label">Descripción de la estructura <span style="color:var(--muted)">(opcional)</span></label>
+          <input class="plan-input" id="pe-estructura" placeholder="ej. Estructura Push/Pull/Legs · Lunes – Miércoles – Viernes" type="text"/>
+          <input class="plan-input" id="pe-estructura2" placeholder="ej. Cada músculo se trabaja 1 vez/semana con alto volumen." type="text" style="margin-top:.4rem"/>
         </div>
       </div>
       <!-- Días del plan -->
