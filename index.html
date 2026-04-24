@@ -554,27 +554,28 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   #modal-plan-box{max-height:92dvh}
 }
 
-/* PLAN EDITOR MODAL */
-#modal-plan{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:flex-end;justify-content:center;z-index:4000;opacity:0;pointer-events:none;transition:opacity .2s}
-#modal-plan.open{opacity:1;pointer-events:all}
-#modal-plan-box{background:var(--surface);border:1px solid var(--border);border-radius:16px 16px 0 0;width:100%;max-width:720px;max-height:92vh;display:flex;flex-direction:column;transform:translateY(30px);transition:transform .25s}
-#modal-plan.open #modal-plan-box{transform:translateY(0)}
+/* GENERIC APP MODAL (shared) */
+.app-modal,#modal-plan{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:flex-end;justify-content:center;z-index:4000;opacity:0;pointer-events:none;transition:opacity .2s}
+.app-modal.open,#modal-plan.open{opacity:1;pointer-events:all}
+.app-modal-box,#modal-plan-box{background:var(--surface);border:1px solid var(--border);border-radius:16px 16px 0 0;width:100%;max-width:720px;max-height:92vh;display:flex;flex-direction:column;transform:translateY(30px);transition:transform .25s}
+.app-modal.open .app-modal-box,#modal-plan.open #modal-plan-box{transform:translateY(0)}
 @media(min-width:601px){
-  #modal-plan{align-items:center;padding:1.5rem}
-  #modal-plan-box{border-radius:16px;transform:scale(.95);max-height:90vh}
-  #modal-plan.open #modal-plan-box{transform:scale(1)}
+  .app-modal,#modal-plan{align-items:center;padding:1.5rem}
+  .app-modal-box,#modal-plan-box{border-radius:16px;transform:scale(.95);max-height:90vh}
+  .app-modal.open .app-modal-box,#modal-plan.open #modal-plan-box{transform:scale(1)}
 }
-#modal-plan-header{padding:1.25rem 1.5rem .75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-#modal-plan-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent);letter-spacing:.5px}
-#modal-plan-close{background:transparent;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:color .2s;line-height:1}
-#modal-plan-close:hover{color:var(--text)}
-#modal-plan-body{padding:1.25rem 1.5rem;overflow-y:auto;overscroll-behavior:contain;flex:1}
-#modal-plan-footer{padding:.75rem 1.5rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem;flex-shrink:0}
+.app-modal-header,#modal-plan-header{padding:1.25rem 1.5rem .75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:.5rem}
+.app-modal-title,#modal-plan-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent);letter-spacing:.5px}
+.app-modal-close,#modal-plan-close{background:transparent;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:color .2s;line-height:1}
+.app-modal-close:hover,#modal-plan-close:hover{color:var(--text)}
+.app-modal-body,#modal-plan-body{padding:1.25rem 1.5rem;overflow-y:auto;overscroll-behavior:contain;flex:1}
+.app-modal-footer,#modal-plan-footer{padding:.75rem 1.5rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem;flex-shrink:0}
 @media(max-width:600px){
-  #modal-plan-header{padding:1rem 1rem .65rem}
-  #modal-plan-body{padding:1rem}
-  #modal-plan-footer{padding:.65rem 1rem 1.25rem;flex-wrap:wrap}
-  #modal-plan-footer button{flex:1}
+  .app-modal-header,#modal-plan-header{padding:1rem 1rem .65rem}
+  .app-modal-body,#modal-plan-body{padding:1rem}
+  .app-modal-footer,#modal-plan-footer{padding:.65rem 1rem 1.25rem;flex-wrap:wrap}
+  .app-modal-footer button,#modal-plan-footer button{flex:1}
+  .app-modal-box,#modal-plan-box{max-height:92dvh}
 }
 .plan-field-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:3px;display:block}
 .plan-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;padding:7px 10px;transition:border-color .2s}
@@ -697,33 +698,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <div class="meal-macros" id="batido-macros-view" style="margin-top:.75rem">
 <span class="pill kcal" id="bm-kcal"></span><span class="pill p" id="bm-prot"></span><span class="pill c" id="bm-carb"></span><span class="pill f" id="bm-fat"></span>
 </div>
-<!-- PANEL DE EDICIÓN BATIDO -->
-<div class="batido-edit-panel" id="batido-edit-panel">
-<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem">
-<div class="batido-edit-row" style="flex:1;min-width:100px">
-<label style="color:var(--accent)">g Proteína por batido</label>
-<input id="be-prot-dosis" min="1" placeholder="35" step="1" type="number" value="35"/>
-</div>
-<div class="batido-edit-row" style="flex:1;min-width:100px">
-<label style="color:var(--accent2)">g Creatina por batido</label>
-<input id="be-creat-dosis" min="1" placeholder="3" step="1" type="number" value="3"/>
-</div>
-</div>
-<div class="batido-edit-row">
-<label>Resto de ingredientes (texto libre)</label>
-<textarea id="be-extra" placeholder="fruta (100g) + 300ml leche semi"></textarea>
-</div>
-<div class="batido-edit-macros">
-<div class="macro-edit-item"><label class="lkcal" style="color:var(--accent3)">kcal</label><input id="be-kcal" min="0" type="number" value="0"/></div>
-<div class="macro-edit-item"><label class="lp" style="color:var(--accent)">Prot (g)</label><input id="be-prot" min="0" type="number" value="0"/></div>
-<div class="macro-edit-item"><label class="lc" style="color:var(--blue)">Carbs (g)</label><input id="be-carb" min="0" style="width:100%" type="number" value="0"/></div>
-<div class="macro-edit-item"><label class="lf" style="color:var(--red)">Grasas (g)</label><input id="be-fat" min="0" type="number" value="0"/></div>
-</div>
-<div class="batido-edit-actions">
-<button class="btn-save-meal" onclick="saveBatidoEdit()">✓ Guardar</button>
-<button class="btn-cancel-meal" onclick="cancelBatidoEdit()">✕ Cancelar</button>
-</div>
-</div>
+<!-- (Panel de edición batido movido a #modal-batido) -->
 <div class="batido-counter-row">
 <button class="supl-count-btn minus" onclick="changeBatidos(-1)">−</button>
 <div style="text-align:center">
@@ -1899,9 +1874,15 @@ document.addEventListener('DOMContentLoaded', () => {
     badge.textContent = found;
     headerEl.appendChild(badge);
   });
-  // Modal-plan backdrop close (modal is after script, so use DOMContentLoaded)
+  // Modal backdrop close (modales tras el script, se enganchan en DOMContentLoaded)
   const _mp = document.getElementById('modal-plan');
   if (_mp) _mp.addEventListener('click', function(e){ if(e.target===this) closePlanModal(); });
+  const _mb = document.getElementById('modal-batido');
+  if (_mb) _mb.addEventListener('click', function(e){ if(e.target===this) closeBatidoModal(); });
+  const _mc = document.getElementById('modal-compra');
+  if (_mc) _mc.addEventListener('click', function(e){ if(e.target===this) closeCompraModal(); });
+  const _mm = document.getElementById('modal-meal');
+  if (_mm) _mm.addEventListener('click', function(e){ if(e.target===this) closeMealModal(); });
   // recalcTotalSemanal se llama desde applyCompraData
   // Fallback emoji si la imagen no carga
   document.querySelectorAll('.compra-img img').forEach(img => {
@@ -2489,69 +2470,7 @@ function sortMealsByTime(dayEl) {
 }
 
 // ── AÑADIR COMIDA ──
-function addMealMode(dayEl) {
-  const grid = dayEl.querySelector('.meals-grid');
-  if (!grid) return;
-  if (grid.querySelector('.meal-card.adding')) return;
-  const card = document.createElement('div');
-  card.className = 'meal-card adding editing';
-  card.innerHTML = `
-    <div class="meal-header" style="align-items:flex-start">
-      <div class="meal-icon d new-meal-icon-preview" style="cursor:pointer;font-size:1.3rem;transition:transform .15s" title="Toca para cambiar emoji">🍽️</div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:4px">
-        <input class="new-meal-name-input" type="text" value="" placeholder="Nombre (ej: Desayuno)" maxlength="40"
-          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;padding:4px 8px;width:100%">
-        <input class="new-meal-time-input" type="time" value=""
-          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:3px 8px;width:100%;color-scheme:dark">
-      </div>
-    </div>
-    <div class="emoji-picker-panel" style="display:none;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.65rem;margin-bottom:.75rem">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:.5rem">
-        <span style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)">Elige un emoji</span>
-        <input class="emoji-search-input" type="text" placeholder="🔍 Buscar..." style="background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.8rem;padding:4px 8px;flex:1;max-width:160px;outline:none">
-      </div>
-      <div class="emoji-picker-grid" style="display:grid;grid-template-columns:repeat(10,1fr);gap:2px;max-height:220px;overflow-y:auto;padding-right:2px"></div>
-    </div>
-    <div class="meal-food">
-      <textarea class="edit-textarea" placeholder="Nombre del plato\n· Ingrediente 1\n· Ingrediente 2"></textarea>
-    </div>
-    <div class="meal-macros">
-      <div class="macro-edit-row">
-        <div class="macro-edit-item"><label class="lkcal">kcal</label><input type="number" min="0" value="0" oninput="if(this.value<0)this.value=0"></div>
-        <div class="macro-edit-item"><label class="lp">Prot (g)</label><input type="number" min="0" value="0" oninput="if(this.value<0)this.value=0"></div>
-        <div class="macro-edit-item"><label class="lc">Carbs (g)</label><input type="number" min="0" value="0" oninput="if(this.value<0)this.value=0"></div>
-        <div class="macro-edit-item"><label class="lf">Grasas (g)</label><input type="number" min="0" value="0" oninput="if(this.value<0)this.value=0"></div>
-      </div>
-      <div class="meal-edit-actions">
-        <button class="btn-save-meal">✓ Guardar comida</button>
-        <button class="btn-cancel-meal">✕ Cancelar</button>
-      </div>
-    </div>`;
-  grid.appendChild(card);
-
-  const pickerPanel  = card.querySelector('.emoji-picker-panel');
-  const pickerGrid   = card.querySelector('.emoji-picker-grid');
-  const searchInput  = card.querySelector('.emoji-search-input');
-  const iconPreview  = card.querySelector('.new-meal-icon-preview');
-
-  const picker = buildEmojiPicker(pickerPanel, pickerGrid, searchInput, iconPreview, () => {});
-
-  // Toggle picker al pulsar el icono
-  iconPreview.addEventListener('click', () => {
-    const open = pickerPanel.style.display !== 'none';
-    pickerPanel.style.display = open ? 'none' : 'block';
-    iconPreview.style.transform = open ? 'scale(1)' : 'scale(1.15)';
-    if (!open) { searchInput.value = ''; searchInput.focus(); }
-  });
-
-  card._getSelectedEmoji = () => picker.getSelected();
-  card.querySelector('textarea').focus();
-  // Focus en nombre primero
-  const nameInp = card.querySelector('.new-meal-name-input');
-  if (nameInp) nameInp.focus();
-  card.querySelector('.btn-save-meal').addEventListener('click', () => saveNewMeal(card));
-  card.querySelector('.btn-cancel-meal').addEventListener('click', () => { card.remove(); });
-}
+function addMealMode(dayEl) { openMealModal({ mode: 'add', dayEl }); }
 
 // ── MODO ELIMINAR COMIDAS ──
 function toggleDeleteMode(dayEl, toggleBtn) {
@@ -2623,94 +2542,8 @@ async function deleteMeal(card, dayEl, toggleBtn) {
   setSyncStatus('saved', '✓ Comida eliminada');
 }
 
-async function saveNewMeal(card) {
-  const foodEl   = card.querySelector('.meal-food');
-  const macrosEl = card.querySelector('.meal-macros');
-  const textarea = foodEl.querySelector('textarea');
-  const lines    = textarea.value.trim().split('\n');
-  if (!lines[0].trim()) { textarea.style.borderColor = 'var(--red)'; textarea.focus(); return; }
-  // Leer nombre, hora y emoji antes de confirmar
-  const nameInpEl   = card.querySelector('.new-meal-name-input');
-  const timeInpEl   = card.querySelector('.new-meal-time-input');
-  const mealName    = (nameInpEl && nameInpEl.value.trim()) ? nameInpEl.value.trim() : (lines[0].trim() || 'Comida extra');
-  const mealTime    = (timeInpEl && timeInpEl.value.trim()) ? inputValToTimeStr(timeInpEl.value.trim()) : '';
-  const chosenEmoji = card._getSelectedEmoji ? card._getSelectedEmoji() : '🍽️';
-  const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => Math.max(0, parseInt(i.value) || 0));
-
-  // Confirmar con resumen de lo que se va a añadir (igual que saveBatidoEdit)
-  const newChanges = [
-    { label: 'Nombre',      from: '—', to: mealName },
-    { label: 'Hora',        from: '—', to: mealTime || '—' },
-    { label: 'Emoji',       from: '—', to: chosenEmoji },
-    { label: 'Descripción', from: '—', to: lines.join('\n').trim().slice(0,80) },
-    { label: 'kcal',        from: '—', to: k },
-    { label: 'Prot g',      from: '—', to: p },
-    { label: 'Carbs g',     from: '—', to: c },
-    { label: 'Grasas g',    from: '—', to: f }
-  ];
-  if (!await confirmSave(newChanges)) return;
-
-  // Aplicar emoji al icono y limpiar sus estilos de edición
-  const iconEl = card.querySelector('.meal-icon');
-  if (iconEl) {
-    iconEl.textContent = chosenEmoji;
-    iconEl.classList.remove('new-meal-icon-preview');
-    iconEl.style.cursor = '';
-    iconEl.style.fontSize = '';
-    iconEl.style.transition = '';
-    iconEl.title = '';
-    iconEl.style.transform = '';
-  }
-  // Asignar id único a la nueva tarjeta
-  const dayEl = card.closest('.day-content');
-  const _dayId = dayEl.id; // e.g. "day-lun"
-  const _isBatidoNew = normalizeAccents(mealName).includes('batido');
-  if (_isBatidoNew) {
-    // ID fijo y legible para tarjetas de batido
-    card.id = _dayId + '-batido';
-  } else {
-    // ID secuencial para comidas extra normales: day-lun-extra-1, day-lun-extra-2, ...
-    let _extraN = 1;
-    while (document.getElementById(_dayId + '-extra-' + _extraN)) _extraN++;
-    card.id = _dayId + '-extra-' + _extraN;
-  }
-  // Reemplazar el div que contiene los inputs (segundo hijo de meal-header) con nombre y hora reales
-  // IMPORTANTE: usar :last-child para coger el div de inputs, NO el div del icono (primer hijo)
-  const headerDiv = card.querySelector('.meal-header > div:last-child');
-  if (headerDiv) {
-    headerDiv.innerHTML = `<div class="meal-name">${escapeHtml(mealName)}</div><div class="meal-time">${escapeHtml(mealTime)}</div>`;
-    headerDiv.style = '';
-  }
-  // Eliminar panel picker
-  card.querySelector('.emoji-picker-panel')?.remove();
-  // Convertir en tarjeta real
-  foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
-  macrosEl.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span>`;
-  card.classList.remove('editing', 'adding');
-  // Añadir botón editar solo si NO es tarjeta de batido
-  if (!normalizeAccents(mealName).includes('batido')) {
-    const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
-    editBtn.addEventListener('click', () => enterEditMode(card));
-    card.querySelector('.meal-header').appendChild(editBtn);
-  } else {
-    card.dataset.isBatido = '1';
-  }
-  sortMealsByTime(dayEl);
-  recalcDayTotal(card);
-  recalcWeeklyAvg();
-
-  // Guardar inmediatamente en Firebase (igual que saveBatidoEdit)
-  const _snap = buildSnapshot();
-  lsSet(LOCAL_KEY, _snap);
-  if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida añadida'); return; }
-  setSyncStatus('saving', 'Guardando…');
-  fetch(FIREBASE_ENDPOINT, {
-    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap)
-  }).then(r => {
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    setSyncStatus('saved', '✓ Comida añadida en la nube');
-  }).catch(() => setSyncStatus('error', '⚠ Error al guardar comida'));
-}
+// saveNewMeal: thin wrapper retrocompatible — la lógica vive en _doSaveMealAdd
+async function saveNewMeal() { return _doSaveMealAdd(); }
 
 // Recrear una comida extra guardada al restaurar el snapshot
 function createRestoredExtraMeal(dayEl, id, saved) {
@@ -2759,107 +2592,249 @@ function ensureBatidoEditBtn(card) {
 }
 
 // ── EDIT MODE ──
-function enterEditMode(card) {
-  if (card.classList.contains('editing')) return;
-  card.classList.add('editing');
-  const foodEl = card.querySelector('.meal-food');
-  const macrosEl = card.querySelector('.meal-macros');
-  const editBtn = card.querySelector('.edit-btn');
-  const iconEl = card.querySelector('.meal-icon');
-  const nameEl = card.querySelector('.meal-name');
-  const timeEl = card.querySelector('.meal-time');
-  card._origFood = foodEl.innerHTML;
-  card._origMacros = macrosEl.innerHTML;
-  card._origEmoji = iconEl ? iconEl.textContent.trim() : '🍽️';
-  card._origName  = nameEl ? nameEl.textContent.trim() : '';
-  card._origTime  = timeEl ? timeEl.textContent.trim() : '';
-  const pills = macrosEl.querySelectorAll('.pill');
-  const [kcal, prot, carb, fat] = [...pills].map(p => parsePillNum(p.textContent));
+function enterEditMode(card) { openMealModal({ mode: 'edit', card }); }
 
-  // Convertir nombre y hora en inputs editables
-  if (nameEl) {
-    const inp = document.createElement('input');
-    inp.type = 'text';
-    inp.className = 'edit-meal-name-inp';
-    inp.value = card._origName;
-    inp.maxLength = 40;
-    inp.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;padding:3px 7px;width:100%;margin-bottom:3px";
-    nameEl.replaceWith(inp);
-  }
-  if (timeEl) {
-    const inp2 = document.createElement('input');
-    inp2.type = 'time';
-    inp2.className = 'edit-meal-time-inp';
-    inp2.value = timeStrToInputVal(card._origTime);
-    inp2.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:2px 7px;width:100%;color-scheme:dark";
-    timeEl.replaceWith(inp2);
+// saveEditMode/cancelEditMode pasan a ser thin wrappers — la lógica vive en saveMealModal/closeMealModal
+async function saveEditMode() { return _doSaveMealEdit(); }
+function cancelEditMode() { closeMealModal(); }
+
+// ── EDICIÓN LIMITADA BATIDO — todo gestionado en #modal-meal con mode='batido' ──
+function enterBatidoEditMode(card) { openMealModal({ mode: 'batido', card }); }
+function cancelBatidoEditMode() { closeMealModal(); }
+async function saveBatidoCardEdit() { return _doSaveMealBatido(); }
+
+// ════════════════════════════════════════════════════════════════════
+// ──  M O D A L   D E   C O M I D A  (add / edit / batido)
+// ════════════════════════════════════════════════════════════════════
+
+function openMealModal(opts) {
+  const { mode } = opts;
+  const card = opts.card || null;
+  const dayEl = opts.dayEl || (card ? card.closest('.day-content') : null);
+  const body = document.getElementById('modal-meal-body');
+  const titleEl = document.getElementById('modal-meal-title');
+  const saveBtn = document.getElementById('modal-meal-save');
+  if (!body) return;
+
+  // Lectura del estado actual del card (para edit/batido)
+  let origEmoji = '🍽️', origName = '', origTime = '', origFoodHTML = '', origPlato = '';
+  let origK = 0, origP = 0, origC = 0, origF = 0;
+  if (card) {
+    const iconEl = card.querySelector('.meal-icon');
+    const nameEl = card.querySelector('.meal-name');
+    const timeEl = card.querySelector('.meal-time');
+    const foodEl = card.querySelector('.meal-food');
+    const macrosEl = card.querySelector('.meal-macros');
+    if (iconEl) origEmoji = iconEl.textContent.trim() || '🍽️';
+    if (nameEl) origName  = nameEl.textContent.trim();
+    if (timeEl) origTime  = timeEl.textContent.trim();
+    if (foodEl) origFoodHTML = foodEl.innerHTML;
+    if (macrosEl) {
+      const pills = macrosEl.querySelectorAll('.pill');
+      [origK, origP, origC, origF] = [...pills].map(p => +parsePillNum(p.textContent) || 0);
+    }
+    const tmp = document.createElement('div'); tmp.innerHTML = origFoodHTML;
+    origPlato = tmp.querySelector('strong')?.textContent.trim() || '';
   }
 
-  // Hacer el icono clickable para abrir el picker
-  if (iconEl) {
-    iconEl.style.cursor = 'pointer';
-    iconEl.title = 'Cambiar emoji';
-    iconEl.style.transition = 'transform .15s';
-  }
+  // Estado guardado
+  window._mealModal = { mode, card, dayEl, origEmoji, origName, origTime, origFoodHTML, origPlato, origK, origP, origC, origF, picker: null };
 
-  // Insertar panel del picker justo antes de meal-food
-  const pickerPanel = document.createElement('div');
-  pickerPanel.className = 'emoji-picker-panel';
-  pickerPanel.style.cssText = 'display:none;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.65rem;margin-bottom:.75rem';
-  pickerPanel.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:.5rem">
-      <span style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)">Elige un emoji</span>
-      <input class="emoji-search-input" type="text" placeholder="🔍 Buscar..." style="background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.8rem;padding:4px 8px;flex:1;max-width:160px;outline:none">
+  // Título y botón
+  titleEl.textContent = mode === 'add' ? 'AÑADIR COMIDA' : (mode === 'batido' ? 'EDITAR BATIDO' : 'EDITAR COMIDA');
+  saveBtn.textContent = mode === 'add' ? '✓ Añadir' : '✓ Guardar';
+
+  // Construir cuerpo
+  const lblStyle = 'font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:3px;display:block';
+  const isBatido = mode === 'batido';
+  const initialFoodText = isBatido ? '' : (origFoodHTML.replace(/<br>/g,'\n').replace(/<[^>]+>/g,''));
+  const initialEmoji = origEmoji || '🍽️';
+  const initialName = origName;
+  const initialTime = timeStrToInputVal(origTime);
+
+  body.innerHTML = `
+    <div class="pe-plan-head">
+      <div style="display:flex;align-items:flex-start;gap:.75rem;flex-wrap:nowrap">
+        ${isBatido ? '' : `
+        <div id="mm-emoji" class="meal-icon d" style="cursor:pointer;font-size:1.5rem;width:48px;height:48px;flex-shrink:0;transition:transform .15s" title="Cambiar emoji">${escapeHtml(initialEmoji)}</div>
+        `}
+        <div style="flex:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.5rem;min-width:0">
+          <div>
+            <label style="${lblStyle}">Nombre</label>
+            <input id="mm-name" class="plan-input" type="text" maxlength="40" placeholder="ej: Desayuno" value="${escapeHtml(initialName)}"/>
+          </div>
+          <div>
+            <label style="${lblStyle}">Hora</label>
+            <input id="mm-time" class="plan-input" type="time" style="color-scheme:dark" value="${escapeHtml(initialTime)}"/>
+          </div>
+        </div>
+      </div>
+      ${isBatido ? '' : `
+      <div id="mm-picker-panel" class="emoji-picker-panel" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.65rem;margin-top:.5rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:.5rem">
+          <span style="${lblStyle};margin-bottom:0">Elige un emoji</span>
+          <input id="mm-picker-search" class="emoji-search-input" type="text" placeholder="🔍 Buscar..." style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.8rem;padding:4px 8px;flex:1;max-width:220px;outline:none">
+        </div>
+        <div id="mm-picker-grid" class="emoji-picker-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:2px;max-height:220px;overflow-y:auto;padding-right:2px"></div>
+      </div>
+      `}
     </div>
-    <div class="emoji-picker-grid" style="display:grid;grid-template-columns:repeat(10,1fr);gap:2px;max-height:200px;overflow-y:auto;padding-right:2px"></div>`;
-  foodEl.parentNode.insertBefore(pickerPanel, foodEl);
+    ${isBatido ? `
+      <div style="margin-top:.85rem">
+        <label style="${lblStyle}">Nombre del plato (negrita)</label>
+        <input id="mm-plato" class="plan-input" type="text" maxlength="60" placeholder="ej: Batido proteico" value="${escapeHtml(origPlato)}"/>
+      </div>
+    ` : `
+      <div style="margin-top:.85rem">
+        <label style="${lblStyle}">Descripción / ingredientes</label>
+        <textarea id="mm-food" class="plan-input edit-textarea" placeholder="Nombre del plato\n· Ingrediente 1\n· Ingrediente 2" style="min-height:120px;resize:vertical">${escapeHtml(initialFoodText)}</textarea>
+      </div>
+      <label style="${lblStyle};margin:1rem 0 .4rem">Macros</label>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.6rem">
+        <div><label style="${lblStyle};color:var(--accent3)">kcal</label><input id="mm-kcal" class="plan-input" type="number" min="0" value="${origK}"/></div>
+        <div><label style="${lblStyle};color:var(--accent)">Prot (g)</label><input id="mm-prot" class="plan-input" type="number" min="0" value="${origP}"/></div>
+        <div><label style="${lblStyle};color:var(--blue)">Carbs (g)</label><input id="mm-carb" class="plan-input" type="number" min="0" value="${origC}"/></div>
+        <div><label style="${lblStyle};color:var(--red)">Grasas (g)</label><input id="mm-fat" class="plan-input" type="number" min="0" value="${origF}"/></div>
+      </div>
+    `}
+  `;
 
-  const pickerGrid  = pickerPanel.querySelector('.emoji-picker-grid');
-  const searchInput = pickerPanel.querySelector('.emoji-search-input');
-  buildEmojiPicker(pickerPanel, pickerGrid, searchInput, iconEl || {textContent:''}, (em) => {
-    if (iconEl) iconEl.textContent = em;
-  });
-
-  if (iconEl) {
-    const _togglePicker = () => {
+  // Inicializar emoji picker (solo modos no-batido)
+  if (!isBatido) {
+    const iconEl = document.getElementById('mm-emoji');
+    const pickerPanel = document.getElementById('mm-picker-panel');
+    const pickerGrid = document.getElementById('mm-picker-grid');
+    const searchInput = document.getElementById('mm-picker-search');
+    const picker = buildEmojiPicker(pickerPanel, pickerGrid, searchInput, iconEl, em => { iconEl.textContent = em; });
+    window._mealModal.picker = picker;
+    iconEl.addEventListener('click', () => {
       const open = pickerPanel.style.display !== 'none';
       pickerPanel.style.display = open ? 'none' : 'block';
       iconEl.style.transform = open ? 'scale(1)' : 'scale(1.15)';
       if (!open) { searchInput.value = ''; searchInput.focus(); }
-    };
-    iconEl.addEventListener('click', _togglePicker);
-    card._iconPickerHandler = _togglePicker;
+    });
   }
 
-  card._getEditEmoji = () => (iconEl ? iconEl.textContent.trim() : card._origEmoji);
-
-  foodEl.innerHTML = `<textarea class="edit-textarea" placeholder="Nombre del plato\n· Ingrediente 1\n· Ingrediente 2"></textarea>`;
-  foodEl.querySelector('textarea').value = card._origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'');
-  macrosEl.innerHTML = `
-    <div class="macro-edit-row">
-      <div class="macro-edit-item"><label class="lkcal">kcal</label><input type="number" min="0" value="${kcal}" oninput="if(this.value<0)this.value=0"></div>
-      <div class="macro-edit-item"><label class="lp">Prot (g)</label><input type="number" min="0" value="${prot}" oninput="if(this.value<0)this.value=0"></div>
-      <div class="macro-edit-item"><label class="lc">Carbs (g)</label><input type="number" min="0" value="${carb}" oninput="if(this.value<0)this.value=0"></div>
-      <div class="macro-edit-item"><label class="lf">Grasas (g)</label><input type="number" min="0" value="${fat}" oninput="if(this.value<0)this.value=0"></div>
-    </div>
-    <div class="meal-edit-actions">
-      <button class="btn-save-meal">✓ Guardar</button>
-      <button class="btn-cancel-meal">✕ Cancelar</button>
-    </div>`;
-  macrosEl.querySelector('.btn-save-meal').addEventListener('click', () => saveEditMode(card));
-  macrosEl.querySelector('.btn-cancel-meal').addEventListener('click', () => cancelEditMode(card));
-  editBtn.style.display = 'none';
+  document.getElementById('modal-meal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Foco inicial en nombre
+  setTimeout(() => document.getElementById('mm-name')?.focus(), 60);
 }
 
-async function saveEditMode(card) {
-  const foodEl = card.querySelector('.meal-food');
-  const macrosEl = card.querySelector('.meal-macros');
-  const lines = foodEl.querySelector('textarea').value.trim().split('\n');
-  const [k, p, c, f] = [...macrosEl.querySelectorAll('input')].map(i => Math.max(0, parseInt(i.value) || 0));
+function closeMealModal() {
+  const modal = document.getElementById('modal-meal');
+  if (modal) modal.classList.remove('open');
+  document.body.style.overflow = '';
+  window._mealModal = null;
+}
 
-  // Leer estado "antes" desde Firebase (fuente de verdad)
-  let origFood = card._origFood;
-  let origMacros = card._origMacros;
+async function saveMealModal() {
+  const state = window._mealModal;
+  if (!state) return;
+  if (state.mode === 'add')    return _doSaveMealAdd();
+  if (state.mode === 'edit')   return _doSaveMealEdit();
+  if (state.mode === 'batido') return _doSaveMealBatido();
+}
+
+// ── Lógica de guardado: AÑADIR ──
+async function _doSaveMealAdd() {
+  const state = window._mealModal;
+  if (!state) return;
+  const dayEl = state.dayEl;
+  if (!dayEl) return;
+  const grid = dayEl.querySelector('.meals-grid');
+  if (!grid) return;
+
+  const foodVal = (document.getElementById('mm-food').value || '').trim();
+  const lines = foodVal.split('\n');
+  if (!lines[0].trim()) {
+    document.getElementById('mm-food').style.borderColor = 'var(--red)';
+    document.getElementById('mm-food').focus();
+    return;
+  }
+  const nameInp = document.getElementById('mm-name');
+  const timeInp = document.getElementById('mm-time');
+  const mealName = (nameInp.value.trim()) || (lines[0].trim() || 'Comida extra');
+  const mealTime = timeInp.value.trim() ? inputValToTimeStr(timeInp.value.trim()) : '';
+  const chosenEmoji = state.picker ? state.picker.getSelected() : (document.getElementById('mm-emoji')?.textContent.trim() || '🍽️');
+  const k = Math.max(0, parseInt(document.getElementById('mm-kcal').value) || 0);
+  const p = Math.max(0, parseInt(document.getElementById('mm-prot').value) || 0);
+  const c = Math.max(0, parseInt(document.getElementById('mm-carb').value) || 0);
+  const f = Math.max(0, parseInt(document.getElementById('mm-fat').value)  || 0);
+
+  const newChanges = [
+    { label: 'Nombre',      from: '—', to: mealName },
+    { label: 'Hora',        from: '—', to: mealTime || '—' },
+    { label: 'Emoji',       from: '—', to: chosenEmoji },
+    { label: 'Descripción', from: '—', to: lines.join('\n').trim().slice(0,80) },
+    { label: 'kcal',        from: '—', to: k },
+    { label: 'Prot g',      from: '—', to: p },
+    { label: 'Carbs g',     from: '—', to: c },
+    { label: 'Grasas g',    from: '—', to: f }
+  ];
+  if (!await confirmSave(newChanges)) return;
+
+  // Crear nueva tarjeta y aplicar contenido
+  const card = document.createElement('div');
+  card.className = 'meal-card';
+  const _dayId = dayEl.id;
+  const isBatidoNew = normalizeAccents(mealName).includes('batido');
+  if (isBatidoNew) {
+    card.id = _dayId + '-batido';
+    card.dataset.isBatido = '1';
+  } else {
+    let n = 1; while (document.getElementById(_dayId + '-extra-' + n)) n++;
+    card.id = _dayId + '-extra-' + n;
+  }
+  card.innerHTML = `
+    <div class="meal-header">
+      <div class="meal-icon d">${escapeHtml(chosenEmoji)}</div>
+      <div><div class="meal-name">${escapeHtml(mealName)}</div><div class="meal-time">${escapeHtml(mealTime)}</div></div>
+    </div>
+    <div class="meal-food"><strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}</div>
+    <div class="meal-macros"><span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span></div>`;
+  grid.appendChild(card);
+  if (isBatidoNew) {
+    ensureBatidoEditBtn(card);
+  } else {
+    const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
+    editBtn.addEventListener('click', () => enterEditMode(card));
+    card.querySelector('.meal-header').appendChild(editBtn);
+  }
+  sortMealsByTime(dayEl);
+  recalcDayTotal(card);
+  recalcWeeklyAvg();
+
+  closeMealModal();
+
+  const _snap = buildSnapshot();
+  lsSet(LOCAL_KEY, _snap);
+  if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida añadida'); return; }
+  setSyncStatus('saving', 'Guardando…');
+  fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap) })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); setSyncStatus('saved', '✓ Comida añadida en la nube'); })
+    .catch(() => setSyncStatus('error', '⚠ Error al guardar comida'));
+}
+
+// ── Lógica de guardado: EDITAR ──
+async function _doSaveMealEdit() {
+  const state = window._mealModal;
+  if (!state) return;
+  const card = state.card;
+  if (!card) return;
+
+  const lines = (document.getElementById('mm-food').value || '').trim().split('\n');
+  const k = Math.max(0, parseInt(document.getElementById('mm-kcal').value) || 0);
+  const p = Math.max(0, parseInt(document.getElementById('mm-prot').value) || 0);
+  const c = Math.max(0, parseInt(document.getElementById('mm-carb').value) || 0);
+  const f = Math.max(0, parseInt(document.getElementById('mm-fat').value)  || 0);
+  const newName  = (document.getElementById('mm-name').value.trim()) || state.origName;
+  const newTime  = inputValToTimeStr(document.getElementById('mm-time').value.trim());
+  const newEmoji = state.picker ? state.picker.getSelected() : (document.getElementById('mm-emoji')?.textContent.trim() || state.origEmoji);
+
+  // Estado "antes" desde Firebase para diff
+  let origFood = state.origFoodHTML;
+  let origK = state.origK, origP = state.origP, origC = state.origC, origF = state.origF;
   if (CLOUD_CONFIGURED) {
     try {
       const r = await fetch(FIREBASE_ENDPOINT);
@@ -2867,8 +2842,8 @@ async function saveEditMode(card) {
         const fb = await r.json();
         if (fb && fb[card.id]) {
           const fd = fb[card.id];
-          origFood   = fd.food   ?? origFood;
-          origMacros = `<span class="pill kcal">${fd.kcal} kcal</span><span class="pill p">${fd.prot}g P</span><span class="pill c">${fd.carb}g C</span><span class="pill f">${fd.fat}g G</span>`;
+          origFood = fd.food ?? origFood;
+          origK = +fd.kcal || 0; origP = +fd.prot || 0; origC = +fd.carb || 0; origF = +fd.fat || 0;
         }
       }
     } catch(e) {}
@@ -2877,199 +2852,91 @@ async function saveEditMode(card) {
       const lc = lsGet(LOCAL_KEY, {});
       if (lc[card.id]) {
         const fd = lc[card.id];
-        origFood   = fd.food ?? origFood;
-        origMacros = `<span class="pill kcal">${fd.kcal} kcal</span><span class="pill p">${fd.prot}g P</span><span class="pill c">${fd.carb}g C</span><span class="pill f">${fd.fat}g G</span>`;
+        origFood = fd.food ?? origFood;
+        origK = +fd.kcal || 0; origP = +fd.prot || 0; origC = +fd.carb || 0; origF = +fd.fat || 0;
       }
     } catch(e) {}
   }
-
-  // Leer nombre/hora/emoji actuales (antes de editar)
-  const nameInp = card.querySelector('.edit-meal-name-inp');
-  const timeInp = card.querySelector('.edit-meal-time-inp');
-  const newEmoji = card._getEditEmoji ? card._getEditEmoji() : (card._origEmoji || '');
-  const newName  = nameInp ? (nameInp.value.trim() || card._origName) : card._origName;
-  const newTime  = timeInp ? inputValToTimeStr(timeInp.value.trim()) : card._origTime;
-
-  const origText  = origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'').trim();
-  const newText   = lines.join('\n').trim();
-  // Extraer macros del "antes" parseando el HTML con DOM (la regex />([\d]+)</g
-  // no funciona porque el contenido es "330 kcal" o "37g P", no "330<")
-  const _origTmp = document.createElement('div');
-  _origTmp.innerHTML = origMacros;
-  const origPills = [..._origTmp.querySelectorAll('.pill')].map(el => +parsePillNum(el.textContent));
-  const menuChanges = [];
-  if ((card._origName || '') !== newName)  menuChanges.push({ label: 'Nombre',      from: card._origName || '—', to: newName });
-  if ((card._origTime || '') !== newTime)  menuChanges.push({ label: 'Hora',        from: card._origTime || '—', to: newTime || '—' });
-  if ((card._origEmoji|| '') !== newEmoji) menuChanges.push({ label: 'Emoji',       from: card._origEmoji|| '—', to: newEmoji });
-  if (origText !== newText) menuChanges.push({ label: 'Descripción', from: origText.slice(0,80), to: newText.slice(0,80) });
+  const origText = origFood.replace(/<br>/g,'\n').replace(/<[^>]+>/g,'').trim();
+  const newText  = lines.join('\n').trim();
+  const changes = [];
+  if (state.origName  !== newName)  changes.push({ label: 'Nombre',      from: state.origName  || '—', to: newName });
+  if (state.origTime  !== newTime)  changes.push({ label: 'Hora',        from: state.origTime  || '—', to: newTime || '—' });
+  if (state.origEmoji !== newEmoji) changes.push({ label: 'Emoji',       from: state.origEmoji || '—', to: newEmoji });
+  if (origText !== newText)         changes.push({ label: 'Descripción', from: origText.slice(0,80), to: newText.slice(0,80) });
   ['kcal','Prot g','Carbs g','Grasas g'].forEach((lbl, i) => {
-    const origN = origPills[i] ?? 0;
-    if (origN !== [k,p,c,f][i]) menuChanges.push({ label: lbl, from: origN, to: [k,p,c,f][i] });
+    const oldV = [origK, origP, origC, origF][i];
+    const newV = [k,p,c,f][i];
+    if (oldV !== newV) changes.push({ label: lbl, from: oldV, to: newV });
   });
-  if (!menuChanges.length) menuChanges.push({ label: 'Sin cambios detectados', from: '', to: '' });
-  if (!await confirmSave(menuChanges)) return;
+  if (!changes.length) changes.push({ label: 'Sin cambios detectados', from: '', to: '' });
+  if (!await confirmSave(changes)) return;
 
-  // Aplicar emoji
-  const iconEl2 = card.querySelector('.meal-icon');
-  if (iconEl2) {
-    if (card._iconPickerHandler) { iconEl2.removeEventListener('click', card._iconPickerHandler); delete card._iconPickerHandler; }
-    if (newEmoji) iconEl2.textContent = newEmoji;
-    iconEl2.style.cursor = ''; iconEl2.title = ''; iconEl2.style.transform = '';
-  }
-  // Aplicar nombre y hora
-  if (nameInp) { const el = document.createElement('div'); el.className='meal-name'; el.textContent=newName; nameInp.replaceWith(el); }
-  if (timeInp) { const el = document.createElement('div'); el.className='meal-time'; el.textContent=newTime; timeInp.replaceWith(el); }
-  // Limpiar picker panel
-  card.querySelector('.emoji-picker-panel')?.remove();
-  foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
-  macrosEl.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span>`;
-  card.classList.remove('editing');
-  card.querySelector('.edit-btn').style.display = '';
-  // Reordenar tarjetas según la nueva hora
-  const _dayEl = card.closest('.day-content');
-  if (_dayEl) sortMealsByTime(_dayEl);
+  // Aplicar al card
+  const iconEl = card.querySelector('.meal-icon');
+  if (iconEl && newEmoji) iconEl.textContent = newEmoji;
+  const nameEl = card.querySelector('.meal-name'); if (nameEl) nameEl.textContent = newName;
+  const timeEl = card.querySelector('.meal-time'); if (timeEl) timeEl.textContent = newTime;
+  const foodEl = card.querySelector('.meal-food');
+  if (foodEl) foodEl.innerHTML = `<strong>${escapeHtml(lines[0] || '')}</strong>${lines.slice(1).length ? '<br>' + lines.slice(1).join('<br>') : ''}`;
+  const macrosEl = card.querySelector('.meal-macros');
+  if (macrosEl) macrosEl.innerHTML = `<span class="pill kcal">${k} kcal</span><span class="pill p">${p}g P</span><span class="pill c">${c}g C</span><span class="pill f">${f}g G</span>`;
+
+  const dayEl = card.closest('.day-content');
+  if (dayEl) sortMealsByTime(dayEl);
   recalcDayTotal(card);
   recalcWeeklyAvg();
 
-  // Guardar inmediatamente en Firebase (igual que saveBatidoEdit)
+  closeMealModal();
+
   const _snap = buildSnapshot();
   lsSet(LOCAL_KEY, _snap);
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida guardada'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FIREBASE_ENDPOINT, {
-    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap)
-  }).then(r => {
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    setSyncStatus('saved', '✓ Comida guardada en la nube');
-  }).catch(() => setSyncStatus('error', '⚠ Error al guardar comida'));
+  fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap) })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); setSyncStatus('saved', '✓ Comida guardada en la nube'); })
+    .catch(() => setSyncStatus('error', '⚠ Error al guardar comida'));
 }
 
-function cancelEditMode(card) {
-  // Restaurar emoji original
-  const iconEl = card.querySelector('.meal-icon');
-  if (iconEl) {
-    if (card._iconPickerHandler) { iconEl.removeEventListener('click', card._iconPickerHandler); delete card._iconPickerHandler; }
-    if (card._origEmoji) { iconEl.textContent = card._origEmoji; }
-    iconEl.style.cursor = ''; iconEl.title = ''; iconEl.style.transform = '';
-  }
-  // Restaurar nombre y hora originales
-  const nameInp = card.querySelector('.edit-meal-name-inp');
-  const timeInp = card.querySelector('.edit-meal-time-inp');
-  if (nameInp) { const el = document.createElement('div'); el.className='meal-name'; el.textContent=card._origName||''; nameInp.replaceWith(el); }
-  if (timeInp) { const el = document.createElement('div'); el.className='meal-time'; el.textContent=card._origTime||''; timeInp.replaceWith(el); }
-  card.querySelector('.emoji-picker-panel')?.remove();
-  card.querySelector('.meal-food').innerHTML = card._origFood;
-  card.querySelector('.meal-macros').innerHTML = card._origMacros;
-  card.classList.remove('editing');
-  card.querySelector('.edit-btn').style.display = '';
-}
-
-// ── EDICIÓN LIMITADA BATIDO (nombre header, hora y nombre de plato) ──
-function enterBatidoEditMode(card) {
-  if (card.classList.contains('editing')) return;
-  card.classList.add('editing');
-  const nameEl  = card.querySelector('.meal-name');
-  const timeEl  = card.querySelector('.meal-time');
-  const foodEl  = card.querySelector('.meal-food');
-  const editBtn = card.querySelector('.batido-edit-btn');
-  card._origName = nameEl ? nameEl.textContent.trim() : '';
-  card._origTime = timeEl ? timeEl.textContent.trim() : '';
-  card._origFood = foodEl ? foodEl.innerHTML : '';
-
-  // Extraer el Nombre de Plato (primer <strong>) del meal-food
-  const tmp = document.createElement('div');
-  tmp.innerHTML = card._origFood;
-  card._origPlatoName = tmp.querySelector('strong')?.textContent.trim() || '';
-
-  if (nameEl) {
-    const inp = document.createElement('input');
-    inp.type = 'text'; inp.className = 'edit-meal-name-inp'; inp.value = card._origName; inp.maxLength = 40;
-    inp.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;padding:3px 7px;width:100%;margin-bottom:3px";
-    nameEl.replaceWith(inp);
-  }
-  if (timeEl) {
-    const inp2 = document.createElement('input');
-    inp2.type = 'time'; inp2.className = 'edit-meal-time-inp'; inp2.value = timeStrToInputVal(card._origTime);
-    inp2.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:2px 7px;width:100%;color-scheme:dark";
-    timeEl.replaceWith(inp2);
-  }
-
-  // Campo Nombre de Plato encima del meal-food existente
-  const platoInp = document.createElement('input');
-  platoInp.type = 'text'; platoInp.className = 'edit-meal-plato-inp'; platoInp.value = card._origPlatoName; platoInp.maxLength = 60;
-  platoInp.placeholder = 'Nombre del plato (negrita)';
-  platoInp.style.cssText = "background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;padding:4px 8px;width:100%;margin-bottom:.4rem";
-  foodEl.before(platoInp);
-
-  // Botones guardar/cancelar
-  const actionsDiv = document.createElement('div');
-  actionsDiv.className = 'meal-edit-actions batido-edit-actions';
-  actionsDiv.innerHTML = `<button class="btn-save-meal">✓ Guardar</button><button class="btn-cancel-meal">✕ Cancelar</button>`;
-  actionsDiv.querySelector('.btn-save-meal').addEventListener('click', () => saveBatidoCardEdit(card));
-  actionsDiv.querySelector('.btn-cancel-meal').addEventListener('click', () => cancelBatidoEditMode(card));
-  foodEl.after(actionsDiv);
-  if (editBtn) editBtn.style.display = 'none';
-}
-
-function cancelBatidoEditMode(card) {
-  const nameInp  = card.querySelector('.edit-meal-name-inp');
-  const timeInp  = card.querySelector('.edit-meal-time-inp');
-  const platoInp = card.querySelector('.edit-meal-plato-inp');
-  if (nameInp)  { const el = document.createElement('div'); el.className='meal-name'; el.textContent=card._origName||''; nameInp.replaceWith(el); }
-  if (timeInp)  { const el = document.createElement('div'); el.className='meal-time'; el.textContent=card._origTime||''; timeInp.replaceWith(el); }
-  platoInp?.remove();
-  card.querySelector('.batido-edit-actions')?.remove();
-  card.classList.remove('editing');
-  const editBtn = card.querySelector('.batido-edit-btn');
-  if (editBtn) editBtn.style.display = '';
-}
-
-async function saveBatidoCardEdit(card) {
-  const nameInp  = card.querySelector('.edit-meal-name-inp');
-  const timeInp  = card.querySelector('.edit-meal-time-inp');
-  const platoInp = card.querySelector('.edit-meal-plato-inp');
-  const newName      = nameInp  ? nameInp.value.trim()  || card._origName      : card._origName;
-  const newTime      = timeInp  ? inputValToTimeStr(timeInp.value.trim())       : card._origTime;
-  const newPlatoName = platoInp ? platoInp.value.trim() || card._origPlatoName  : card._origPlatoName;
+// ── Lógica de guardado: BATIDO (limited: nombre/hora/plato) ──
+async function _doSaveMealBatido() {
+  const state = window._mealModal;
+  if (!state) return;
+  const card = state.card;
+  if (!card) return;
+  const newName  = document.getElementById('mm-name').value.trim() || state.origName;
+  const newTime  = inputValToTimeStr(document.getElementById('mm-time').value.trim());
+  const newPlato = document.getElementById('mm-plato').value.trim() || state.origPlato;
 
   const changes = [];
-  if (card._origName      !== newName)      changes.push({ label: 'Nombre',        from: card._origName      || '—', to: newName });
-  if (card._origTime      !== newTime)      changes.push({ label: 'Hora',          from: card._origTime      || '—', to: newTime || '—' });
-  if (card._origPlatoName !== newPlatoName) changes.push({ label: 'Nombre de plato', from: card._origPlatoName || '—', to: newPlatoName });
+  if (state.origName  !== newName)  changes.push({ label: 'Nombre',         from: state.origName  || '—', to: newName });
+  if (state.origTime  !== newTime)  changes.push({ label: 'Hora',           from: state.origTime  || '—', to: newTime || '—' });
+  if (state.origPlato !== newPlato) changes.push({ label: 'Nombre de plato', from: state.origPlato || '—', to: newPlato });
   if (!changes.length) changes.push({ label: 'Sin cambios detectados', from: '', to: '' });
-  if (!await confirmSave(changes)) { cancelBatidoEditMode(card); return; }
+  if (!await confirmSave(changes)) return;
 
-  // Restaurar inputs → elementos
-  const nameEl = document.createElement('div'); nameEl.className = 'meal-name'; nameEl.textContent = newName;
-  nameInp?.replaceWith(nameEl);
-  const timeEl = document.createElement('div'); timeEl.className = 'meal-time'; timeEl.textContent = newTime;
-  timeInp?.replaceWith(timeEl);
-  platoInp?.remove();
-  card.querySelector('.batido-edit-actions')?.remove();
-
-  // Actualizar el <strong> en meal-food con el nuevo nombre de plato
+  // Aplicar al card
+  const nameEl = card.querySelector('.meal-name'); if (nameEl) nameEl.textContent = newName;
+  const timeEl = card.querySelector('.meal-time'); if (timeEl) timeEl.textContent = newTime;
   const foodEl = card.querySelector('.meal-food');
   if (foodEl) {
     const strongEl = foodEl.querySelector('strong');
-    if (strongEl) strongEl.textContent = newPlatoName;
-    else foodEl.innerHTML = `<strong>${escapeHtml(newPlatoName)}</strong>` + (foodEl.innerHTML ? '<br>' + foodEl.innerHTML : '');
+    if (strongEl) strongEl.textContent = newPlato;
+    else foodEl.innerHTML = `<strong>${escapeHtml(newPlato)}</strong>` + (foodEl.innerHTML ? '<br>' + foodEl.innerHTML : '');
   }
 
-  card.classList.remove('editing');
-
-  // ¿El nuevo nombre ya no es batido? → convertir a tarjeta normal
-  if (!normalizeAccents(newName).includes('batido') && !normalizeAccents(newPlatoName).includes('batido')) {
-    card.dataset.isBatido = '';
+  // ¿Ya no es batido? → convertir a comida normal
+  if (!normalizeAccents(newName).includes('batido') && !normalizeAccents(newPlato).includes('batido')) {
     delete card.dataset.isBatido;
     card.classList.remove('batido-disabled', 'batido-global-off');
     card.querySelector('.batido-day-toggle')?.remove();
     card.querySelector('.meal-food').innerHTML = '';
     card.querySelector('.meal-macros').innerHTML = '';
-    const oldBtn = card.querySelector('.batido-edit-btn');
-    if (oldBtn) oldBtn.remove();
+    card.querySelector('.batido-edit-btn')?.remove();
     const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
     editBtn.addEventListener('click', () => enterEditMode(card));
     card.querySelector('.meal-header').appendChild(editBtn);
+    closeMealModal();
     const _snap = buildSnapshot(); lsSet(LOCAL_KEY, _snap);
     if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
     setSyncStatus('saved', '✓ Tarjeta convertida a comida normal');
@@ -3078,8 +2945,7 @@ async function saveBatidoCardEdit(card) {
   }
 
   // Sigue siendo batido
-  const editBtn = card.querySelector('.batido-edit-btn');
-  if (editBtn) editBtn.style.display = '';
+  closeMealModal();
   const _snap = buildSnapshot(); lsSet(LOCAL_KEY, _snap);
   if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
   setSyncStatus('saved', '✓ Batido actualizado');
@@ -3510,23 +3376,21 @@ document.addEventListener('DOMContentLoaded', () => {
 const BATIDO_FB_KEY = 'batido';
 const BATIDO_LOCAL_KEY = 'planMuscular_batido_v1';
 
-function toggleBatidoEdit() {
-  const panel = document.getElementById('batido-edit-panel');
-  const btn   = document.getElementById('batido-edit-btn');
-  if (panel.classList.contains('open')) {
-    cancelBatidoEdit();
-    return;
-  }
-  // Rellenar panel con valores actuales
+function toggleBatidoEdit() { openBatidoModal(); }
+
+function openBatidoModal() {
+  const modal = document.getElementById('modal-batido');
+  if (!modal) return;
+  // Rellenar con valores actuales
   const extra = document.getElementById('batido-extra-view').textContent;
-  document.getElementById('be-extra').value = extra;
-  document.getElementById('be-prot-dosis').value = document.getElementById('prot-dosis-input').value || '35';
+  document.getElementById('be-extra').value       = extra;
+  document.getElementById('be-prot-dosis').value  = document.getElementById('prot-dosis-input').value  || '35';
   document.getElementById('be-creat-dosis').value = document.getElementById('creat-dosis-input').value || '3';
   document.getElementById('be-kcal').value = parsePillNum(document.getElementById('bm-kcal').textContent);
   document.getElementById('be-prot').value = parsePillNum(document.getElementById('bm-prot').textContent);
   document.getElementById('be-carb').value = parsePillNum(document.getElementById('bm-carb').textContent);
   document.getElementById('be-fat').value  = parsePillNum(document.getElementById('bm-fat').textContent);
-  // Guardar snapshot de los valores al abrir para comparar al guardar
+  // Snapshot "antes" para diff de saveBatidoEdit
   window._batidoOrigSnapshot = {
     protDosis:  parseInt(document.getElementById('prot-dosis-input').value)  || 35,
     creatDosis: parseInt(document.getElementById('creat-dosis-input').value) || 3,
@@ -3536,14 +3400,19 @@ function toggleBatidoEdit() {
     carb:       parseInt(parsePillNum(document.getElementById('bm-carb').textContent)) || 0,
     fat:        parseInt(parsePillNum(document.getElementById('bm-fat').textContent))  || 0
   };
-  panel.classList.add('open');
-  btn.textContent = '✕ Cerrar';
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
-function cancelBatidoEdit() {
-  document.getElementById('batido-edit-panel').classList.remove('open');
-  document.getElementById('batido-edit-btn').textContent = '✏ Editar';
+function closeBatidoModal() {
+  const modal = document.getElementById('modal-batido');
+  if (!modal) return;
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
 }
+
+// Alias retrocompatible (saveBatidoEdit llama a cancelBatidoEdit al terminar)
+function cancelBatidoEdit() { closeBatidoModal(); }
 
 async function saveBatidoEdit() {
   const protDosis  = Math.max(1, parseInt(document.getElementById('be-prot-dosis').value)  || 35);
@@ -3976,13 +3845,14 @@ function extractSuplItems() {
 }
 
 async function toggleCompraEdit(btn) {
-  const card = btn.closest('.compra-card');
-  const catId = card.dataset.catId;
-  const isEditing = card.classList.contains('editing-compra');
-  if (isEditing) { cancelCompraEdit(card); return; }
+  return openCompraModal(btn);
+}
 
-  card.classList.add('editing-compra');
-  btn.textContent = '✕ Cancelar';
+async function openCompraModal(btn) {
+  const card = btn.closest('.compra-card');
+  if (!card) return;
+  const catId = card.dataset.catId;
+  const catName = card.querySelector('.compra-cat')?.textContent?.trim() || 'CATEGORÍA';
 
   // Cargar estado "antes" desde Firebase (fuente de verdad)
   let firebaseOrig = null;
@@ -3998,14 +3868,18 @@ async function toggleCompraEdit(btn) {
       firebaseOrig = lc[catId] || null;
     } catch(e) {}
   }
-  card._origItems = Array.isArray(firebaseOrig) ? firebaseOrig.map(it => ({ ...it })) : [];
 
-  // ── Caso especial: SUPLEMENTOS ──
+  window._compraModal = {
+    card, catId,
+    origItems: Array.isArray(firebaseOrig) ? firebaseOrig.map(it => ({ ...it })) : []
+  };
+
+  document.getElementById('modal-compra-title').textContent = 'EDITAR · ' + catName.toUpperCase();
+  const body = document.getElementById('modal-compra-body');
+  body.innerHTML = '';
+
   if (catId === 'suplementos') {
-    const list = card.querySelector('.compra-items-list');
-    card._origItemsHTML = list.innerHTML;
     const suplItems = extractSuplItems();
-    list.innerHTML = '';
     const labels = { prot: '💪 Proteína', creat: '💊 Creatina' };
     const placeholderStock = { prot: '750', creat: '300' };
     const placeholderPrice = { prot: '14.90', creat: '9.90' };
@@ -4018,83 +3892,94 @@ async function toggleCompraEdit(btn) {
         <div style="display:flex;flex-direction:column;gap:.22rem">
           <div style="display:flex;justify-content:space-between;align-items:center">
             <span class="compra-item-edit-lbl">Nombre</span>
-            <button class="btn-del-item" onclick="deleteCompraItem(this)" title="Eliminar producto">🗑 Eliminar producto</button>
           </div>
-          <input class="inp-name" type="text" value="${escapeHtml(it.name)}" placeholder="Nombre del producto">
+          <input class="inp-name plan-input" type="text" value="${escapeHtml(it.name)}" placeholder="Nombre del producto">
         </div>
-        <div style="display:flex;align-items:center;gap:.5rem">
-          <span class="compra-item-edit-lbl" style="flex-shrink:0">Precio</span>
-          <span class="price-input-wrap"><input class="inp-price" type="text" inputmode="decimal" value="${escapeHtml(String(it.price ? String(it.price).replace('.', ',') : ''))}" placeholder="${placeholderPrice[it.id] || ''}"><span class="price-eur-suffix">€</span></span>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem;margin-top:.4rem">
+          <div>
+            <span class="compra-item-edit-lbl" style="display:block;margin-bottom:3px">Precio</span>
+            <span class="price-input-wrap" style="width:100%"><input class="inp-price" type="text" inputmode="decimal" value="${escapeHtml(String(it.price ? String(it.price).replace('.', ',') : ''))}" placeholder="${placeholderPrice[it.id] || ''}"><span class="price-eur-suffix">€</span></span>
+          </div>
+          <div>
+            <span class="compra-item-edit-lbl" style="display:block;margin-bottom:3px">Gramos comprados (g)</span>
+            <input class="inp-stock plan-input" type="number" min="0" step="1" value="${escapeHtml(String(it.stock))}" placeholder="${placeholderStock[it.id] || ''}">
+          </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:.22rem">
-          <span class="compra-item-edit-lbl">Gramos comprados (g)</span>
-          <input class="inp-stock" type="number" min="0" step="1" value="${escapeHtml(String(it.stock))}" placeholder="${placeholderStock[it.id] || ''}">
-        </div>
-        <div style="display:flex;flex-direction:column;gap:.22rem">
+        <div style="display:flex;flex-direction:column;gap:.22rem;margin-top:.4rem">
           <span class="compra-item-edit-lbl">URL foto</span>
-          <input class="inp-img" type="text" value="${escapeHtml(it.img)}" placeholder="https://..." style="min-width:180px">
+          <input class="inp-img plan-input" type="text" value="${escapeHtml(it.img)}" placeholder="https://...">
         </div>
-        <div style="display:flex;flex-direction:column;gap:.22rem">
+        <div style="display:flex;flex-direction:column;gap:.22rem;margin-top:.4rem">
           <span class="compra-item-edit-lbl">Galería extra (URLs separadas por |)</span>
-          <input class="inp-gallery" type="text" value="${escapeHtml(it.gallery || '')}" placeholder="https://foto2.jpg|..." style="min-width:180px">
+          <input class="inp-gallery plan-input" type="text" value="${escapeHtml(it.gallery || '')}" placeholder="https://foto2.jpg|...">
         </div>`;
-      list.appendChild(row);
+      body.appendChild(row);
     });
-    const actRow = document.createElement('div');
-    actRow.className = 'compra-edit-actions';
-    actRow.innerHTML = `<button class="btn-save-meal" onclick="saveSuplEdit(this)">✓ Guardar</button><button class="btn-cancel-meal" onclick="cancelCompraEditBtn(this)">✕ Cancelar</button>`;
-    list.appendChild(actRow);
-    // Attach price normalization
-    list.querySelectorAll('.inp-price').forEach(inp => attachPriceNormalization(inp));
-    return;
+  } else {
+    const items = extractItemsFromCard(card);
+    items.forEach((it) => {
+      const row = document.createElement('div');
+      row.className = 'compra-item-edit';
+      row.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:.22rem">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="compra-item-edit-lbl">Nombre</span>
+            <button class="btn-del-item" onclick="deleteCompraItem(this)" title="Eliminar producto">🗑 Eliminar</button>
+          </div>
+          <input class="inp-name plan-input" type="text" value="${escapeHtml(it.name)}" placeholder="Nombre del producto">
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem;margin-top:.4rem">
+          <div>
+            <span class="compra-item-edit-lbl" style="display:block;margin-bottom:3px">Precio</span>
+            <span class="price-input-wrap" style="width:100%"><input class="inp-price" type="text" inputmode="decimal" value="${escapeHtml(it.price.replace(/[€\s]/g,''))}" placeholder="3,50"><span class="price-eur-suffix">€</span></span>
+          </div>
+          <div>
+            <span class="compra-item-edit-lbl" style="display:block;margin-bottom:3px">URL foto</span>
+            <input class="inp-img plan-input" type="text" value="${escapeHtml(it.img)}" placeholder="https://...">
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.22rem;margin-top:.4rem">
+          <span class="compra-item-edit-lbl">Galería extra (URLs separadas por |)</span>
+          <input class="inp-gallery plan-input" type="text" value="${escapeHtml(it.gallery)}" placeholder="https://foto2.jpg|https://foto3.jpg">
+        </div>`;
+      body.appendChild(row);
+    });
+    const addRow = document.createElement('div');
+    addRow.className = 'compra-add-row';
+    addRow.innerHTML = `<button class="btn-add-item" onclick="addCompraItem(this)">+ Añadir producto</button>`;
+    body.appendChild(addRow);
   }
 
-  // ── Resto de categorías (comportamiento normal) ──
-  const list = card.querySelector('.compra-items-list');
-  card._origItemsHTML = list.innerHTML;
-  const items = extractItemsFromCard(card);
-  list.innerHTML = '';
-  items.forEach((it) => {
-    const row = document.createElement('div');
-    row.className = 'compra-item-edit';
-    row.innerHTML = `
-      <div style="display:flex;flex-direction:column;gap:.22rem">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <span class="compra-item-edit-lbl">Nombre</span>
-          <button class="btn-del-item" onclick="deleteCompraItem(this)" title="Eliminar producto">🗑 Eliminar producto</button>
-        </div>
-        <input class="inp-name" type="text" value="${escapeHtml(it.name)}" placeholder="Nombre del producto">
-      </div>
-      <div style="display:flex;align-items:center;gap:.5rem">
-        <span class="compra-item-edit-lbl" style="flex-shrink:0">Precio</span>
-        <span class="price-input-wrap"><input class="inp-price" type="text" inputmode="decimal" value="${escapeHtml(it.price.replace(/[€\s]/g,''))}" placeholder="3,50"><span class="price-eur-suffix">€</span></span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:.22rem">
-        <span class="compra-item-edit-lbl">URL foto</span>
-        <input class="inp-img" type="text" value="${escapeHtml(it.img)}" placeholder="https://...">
-      </div>
-      <div style="display:flex;flex-direction:column;gap:.22rem">
-        <span class="compra-item-edit-lbl">Galería extra (URLs separadas por |)</span>
-        <input class="inp-gallery" type="text" value="${escapeHtml(it.gallery)}" placeholder="https://foto2.jpg|https://foto3.jpg">
-      </div>`;
-    list.appendChild(row);
-  });
-  const addRow = document.createElement('div');
-  addRow.className = 'compra-add-row';
-  addRow.innerHTML = `<button class="btn-add-item" onclick="addCompraItem(this)">+ Añadir producto</button>`;
-  list.appendChild(addRow);
-  const actRow = document.createElement('div');
-  actRow.className = 'compra-edit-actions';
-  actRow.innerHTML = `<button class="btn-save-meal" onclick="saveCompraEdit(this)">✓ Guardar</button><button class="btn-cancel-meal" onclick="cancelCompraEditBtn(this)">✕ Cancelar</button>`;
-  list.appendChild(actRow);
-  // Attach price normalization to all price inputs
-  list.querySelectorAll('.inp-price').forEach(inp => attachPriceNormalization(inp));
+  body.querySelectorAll('.inp-price').forEach(inp => attachPriceNormalization(inp));
+
+  const modal = document.getElementById('modal-compra');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
-// Guardar edición de suplementos (nombre/emoji/img/precio/stock)
-async function saveSuplEdit(btn) {
-  const card = btn.closest('.compra-card');
-  const list = card.querySelector('.compra-items-list');
+function closeCompraModal() {
+  const modal = document.getElementById('modal-compra');
+  if (modal) modal.classList.remove('open');
+  document.body.style.overflow = '';
+  window._compraModal = null;
+}
+
+async function saveCompraModal() {
+  const state = window._compraModal;
+  if (!state) return;
+  if (state.catId === 'suplementos') {
+    await saveSuplEdit();
+  } else {
+    await saveCompraEdit();
+  }
+}
+
+// Guardar edición de suplementos (nombre/emoji/img/precio/stock) — invocado desde #modal-compra
+async function saveSuplEdit() {
+  const state = window._compraModal;
+  if (!state) return;
+  const card = state.card;
+  const list = document.getElementById('modal-compra-body');
   const suplData = {};
   const s = loadSuplState();
 
@@ -4139,15 +4024,9 @@ async function saveSuplEdit(btn) {
   if (!await confirmSave(_sCh)) return;
   saveSuplState(s);
 
-  // Restaurar HTML original de la lista y aplicar los nuevos valores visuales
-  if (card._origItemsHTML !== undefined) {
-    list.innerHTML = card._origItemsHTML;
-    attachLightboxToItems(list.querySelectorAll('.compra-item'));
-    attachImgFallback(list.querySelectorAll('.compra-img img'));
-  }
+  // Aplicar nuevos valores visuales directamente a los .supl-product-item existentes en la página
   Object.entries(suplData).forEach(([id, d]) => {
-    const item = list.querySelector(`.supl-product-item[data-supl-id="${id}"]`)
-               || document.querySelector(`.supl-product-item[data-supl-id="${id}"]`);
+    const item = document.querySelector(`.supl-product-item[data-supl-id="${id}"]`);
     if (!item) return;
     const imgEl   = item.querySelector('.supl-img-view img');
     const nameEl  = item.querySelector('.supl-name-view');
@@ -4161,10 +4040,7 @@ async function saveSuplEdit(btn) {
     }
   });
 
-  card.classList.remove('editing-compra');
-  const editBtn = card.querySelector('.compra-edit-btn');
-  if (editBtn) editBtn.textContent = '✏ Editar categoría';
-
+  closeCompraModal();
   renderSupl();
   renderCostSupl();
 
@@ -4193,59 +4069,49 @@ async function deleteCompraItem(btn) {
 }
 
 function addCompraItem(btn) {
-  const list = btn.closest('.compra-items-list');
+  const body   = document.getElementById('modal-compra-body');
   const addRow = btn.closest('.compra-add-row');
+  if (!body || !addRow) return;
   const row = document.createElement('div');
   row.className = 'compra-item-edit';
   row.innerHTML = `
     <div style="display:flex;flex-direction:column;gap:.22rem">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <span class="compra-item-edit-lbl">Nombre</span>
-        <button class="btn-del-item" onclick="deleteCompraItem(this)" title="Eliminar producto">🗑 Eliminar producto</button>
+        <button class="btn-del-item" onclick="deleteCompraItem(this)" title="Eliminar producto">🗑 Eliminar</button>
       </div>
-      <input class="inp-name" type="text" value="" placeholder="Nombre del producto">
+      <input class="inp-name plan-input" type="text" value="" placeholder="Nombre del producto">
     </div>
-    <div style="display:flex;align-items:center;gap:.5rem">
-      <span class="compra-item-edit-lbl" style="flex-shrink:0">Precio</span>
-      <span class="price-input-wrap"><input class="inp-price" type="text" inputmode="decimal" value="" placeholder="3,50"><span class="price-eur-suffix">€</span></span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem;margin-top:.4rem">
+      <div>
+        <span class="compra-item-edit-lbl" style="display:block;margin-bottom:3px">Precio</span>
+        <span class="price-input-wrap" style="width:100%"><input class="inp-price" type="text" inputmode="decimal" value="" placeholder="3,50"><span class="price-eur-suffix">€</span></span>
+      </div>
+      <div>
+        <span class="compra-item-edit-lbl" style="display:block;margin-bottom:3px">URL foto</span>
+        <input class="inp-img plan-input" type="text" value="" placeholder="https://...">
+      </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:.22rem">
-      <span class="compra-item-edit-lbl">URL foto</span>
-      <input class="inp-img" type="text" value="" placeholder="https://...">
-    </div>
-    <div style="display:flex;flex-direction:column;gap:.22rem">
+    <div style="display:flex;flex-direction:column;gap:.22rem;margin-top:.4rem">
       <span class="compra-item-edit-lbl">Galería extra (URLs separadas por |)</span>
-      <input class="inp-gallery" type="text" value="" placeholder="https://foto2.jpg|https://foto3.jpg">
+      <input class="inp-gallery plan-input" type="text" value="" placeholder="https://foto2.jpg|https://foto3.jpg">
     </div>`;
-  list.insertBefore(row, addRow);
+  body.insertBefore(row, addRow);
   row.querySelector('.inp-name').focus();
-  // Attach price normalization
   const priceInp = row.querySelector('.inp-price');
   if (priceInp) attachPriceNormalization(priceInp);
 }
 
-function cancelCompraEditBtn(btn) {
-  const card = btn.closest('.compra-card');
-  cancelCompraEdit(card);
-}
+// Aliases retrocompatibles
+function cancelCompraEditBtn() { closeCompraModal(); }
+function cancelCompraEdit()    { closeCompraModal(); }
 
-function cancelCompraEdit(card) {
-  card.classList.remove('editing-compra');
-  const editBtn = card.querySelector('.compra-edit-btn');
-  if (editBtn) editBtn.textContent = '✏ Editar categoría';
-  // Restaurar HTML original (funciona para todas las categorías incluidos suplementos)
-  const list = card.querySelector('.compra-items-list');
-  if (card._origItemsHTML !== undefined) {
-    list.innerHTML = card._origItemsHTML;
-    attachLightboxToItems(list.querySelectorAll('.compra-item'));
-    attachImgFallback(list.querySelectorAll('.compra-img img'));
-  }
-}
-
-async function saveCompraEdit(btn) {
-  const card = btn.closest('.compra-card');
-  const list = card.querySelector('.compra-items-list');
-  const catId = card.dataset.catId;
+async function saveCompraEdit() {
+  const state = window._compraModal;
+  if (!state) return;
+  const card  = state.card;
+  const list  = document.getElementById('modal-compra-body');
+  const catId = state.catId;
 
   // Parse new items from edit inputs
   const items = [];
@@ -4260,30 +4126,8 @@ async function saveCompraEdit(btn) {
     if (name) items.push({ name, price, pricePlain, img, gallery });
   });
 
-  // Usar _origItems (cargado desde Firebase/localStorage) como fuente de verdad
-  // Fallback: parsear desde HTML original si no hay datos de Firebase
-  let origItems = Array.isArray(card._origItems) && card._origItems.length > 0
-    ? card._origItems
-    : (() => {
-        const parsed = [];
-        if (card._origItemsHTML) {
-          const tmp = document.createElement('div');
-          tmp.innerHTML = card._origItemsHTML;
-          tmp.querySelectorAll('.compra-item').forEach(it => {
-            const nameEl  = it.querySelector('.name');
-            const priceEl = it.querySelector('.price');
-            if (!nameEl) return;
-            const imgEl = it.querySelector('.compra-img img');
-            parsed.push({
-              name:    nameEl.textContent.trim(),
-              price:   (priceEl?.textContent || '').trim(),
-              img:     imgEl ? (imgEl.getAttribute('src') || '') : '',
-              gallery: it.dataset.gallery || ''
-            });
-          });
-        }
-        return parsed;
-      })();
+  // Usar origItems del estado del modal (cargado desde Firebase) como fuente de verdad
+  const origItems = Array.isArray(state.origItems) ? state.origItems : [];
 
   // Build changes: detect renames by position, normalize prices
   const compraChanges = [];
@@ -4331,12 +4175,11 @@ async function saveCompraEdit(btn) {
   if (!compraChanges.length) compraChanges.push({ label: 'Sin cambios detectados', from: '', to: '' });
   if (!await confirmSave(compraChanges)) return;
 
-  card.classList.remove('editing-compra');
-  const editBtn = card.querySelector('.compra-edit-btn');
-  if (editBtn) editBtn.textContent = '✏ Editar categoría';
-
-  renderItemsToList(list, items);
+  // Render en la card real de la página (no en el modal)
+  const realList = card.querySelector('.compra-items-list');
+  if (realList) renderItemsToList(realList, items);
   recalcTotalSemanal();
+  closeCompraModal();
 
   let allCompra = lsGet(COMPRA_LOCAL_KEY, {});
   allCompra[catId] = items;
@@ -4910,16 +4753,24 @@ function peExRowHTML(ex, dayBadge) {
   return `<div class="plan-ex-row">
     <div style="display:flex;flex-direction:column;gap:.35rem">
       ${peExerciseSelectHTML(ex.nombre || '', badge)}
-      <input class="plan-input pe-ex-desc" placeholder="Descripción / grupo muscular" type="text" value="${escapeHtml(ex.desc || '')}" style="font-size:.8rem"/>
     </div>
     <div style="display:flex;flex-direction:column;gap:.4rem">
-      <div style="display:flex;align-items:center;gap:5px;flex-wrap:nowrap">
-        <select class="plan-input pe-ex-series-num" style="${numStyle}">${peNumOptions(100, p.s)}</select>
-        <span style="${sep}">×</span>
-        <select class="plan-input pe-ex-reps1" onchange="peRepsSync(this)" style="${numStyle}">${peNumOptions(300, p.r1)}</select>
-        <span class="pe-ex-reps2-wrap" style="display:${hasRango ? 'inline-flex' : 'none'};align-items:center;gap:5px">
-          <span style="${sep}">–</span>
-          <select class="plan-input pe-ex-reps2" onchange="peRepsSync(this)" style="${numStyle}">${peNumOptions(300, p.r2)}</select>
+      <div style="display:flex;align-items:flex-end;gap:5px;flex-wrap:nowrap">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+          <span style="font-size:.55rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px">Series</span>
+          <select class="plan-input pe-ex-series-num" style="${numStyle}">${peNumOptions(100, p.s)}</select>
+        </div>
+        <span style="${sep};padding-bottom:6px">×</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+          <span style="font-size:.55rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px">Reps</span>
+          <select class="plan-input pe-ex-reps1" onchange="peRepsSync(this)" style="${numStyle}">${peNumOptions(300, p.r1)}</select>
+        </div>
+        <span class="pe-ex-reps2-wrap" style="display:${hasRango ? 'inline-flex' : 'none'};align-items:flex-end;gap:5px">
+          <span style="${sep};padding-bottom:6px">–</span>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+            <span style="font-size:.55rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px">Hasta</span>
+            <select class="plan-input pe-ex-reps2" onchange="peRepsSync(this)" style="${numStyle}">${peNumOptions(300, p.r2)}</select>
+          </div>
         </span>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
@@ -4978,7 +4829,7 @@ function peReadData() {
     const ejercicios  = [];
     box.querySelectorAll('.plan-ex-row').forEach(row => {
       const nombre = row.querySelector('.pe-ex-nombre').value.trim();
-      const desc   = row.querySelector('.pe-ex-desc').value.trim();
+      const desc   = '';
       const sSel   = row.querySelector('.pe-ex-series-num');
       const r1Sel  = row.querySelector('.pe-ex-reps1');
       const rango  = row.querySelector('.pe-ex-rango');
@@ -5304,7 +5155,11 @@ async function savePlanModal() {
   }
 
   sortToggleBar();
-  onEntrenoPlanesChanged();
+  // Actualizar caché y banner sin cambiar el plan activo (no usamos activateRecommendedPlan
+  // porque el usuario quiere seguir viendo el plan que acaba de editar/crear)
+  updateEntrenoPlanesCache();
+  renderEntrenoBanner();
+  setPlanActive(planId);
 
   // Save to Firebase
   if (CLOUD_CONFIGURED) {
@@ -5488,6 +5343,79 @@ async function loadEntrenoPlans() {
     <div id="modal-plan-footer">
       <button class="modal-btn-cancel" onclick="closePlanModal()">✕ Cancelar</button>
       <button class="modal-btn-ok" id="pe-btn-save" onclick="savePlanModal()">✓ Guardar plan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL BATIDO (edit suplementación) ══ -->
+<div class="app-modal" id="modal-batido" role="dialog" aria-modal="true">
+  <div class="app-modal-box">
+    <div class="app-modal-header">
+      <div class="app-modal-title">EDITAR BATIDO PROTÉICO</div>
+      <button class="app-modal-close" onclick="closeBatidoModal()" title="Cerrar">✕</button>
+    </div>
+    <div class="app-modal-body">
+      <div class="pe-plan-head">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem">
+          <div>
+            <label class="plan-field-label" style="color:var(--accent)">g Proteína / batido</label>
+            <input class="plan-input" id="be-prot-dosis" min="1" placeholder="35" step="1" type="number" value="35"/>
+          </div>
+          <div>
+            <label class="plan-field-label" style="color:var(--accent2)">g Creatina / batido</label>
+            <input class="plan-input" id="be-creat-dosis" min="1" placeholder="3" step="1" type="number" value="3"/>
+          </div>
+        </div>
+        <div>
+          <label class="plan-field-label">Resto de ingredientes (texto libre)</label>
+          <textarea class="plan-input" id="be-extra" placeholder="fruta (100g) + 300ml leche semi" rows="2" style="resize:vertical;min-height:64px"></textarea>
+        </div>
+      </div>
+      <div class="plan-field-label" style="margin:1rem 0 .4rem">Macros por batido</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.6rem">
+        <div><label class="plan-field-label" style="color:var(--accent3)">kcal</label><input class="plan-input" id="be-kcal" min="0" type="number" value="0"/></div>
+        <div><label class="plan-field-label" style="color:var(--accent)">Prot (g)</label><input class="plan-input" id="be-prot" min="0" type="number" value="0"/></div>
+        <div><label class="plan-field-label" style="color:var(--blue)">Carbs (g)</label><input class="plan-input" id="be-carb" min="0" type="number" value="0"/></div>
+        <div><label class="plan-field-label" style="color:var(--red)">Grasas (g)</label><input class="plan-input" id="be-fat" min="0" type="number" value="0"/></div>
+      </div>
+    </div>
+    <div class="app-modal-footer">
+      <button class="modal-btn-cancel" onclick="closeBatidoModal()">✕ Cancelar</button>
+      <button class="modal-btn-ok" onclick="saveBatidoEdit()">✓ Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL COMPRA (edit categoría) ══ -->
+<div class="app-modal" id="modal-compra" role="dialog" aria-modal="true">
+  <div class="app-modal-box">
+    <div class="app-modal-header">
+      <div class="app-modal-title" id="modal-compra-title">EDITAR CATEGORÍA</div>
+      <button class="app-modal-close" onclick="closeCompraModal()" title="Cerrar">✕</button>
+    </div>
+    <div class="app-modal-body" id="modal-compra-body">
+      <!-- Contenido inyectado dinámicamente -->
+    </div>
+    <div class="app-modal-footer">
+      <button class="modal-btn-cancel" onclick="closeCompraModal()">✕ Cancelar</button>
+      <button class="modal-btn-ok" id="modal-compra-save" onclick="saveCompraModal()">✓ Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL COMIDA (añadir / editar) ══ -->
+<div class="app-modal" id="modal-meal" role="dialog" aria-modal="true">
+  <div class="app-modal-box">
+    <div class="app-modal-header">
+      <div class="app-modal-title" id="modal-meal-title">COMIDA</div>
+      <button class="app-modal-close" onclick="closeMealModal()" title="Cerrar">✕</button>
+    </div>
+    <div class="app-modal-body" id="modal-meal-body">
+      <!-- Contenido inyectado dinámicamente -->
+    </div>
+    <div class="app-modal-footer">
+      <button class="modal-btn-cancel" onclick="closeMealModal()">✕ Cancelar</button>
+      <button class="modal-btn-ok" id="modal-meal-save" onclick="saveMealModal()">✓ Guardar</button>
     </div>
   </div>
 </div>
