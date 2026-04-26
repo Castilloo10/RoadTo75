@@ -542,12 +542,12 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   .cal-hdr{font-size:.68rem;padding:4px 0 6px;letter-spacing:.8px}
 
   /* ── REGISTRO DE PESOS ── */
-  .reg-ex-row{padding:.65rem;gap:.3rem}
-  .reg-ex-name{font-size:.82rem;line-height:1.3}
-  .reg-ex-series{font-size:.68rem}
-  .reg-ex-inputs{gap:.35rem}
-  .reg-set-wrap label{font-size:.58rem}
-  .reg-set-wrap input{font-size:16px;padding:5px 6px;width:58px;min-height:36px;text-align:center}
+  .reg-ex-row{padding:.7rem;gap:.4rem}
+  .reg-ex-name{font-size:.95rem;line-height:1.3}
+  .reg-ex-series{font-size:.88rem}
+  .reg-ex-inputs{gap:.45rem}
+  .reg-set-wrap label{font-size:.68rem}
+  .reg-set-wrap input{font-size:16px;padding:6px 7px;width:70px;min-height:40px;text-align:center;font-weight:600}
   .reg-notes{min-height:40px;padding:6px 8px}
 
   /* ── PLAN MODAL (dvh para que respete URL bar de móviles) ── */
@@ -597,7 +597,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .btn-del-day:hover{background:rgba(240,55,55,.08)}
 .plan-badge-select{appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;padding:4px 20px 4px 8px;cursor:pointer;letter-spacing:.5px;width:fit-content;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b7068'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 5px center}
 .plan-badge-select:focus{outline:none;border-color:var(--accent)}
-.plan-badge-select optgroup,.pe-diaSemana optgroup{background:var(--surface2);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.plan-badge-select optgroup,.pe-diaSemana optgroup{background:var(--surface2);color:#ffd54f;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
 .plan-badge-select option,.pe-diaSemana option{background:var(--surface2);color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.5px}
 .pe-diaSemana option{background:var(--surface2) !important;color:var(--text) !important}
 /* CALENDAR */
@@ -605,6 +605,15 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .cal-day:hover{border-color:var(--accent);background:var(--surface2)}
 .cal-day.today{border-color:var(--accent2);background:rgba(55,240,168,.08)}
 .cal-day.selected{border-color:var(--accent);background:rgba(181,240,55,.12)}
+.cal-day.cal-day-train{background:rgba(55,200,90,.18);border-color:rgba(55,200,90,.55)}
+.cal-day.cal-day-train .cal-badge{color:#7cd97e;font-weight:700}
+.cal-day.cal-day-rest{background:rgba(55,160,240,.18);border-color:rgba(55,160,240,.55)}
+.cal-day.cal-day-rest .cal-badge{color:#65bcf0;font-weight:700}
+.cal-day.cal-day-train.selected,.cal-day.cal-day-rest.selected{border-color:var(--accent)}
+/* Plan-day selector: títulos de plan (optgroup) en amarillo */
+#reg-plan-select{color:var(--text);font-weight:600}
+#reg-plan-select optgroup{color:#ffd54f;font-weight:700;font-size:.92rem;background:var(--surface2)}
+#reg-plan-select option{color:var(--text);font-weight:500;background:var(--surface2)}
 .cal-day.other-month{opacity:.18;cursor:default;pointer-events:none;border-color:transparent;background:transparent}
 .cal-day-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);line-height:1}
 .cal-day.today .cal-day-num{color:var(--accent2);font-weight:700}
@@ -613,14 +622,42 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .cal-dot.rest{background:var(--blue)}
 .cal-badge{font-size:.46rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px;line-height:1.2}
 .cal-hdr{font-size:.72rem;font-weight:700;color:var(--accent);text-align:center;text-transform:uppercase;padding:6px 0 8px;letter-spacing:1px}
-.reg-ex-row{display:flex;flex-direction:column;gap:.35rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.75rem}
-.reg-ex-name{font-size:.84rem;font-weight:700;color:var(--text)}
-.reg-ex-series{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);margin-bottom:.1rem}
-.reg-ex-inputs{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
-.reg-set-wrap{display:flex;align-items:center;gap:4px}
-.reg-set-wrap label{font-size:.62rem;color:var(--muted);white-space:nowrap}
-.reg-set-wrap input{background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:3px 7px;width:62px;text-align:center}
+.reg-ex-row{display:flex;flex-direction:column;gap:.5rem;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.85rem}
+.reg-ex-name{font-size:1rem;font-weight:700;color:var(--text);line-height:1.25}
+.reg-ex-series{font-family:'JetBrains Mono',monospace;font-size:.92rem;color:var(--accent);margin-bottom:.15rem;font-weight:600}
+.reg-ex-inputs{display:flex;gap:.55rem;flex-wrap:wrap;align-items:center}
+.reg-set-wrap{display:flex;flex-direction:column;align-items:center;gap:3px}
+.reg-set-wrap label{font-size:.72rem;color:var(--text2);white-space:nowrap;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.reg-set-wrap input{background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:1rem;padding:6px 9px;width:74px;text-align:center;font-weight:600}
 .reg-set-wrap input:focus{outline:none;border-color:var(--accent)}
+/* Tooltip CSS para botón ⓘ (hover desktop / focus móvil) */
+.reg-ex-info-btn{position:relative}
+.reg-ex-info-btn::after{
+  content:attr(data-tooltip);
+  position:absolute;
+  top:calc(100% + 6px);
+  right:0;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:.55rem .7rem;
+  border-radius:8px;
+  font-size:.78rem;
+  font-weight:400;
+  white-space:normal;
+  width:260px;
+  max-width:80vw;
+  text-align:left;
+  line-height:1.5;
+  letter-spacing:0;
+  text-transform:none;
+  box-shadow:0 6px 20px rgba(0,0,0,.55);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .15s;
+  z-index:50;
+}
+.reg-ex-info-btn:hover::after,.reg-ex-info-btn:focus::after,.reg-ex-info-btn.show-tip::after{opacity:1}
 .reg-notes{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.78rem;padding:4px 8px;resize:none;min-height:36px;margin-top:.35rem}
 .reg-notes:focus{outline:none;border-color:var(--accent)}
 </style>
@@ -1223,28 +1260,27 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 
   <!-- PLAN SELECTOR -->
   <div style="margin-bottom:1rem">
-    <div class="compra-item-edit-lbl" style="margin-bottom:.4rem">Plan de entrenamiento del día</div>
-    <div style="display:flex;gap:.4rem;flex-wrap:wrap" id="reg-plan-btns">
-      <button class="day-tab" onclick="selectRegPlan('empuje')"  data-plan="empuje">EMPUJE</button>
-      <button class="day-tab" onclick="selectRegPlan('tiron')"   data-plan="tiron">TIRÓN</button>
-      <button class="day-tab" onclick="selectRegPlan('legs')"    data-plan="legs">LEGS</button>
-      <button class="day-tab" onclick="selectRegPlan('upperA')"  data-plan="upperA">UPPER A</button>
-      <button class="day-tab" onclick="selectRegPlan('lowerA')"  data-plan="lowerA">LOWER A</button>
-      <button class="day-tab" onclick="selectRegPlan('upperB')"  data-plan="upperB">UPPER B</button>
-      <button class="day-tab" onclick="selectRegPlan('lowerB')"  data-plan="lowerB">LOWER B</button>
-      <button class="day-tab" onclick="selectRegPlan('rest')"    data-plan="rest">💤 Descanso</button>
-    </div>
+    <label class="plan-field-label">Plan del día</label>
+    <select class="plan-input" id="reg-plan-select" onchange="onRegPlanChange(this)">
+      <option value="">— Selecciona —</option>
+    </select>
   </div>
 
   <!-- EXERCISES LOG -->
   <div id="reg-exercises" style="display:none">
-    <div class="compra-item-edit-lbl" style="margin-bottom:.75rem">Registro de pesos</div>
-    <div id="reg-ex-list" style="display:flex;flex-direction:column;gap:.6rem"></div>
-    <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
-      <button class="btn-save-meal" onclick="saveRegDay()">✓ Guardar registro</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem">
+      <label class="plan-field-label" style="margin:0">Registro de pesos</label>
     </div>
+    <div id="reg-ex-list" style="display:flex;flex-direction:column;gap:.6rem"></div>
   </div>
-  <div id="reg-rest-msg" style="display:none;color:var(--blue);font-size:.9rem;padding:.75rem 0">💤 Día de descanso registrado.</div>
+  <div id="reg-rest-msg" style="display:none;color:var(--blue);font-size:.95rem;padding:.5rem 0;font-weight:600">
+    💤 Día de descanso. Pulsa <strong>Guardar registro</strong> para marcarlo en azul en el calendario.
+  </div>
+  <!-- ACCIONES (visibles siempre que haya plan seleccionado) -->
+  <div id="reg-actions" style="display:none;margin-top:1rem;gap:.5rem;flex-wrap:wrap">
+    <button class="btn-save-meal" onclick="saveRegDay()">✓ Guardar registro</button>
+    <button class="btn-cancel-meal" onclick="deleteRegEntry()" style="border-color:rgba(240,55,55,.4);color:var(--red)">🗑 Eliminar registro del día</button>
+  </div>
 </div>
 
 </div>
@@ -2519,7 +2555,8 @@ async function deleteMeal(card, dayEl, toggleBtn) {
     delete data[card.id];
     lsSet(LOCAL_KEY, data);
     if (CLOUD_CONFIGURED) {
-      try { await fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); } catch(e) {}
+      // DELETE quirúrgico de la clave concreta (no toca el resto del nodo /menus)
+      try { await fetch(FB_BASE + '/menus/' + encodeURIComponent(card.id) + '.json', { method: 'DELETE' }); } catch(e) {}
     }
   }
   card.remove();
@@ -2811,7 +2848,7 @@ async function _doSaveMealAdd() {
   lsSet(LOCAL_KEY, _snap);
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida añadida'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap) })
+  fetch(FIREBASE_ENDPOINT, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap) })
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); setSyncStatus('saved', '✓ Comida añadida en la nube'); })
     .catch(() => setSyncStatus('error', '⚠ Error al guardar comida'));
 }
@@ -2893,7 +2930,7 @@ async function _doSaveMealEdit() {
   lsSet(LOCAL_KEY, _snap);
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida guardada'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FIREBASE_ENDPOINT, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap) })
+  fetch(FIREBASE_ENDPOINT, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap) })
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); setSyncStatus('saved', '✓ Comida guardada en la nube'); })
     .catch(() => setSyncStatus('error', '⚠ Error al guardar comida'));
 }
@@ -2938,7 +2975,7 @@ async function _doSaveMealBatido() {
     card.querySelector('.meal-header').appendChild(editBtn);
     closeMealModal();
     const _snap = buildSnapshot(); lsSet(LOCAL_KEY, _snap);
-    if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
+    if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
     setSyncStatus('saved', '✓ Tarjeta convertida a comida normal');
     sortMealsByTime(card.closest('.day-content'));
     return;
@@ -2947,7 +2984,7 @@ async function _doSaveMealBatido() {
   // Sigue siendo batido
   closeMealModal();
   const _snap = buildSnapshot(); lsSet(LOCAL_KEY, _snap);
-  if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
+  if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
   setSyncStatus('saved', '✓ Batido actualizado');
   sortMealsByTime(card.closest('.day-content'));
 }
@@ -4327,9 +4364,18 @@ const EXERCISES_BY_TYPE = {
 function peExerciseSelectHTML(currentValue, dayBadge) {
   const cur = currentValue || '';
   const knownTypes = Object.keys(EXERCISES_BY_TYPE);
-  const types = (dayBadge && dayBadge !== 'custom' && EXERCISES_BY_TYPE[dayBadge])
-    ? [dayBadge]
-    : knownTypes;
+  // Acepta string o array de badges (slot1, slot2, slot3)
+  const rawList = Array.isArray(dayBadge) ? dayBadge : (dayBadge ? [dayBadge] : []);
+  const validBadges = [];
+  const seenB = new Set();
+  rawList.forEach(b => {
+    if (!b || b === 'custom' || !EXERCISES_BY_TYPE[b]) return;
+    if (seenB.has(b)) return;
+    seenB.add(b);
+    validBadges.push(b);
+  });
+  // Si no hay tipos válidos (todo custom o vacío) → mostrar todos los grupos
+  const types = validBadges.length ? validBadges : knownTypes;
   const labelFor = v => {
     const b = BADGE_TYPES.find(x => x.val === v);
     return b ? b.label : (v || '').toUpperCase();
@@ -4408,9 +4454,16 @@ function badgeDisplayLabel(val, customVal) {
   return found ? found.label : (val || '—').toUpperCase();
 }
 
-function badgeSelectHTML(selectedVal) {
+function badgeSelectHTML(selectedVal, opts) {
+  opts = opts || {};
+  const optional = !!opts.optional;
+  const slot = opts.slot || 1;
   const badgeMap = Object.fromEntries(BADGE_TYPES.map(b => [b.val, b]));
-  const groups = BADGE_GROUPS.map(g =>
+  let inner = '';
+  if (optional) {
+    inner += `<option value=""${!selectedVal ? ' selected' : ''}>— Sin tipo —</option>`;
+  }
+  inner += BADGE_GROUPS.map(g =>
     `<optgroup label="${g.label}">` +
     g.options.map(val => {
       const b = badgeMap[val];
@@ -4419,7 +4472,8 @@ function badgeSelectHTML(selectedVal) {
     }).join('') +
     '</optgroup>'
   ).join('');
-  return `<select class="plan-badge-select">${groups}</select>`;
+  const slotClass = slot > 1 ? ' pe-badge-slot' + slot : '';
+  return `<select class="plan-badge-select${slotClass}">${inner}</select>`;
 }
 
 // Resizes any select to fit its selected option text
@@ -4521,12 +4575,12 @@ function peBadgeSelectChanged(sel) {
   applyBadgeSelectColor(sel);
   const box = sel.closest('.plan-day-box');
   if (!box) return;
-  // Rebuild exercise selects inside this day to match the new type
-  // (custom → all types, otherwise → only this type's catalog; existing values preserved)
+  // Rebuild exercise selects inside this day combinando los 3 badges (slot1+slot2+slot3)
+  const _badgesNow = peReadDayBadges(box);
   box.querySelectorAll('.plan-ex-row .pe-ex-nombre').forEach(oldSel => {
     const currentVal = oldSel.value || '';
     const tmp = document.createElement('div');
-    tmp.innerHTML = peExerciseSelectHTML(currentVal, sel.value);
+    tmp.innerHTML = peExerciseSelectHTML(currentVal, _badgesNow);
     oldSel.replaceWith(tmp.firstElementChild);
   });
   const hiddenInput = box.querySelector('.pe-badge-custom');
@@ -4569,12 +4623,79 @@ function peBadgeSelectChanged(sel) {
 // Called from the ✏ Cambiar button — always opens the prompt regardless of existing value
 function peOpenCustomPromptFromEditBtn(btn) {
   const box         = btn.closest('.plan-day-box');
-  const sel         = box ? box.querySelector('.plan-badge-select:not(.pe-diaSemana)') : null;
+  const sel         = box ? box.querySelector('.plan-badge-select:not(.pe-diaSemana):not(.pe-badge-slot2):not(.pe-badge-slot3)') : null;
   const hiddenInput = box ? box.querySelector('.pe-badge-custom') : null;
   const preview     = box ? box.querySelector('.pe-badge-custom-preview') : null;
   const editBtn     = btn;
   if (!sel) return;
   peOpenCustomBadgePrompt(sel, hiddenInput, preview, editBtn, hiddenInput ? hiddenInput.value : '');
+}
+
+// Custom prompt para slots 2 y 3 (botón ✏ del slot)
+function peOpenCustomPromptSlot(btn, slot) {
+  const box         = btn.closest('.plan-day-box');
+  const sel         = box ? box.querySelector('.pe-badge-slot' + slot) : null;
+  const hiddenInput = box ? box.querySelector('.pe-badge-custom' + slot) : null;
+  const preview     = box ? box.querySelector('.pe-badge-custom-preview' + slot) : null;
+  if (!sel) return;
+  peOpenCustomBadgePrompt(sel, hiddenInput, preview, btn, hiddenInput ? hiddenInput.value : '');
+}
+
+// Handler para slots 2/3 (gestiona custom prompt + visibilidad slot 3 + reconstruye ejercicios)
+function peBadgeSlotChanged(sel, slot) {
+  if (sel.value !== 'custom') sel.dataset.prevVal = sel.value;
+  const box = sel.closest('.plan-day-box');
+  if (!box) return;
+  const hiddenInput = box.querySelector('.pe-badge-custom' + slot);
+  const preview     = box.querySelector('.pe-badge-custom-preview' + slot);
+  const editBtn     = box.querySelector('.pe-badge-custom-edit-btn' + slot);
+
+  // Si el slot 2 cambia, mostrar/ocultar slot 3 según tenga valor
+  if (slot === 2) {
+    const tipo3Wrap = box.querySelector('.pe-tipo-extra-wrap[data-slot="3"]');
+    if (tipo3Wrap) tipo3Wrap.style.display = sel.value ? 'inline-flex' : 'none';
+    // Si se vacía slot 2, también limpiamos slot 3
+    if (!sel.value) {
+      const sel3 = box.querySelector('.pe-badge-slot3');
+      const hidden3 = box.querySelector('.pe-badge-custom3');
+      const prev3 = box.querySelector('.pe-badge-custom-preview3');
+      const edit3 = box.querySelector('.pe-badge-custom-edit-btn3');
+      if (sel3) { sel3.value = ''; resizeBadgeSelect(sel3); applyBadgeSelectColor(sel3); }
+      if (hidden3) hidden3.value = '';
+      if (prev3) { prev3.textContent = ''; prev3.style.display = 'none'; }
+      if (edit3) edit3.style.display = 'none';
+    }
+  }
+
+  // Reconstruir selectores de ejercicios con los 3 badges activos
+  const _badgesNow = peReadDayBadges(box);
+  box.querySelectorAll('.plan-ex-row .pe-ex-nombre').forEach(oldSel => {
+    const currentVal = oldSel.value || '';
+    const tmp = document.createElement('div');
+    tmp.innerHTML = peExerciseSelectHTML(currentVal, _badgesNow);
+    oldSel.replaceWith(tmp.firstElementChild);
+  });
+
+  if (sel.value !== 'custom') {
+    if (hiddenInput && hiddenInput.value) box.dataset['lastCustom' + slot] = hiddenInput.value;
+    if (preview) { preview.textContent = ''; preview.style.display = 'none'; }
+    if (editBtn) editBtn.style.display = 'none';
+    return;
+  }
+
+  box.dataset['prevBadgeVal' + slot] = sel.dataset.prevVal || '';
+  const restored = (!hiddenInput || !hiddenInput.value) && box.dataset['lastCustom' + slot]
+    ? box.dataset['lastCustom' + slot] : '';
+  if (restored && hiddenInput) hiddenInput.value = restored;
+  const existing = hiddenInput ? hiddenInput.value : '';
+  if (existing) {
+    if (preview) { preview.textContent = '→ ' + existing; preview.style.display = 'inline'; preview.style.color = '#c07af0'; }
+    if (editBtn) editBtn.style.display = 'inline-flex';
+    return;
+  }
+  if (preview) preview.style.display = 'inline';
+  if (editBtn) editBtn.style.display = 'inline-flex';
+  peOpenCustomBadgePrompt(sel, hiddenInput, preview, editBtn, existing);
 }
 
 // Opens the modal prompt to set/change the custom badge text
@@ -4684,8 +4805,8 @@ function peAddDay(dayData) {
   const box = document.createElement('div');
   box.className = 'plan-day-box';
 
-  const dayBadgeForRows = d.badge || 'pecho';
-  const exRows = (d.ejercicios && d.ejercicios.length ? d.ejercicios : [{}]).map(ex => peExRowHTML(ex, dayBadgeForRows)).join('');
+  const dayBadgesForRows = [d.badge || 'pecho', d.badge2 || '', (d.badge2 ? d.badge3 : '') || ''];
+  const exRows = (d.ejercicios && d.ejercicios.length ? d.ejercicios : [{}]).map(ex => peExRowHTML(ex, dayBadgesForRows)).join('');
 
   box.innerHTML = `
     <div class="plan-day-header">
@@ -4704,6 +4825,18 @@ function peAddDay(dayData) {
         <span class="pe-badge-custom-preview" style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;letter-spacing:.5px;color:#c07af0;display:${d.badge==='custom'?'inline':'none'}">${d.badgeCustom ? '\u2192 ' + escapeHtml(d.badgeCustom) : ''}</span>
         <button class="pe-badge-custom-edit-btn" onclick="peOpenCustomPromptFromEditBtn(this)" style="display:${d.badge==='custom'?'inline-flex':'none'};background:rgba(181,240,55,.12);border:1px dashed rgba(181,240,55,.5);color:var(--accent);border-radius:7px;padding:4px 11px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;align-items:center;gap:4px;transition:all .2s" onmouseover="this.style.background='rgba(181,240,55,.22)';this.style.borderColor='var(--accent)'" onmouseout="this.style.background='rgba(181,240,55,.12)';this.style.borderColor='rgba(181,240,55,.5)'">✏ Cambiar nombre</button>
       <input class="pe-badge-custom" type="hidden" value="${escapeHtml(d.badgeCustom || '')}"/>
+      <span class="pe-tipo-extra-wrap" data-slot="2" style="display:inline-flex;align-items:center;gap:.4rem">
+        ${badgeSelectHTML(d.badge2 || '', { slot: 2, optional: true })}
+        <span class="pe-badge-custom-preview2" style="font-family:Bebas Neue,sans-serif;font-size:1rem;letter-spacing:.5px;color:#c07af0;display:${d.badge2==='custom'?'inline':'none'}">${d.badgeCustom2 ? '→ ' + escapeHtml(d.badgeCustom2) : ''}</span>
+        <button class="pe-badge-custom-edit-btn2" onclick="peOpenCustomPromptSlot(this,2)" style="display:${d.badge2==='custom'?'inline-flex':'none'};background:rgba(181,240,55,.1);border:1px dashed rgba(181,240,55,.4);color:var(--accent);border-radius:6px;padding:3px 8px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;align-items:center;gap:3px">✏</button>
+        <input class="pe-badge-custom2" type="hidden" value="${escapeHtml(d.badgeCustom2 || '')}"/>
+      </span>
+      <span class="pe-tipo-extra-wrap" data-slot="3" style="display:${d.badge2 ? 'inline-flex' : 'none'};align-items:center;gap:.4rem">
+        ${badgeSelectHTML(d.badge3 || '', { slot: 3, optional: true })}
+        <span class="pe-badge-custom-preview3" style="font-family:Bebas Neue,sans-serif;font-size:1rem;letter-spacing:.5px;color:#c07af0;display:${d.badge3==='custom'?'inline':'none'}">${d.badgeCustom3 ? '→ ' + escapeHtml(d.badgeCustom3) : ''}</span>
+        <button class="pe-badge-custom-edit-btn3" onclick="peOpenCustomPromptSlot(this,3)" style="display:${d.badge3==='custom'?'inline-flex':'none'};background:rgba(181,240,55,.1);border:1px dashed rgba(181,240,55,.4);color:var(--accent);border-radius:6px;padding:3px 8px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;align-items:center;gap:3px">✏</button>
+        <input class="pe-badge-custom3" type="hidden" value="${escapeHtml(d.badgeCustom3 || '')}"/>
+      </span>
       <button class="btn-del-day" onclick="peDelDay(this)" style="margin-left:auto">🗑 Eliminar día</button>
     </div>
     <div class="plan-day-info">
@@ -4733,26 +4866,36 @@ function peAddDay(dayData) {
     diaSel.addEventListener('change', () => { applyDiaSelectColor(diaSel); resizeSelectToContent(diaSel, 42); });
   }
 
-  // Hook the badge select: show custom prompt when 'custom' is chosen
-  const badgeSel = box.querySelector('.plan-badge-select:not(.pe-diaSemana)');
+  // Hook the badge select (slot 1 — obligatorio, dispara reconstrucción de selectores de ejercicio)
+  const badgeSel = box.querySelector('.plan-badge-select:not(.pe-diaSemana):not(.pe-badge-slot2):not(.pe-badge-slot3)');
   if (badgeSel) {
     badgeSel.dataset.prevVal = badgeSel.value;
     resizeBadgeSelect(badgeSel);
     applyBadgeSelectColor(badgeSel);
     badgeSel.addEventListener('change', () => { peBadgeSelectChanged(badgeSel); resizeBadgeSelect(badgeSel); applyBadgeSelectColor(badgeSel); });
   }
+  // Hooks para slots 2 y 3 (opcionales)
+  [2,3].forEach(slot => {
+    const sel = box.querySelector('.pe-badge-slot' + slot);
+    if (!sel) return;
+    sel.dataset.prevVal = sel.value;
+    resizeBadgeSelect(sel);
+    applyBadgeSelectColor(sel);
+    sel.addEventListener('change', () => { peBadgeSlotChanged(sel, slot); resizeBadgeSelect(sel); applyBadgeSelectColor(sel); });
+  });
 }
 
-function peExRowHTML(ex, dayBadge) {
+function peExRowHTML(ex, dayBadges) {
   ex = ex || {};
-  const badge = dayBadge || 'empuje';
+  // dayBadges puede ser string (legacy) o array de hasta 3 badges
+  const badges = Array.isArray(dayBadges) ? dayBadges : (dayBadges ? [dayBadges] : ['empuje']);
   const p = peParseSeries(ex.series || '');
   const hasRango = !!p.r2;
   const numStyle = 'padding:4px 6px;font-size:.9rem;min-width:52px;width:auto;font-family:\'Bebas Neue\',sans-serif;letter-spacing:.5px';
   const sep = 'color:var(--text2);font-weight:700;font-size:1rem;font-family:\'Bebas Neue\',sans-serif';
   return `<div class="plan-ex-row">
     <div style="display:flex;flex-direction:column;gap:.35rem">
-      ${peExerciseSelectHTML(ex.nombre || '', badge)}
+      ${peExerciseSelectHTML(ex.nombre || '', badges)}
     </div>
     <div style="display:flex;flex-direction:column;gap:.4rem">
       <div style="display:flex;align-items:flex-end;gap:5px;flex-wrap:nowrap">
@@ -4784,13 +4927,24 @@ function peExRowHTML(ex, dayBadge) {
   </div>`;
 }
 
+// Lee los 3 badges actuales (slot1, slot2, slot3) del DOM
+function peReadDayBadges(box) {
+  if (!box) return ['pecho'];
+  const s1 = box.querySelector('.plan-badge-select:not(.pe-diaSemana):not(.pe-badge-slot2):not(.pe-badge-slot3)');
+  const s2 = box.querySelector('.pe-badge-slot2');
+  const s3 = box.querySelector('.pe-badge-slot3');
+  const v1 = s1 ? s1.value : 'pecho';
+  const v2 = s2 ? s2.value : '';
+  const v3 = (v2 && s3) ? s3.value : '';
+  return [v1, v2, v3];
+}
+
 function peAddEx(btn) {
   const ejerciciosDiv = btn.previousElementSibling;
   const box = btn.closest('.plan-day-box');
-  const badgeSel = box ? box.querySelector('.plan-badge-select:not(.pe-diaSemana)') : null;
-  const dayBadge = badgeSel ? badgeSel.value : 'pecho';
+  const badges = peReadDayBadges(box);
   const tmp = document.createElement('div');
-  tmp.innerHTML = peExRowHTML({}, dayBadge);
+  tmp.innerHTML = peExRowHTML({}, badges);
   ejerciciosDiv.appendChild(tmp.firstElementChild);
 }
 
@@ -4820,8 +4974,12 @@ function peReadData() {
   const estructura2= document.getElementById('pe-estructura2').value.trim();
   const dias = [];
   document.querySelectorAll('#pe-dias-container .plan-day-box').forEach(box => {
-    const badgeSel    = box.querySelector('.plan-badge-select:not(.pe-diaSemana)');
-    const badgeCustom = box.querySelector('.pe-badge-custom').value.trim();
+    const badgeSel     = box.querySelector('.plan-badge-select:not(.pe-diaSemana):not(.pe-badge-slot2):not(.pe-badge-slot3)');
+    const badgeCustom  = box.querySelector('.pe-badge-custom').value.trim();
+    const badgeSel2    = box.querySelector('.pe-badge-slot2');
+    const badgeCustom2 = box.querySelector('.pe-badge-custom2')?.value.trim() || '';
+    const badgeSel3    = box.querySelector('.pe-badge-slot3');
+    const badgeCustom3 = box.querySelector('.pe-badge-custom3')?.value.trim() || '';
     const titulo      = box.querySelector('.pe-title').value.trim();
     const descripcion = box.querySelector('.pe-desc').value.trim();
     const diaSemana   = box.querySelector('.pe-diaSemana').value.trim();
@@ -4841,7 +4999,17 @@ function peReadData() {
       );
       if (nombre) ejercicios.push({ nombre, desc, series });
     });
-    dias.push({ badge: badgeSel ? badgeSel.value : 'empuje', badgeCustom, titulo, descripcion, diaSemana, ejercicios, comentario });
+    const badge2 = badgeSel2 ? badgeSel2.value : '';
+    const badge3 = (badge2 && badgeSel3) ? badgeSel3.value : '';
+    dias.push({
+      badge: badgeSel ? badgeSel.value : 'empuje',
+      badgeCustom,
+      badge2,
+      badgeCustom2: badge2 === 'custom' ? badgeCustom2 : '',
+      badge3,
+      badgeCustom3: badge3 === 'custom' ? badgeCustom3 : '',
+      titulo, descripcion, diaSemana, ejercicios, comentario
+    });
   });
   return { nombre, estructura, estructura2, dias };
 }
@@ -4859,13 +5027,20 @@ function peBuildPlanHTML(planId, data) {
     <button onclick="deletePlan('${planId}')" style="background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.2)';this.style.borderColor='var(--red)'" onmouseout="this.style.background='rgba(240,55,55,.1)';this.style.borderColor='rgba(240,55,55,.4)'">🗑 Eliminar plan</button>
   </div>`;
   html += `<div class="dias-entreno">`;
+  // Helper: HTML de un badge (val/customVal) o '' si no aplica
+  const _badgeChipHTML = (val, customVal) => {
+    if (!val) return '';
+    const bt = badgeMap[val] || { label: (val || '').toUpperCase(), cls: '' };
+    const lbl = val === 'custom' && customVal ? customVal.toUpperCase() : bt.label;
+    return `<span class="dia-badge ${bt.cls || ''}">${escapeHtml(lbl)}</span>`;
+  };
   (data.dias || []).forEach(dia => {
-    const bType = badgeMap[dia.badge] || { label: dia.badge.toUpperCase(), cls: '' };
-    const badgeLabel = dia.badge === 'custom' && dia.badgeCustom ? dia.badgeCustom.toUpperCase() : bType.label;
-    const badgeCls   = bType.cls || '';
     html += `<div class="dia-entreno">`;
     const diaSemanaHTML = dia.diaSemana ? `<span class="dia-day-badge">${escapeHtml(dia.diaSemana)}</span>` : '';
-    html += `<div class="dia-entreno-header"><span class="dia-badge ${badgeCls}">${escapeHtml(badgeLabel)}</span><div style="flex:1;min-width:0"><div class="dia-title">${escapeHtml(dia.titulo)}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div>${diaSemanaHTML}</div>`;
+    const badge1HTML = _badgeChipHTML(dia.badge, dia.badgeCustom);
+    const badge2HTML = _badgeChipHTML(dia.badge2, dia.badgeCustom2);
+    const badge3HTML = (dia.badge2 ? _badgeChipHTML(dia.badge3, dia.badgeCustom3) : '');
+    html += `<div class="dia-entreno-header"><div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center">${badge1HTML}${badge2HTML}${badge3HTML}</div><div style="flex:1;min-width:0"><div class="dia-title">${escapeHtml(dia.titulo)}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div>${diaSemanaHTML}</div>`;
     (dia.ejercicios || []).forEach(ex => {
       html += `<div class="exercise"><div class="ex-name"><strong>${escapeHtml(ex.nombre)}</strong>${escapeHtml(ex.desc)}</div><span class="ex-sets">${escapeHtml(ex.series)}</span></div>`;
     });
@@ -5063,6 +5238,8 @@ async function savePlanModal() {
     planChanges.push({ label: 'Días de entrenamiento', from: '—', to: data.dias.length + ' día' + (data.dias.length === 1 ? '' : 's') });
     data.dias.forEach((d, i) => {
       planChanges.push({ label: 'Día ' + (i+1) + ' — Tipo',   from: '—', to: badgeDisplayLabel(d.badge || '', d.badgeCustom || '') });
+      if (d.badge2) planChanges.push({ label: 'Día ' + (i+1) + ' — Tipo 2', from: '—', to: badgeDisplayLabel(d.badge2, d.badgeCustom2 || '') });
+      if (d.badge2 && d.badge3) planChanges.push({ label: 'Día ' + (i+1) + ' — Tipo 3', from: '—', to: badgeDisplayLabel(d.badge3, d.badgeCustom3 || '') });
       planChanges.push({ label: 'Día ' + (i+1) + ' — Título', from: '—', to: d.titulo || '—' });
       if (d.diaSemana) planChanges.push({ label: 'Día ' + (i+1) + ' — Día semana', from: '—', to: d.diaSemana });
       // Ejercicios uno a uno (ya se muestran como "nuevo" al tener oldEx vacío)
@@ -5099,6 +5276,15 @@ async function savePlanModal() {
       const newBadgeLabel = badgeDisplayLabel(d.badge   || '', d.badgeCustom   || '');
       if (oldBadgeLabel !== newBadgeLabel)
         planChanges.push({ label: 'Día ' + (i+1) + ' — Tipo', from: oldBadgeLabel, to: newBadgeLabel });
+      // Slot 2 y slot 3
+      const oldB2 = old.badge2 ? badgeDisplayLabel(old.badge2, old.badgeCustom2 || '') : '';
+      const newB2 = d.badge2   ? badgeDisplayLabel(d.badge2,   d.badgeCustom2   || '') : '';
+      if (oldB2 !== newB2)
+        planChanges.push({ label: 'Día ' + (i+1) + ' — Tipo 2', from: oldB2 || '—', to: newB2 || '—' });
+      const oldB3 = (old.badge2 && old.badge3) ? badgeDisplayLabel(old.badge3, old.badgeCustom3 || '') : '';
+      const newB3 = (d.badge2 && d.badge3)     ? badgeDisplayLabel(d.badge3,   d.badgeCustom3   || '') : '';
+      if (oldB3 !== newB3)
+        planChanges.push({ label: 'Día ' + (i+1) + ' — Tipo 3', from: oldB3 || '—', to: newB3 || '—' });
       if ((old.titulo || '') !== (d.titulo || ''))
         planChanges.push({ label: 'Día ' + (i+1) + ' — Título',      from: old.titulo || '—',      to: d.titulo || '—' });
       if ((old.descripcion || '') !== (d.descripcion || ''))
@@ -5428,24 +5614,60 @@ const CAL_POS_LS_KEY = 'planMuscular_cal_pos_v1';
 const REG_LS_KEY  = 'planMuscular_registro_v1';
 const CAL_START   = new Date(2026, 0, 1);  // Min date: Jan 2026
 
-// Plan data
-const PLANES = {
-  empuje: { label:'EMPUJE',  color:'var(--accent)',  desc:'Pecho · Hombros · Tríceps',
-    ex:[{n:'Press de banca plano (barra)',s:'4×6-8'},{n:'Press inclinado (mancuernas)',s:'3×8-10'},{n:'Press militar (barra o mancuernas)',s:'3×8-10'},{n:'Elevaciones laterales',s:'3×12-15'},{n:'Fondos en paralelas',s:'3×8-10'},{n:'Extensión tríceps en polea',s:'3×12-15'}]},
-  tiron:  { label:'TIRÓN',   color:'var(--blue)',    desc:'Espalda · Bíceps',
-    ex:[{n:'Dominadas o jalón al pecho',s:'4×6-8'},{n:'Remo con barra (Pendlay)',s:'4×6-8'},{n:'Remo en polea sentado',s:'3×10-12'},{n:'Face pulls en polea',s:'3×15'},{n:'Curl bíceps con barra Z',s:'3×10-12'},{n:'Curl martillo mancuernas',s:'3×12-15'}]},
-  legs:   { label:'LEGS',    color:'var(--accent2)', desc:'Cuádriceps · Isquios · Glúteos',
-    ex:[{n:'Sentadilla con barra (trasera)',s:'4×6-8'},{n:'Peso muerto rumano',s:'3×8-10'},{n:'Prensa de piernas',s:'3×10-12'},{n:'Extensión de cuádriceps (máquina)',s:'3×12-15'},{n:'Curl de isquiotibiales tumbado',s:'3×12-15'},{n:'Gemelos de pie (máquina o barra)',s:'4×12-15'}]},
-  upperA: { label:'UPPER A', color:'var(--accent)',  desc:'Pecho/Tríceps énfasis',
-    ex:[{n:'Press de banca plano (barra)',s:'4×5-7'},{n:'Remo con barra (Pendlay)',s:'4×6-8'},{n:'Press inclinado mancuernas',s:'3×8-10'},{n:'Jalón al pecho agarre ancho',s:'3×10-12'},{n:'Press militar mancuernas',s:'3×10-12'},{n:'Fondos en paralelas',s:'3×8-10'},{n:'Curl bíceps barra',s:'3×12'}]},
-  lowerA: { label:'LOWER A', color:'var(--accent3)', desc:'Cuádriceps énfasis',
-    ex:[{n:'Sentadilla con barra',s:'4×5-7'},{n:'Peso muerto rumano',s:'3×8-10'},{n:'Prensa de piernas',s:'3×10-12'},{n:'Extensión cuádriceps (máquina)',s:'3×12-15'},{n:'Curl isquiotibiales tumbado',s:'3×12-15'},{n:'Gemelos de pie',s:'4×15'}]},
-  upperB: { label:'UPPER B', color:'var(--accent2)', desc:'Espalda/Bíceps énfasis',
-    ex:[{n:'Dominadas (o jalón neutro)',s:'4×6-8'},{n:'Press banca inclinado barra',s:'4×8-10'},{n:'Remo en polea sentado',s:'3×10-12'},{n:'Aperturas en polea alta',s:'3×12-15'},{n:'Elevaciones laterales',s:'3×15'},{n:'Curl martillo mancuernas',s:'3×12'},{n:'Extensión tríceps polea',s:'3×12-15'}]},
-  lowerB: { label:'LOWER B', color:'var(--red)',     desc:'Isquios/Glúteos énfasis',
-    ex:[{n:'Peso muerto convencional',s:'4×4-6'},{n:'Hip Thrust con barra',s:'4×10-12'},{n:'Sentadilla búlgara (unilateral)',s:'3×10'},{n:'Leg press pies altos',s:'3×12'},{n:'Curl nórdico o máquina isquios',s:'3×10-12'},{n:'Gemelos sentado (máquina)',s:'4×15'}]},
-  rest:   { label:'💤 DESCANSO', color:'#b07af0', desc:'', ex:[] }
-};
+// ── REGISTRO DE PESOS — datos derivados de entreno_plans ──
+// Formato de entry.plan: 'PLANID|DAYINDEX' (training) o 'rest' (descanso)
+// entry.exercises[exName] = { sets: [{kg:'80'},...] } (kg con coma decimal)
+function getRegPlanDay(planValue) {
+  if (!planValue || planValue === 'rest') return null;
+  const [planId, dayIdx] = planValue.split('|');
+  const plans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
+  const plan = plans[planId];
+  if (!plan || !plan.dias) {
+    // fallback: leer del DOM (planes hardcoded sin datos en localStorage)
+    const dom = (typeof peReadDomPlan === 'function') ? peReadDomPlan(planId) : null;
+    if (!dom || !dom.dias) return null;
+    const day = dom.dias[parseInt(dayIdx) || 0];
+    return day ? { plan: dom, day, planId, dayIdx: parseInt(dayIdx) || 0 } : null;
+  }
+  const day = plan.dias[parseInt(dayIdx) || 0];
+  if (!day) return null;
+  return { plan, day, planId, dayIdx: parseInt(dayIdx) || 0 };
+}
+// Combina badge + badge2 + badge3 → "PECHO-TRICEPS-HOMBRO"
+function regBadgesCombined(day) {
+  const labels = [];
+  const _lbl = (v, c) => (typeof badgeDisplayLabel === 'function')
+    ? badgeDisplayLabel(v || '', c || '')
+    : (v || '').toUpperCase();
+  if (day.badge)  labels.push(_lbl(day.badge,  day.badgeCustom));
+  if (day.badge2) labels.push(_lbl(day.badge2, day.badgeCustom2));
+  if (day.badge2 && day.badge3) labels.push(_lbl(day.badge3, day.badgeCustom3));
+  return labels.filter(Boolean).join(' / ');
+}
+// Etiqueta legible para cal/select
+function regPlanLabel(planValue) {
+  if (planValue === 'rest') return 'DESCANSO';
+  const info = getRegPlanDay(planValue);
+  if (!info) return planValue || '';
+  const { plan, day, dayIdx } = info;
+  const badgeLbl = regBadgesCombined(day);
+  const planName = plan.nombre || '';
+  const diaSemPrefix = day.diaSemana ? day.diaSemana + ' — ' : '';
+  const titulo = day.titulo ? ' · ' + day.titulo : '';
+  return `${planName ? planName + ' · ' : ''}${diaSemPrefix}Día ${dayIdx + 1}${titulo} (${badgeLbl})`;
+}
+// Etiqueta corta para badge del calendario (cabe en 1 línea)
+function regPlanShortLabel(planValue) {
+  if (planValue === 'rest') return 'DESCANSO';
+  const info = getRegPlanDay(planValue);
+  if (!info) return '';
+  return regBadgesCombined(info.day);
+}
+// Parsea ex.series ("4×6-8" / "3x10") → nº de series default
+function regSeriesCount(seriesStr) {
+  const m = /^(\d+)\s*[×xX*]/.exec((seriesStr || '').trim());
+  return m ? Math.max(1, parseInt(m[1])) : 3;
+}
 
 let calYear   = new Date().getFullYear();
 let calMonth  = new Date().getMonth();
@@ -5545,16 +5767,15 @@ function makeDayCell(dateObj, isOtherMonth) {
   let cls = isOtherMonth ? 'cal-day other-month' : 'cal-day';
   if (key === tk) cls += ' today';
   if (key === selDate) cls += ' selected';
+  if (entry && !isOtherMonth) {
+    cls += entry.plan === 'rest' ? ' cal-day-rest' : ' cal-day-train';
+  }
   cell.className = cls;
   if (!isOtherMonth) cell.onclick = () => openRegPanel(key);
   let inner = `<span class="cal-day-num">${d}</span>`;
   if (entry && !isOtherMonth) {
-    const planInfo = PLANES[entry.plan];
-    if (entry.plan === 'rest') {
-      inner += `<span class="cal-dot rest"></span><span class="cal-badge">descanso</span>`;
-    } else if (planInfo) {
-      inner += `<span class="cal-dot log"></span><span class="cal-badge">${planInfo.label}</span>`;
-    }
+    const lbl = regPlanShortLabel(entry.plan);
+    inner += `<span class="cal-badge">${escapeHtml(lbl || '')}</span>`;
   }
   cell.innerHTML = inner;
   return cell;
@@ -5759,6 +5980,71 @@ function calGoToday() {
 }
 
 // ── Day panel ──
+function populateRegPlanSelect() {
+  const sel = document.getElementById('reg-plan-select');
+  if (!sel) return;
+  const plans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
+  // Si el localStorage está vacío, leer del DOM (planes hardcoded)
+  const planEntries = Object.entries(plans);
+  const allPlans = planEntries.length ? planEntries : [];
+  if (!allPlans.length) {
+    document.querySelectorAll('#entreno .entreno-plan').forEach(el => {
+      const planId = el.id.replace(/^plan-/, '');
+      const dom = (typeof peReadDomPlan === 'function') ? peReadDomPlan(planId) : null;
+      if (dom) allPlans.push([planId, dom]);
+    });
+  }
+  // Orden: 1) planes estándar (cuyo nombre NO contiene "personalizado/custom")
+  //           ordenados por nº de días ASC.
+  //        2) planes personalizados al final (nombre contiene "personalizado/custom")
+  //           también ordenados por nº de días ASC, luego nombre.
+  const _norm = s => (s || '').toString().toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const isCustomPlan = plan => {
+    const name = _norm(plan && plan.nombre);
+    return name.includes('personalizado') || name.includes('personalizada') || name.includes('custom');
+  };
+  allPlans.sort((a, b) => {
+    const cA = isCustomPlan(a[1]);
+    const cB = isCustomPlan(b[1]);
+    if (cA !== cB) return cA ? 1 : -1; // estándar antes que custom
+    const diasA = (a[1].dias || []).length;
+    const diasB = (b[1].dias || []).length;
+    if (diasA !== diasB) return diasA - diasB;
+    return (a[1].nombre || a[0]).localeCompare(b[1].nombre || b[0]);
+  });
+
+  // Día de la semana del selDate (en mayúscula, formato del plan)
+  const WEEKDAY_NAMES = ['DOMINGO','LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO'];
+  let weekdayUpper = '';
+  if (selDate) {
+    const [yy, mm, dd] = selDate.split('-').map(Number);
+    const dt = new Date(yy, mm - 1, dd);
+    weekdayUpper = WEEKDAY_NAMES[dt.getDay()] || '';
+  }
+
+  let html = `<option value="">— Selecciona —</option>`;
+  allPlans.forEach(([planId, plan]) => {
+    if (!plan.dias || !plan.dias.length) return;
+    // Filtrar solo días del plan asignados al día de la semana actual
+    const matching = plan.dias
+      .map((day, idx) => ({ day, idx }))
+      .filter(({ day }) => !weekdayUpper || (day.diaSemana || '').toUpperCase() === weekdayUpper);
+    if (!matching.length) return;
+    const planName = plan.nombre || planId;
+    html += `<optgroup label="${escapeHtml(planName)}">`;
+    matching.forEach(({ day, idx }) => {
+      const badgeLbl = regBadgesCombined(day);
+      const diaSemPrefix = day.diaSemana ? day.diaSemana + ' — ' : '';
+      const titulo = day.titulo ? ' · ' + day.titulo : '';
+      html += `<option value="${escapeHtml(planId)}|${idx}">${escapeHtml(diaSemPrefix)}Día ${idx+1}${escapeHtml(titulo)} (${escapeHtml(badgeLbl)})</option>`;
+    });
+    html += `</optgroup>`;
+  });
+  html += `<option value="rest">💤 DESCANSO</option>`;
+  sel.innerHTML = html;
+}
+
 function openRegPanel(key) {
   selDate = key;
   renderCalendar();
@@ -5771,15 +6057,19 @@ function openRegPanel(key) {
   const panel = document.getElementById('reg-panel');
   panel.style.display = 'block';
 
-  // Reset plan selection
-  document.querySelectorAll('#reg-plan-btns .day-tab').forEach(b => b.classList.remove('active'));
+  populateRegPlanSelect();
+  const sel = document.getElementById('reg-plan-select');
+
   document.getElementById('reg-exercises').style.display = 'none';
   document.getElementById('reg-rest-msg').style.display = 'none';
+  const actions = document.getElementById('reg-actions');
+  if (actions) actions.style.display = 'none';
 
-  // Load existing entry
   const entry = regCache[key];
-  if (entry && entry.plan) {
-    selectRegPlan(entry.plan, entry);
+  if (entry && entry.plan && sel) {
+    sel.value = entry.plan;
+    if (sel.value !== entry.plan) sel.value = ''; // valor no existe (plan eliminado)
+    if (sel.value) renderRegExercises(sel.value, entry);
   }
 
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -5791,79 +6081,306 @@ function closeRegPanel() {
   renderCalendar();
 }
 
-function selectRegPlan(planId, existingEntry) {
-  document.querySelectorAll('#reg-plan-btns .day-tab').forEach(b => b.classList.remove('active'));
-  const btn = document.querySelector(`#reg-plan-btns [data-plan="${planId}"]`);
-  if (btn) btn.classList.add('active');
+function onRegPlanChange(sel) {
+  const exDiv  = document.getElementById('reg-exercises');
+  const restMsg = document.getElementById('reg-rest-msg');
+  const actions = document.getElementById('reg-actions');
+  const value = sel.value;
+  if (!value) {
+    exDiv.style.display = 'none';
+    restMsg.style.display = 'none';
+    if (actions) actions.style.display = 'none';
+    return;
+  }
+  // Buscar entry existente para conservar pesos previos al cambiar de plan
+  const existing = (selDate && regCache[selDate] && regCache[selDate].plan === value) ? regCache[selDate] : null;
+  renderRegExercises(value, existing);
+}
 
+function renderRegExercises(planValue, existingEntry) {
   const exDiv  = document.getElementById('reg-exercises');
   const restMsg = document.getElementById('reg-rest-msg');
   const list   = document.getElementById('reg-ex-list');
+  const actions = document.getElementById('reg-actions');
+  if (actions) actions.style.display = 'flex';
 
-  if (planId === 'rest') {
+  if (planValue === 'rest') {
     exDiv.style.display = 'none';
     restMsg.style.display = 'block';
     return;
   }
-
   restMsg.style.display = 'none';
-  const plan = PLANES[planId];
-  if (!plan || !plan.ex.length) { exDiv.style.display = 'none'; return; }
 
+  const info = getRegPlanDay(planValue);
+  if (!info || !info.day.ejercicios || !info.day.ejercicios.length) {
+    list.innerHTML = '<div style="color:var(--text2);font-size:.9rem;padding:.5rem 0">Este día no tiene ejercicios definidos en el plan.</div>';
+    exDiv.style.display = 'block';
+    exDiv.dataset.plan = planValue;
+    return;
+  }
+
+  const deletedSet = new Set((existingEntry?.deletedExercises) || []);
   list.innerHTML = '';
-  plan.ex.forEach(ex => {
-    const saved = existingEntry?.exercises?.[ex.n] || {};
-    const setsCount = parseInt(ex.s.split('×')[0]) || 3;
-    let setsHtml = '';
-    for (let i = 0; i < setsCount; i++) {
-      const sv = saved.sets?.[i] || {};
-      setsHtml += `
-        <div class="reg-set-wrap">
-          <label>S${i+1}</label>
-          <input type="text" inputmode="decimal" placeholder="kg" value="${sv.kg || ''}" data-ex="${encodeURIComponent(ex.n)}" data-si="${i}" data-field="kg">
-        </div>`;
-    }
-    const notes = saved.notes || '';
-    const row = document.createElement('div');
-    row.className = 'reg-ex-row';
-    row.dataset.ex = ex.n;
-    row.innerHTML = `
-      <div class="reg-ex-name">${ex.n}</div>
-      <div class="reg-ex-series">${ex.s}</div>
-      <div class="reg-ex-inputs">${setsHtml}</div>
-      <textarea class="reg-notes" rows="1" placeholder="Notas opcionales…">${notes}</textarea>`;
-    list.appendChild(row);
+  info.day.ejercicios.forEach(ex => {
+    if (deletedSet.has(ex.nombre)) return;
+    const savedEx = existingEntry?.exercises?.[ex.nombre];
+    const defaultCount = regSeriesCount(ex.series);
+    const sets = (savedEx && Array.isArray(savedEx.sets) && savedEx.sets.length)
+      ? savedEx.sets
+      : Array.from({ length: defaultCount }, () => ({ kg: '' }));
+    list.appendChild(buildRegExRow(ex, sets));
   });
-
   exDiv.style.display = 'block';
-  exDiv.dataset.plan = planId;
+  exDiv.dataset.plan = planValue;
+}
+
+function buildRegExRow(ex, sets) {
+  const row = document.createElement('div');
+  row.className = 'reg-ex-row';
+  row.dataset.ex = ex.nombre;
+  row.dataset.exSeries = ex.series || '';
+  row.innerHTML = `
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;flex-wrap:wrap">
+      <div class="reg-ex-name" style="flex:1;min-width:0">${escapeHtml(ex.nombre)}</div>
+      <div style="display:flex;gap:.3rem;flex-wrap:wrap">
+        <button type="button" class="reg-ex-info-btn" onclick="regToggleInfoTip(this)" data-tooltip="El número de series viene del Plan del Día seleccionado arriba. Si quieres cambiarlo solo en este registro, usa el botón 🗑 Series para eliminar las series sobrantes; el conteo se recalcula solo aquí." style="background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.4);color:var(--blue);border-radius:5px;padding:2px 8px;font-size:.78rem;font-weight:700;cursor:help">ⓘ</button>
+        <button class="reg-ex-delseries-btn" onclick="regOpenDeleteSeries(this)" title="Eliminar series" style="background:rgba(240,168,55,.1);border:1px solid rgba(240,168,55,.4);color:var(--accent3);border-radius:5px;padding:2px 8px;font-size:.7rem;font-weight:700;cursor:pointer">🗑 Series</button>
+        <button class="reg-ex-del-btn" onclick="regDeleteExerciseRow(this)" title="Eliminar ejercicio" style="background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:5px;padding:2px 8px;font-size:.7rem;font-weight:700;cursor:pointer">🗑 Ejercicio</button>
+      </div>
+    </div>
+    <div class="reg-ex-series">${escapeHtml(ex.series || '')}</div>
+    <div class="reg-ex-inputs"></div>
+  `;
+  const inputsWrap = row.querySelector('.reg-ex-inputs');
+  sets.forEach((s, i) => inputsWrap.appendChild(buildRegSetInput(i, s.kg || '')));
+  return row;
+}
+
+function buildRegSetInput(idx, kg) {
+  const wrap = document.createElement('div');
+  wrap.className = 'reg-set-wrap';
+  wrap.dataset.si = idx;
+  wrap.innerHTML = `
+    <label>Serie ${idx+1}</label>
+    <input type="text" inputmode="decimal" placeholder="kg" value="${escapeHtml(String(kg || ''))}" data-field="kg" oninput="regSanitizeKgInput(this)">
+  `;
+  return wrap;
+}
+// Solo dígitos + una coma; bloquea negativos / signos
+function regSanitizeKgInput(inp) {
+  let v = inp.value.replace(/\./g, ',').replace(/[^\d,]/g, '');
+  const parts = v.split(',');
+  if (parts.length > 2) v = parts[0] + ',' + parts.slice(1).join('');
+  // Como mucho 2 decimales (opcional, mejora UX)
+  if (parts[1] && parts[1].length > 2) v = parts[0] + ',' + parts[1].slice(0,2);
+  inp.value = v;
+}
+
+// Toggle del tooltip con clase (en hover/focus el tooltip ya sale por CSS;
+// el toggle es para móvil donde el tap establece focus pero podemos forzar visibilidad).
+function regToggleInfoTip(btn) {
+  // Cierra cualquier otro tooltip abierto
+  document.querySelectorAll('.reg-ex-info-btn.show-tip').forEach(b => { if (b !== btn) b.classList.remove('show-tip'); });
+  btn.classList.toggle('show-tip');
+  // Cerrar al tocar fuera
+  if (btn.classList.contains('show-tip')) {
+    setTimeout(() => {
+      const onDocClick = (e) => {
+        if (!btn.contains(e.target)) {
+          btn.classList.remove('show-tip');
+          document.removeEventListener('click', onDocClick);
+        }
+      };
+      document.addEventListener('click', onDocClick);
+    }, 0);
+  }
+}
+
+async function regDeleteExerciseRow(btn) {
+  const row = btn.closest('.reg-ex-row');
+  if (!row) return;
+  const exName = row.dataset.ex;
+  const ok = await mobileConfirm('Eliminar ejercicio',
+    `¿Seguro que quieres eliminar <strong>${escapeHtml(exName)}</strong> del registro de este día?`);
+  if (!ok) return;
+  row.remove();
+}
+
+async function regOpenDeleteSeries(btn) {
+  const row = btn.closest('.reg-ex-row');
+  if (!row) return;
+  const exName = row.dataset.ex;
+  const wraps = [...row.querySelectorAll('.reg-set-wrap')];
+  if (!wraps.length) {
+    await mobileConfirm('Sin series', `No hay series que eliminar en <strong>${escapeHtml(exName)}</strong>.`);
+    return;
+  }
+  // Modal con checkboxes para seleccionar qué series borrar
+  const modal   = document.getElementById('modal-confirm');
+  const titleEl = document.getElementById('modal-confirm-title');
+  const bodyEl  = document.getElementById('modal-confirm-body');
+  const btnOk   = document.getElementById('modal-btn-ok');
+  const btnCan  = document.getElementById('modal-btn-cancel');
+  titleEl.textContent = 'Eliminar series';
+  let inner = `<div style="font-size:.85rem;color:var(--text2);margin-bottom:.6rem">Selecciona las series a eliminar de <strong>${escapeHtml(exName)}</strong>:</div>`;
+  inner += `<div style="display:flex;flex-direction:column;gap:.4rem">`;
+  wraps.forEach((w, i) => {
+    const kg = w.querySelector('input')?.value || '';
+    inner += `<label style="display:flex;align-items:center;gap:.5rem;font-size:.88rem;color:var(--text);cursor:pointer">
+      <input type="checkbox" class="rds-cb" data-idx="${i}"/> Serie ${i+1}${kg ? ' · ' + escapeHtml(kg) + ' kg' : ''}
+    </label>`;
+  });
+  inner += `</div>`;
+  bodyEl.innerHTML = inner;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  return new Promise(resolve => {
+    function close(result){
+      modal.classList.remove('open'); document.body.style.overflow='';
+      btnOk.removeEventListener('click', onOk);
+      btnCan.removeEventListener('click', onCan);
+      modal.removeEventListener('click', onBg);
+      resolve(result);
+    }
+    const onOk  = () => {
+      const toDel = [...bodyEl.querySelectorAll('.rds-cb:checked')].map(cb => parseInt(cb.dataset.idx));
+      if (!toDel.length) { close(false); return; }
+      // Borrar de mayor a menor para no romper índices
+      toDel.sort((a,b) => b - a).forEach(i => wraps[i]?.remove());
+      // Renumerar labels Serie 1..N
+      [...row.querySelectorAll('.reg-set-wrap')].forEach((w, i) => {
+        w.dataset.si = i;
+        const lbl = w.querySelector('label'); if (lbl) lbl.textContent = 'Serie ' + (i+1);
+      });
+      close(true);
+    };
+    const onCan = () => close(false);
+    const onBg  = e => { if (e.target === modal) close(false); };
+    btnOk.addEventListener('click', onOk);
+    btnCan.addEventListener('click', onCan);
+    modal.addEventListener('click', onBg);
+  });
+}
+
+// Lee el estado actual del DOM y devuelve un entry (sin guardar)
+function readRegDayFromDOM() {
+  const sel = document.getElementById('reg-plan-select');
+  const planValue = sel ? sel.value : '';
+  if (!planValue) return null;
+  const data = { plan: planValue, savedAt: new Date().toISOString() };
+  if (planValue === 'rest') return data;
+  const info = getRegPlanDay(planValue);
+  const allExNames = info ? (info.day.ejercicios || []).map(e => e.nombre) : [];
+  const presentExNames = new Set();
+  const exercises = {};
+  document.querySelectorAll('#reg-ex-list .reg-ex-row').forEach(row => {
+    const exName = row.dataset.ex;
+    presentExNames.add(exName);
+    const sets = [...row.querySelectorAll('.reg-set-wrap input')].map(inp => ({ kg: inp.value.trim() }));
+    exercises[exName] = { sets };
+  });
+  data.exercises = exercises;
+  // Ejercicios que estaban en el plan pero el usuario eliminó del registro
+  const deletedExercises = allExNames.filter(n => !presentExNames.has(n));
+  if (deletedExercises.length) data.deletedExercises = deletedExercises;
+  return data;
+}
+
+// Genera el diff legible entre old y new (orig desde Firebase)
+function regDiff(orig, neu) {
+  const changes = [];
+  if (!orig && !neu) return changes;
+  if (!orig && neu) {
+    changes.push({ label: 'Plan',  from: '—', to: regPlanLabel(neu.plan) });
+    if (neu.exercises) {
+      Object.keys(neu.exercises).forEach(name => {
+        const sets = (neu.exercises[name].sets || []).map(s => s.kg || '—').join(' · ');
+        changes.push({ label: name, from: '—', to: sets || '— sin pesos —' });
+      });
+    }
+    return changes;
+  }
+  if (orig && !neu) {
+    changes.push({ label: 'Plan',  from: regPlanLabel(orig.plan), to: '—' });
+    return changes;
+  }
+  if (orig.plan !== neu.plan) {
+    changes.push({ label: 'Plan', from: regPlanLabel(orig.plan), to: regPlanLabel(neu.plan) });
+  }
+  const oExs = orig.exercises || {};
+  const nExs = neu.exercises  || {};
+  const allNames = new Set([...Object.keys(oExs), ...Object.keys(nExs)]);
+  allNames.forEach(name => {
+    const oSets = (oExs[name]?.sets || []).map(s => s.kg || '—').join(' · ');
+    const nSets = (nExs[name]?.sets || []).map(s => s.kg || '—').join(' · ');
+    if (oSets !== nSets) {
+      changes.push({ label: name, from: oSets || '—', to: nSets || '—' });
+    }
+  });
+  return changes;
 }
 
 async function saveRegDay() {
   if (!selDate) return;
-  const planBtn = document.querySelector('#reg-plan-btns .day-tab.active');
-  if (!planBtn) { alert('Selecciona un plan para este día.'); return; }
-  const planId = planBtn.dataset.plan;
-
-  const data = { plan: planId, savedAt: new Date().toISOString() };
-
-  if (planId !== 'rest') {
-    const exercises = {};
-    document.querySelectorAll('#reg-ex-list .reg-ex-row').forEach(row => {
-      const exName = row.dataset.ex;
-      const sets = [];
-      row.querySelectorAll('input').forEach(inp => {
-        const si = parseInt(inp.dataset.si);
-        if (!sets[si]) sets[si] = {};
-        sets[si].kg = inp.value.trim();
-      });
-      const notes = row.querySelector('.reg-notes')?.value.trim() || '';
-      exercises[exName] = { sets, notes };
-    });
-    data.exercises = exercises;
+  const sel = document.getElementById('reg-plan-select');
+  if (!sel || !sel.value) {
+    await mobileConfirm('Falta plan', 'Selecciona un plan para este día.');
+    return;
   }
+  const newEntry = readRegDayFromDOM();
+  if (!newEntry) return;
 
-  await saveRegEntry(selDate, data);
+  // Obtener "antes" desde Firebase (fuente de verdad)
+  let orig = null;
+  if (CLOUD_CONFIGURED) {
+    try {
+      const r = await fetch(`${FB_BASE}/${REG_FB_KEY}/${selDate}.json`);
+      if (r.ok) { const d = await r.json(); if (d) orig = d; }
+    } catch(e) {}
+  }
+  if (!orig) orig = regCache[selDate] || null;
+
+  const changes = regDiff(orig, newEntry);
+  if (!changes.length) {
+    await mobileConfirm('Sin cambios', 'Sin cambios registrados.');
+    return;
+  }
+  if (!await confirmSave(changes)) return;
+
+  await saveRegEntry(selDate, newEntry);
+}
+
+async function deleteRegEntry() {
+  if (!selDate) return;
+  let orig = null;
+  if (CLOUD_CONFIGURED) {
+    try {
+      const r = await fetch(`${FB_BASE}/${REG_FB_KEY}/${selDate}.json`);
+      if (r.ok) { const d = await r.json(); if (d) orig = d; }
+    } catch(e) {}
+  }
+  if (!orig) orig = regCache[selDate] || null;
+  if (!orig) {
+    await mobileConfirm('Sin registro', 'Este día no tiene registro guardado.');
+    return;
+  }
+  const changes = regDiff(orig, null);
+  if (!await confirmSave(changes)) return;
+
+  delete regCache[selDate];
+  lsSet(REG_LS_KEY, regCache);
+  if (CLOUD_CONFIGURED) {
+    try { await fetch(`${FB_BASE}/${REG_FB_KEY}/${encodeURIComponent(selDate)}.json`, { method:'DELETE' }); } catch(e) {}
+  }
+  setSyncStatus('saved', '✓ Registro eliminado');
+  // Cerrar y refrescar
+  document.getElementById('reg-exercises').style.display = 'none';
+  document.getElementById('reg-rest-msg').style.display = 'none';
+  const actions = document.getElementById('reg-actions');
+  if (actions) actions.style.display = 'none';
+  const sel = document.getElementById('reg-plan-select');
+  if (sel) sel.value = '';
+  renderCalendar();
 }
 
 // ── Init calendar on section show ──
