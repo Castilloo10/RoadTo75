@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="es">
 <head>
@@ -29,10 +29,15 @@ header{background:var(--surface);border-bottom:1px solid var(--border);position:
 .header-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:112px}
 .logo{display:flex;align-items:center;gap:16px;justify-self:end;margin-right:1.5rem}
 .logo img{height:100px;width:auto;display:block;border-radius:50%}
-nav{display:flex;gap:.25rem;flex-wrap:wrap;justify-content:center}
-nav button{background:transparent;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;padding:8px 16px;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap}
-nav button:hover{background:var(--surface2);color:var(--text)}
-nav button.active{background:var(--accent);color:#0d0f0e;font-weight:700}
+/* Nav genérico (clase compartida) */
+.main-nav{display:flex;gap:.25rem;flex-wrap:wrap;justify-content:center}
+.main-nav .nav-btn{background:transparent;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;padding:8px 16px;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.main-nav .nav-btn:hover{background:var(--surface2);color:var(--text)}
+.main-nav .nav-btn.active{background:var(--accent);color:#0d0f0e;font-weight:700}
+/* Bottom nav móvil (oculto por defecto) */
+.nav-mobile{display:none}
+.nav-mobile .nav-icon{font-size:1.4rem;line-height:1}
+.nav-mobile .nav-label{font-size:.65rem;letter-spacing:.3px}
 
 /* LAYOUT */
 .hero{padding:3rem 2rem 2rem;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start}
@@ -59,24 +64,71 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .pill.f{background:rgba(240,55,55,.15);color:var(--red)}
 
 /* TABS */
-.day-tabs{display:flex;gap:.25rem;margin-bottom:-0.5rem;flex-wrap:wrap}
+.day-tabs{display:flex;gap:.25rem;margin-bottom:1rem;flex-wrap:wrap}
 .day-tab{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all .18s}
 .day-tab:hover{border-color:var(--accent);color:var(--accent)}
 .day-tab.active{background:#d85818;border-color:#d85818;color:#fff}
 .day-content{display:none} .day-content.active{display:block}
-.meal-btn-row{display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:0;margin-top:.5rem;width:100%;box-sizing:border-box}
-.meal-btn-row .edit-btn{margin-left:0}
-/* Botón excluir día de media */
-.btn-exclude-day{font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:5px;cursor:pointer;transition:all .2s;white-space:nowrap;border:1px solid rgba(181,240,55,.4);background:rgba(181,240,55,.1);color:var(--accent)}
-.btn-exclude-day:hover{background:rgba(181,240,55,.18)}
-.btn-exclude-day.excluded{border-color:rgba(240,55,55,.4);background:rgba(240,55,55,.1);color:var(--red)}
-.btn-exclude-day.excluded:hover{background:rgba(240,55,55,.2)}
+/* ── DAY MENU (⋯ dropdown sustituye Añadir/Eliminar/Resetear) ── */
+.day-menu{position:relative;display:inline-block}
+.day-menu-trigger{
+  background:var(--surface2);border:1px solid var(--border);color:var(--text);
+  border-radius:8px;padding:6px 14px;font-size:1.15rem;font-weight:700;cursor:pointer;
+  line-height:1;letter-spacing:2px;transition:all .15s;font-family:'DM Sans',sans-serif;
+  min-height:32px;display:inline-flex;align-items:center;justify-content:center
+}
+.day-menu-trigger:hover{border-color:var(--accent);color:var(--accent);background:var(--surface)}
+.day-menu-trigger.open{background:var(--accent);color:#0d0f0e;border-color:var(--accent)}
+.day-menu-popup{
+  display:none;position:absolute;top:calc(100% + 6px);right:0;z-index:120;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:6px;min-width:220px;box-shadow:0 8px 24px rgba(0,0,0,.55);
+  flex-direction:column;gap:2px
+}
+.day-menu-popup.open{display:flex}
+.day-menu-item{
+  background:transparent;border:none;text-align:left;
+  padding:9px 12px;border-radius:6px;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;
+  cursor:pointer;transition:background .15s;white-space:nowrap;
+  display:flex;align-items:center;gap:8px
+}
+.day-menu-item:hover{background:var(--surface2)}
+.day-menu-item .item-icon{font-size:1rem;width:1.2em;text-align:center;flex-shrink:0}
+.day-menu-item.danger{color:var(--red)}
+.day-menu-item.danger:hover{background:rgba(240,55,55,.1)}
+.day-menu-item.warn{color:var(--accent3)}
+.day-menu-item.warn:hover{background:rgba(240,168,55,.1)}
+.day-content.day-hidden .meals-grid,.day-content.day-hidden .batido-add-row{display:none}
+.day-content.day-hidden .day-total-macros{opacity:.35}
+.day-content.day-hidden::before{content:'👁‍🗨 Día oculto · usa ⋯ → Mostrar día';display:block;font-size:.85rem;font-weight:700;color:var(--accent3);text-align:center;padding:1.5rem 1rem;background:rgba(240,168,55,.07);border:1px dashed rgba(240,168,55,.3);border-radius:10px;margin-bottom:1rem;letter-spacing:.3px}
+.day-tab.tab-hidden{opacity:.4;text-decoration:line-through;text-decoration-color:rgba(240,168,55,.6);text-decoration-thickness:2px}
+.day-total .day-menu{margin-left:.5rem;margin-right:auto}
+/* ── BOTÓN × DELETE INLINE EN MEAL CARDS ── */
+.meal-card{position:relative;cursor:pointer}
+.meal-card[data-is-batido="1"]{cursor:default}
+.meal-card-delete{
+  position:absolute;top:8px;right:8px;width:26px;height:26px;
+  background:rgba(240,55,55,.08);border:1px solid rgba(240,55,55,.25);
+  color:var(--red);border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;font-weight:700;line-height:1;padding:0;
+  opacity:0;transition:opacity .18s,background .15s,border-color .15s;
+  z-index:5;font-family:'DM Sans',sans-serif
+}
+.meal-card:hover .meal-card-delete{opacity:1}
+.meal-card-delete:hover{background:rgba(240,55,55,.2);border-color:var(--red)}
+/* En móvil siempre visible (atenuado) ya que no hay hover */
+@media(hover:none){
+  .meal-card-delete{opacity:.55}
+  .meal-card-delete:active{opacity:1;background:rgba(240,55,55,.25)}
+}
 /* Día excluido de la media */
 .day-content[data-excluded="1"] .day-total{opacity:.45}
 .day-content[data-excluded="1"] .day-total-label::after{content:' (excluido de media)';font-size:.65em;color:var(--red);font-family:'DM Sans',sans-serif;font-weight:600;letter-spacing:0}
 
 /* MEAL CARDS */
-.meals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:1.25rem;margin-top:.3rem;align-items:start}
+.meals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:1.25rem;margin-top:.5rem;align-items:start}
 .meal-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:border-color .2s}
 .meal-card:hover{border-color:var(--accent)}
 .meal-header{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
@@ -124,7 +176,10 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .entreno-plan{display:none} .entreno-plan.active{display:block}
 .dias-entreno{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
 .dia-entreno{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
-.dia-entreno-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.dia-entreno-header{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}
+.dia-entreno-row-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.dia-entreno-badges{display:flex;flex-wrap:wrap;gap:4px;align-items:center;flex:1;min-width:0}
+.dia-entreno-row-title{min-width:0}
 .dia-badge{background:var(--accent);color:#0d0f0e;font-family:'Bebas Neue',sans-serif;font-size:.9rem;font-weight:400;padding:3px 10px;border-radius:6px;letter-spacing:.5px;white-space:nowrap;flex-shrink:0}
 /* Legacy classes (hardcoded plans) */
 .dia-badge.legs{background:var(--accent2);color:#0d0f0e}
@@ -229,24 +284,36 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .supl-batidos.warn{border-color:var(--red);color:var(--red);background:rgba(240,55,55,.08)}
 .supl-batidos:empty{display:none}
 
-/* BATIDO GLOBAL TOGGLE */
-.batido-toggle-btn{font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;padding:5px 14px;border-radius:7px;cursor:pointer;border:1px solid;transition:all .2s}
-.batido-toggle-btn.active{background:rgba(181,240,55,.15);border-color:rgba(181,240,55,.4);color:var(--accent)}
-.batido-toggle-btn.inactive{background:rgba(240,55,55,.1);border-color:rgba(240,55,55,.35);color:var(--red)}
-/* BATIDO PER-DAY TOGGLE */
-.batido-day-toggle{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.68rem;padding:2px 7px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;margin-top:.5rem;width:100%}
-.batido-day-toggle:hover{border-color:var(--accent2);color:var(--accent2)}
-.batido-day-toggle.off{border-color:rgba(181,240,55,.45);color:var(--accent);background:rgba(181,240,55,.12);font-weight:700;box-shadow:0 0 0 1px rgba(181,240,55,.06)}
-.batido-day-toggle:not(.off){border-color:rgba(240,55,55,.42);color:var(--red);background:rgba(240,55,55,.12);font-weight:700;box-shadow:0 0 0 1px rgba(240,55,55,.06)}
-/* BATIDO DISABLED CARD */
-.meal-card.batido-disabled .meal-header,
-.meal-card.batido-disabled .meal-food,
-.meal-card.batido-disabled .meal-macros{opacity:.45;pointer-events:none}
-.meal-card.batido-disabled::after{content:'⏸ Batido desactivado para este día';display:block;color:#c97878;font-size:.78rem;font-weight:700;font-style:italic;text-align:center;background:rgba(240,55,55,.07);border:1px solid rgba(240,55,55,.2);border-radius:7px;padding:.45rem .75rem;margin-top:.6rem}
-.meal-card.batido-global-off .meal-header,
-.meal-card.batido-global-off .meal-food,
-.meal-card.batido-global-off .meal-macros{opacity:.45;pointer-events:none}
-.meal-card.batido-global-off::after{content:'⏸ Batido global desactivado';display:block;color:var(--accent3);font-size:.78rem;font-weight:700;font-style:italic;text-align:center;background:rgba(240,168,55,.12);border:1px solid rgba(240,168,55,.35);border-radius:7px;padding:.45rem .75rem;margin-top:.6rem}
+/* BATIDO ADD ROW (legacy contenedor del botón per-day; el toolbar global lo sustituye, pero queda por compat) */
+.batido-add-row{display:flex;justify-content:center;margin:.75rem 0 .25rem}
+.batido-toggle-btn{font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.batido-toggle-btn--add{background:rgba(55,208,160,.1);border:1px dashed rgba(55,208,160,.5);color:var(--accent2)}
+.batido-toggle-btn--add:hover{background:rgba(55,208,160,.18);border-style:solid}
+.batido-toggle-btn--remove{background:rgba(240,104,104,.08);border:1px solid rgba(240,104,104,.3);color:#f06868}
+.batido-toggle-btn--remove:hover{background:rgba(240,104,104,.16);border-color:rgba(240,104,104,.55)}
+.menu-slots-toolbar{display:flex;justify-content:flex-end;align-items:center;gap:.5rem;flex-wrap:wrap;margin:0 0 .65rem}
+.menu-slots-edit-btn{background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);font-size:.78rem;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s;white-space:nowrap}
+.menu-slots-edit-btn:hover{background:rgba(55,160,240,.2);border-color:var(--blue)}
+.menu-batido-toggle-btn{font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap;background:rgba(55,208,160,.1);border:1px solid rgba(55,208,160,.4);color:var(--accent2)}
+.menu-batido-toggle-btn:hover{background:rgba(55,208,160,.2);border-color:var(--accent2)}
+.menu-batido-toggle-btn.active{background:rgba(240,104,104,.08);border-color:rgba(240,104,104,.4);color:#f06868}
+.menu-batido-toggle-btn.active:hover{background:rgba(240,104,104,.16);border-color:rgba(240,104,104,.6)}
+.slot-edit-row{display:flex;gap:.5rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.slot-edit-row:last-child{border-bottom:none}
+.slot-edit-controls{display:flex;gap:.25rem;flex-shrink:0}
+.slot-edit-controls button{background:transparent;border:1px solid var(--border);color:var(--text2);font-size:.75rem;padding:3px 7px;border-radius:5px;cursor:pointer;line-height:1;transition:all .15s;font-family:'DM Sans',sans-serif}
+.slot-edit-controls button:hover{background:var(--surface2);color:var(--text)}
+.slot-edit-controls button:disabled{opacity:.3;cursor:not-allowed}
+.slot-edit-controls button.danger:hover{border-color:var(--red);color:var(--red);background:rgba(220,80,80,.08)}
+.slot-edit-fields{display:flex;gap:.4rem;flex:1;min-width:200px;flex-wrap:wrap}
+.slot-edit-fields input,.slot-edit-fields select{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.8rem;padding:5px 8px}
+.slot-edit-fields input:focus,.slot-edit-fields select:focus{outline:none;border-color:var(--accent)}
+.slot-edit-emoji{max-width:60px;text-align:center;font-size:1.05rem}
+.slot-edit-name{flex:1;min-width:120px}
+.slot-edit-icon-class{flex-shrink:0}
+.slot-add-row{display:flex;justify-content:center;margin-top:.75rem}
+.btn-add-slot{background:rgba(181,240,55,.08);border:2px dashed rgba(181,240,55,.4);color:var(--accent);font-weight:600;font-size:.8rem;padding:8px 18px;border-radius:7px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.btn-add-slot:hover{background:rgba(181,240,55,.15);border-style:solid}
 /* BATIDO EDIT MODE */
 .batido-edit-panel{display:none;margin-top:1rem;background:var(--surface2);border:1px solid var(--accent);border-radius:10px;padding:1.1rem}
 .batido-edit-panel.open{display:block}
@@ -264,8 +331,26 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 
 /* COMPRA EDIT MODE */
 .compra-cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
-.compra-edit-btn{background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);font-size:.7rem;padding:3px 9px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;font-weight:600}
+.compra-edit-btn{display:none;background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);font-size:.7rem;padding:3px 9px;border-radius:5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;font-weight:600}
 .compra-edit-btn:hover{background:rgba(55,160,240,.2);border-color:var(--blue);color:var(--blue)}
+.compra-edit-mode .compra-edit-btn{display:inline-block}
+.compra-list-toolbar{display:flex;justify-content:flex-end;margin:0 0 1rem}
+.compra-list-edit-btn{background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);font-size:.78rem;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s;white-space:nowrap}
+.compra-list-edit-btn:hover{background:rgba(55,160,240,.2);border-color:var(--blue)}
+.compra-list-edit-btn.active{background:rgba(181,240,55,.15);border-color:var(--accent);color:var(--accent)}
+.compra-list-edit-btn.active:hover{background:rgba(181,240,55,.25)}
+.compra-cat-actions{display:none;align-items:center;gap:.25rem;margin-left:.3rem}
+.compra-edit-mode .compra-cat-actions{display:inline-flex}
+.compra-cat-action-btn{background:transparent;border:1px solid var(--border);color:var(--text2);font-size:.7rem;padding:2px 6px;border-radius:5px;cursor:pointer;line-height:1;transition:all .15s;font-family:'DM Sans',sans-serif}
+.compra-cat-action-btn:hover{background:var(--surface2);color:var(--text);border-color:var(--text2)}
+.compra-cat-action-btn:disabled{opacity:.3;cursor:not-allowed}
+.compra-cat-action-btn.danger:hover{border-color:var(--red);color:var(--red);background:rgba(220,80,80,.08)}
+.compra-add-cat-tile{display:none;align-items:center;justify-content:center;border:2px dashed rgba(181,240,55,.4);border-radius:12px;padding:1.5rem;cursor:pointer;color:var(--accent);font-weight:600;font-size:.85rem;transition:all .2s;background:rgba(181,240,55,.04);min-height:80px}
+.compra-add-cat-tile:hover{background:rgba(181,240,55,.1);border-color:var(--accent)}
+.compra-edit-mode .compra-add-cat-tile{display:flex}
+.cat-color-picker{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.35rem}
+.cat-color-swatch{width:30px;height:30px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .15s;outline:1px solid var(--border)}
+.cat-color-swatch.selected{border-color:var(--text);transform:scale(1.15)}
 .compra-card.editing-compra{border-color:var(--accent);box-shadow:0 0 0 2px rgba(181,240,55,.1)}
 .compra-item-edit{display:flex;flex-direction:column;gap:.4rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
 .compra-item-edit:last-of-type{border-bottom:none}
@@ -287,10 +372,16 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .compra-edit-actions{display:flex;gap:.5rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
 
 /* MODAL CONFIRM */
-#modal-confirm{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;justify-content:center;z-index:5000;padding:0;opacity:0;pointer-events:none;transition:opacity .2s}
+#modal-confirm{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9000;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .2s}
 #modal-confirm.open{opacity:1;pointer-events:all}
-#modal-confirm-box{background:var(--surface);border:1px solid var(--border);border-radius:16px 16px 0 0;padding:1.5rem 1.5rem 2rem;width:100%;max-width:520px;max-height:80vh;overflow-y:auto;transform:translateY(20px);transition:transform .25s}
-#modal-confirm.open #modal-confirm-box{transform:translateY(0)}
+#modal-confirm-box{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem 1.5rem 2rem;width:100%;max-width:520px;max-height:80vh;overflow-y:auto;transform:scale(.96);transition:transform .25s}
+#modal-confirm.open #modal-confirm-box{transform:scale(1)}
+@media (max-width:600px){
+  #modal-confirm{align-items:flex-end;padding:0}
+  #modal-confirm-box{border-radius:16px 16px 0 0;max-height:85dvh;padding-top:1.5rem;transform:translateY(20px)}
+  #modal-confirm.open #modal-confirm-box{transform:translateY(0)}
+  #modal-confirm-box::before{content:"";position:absolute;top:.5rem;left:50%;transform:translateX(-50%);width:42px;height:4px;background:var(--text2);opacity:.35;border-radius:3px;pointer-events:none}
+}
 #modal-confirm-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--accent);margin-bottom:.75rem;letter-spacing:.5px}
 #modal-confirm-body{font-size:.85rem;color:var(--text2);line-height:1.7;margin-bottom:1.25rem;max-height:45vh;overflow-y:auto;overscroll-behavior:contain}
 #modal-confirm-body strong{color:var(--text)}
@@ -385,13 +476,39 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .nav-scroll-hint.hidden{opacity:0 !important}
 
 @media(max-width:600px){
-  /* ── HEADER ── */
-  .header-inner{grid-template-columns:auto 1fr;grid-template-rows:auto auto;height:auto;padding:.55rem .75rem .45rem;gap:.4rem}
-  .logo{grid-column:1;grid-row:1;margin-right:0}
+  /* ── HEADER (solo logo en móvil; nav va abajo) ── */
+  .header-inner{grid-template-columns:1fr;grid-template-rows:auto;height:auto;padding:.55rem .75rem;gap:0;justify-items:center}
+  .logo{grid-column:1;grid-row:1;margin-right:0;justify-self:center}
   .logo img{height:42px}
-  nav{grid-column:1/-1;grid-row:2;gap:.2rem;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
-  nav::-webkit-scrollbar{display:none}
-  nav button{font-size:.72rem;padding:6px 10px;white-space:nowrap;flex-shrink:0;border-radius:7px}
+  .nav-desktop{display:none}
+  /* Bottom nav: fijo en parte inferior */
+  .nav-mobile{
+    display:flex;position:fixed;bottom:0;left:0;right:0;
+    background:var(--surface);border-top:1px solid var(--border);
+    padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+    z-index:100;justify-content:space-around;gap:4px;
+    box-shadow:0 -2px 8px rgba(0,0,0,.25)
+  }
+  .nav-mobile .nav-btn{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    padding:6px 4px;flex:1;font-size:.7rem;font-weight:600;border-radius:8px;
+    color:var(--text2);background:transparent;min-height:48px
+  }
+  .nav-mobile .nav-btn.active{background:rgba(181,240,55,.12);color:var(--accent)}
+  .nav-mobile .nav-btn.active .nav-icon{transform:scale(1.1)}
+  .nav-mobile .nav-icon{transition:transform .2s}
+  /* Touch targets ≥44px en móvil */
+  .day-menu-trigger{min-height:40px;min-width:40px;padding:6px 12px}
+  .cal-nav-row1 .etog-btn{min-height:38px}
+  /* Ocultar bottom-nav cuando un modal/panel cubre la pantalla (evita que quede tapado y enganche al usuario) */
+  body:has(.app-modal.open) .nav-mobile,
+  body:has(#modal-plan.open) .nav-mobile,
+  body:has(#modal-confirm.open) .nav-mobile,
+  body.reg-mobile-open .nav-mobile{display:none}
+  /* Padding inferior body para que el contenido no quede oculto */
+  body{padding-bottom:calc(70px + env(safe-area-inset-bottom)) !important}
+  /* Sticky day tabs justo bajo el header en móvil */
+  .day-tabs{position:sticky;top:var(--header-h,80px);z-index:90;background:var(--bg);padding-top:.4rem;padding-bottom:.4rem;margin-top:0;box-shadow:0 4px 8px -4px rgba(0,0,0,.4)}
 
   /* ── HERO ── */
   .hero{grid-template-columns:1fr;padding:1.25rem .75rem .75rem}
@@ -443,8 +560,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   /* ── DAY TOTAL ── */
   .day-total{display:grid;grid-template-columns:1fr auto;align-items:center;gap:.35rem .5rem;padding:.7rem .9rem}
   .day-total-label{font-size:.76rem;grid-column:1;grid-row:1}
-  .day-total .reset-day-btn{grid-column:2;grid-row:1;margin-left:0;font-size:.76rem;padding:4px 10px}
-  .day-total .btn-exclude-day{grid-column:1/-1}
+  .day-total .day-menu{grid-column:2;grid-row:1;justify-self:end}
   .day-total-macros{gap:.3rem;grid-column:1/-1}
 
   /* ── COMPRA ── */
@@ -453,6 +569,8 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   .compra-cat-header{flex-wrap:nowrap;gap:.4rem;align-items:center}
   .compra-cat{font-size:.95rem;margin-bottom:0}
   .compra-edit-btn{font-size:.65rem;padding:4px 8px;flex-shrink:0}
+  .compra-list-toolbar{margin:0 0 .75rem}
+  .compra-list-edit-btn{font-size:.72rem;padding:5px 11px}
   .compra-item{font-size:.8rem;padding:5px 0}
   .compra-item .name{font-size:.8rem}
   .compra-item .price{font-size:.74rem}
@@ -555,14 +673,16 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 }
 
 /* GENERIC APP MODAL (shared) */
-.app-modal,#modal-plan{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:flex-end;justify-content:center;z-index:4000;opacity:0;pointer-events:none;transition:opacity .2s}
+.app-modal,#modal-plan{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:4000;opacity:0;pointer-events:none;transition:opacity .2s;padding:1.5rem}
 .app-modal.open,#modal-plan.open{opacity:1;pointer-events:all}
-.app-modal-box,#modal-plan-box{background:var(--surface);border:1px solid var(--border);border-radius:16px 16px 0 0;width:100%;max-width:720px;max-height:92vh;display:flex;flex-direction:column;transform:translateY(30px);transition:transform .25s}
-.app-modal.open .app-modal-box,#modal-plan.open #modal-plan-box{transform:translateY(0)}
+.app-modal-box,#modal-plan-box{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:720px;max-height:90vh;display:flex;flex-direction:column;transform:scale(.96);transition:transform .25s}
+.app-modal.open .app-modal-box,#modal-plan.open #modal-plan-box{transform:scale(1)}
 @media(min-width:601px){
   .app-modal,#modal-plan{align-items:center;padding:1.5rem}
-  .app-modal-box,#modal-plan-box{border-radius:16px;transform:scale(.95);max-height:90vh}
-  .app-modal.open .app-modal-box,#modal-plan.open #modal-plan-box{transform:scale(1)}
+  .app-modal,#modal-plan{align-items:flex-end;padding:0}
+  .app-modal-box,#modal-plan-box{border-radius:16px 16px 0 0;max-height:85dvh;transform:translateY(30px);padding-top:.5rem}
+  .app-modal.open .app-modal-box,#modal-plan.open #modal-plan-box{transform:translateY(0)}
+  .app-modal-box::before,#modal-plan-box::before{content:"";position:absolute;top:.5rem;left:50%;transform:translateX(-50%);width:42px;height:4px;background:var(--text2);opacity:.35;border-radius:3px;pointer-events:none}
 }
 .app-modal-header,#modal-plan-header{padding:1.25rem 1.5rem .75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:.5rem}
 .app-modal-title,#modal-plan-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent);letter-spacing:.5px}
@@ -572,8 +692,8 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .app-modal-footer,#modal-plan-footer{padding:.75rem 1.5rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem;flex-shrink:0}
 @media(max-width:600px){
   .app-modal-header,#modal-plan-header{padding:1rem 1rem .65rem}
-  .app-modal-body,#modal-plan-body{padding:1rem}
-  .app-modal-footer,#modal-plan-footer{padding:.65rem 1rem 1.25rem;flex-wrap:wrap}
+  .app-modal-body,#modal-plan-body{padding:1rem 1rem max(1rem,env(safe-area-inset-bottom))}
+  .app-modal-footer,#modal-plan-footer{padding:.65rem 1rem max(1.25rem,env(safe-area-inset-bottom));flex-wrap:wrap}
   .app-modal-footer button,#modal-plan-footer button{flex:1}
   .app-modal-box,#modal-plan-box{max-height:92dvh}
 }
@@ -601,6 +721,23 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .plan-badge-select option,.pe-diaSemana option{background:var(--surface2);color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:.5px}
 .pe-diaSemana option{background:var(--surface2) !important;color:var(--text) !important}
 /* CALENDAR */
+/* CAL NAV 2 ROWS */
+.cal-nav{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.4rem}
+.cal-nav-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.cal-nav-row2{padding-top:.15rem;border-top:1px dashed var(--border)}
+/* REG LAYOUT: calendario (izq) + panel del día (dcha en desktop, modal full-screen en móvil) */
+.reg-layout{display:grid;grid-template-columns:1fr;gap:1.5rem;margin-bottom:1.5rem}
+@media (min-width:1024px){
+  .reg-layout{grid-template-columns:minmax(0,1.45fr) minmax(330px,1fr);align-items:start}
+  #reg-panel.reg-side-col{position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem}
+}
+#reg-panel{display:none}
+#reg-panel.open{display:block}
+@media (max-width:1023px){
+  #reg-panel.open{position:fixed;inset:0;z-index:5500;background:var(--bg);overflow-y:auto;padding:1.25rem 1rem 2rem;animation:reg-mob-in .25s ease}
+  body.reg-mobile-open{overflow:hidden}
+}
+@keyframes reg-mob-in{from{opacity:.4;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .cal-day{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 4px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px}
 .cal-day:hover{border-color:var(--accent);background:var(--surface2)}
 .cal-day.today{border-color:var(--accent2);background:rgba(55,240,168,.08)}
@@ -695,14 +832,29 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <div class="logo">
 <img alt="Logo Plan Muscular" src="sin_fondo.png"/>
 </div>
-<nav>
-<button class="active" onclick="showSection('menu')">📋 Menú Semanal</button>
-<button onclick="showSection('compra')">🛒 Lista Compra</button>
-<button onclick="showSection('entreno')">💪 Entrenamiento</button>
-<button onclick="showSection('progresion')">📈 Progresión</button>
+<nav class="main-nav nav-desktop">
+<button class="nav-btn active" onclick="showSection('menu')">📋 Menú Semanal</button>
+<button class="nav-btn" onclick="showSection('compra')">🛒 Lista Compra</button>
+<button class="nav-btn" onclick="showSection('entreno')">💪 Entrenamiento</button>
+<button class="nav-btn" onclick="showSection('progresion')">📈 Progresión</button>
 </nav>
 </div>
 </header>
+<!-- Bottom nav: solo visible en móvil -->
+<nav class="main-nav nav-mobile" aria-label="Navegación principal">
+<button class="nav-btn active" onclick="showSection('menu')">
+<span class="nav-icon">📋</span><span class="nav-label">Menú</span>
+</button>
+<button class="nav-btn" onclick="showSection('compra')">
+<span class="nav-icon">🛒</span><span class="nav-label">Compra</span>
+</button>
+<button class="nav-btn" onclick="showSection('entreno')">
+<span class="nav-icon">💪</span><span class="nav-label">Entreno</span>
+</button>
+<button class="nav-btn" onclick="showSection('progresion')">
+<span class="nav-icon">📈</span><span class="nav-label">Progreso</span>
+</button>
+</nav>
 <!-- ══ MENÚ ══ -->
 <section class="section active" id="menu">
 <div class="hero" style="padding-top:2rem">
@@ -721,7 +873,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <div class="batido-box">
 <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.25rem">
 <h3 style="margin-bottom:0">🥤 SUPLEMENTACIÓN - BATIDO PROTÉICO DIARIO (Merienda / Post-Entreno)</h3>
-<div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap"><button class="batido-toggle-btn active" id="batido-global-toggle" onclick="toggleBatidoGlobal()">✓ Activo</button><button class="edit-btn" id="batido-edit-btn" onclick="toggleBatidoEdit()">✏ Editar</button></div>
+<div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap"><button class="edit-btn" id="batido-edit-btn" onclick="openBatidoModal()">⚙ Configurar</button></div>
 </div>
 <p id="batido-desc-view" style="font-size:.9rem;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:2">
 <strong id="batido-prot-dosis-view">—</strong>
@@ -758,6 +910,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <div class="supl-alert" id="batido-prot-alert"></div>
 <div class="supl-alert" id="batido-creat-alert"></div>
 </div>
+<div class="menu-slots-toolbar"><button class="menu-batido-toggle-btn" id="menu-batido-toggle-btn" onclick="toggleWeeklyBatido()">+ Añadir batido</button><button class="menu-slots-edit-btn" onclick="openMenuSlotsModal()">✏ Editar slots de comidas</button></div>
 <div class="day-tabs">
 <button class="day-tab active" onclick="showDay('lun')">LUNES</button>
 <button class="day-tab" onclick="showDay('mar')">MARTES</button>
@@ -769,191 +922,37 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 </div>
 <!-- LUNES -->
 <div class="day-content active" id="day-lun">
-<div class="meal-btn-row" id="btn-row-lun"></div>
-<div class="meals-grid">
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-</div>
+<div class="meals-grid"></div>
 <div class="day-total"><span class="day-total-label">TOTAL LUNES</span><div class="day-total-macros"></div></div>
 </div>
 <!-- MARTES -->
 <div class="day-content" id="day-mar">
-<div class="meal-btn-row" id="btn-row-mar"></div>
-<div class="meals-grid">
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-</div>
+<div class="meals-grid"></div>
 <div class="day-total"><span class="day-total-label">TOTAL MARTES</span><div class="day-total-macros"></div></div>
 </div>
 <!-- MIÉRCOLES -->
 <div class="day-content" id="day-mie">
-<div class="meal-btn-row" id="btn-row-mie"></div>
-<div class="meals-grid">
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-</div>
+<div class="meals-grid"></div>
 <div class="day-total"><span class="day-total-label">TOTAL MIÉRCOLES</span><div class="day-total-macros"></div></div>
 </div>
 <!-- JUEVES -->
 <div class="day-content" id="day-jue">
-<div class="meal-btn-row" id="btn-row-jue"></div>
-<div class="meals-grid">
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-</div>
+<div class="meals-grid"></div>
 <div class="day-total"><span class="day-total-label">TOTAL JUEVES</span><div class="day-total-macros"></div></div>
 </div>
 <!-- VIERNES -->
 <div class="day-content" id="day-vie">
-<div class="meal-btn-row" id="btn-row-vie"></div>
-<div class="meals-grid">
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-</div>
+<div class="meals-grid"></div>
 <div class="day-total"><span class="day-total-label">TOTAL VIERNES</span><div class="day-total-macros"></div></div>
 </div>
 <!-- SÁBADO -->
 <div class="day-content" id="day-sab">
-<div class="meal-btn-row" id="btn-row-sab"></div>
-<div class="meals-grid">
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-</div>
+<div class="meals-grid"></div>
 <div class="day-total"><span class="day-total-label">TOTAL SÁBADO</span><div class="day-total-macros"></div></div>
 </div>
 <!-- DOMINGO -->
 <div class="day-content" id="day-dom">
-<div class="meal-btn-row" id="btn-row-dom"></div>
-<div class="meals-grid">
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon d">🌅</div><div><div class="meal-name">Desayuno</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon c">☀️</div><div><div class="meal-name">Comida</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon m">🥤</div><div><div class="meal-name">Merienda</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-<div class="meal-card">
-<div class="meal-header"><div class="meal-icon ce">🌙</div><div><div class="meal-name">Cena</div><div class="meal-time"></div></div></div>
-<div class="meal-food"></div>
-<div class="meal-macros"></div>
-</div>
-</div>
+<div class="meals-grid"></div>
 <div class="day-total"><span class="day-total-label">TOTAL DOMINGO</span><div class="day-total-macros"></div></div>
 </div>
 </div>
@@ -970,21 +969,22 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
     <div class="compra-item" data-gallery="https://ejemplo.com/foto2.jpg|https://ejemplo.com/foto3.jpg">
   ─────────────────────────────────────────────────────────────────────────────
   -->
+<div class="compra-list-toolbar"><button class="compra-list-edit-btn" id="compra-list-edit-btn" onclick="toggleCompraListEdit()">✏ Editar lista</button></div>
 <div class="compra-grid">
-<div class="compra-card" data-cat-id="proteinas">
-<div class="compra-cat-header"><div class="compra-cat" style="color:#f09050;margin-bottom:0">🍗PROTEÍNAS ANIMALES</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-card" data-cat-id="frutas">
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent2);margin-bottom:0">🥦FRUTAS Y VERDURAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
 <div class="compra-card" data-cat-id="lacteos">
 <div class="compra-cat-header"><div class="compra-cat" style="color:#b07af0;margin-bottom:0">🥛LÁCTEOS Y DERIVADOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
-<div class="compra-card" data-cat-id="hidratos">
-<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent3);margin-bottom:0">🌾HIDRATOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-card" data-cat-id="proteinas">
+<div class="compra-cat-header"><div class="compra-cat" style="color:#f09050;margin-bottom:0">🍗PROTEÍNAS ANIMALES</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
-<div class="compra-card" data-cat-id="frutas">
-<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent2);margin-bottom:0">🥦FRUTAS Y VERDURAS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-card" data-cat-id="hidratos">
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent3);margin-bottom:0">🌾HIDRATOS</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <div class="compra-items-list"></div>
 </div>
 <div class="compra-card" data-cat-id="despensa">
@@ -992,7 +992,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <div class="compra-items-list"></div>
 </div>
 <div class="compra-card" data-cat-id="suplementos">
-<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">💊SUPLEMENTACIÓN</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
+<div class="compra-cat-header"><div class="compra-cat" style="color:var(--accent);margin-bottom:0">💪SUPLEMENTACIÓN</div><button class="compra-edit-btn" onclick="toggleCompraEdit(this)">✏ Editar categoría</button></div>
 <!-- PROTEÍNA -->
 <div class="compra-items-list">
 <div class="compra-item supl-product-item" data-supl-id="prot" style="flex-direction:column;align-items:flex-start;gap:.5rem;padding-bottom:.75rem">
@@ -1107,102 +1107,11 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 </div>
 <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem">
   <div class="entreno-toggle" id="entreno-toggle-bar" style="margin-bottom:0">
-    <button class="etog-btn active" onclick="showPlan('3dias')">Plan 3 Días</button>
-    <button class="etog-btn" onclick="showPlan('4dias')">Plan 4 Días</button>
+    <!-- Los botones se generan dinámicamente desde DEFAULT_ENTRENO_PLANS / Firebase -->
   </div>
   <button onclick="openPlanModal()" style="background:rgba(181,240,55,.1);border:1px dashed rgba(181,240,55,.5);color:var(--accent);border-radius:8px;padding:8px 16px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap" onmouseover="this.style.background='rgba(181,240,55,.2)'" onmouseout="this.style.background='rgba(181,240,55,.1)'">+ Añadir plan nuevo</button>
 </div>
-<div class="entreno-plan active" id="plan-3dias">
-<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1rem;font-size:.84rem;color:var(--text2)">
-<strong style="color:var(--text)">Estructura Push / Pull / Legs</strong> · Lunes – Miércoles – Viernes<br/>
-      Cada músculo se trabaja 1 vez/semana con alto volumen. Ideal para el nivel principiante-intermedio.
-    </div>
-<div style="display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:.85rem">
-  <button onclick="openPlanModal('3dias')" style="background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(55,160,240,.2)';this.style.borderColor='var(--blue)'" onmouseout="this.style.background='rgba(55,160,240,.1)';this.style.borderColor='rgba(55,160,240,.35)'">✏ Editar plan</button>
-  <button onclick="deletePlan('3dias')" style="background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.2)';this.style.borderColor='var(--red)'" onmouseout="this.style.background='rgba(240,55,55,.1)';this.style.borderColor='rgba(240,55,55,.4)'">🗑 Eliminar plan</button>
-</div>
-<div class="dias-entreno">
-<div class="dia-entreno">
-<div class="dia-entreno-header"><span class="dia-badge b-empuje">EMPUJE</span><div><div class="dia-title">Día A · Empuje</div><div class="dia-sub">Pecho · Hombros · Tríceps · LUNES</div></div></div>
-<div class="exercise"><div class="ex-name"><strong>Press de banca plano (barra)</strong>Compuesto principal de pecho</div><span class="ex-sets">4×6-8</span></div>
-<div class="exercise"><div class="ex-name"><strong>Press inclinado (mancuernas)</strong>Porción clavicular del pecho</div><span class="ex-sets">3×8-10</span></div>
-<div class="exercise"><div class="ex-name"><strong>Press militar (barra o mancuernas)</strong>Deltoides anterior y medial</div><span class="ex-sets">3×8-10</span></div>
-<div class="exercise"><div class="ex-name"><strong>Elevaciones laterales</strong>Amplitud de hombros</div><span class="ex-sets">3×12-15</span></div>
-<div class="exercise"><div class="ex-name"><strong>Fondos en paralelas</strong>Tríceps y pecho inferior</div><span class="ex-sets">3×8-10</span></div>
-<div class="exercise"><div class="ex-name"><strong>Extensión tríceps en polea</strong>Aislamiento de tríceps</div><span class="ex-sets">3×12-15</span></div>
-<div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 90-120s entre series compuestas · 60s aislamiento</div>
-</div>
-<div class="dia-entreno">
-<div class="dia-entreno-header"><span class="dia-badge b-tiron">TIRÓN</span><div><div class="dia-title">Día B · Tirón</div><div class="dia-sub">Espalda · Bíceps · MIÉRCOLES</div></div></div>
-<div class="exercise"><div class="ex-name"><strong>Dominadas o jalón al pecho</strong>Dorsal ancho · compuesto clave</div><span class="ex-sets">4×6-8</span></div>
-<div class="exercise"><div class="ex-name"><strong>Remo con barra (Pendlay)</strong>Espalda media y trapecio</div><span class="ex-sets">4×6-8</span></div>
-<div class="exercise"><div class="ex-name"><strong>Remo en polea sentado</strong>Romboides y dorsal</div><span class="ex-sets">3×10-12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Face pulls en polea</strong>Deltoides posterior y manguito</div><span class="ex-sets">3×15</span></div>
-<div class="exercise"><div class="ex-name"><strong>Curl bíceps con barra Z</strong>Bíceps braquial</div><span class="ex-sets">3×10-12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Curl martillo mancuernas</strong>Braquial y braquiorradial</div><span class="ex-sets">3×12-15</span></div>
-<div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 90-120s entre series compuestas · 60s aislamiento</div>
-</div>
-<div class="dia-entreno">
-<div class="dia-entreno-header"><span class="dia-badge legs">LEGS</span><div><div class="dia-title">Día C · Piernas</div><div class="dia-sub">Cuádriceps · Isquios · Glúteos · VIERNES</div></div></div>
-<div class="exercise"><div class="ex-name"><strong>Sentadilla con barra (trasera)</strong>Rey de los compuestos de pierna</div><span class="ex-sets">4×6-8</span></div>
-<div class="exercise"><div class="ex-name"><strong>Peso muerto rumano</strong>Isquiotibiales y glúteos</div><span class="ex-sets">3×8-10</span></div>
-<div class="exercise"><div class="ex-name"><strong>Prensa de piernas</strong>Cuádriceps con seguridad</div><span class="ex-sets">3×10-12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Extensión de cuádriceps (máquina)</strong>Aislamiento cuádriceps</div><span class="ex-sets">3×12-15</span></div>
-<div class="exercise"><div class="ex-name"><strong>Curl de isquiotibiales tumbado</strong>Femoral posterior</div><span class="ex-sets">3×12-15</span></div>
-<div class="exercise"><div class="ex-name"><strong>Gemelos de pie (máquina o barra)</strong>Gastrocnemio y sóleo</div><span class="ex-sets">4×12-15</span></div>
-<div style="margin-top:.75rem;font-size:.78rem;color:var(--muted)">Descanso: 2-3 min sentadilla · 90s resto compuestos · 60s aislamiento</div>
-</div>
-</div>
-</div>
-<div class="entreno-plan" id="plan-4dias">
-<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1rem;font-size:.84rem;color:var(--text2)">
-<strong style="color:var(--text)">Estructura Upper / Lower (2 días cada uno)</strong> · Lunes – Martes – Jueves – Viernes<br/>
-      Mayor frecuencia por grupo muscular (2×/semana). Óptimo para hipertrofia intermedia.
-    </div>
-<div style="display:flex;justify-content:flex-end;gap:.4rem;margin-bottom:.85rem">
-  <button onclick="openPlanModal('4dias')" style="background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(55,160,240,.2)';this.style.borderColor='var(--blue)'" onmouseout="this.style.background='rgba(55,160,240,.1)';this.style.borderColor='rgba(55,160,240,.35)'">✏ Editar plan</button>
-  <button onclick="deletePlan('4dias')" style="background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:6px;padding:4px 12px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s" onmouseover="this.style.background='rgba(240,55,55,.2)';this.style.borderColor='var(--red)'" onmouseout="this.style.background='rgba(240,55,55,.1)';this.style.borderColor='rgba(240,55,55,.4)'">🗑 Eliminar plan</button>
-</div>
-<div class="dias-entreno">
-<div class="dia-entreno">
-<div class="dia-entreno-header"><span class="dia-badge upper">UPPER A</span><div><div class="dia-title">Tren Superior A</div><div class="dia-sub">Pecho/Tríceps énfasis · LUNES</div></div></div>
-<div class="exercise"><div class="ex-name"><strong>Press de banca plano (barra)</strong>Compuesto principal</div><span class="ex-sets">4×5-7</span></div>
-<div class="exercise"><div class="ex-name"><strong>Remo con barra (Pendlay)</strong>Espalda media · antagonista</div><span class="ex-sets">4×6-8</span></div>
-<div class="exercise"><div class="ex-name"><strong>Press inclinado mancuernas</strong>Porción clavicular</div><span class="ex-sets">3×8-10</span></div>
-<div class="exercise"><div class="ex-name"><strong>Jalón al pecho agarre ancho</strong>Dorsal ancho</div><span class="ex-sets">3×10-12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Press militar mancuernas</strong>Deltoides</div><span class="ex-sets">3×10-12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Fondos en paralelas</strong>Tríceps</div><span class="ex-sets">3×8-10</span></div>
-<div class="exercise"><div class="ex-name"><strong>Curl bíceps barra</strong>Bíceps</div><span class="ex-sets">3×12</span></div>
-</div>
-<div class="dia-entreno">
-<div class="dia-entreno-header"><span class="dia-badge lower">LOWER A</span><div><div class="dia-title">Tren Inferior A</div><div class="dia-sub">Cuádriceps énfasis · MARTES</div></div></div>
-<div class="exercise"><div class="ex-name"><strong>Sentadilla con barra</strong>Compuesto principal de pierna</div><span class="ex-sets">4×5-7</span></div>
-<div class="exercise"><div class="ex-name"><strong>Peso muerto rumano</strong>Isquios y glúteos</div><span class="ex-sets">3×8-10</span></div>
-<div class="exercise"><div class="ex-name"><strong>Prensa de piernas</strong>Cuádriceps</div><span class="ex-sets">3×10-12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Extensión cuádriceps (máquina)</strong>Aislamiento cuádriceps</div><span class="ex-sets">3×12-15</span></div>
-<div class="exercise"><div class="ex-name"><strong>Curl isquiotibiales tumbado</strong>Femoral posterior</div><span class="ex-sets">3×12-15</span></div>
-<div class="exercise"><div class="ex-name"><strong>Gemelos de pie</strong>Gastrocnemio</div><span class="ex-sets">4×15</span></div>
-</div>
-<div class="dia-entreno">
-<div class="dia-entreno-header"><span class="dia-badge upperB">UPPER B</span><div><div class="dia-title">Tren Superior B</div><div class="dia-sub">Espalda/Bíceps énfasis · JUEVES</div></div></div>
-<div class="exercise"><div class="ex-name"><strong>Dominadas (o jalón neutro)</strong>Dorsal · compuesto principal</div><span class="ex-sets">4×6-8</span></div>
-<div class="exercise"><div class="ex-name"><strong>Press banca inclinado barra</strong>Pecho clavicular</div><span class="ex-sets">4×8-10</span></div>
-<div class="exercise"><div class="ex-name"><strong>Remo en polea sentado</strong>Romboides · espalda media</div><span class="ex-sets">3×10-12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Aperturas en polea alta</strong>Pecho aislado</div><span class="ex-sets">3×12-15</span></div>
-<div class="exercise"><div class="ex-name"><strong>Elevaciones laterales</strong>Deltoides medial</div><span class="ex-sets">3×15</span></div>
-<div class="exercise"><div class="ex-name"><strong>Curl martillo mancuernas</strong>Braquial y bíceps</div><span class="ex-sets">3×12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Extensión tríceps polea</strong>Tríceps largo</div><span class="ex-sets">3×12-15</span></div>
-</div>
-<div class="dia-entreno">
-<div class="dia-entreno-header"><span class="dia-badge lowerB">LOWER B</span><div><div class="dia-title">Tren Inferior B</div><div class="dia-sub">Isquios/Glúteos énfasis · VIERNES</div></div></div>
-<div class="exercise"><div class="ex-name"><strong>Peso muerto convencional</strong>Compuesto total posterior</div><span class="ex-sets">4×4-6</span></div>
-<div class="exercise"><div class="ex-name"><strong>Hip Thrust con barra</strong>Glúteo máximo</div><span class="ex-sets">4×10-12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Sentadilla búlgara (unilateral)</strong>Cuádriceps y glúteo</div><span class="ex-sets">3×10</span></div>
-<div class="exercise"><div class="ex-name"><strong>Leg press pies altos</strong>Isquios y glúteos</div><span class="ex-sets">3×12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Curl nórdico o máquina isquios</strong>Isquiotibiales</div><span class="ex-sets">3×10-12</span></div>
-<div class="exercise"><div class="ex-name"><strong>Gemelos sentado (máquina)</strong>Sóleo</div><span class="ex-sets">4×15</span></div>
-</div>
-</div>
+<!-- Los planes (.entreno-plan) se generan dinámicamente desde DEFAULT_ENTRENO_PLANS / Firebase -->
 </div>
 </section>
 <!-- ══ PROGRESIÓN ══ -->
@@ -1213,10 +1122,9 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 </div>
 <p class="section-intro">Selecciona un día del calendario, elige el plan y anota los pesos de cada ejercicio.</p>
 
-<!-- CALENDAR NAV -->
-<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem;flex-wrap:wrap">
-  <!-- Arrows + label + Hoy tightly left -->
-  <div style="display:inline-flex;align-items:center;gap:.4rem;flex-shrink:0">
+<!-- CALENDAR NAV (2 filas) -->
+<div class="cal-nav">
+  <div class="cal-nav-row cal-nav-row1">
     <div style="display:inline-flex;align-items:center;gap:0">
       <button class="etog-btn" id="cal-prev" onclick="calNav(-1)" style="font-size:1.1rem;padding:6px 8px;border-radius:7px 0 0 7px;border-right:none">&#8249;</button>
       <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent);letter-spacing:1px;cursor:pointer;padding:0 10px;background:var(--surface2);border:1px solid var(--border);line-height:2rem;white-space:nowrap" id="cal-month-label" onclick="calToggleFilter()"></div>
@@ -1224,8 +1132,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
     </div>
     <button class="supl-reset-btn" onclick="calGoToday()" style="font-size:.82rem;padding:6px 14px;font-weight:700">Hoy</button>
   </div>
-  <!-- Vista toggle right -->
-  <div style="display:flex;align-items:center;gap:.4rem;margin-left:auto;flex-wrap:wrap">
+  <div class="cal-nav-row cal-nav-row2">
     <span style="font-size:.7rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px">Vista:</span>
     <button id="cal-view-month" onclick="calSetView('month')" class="etog-btn active" style="font-size:.78rem;padding:5px 11px">Mes</button>
     <button id="cal-view-week"  onclick="calSetView('week')"  class="etog-btn"        style="font-size:.78rem;padding:5px 11px">Semana</button>
@@ -1247,12 +1154,12 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   </div>
 </div>
 
-<!-- CALENDAR GRID -->
-<div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1.5rem;margin-top:2rem"></div>
-
-<!-- DAY DETAIL PANEL -->
-<div id="reg-panel" style="display:none">
-  <hr style="border:none;border-top:1px solid var(--border);margin-bottom:1.25rem">
+<!-- LAYOUT: calendar (izq) + panel del día (dcha en desktop, modal en móvil) -->
+<div class="reg-layout">
+  <div class="reg-cal-col">
+    <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:2rem"></div>
+  </div>
+<aside id="reg-panel" class="reg-side-col">
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">
     <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--accent2)" id="reg-day-title"></div>
     <button class="btn-cancel-meal" onclick="closeRegPanel()" style="padding:5px 12px">✕ Cerrar</button>
@@ -1281,6 +1188,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
     <button class="btn-save-meal" onclick="saveRegDay()">✓ Guardar registro</button>
     <button class="btn-cancel-meal" onclick="deleteRegEntry()" style="border-color:rgba(240,55,55,.4);color:var(--red)">🗑 Eliminar registro del día</button>
   </div>
+</aside>
 </div>
 
 </div>
@@ -1350,7 +1258,7 @@ function setEntrenoDay(day, val) {
   fetch(FB_BASE + '/' + DAYTYPE_FB_KEY + '.json', {
     method: 'PUT', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(window._entrenoWeekTypes)
-  }).catch(() => {});
+  }).catch(_fbErr);
 }
 
 // Alias para compatibilidad
@@ -1514,12 +1422,15 @@ async function loadDayTypes() {
 // ── WEEKLY AVERAGE ──
 const WEEKEND_EXCLUDED_KEY = 'planMuscular_weekendExcluded_v1';
 const WEEKEND_EXCLUDED_FB_KEY = 'weekend_excluded';
+const DAYS_HIDDEN_KEY    = 'planMuscular_daysHidden_v1';
+const DAYS_HIDDEN_FB_KEY = 'days_hidden';
 
 function recalcWeeklyAvg() {
   let totK=0, totP=0, totC=0, totF=0, days=0;
   document.querySelectorAll('.day-total-macros').forEach(el => {
     const dayContent = el.closest('.day-content');
     if (dayContent && dayContent.dataset.excluded === '1') return;
+    if (dayContent && dayContent.dataset.hidden === '1') return;
     const pills = el.querySelectorAll('.pill');
     if (pills.length < 4) return;
     totK += +parsePillNum(pills[0].textContent);
@@ -1536,51 +1447,114 @@ function recalcWeeklyAvg() {
   document.getElementById('avg-fat').innerHTML  = Math.round(totF/days) + _unit('g');
 }
 
-function applyWeekendExcluded(data) {
-  ['sab', 'dom'].forEach(dayId2 => {
+const ALL_DAY_IDS = ['lun','mar','mie','jue','vie','sab','dom'];
+
+function applyDaysExcluded(data) {
+  ALL_DAY_IDS.forEach(dayId2 => {
     const isExcluded = !!(data && data[dayId2]);
     const dayEl = document.getElementById('day-' + dayId2);
-    if (dayEl) dayEl.dataset.excluded = isExcluded ? '1' : '0';
-    // Button is now inside day-total, not btn-row
-    const btn = dayEl ? dayEl.querySelector('.btn-exclude-day') : null;
-    if (btn) {
-      btn.textContent = isExcluded ? '✕ Excluir macros de media semanal' : '✓ Incluir macros en media semanal';
-      btn.classList.toggle('excluded', isExcluded);
-    }
+    if (!dayEl) return;
+    dayEl.dataset.excluded = isExcluded ? '1' : '0';
+    if (typeof syncDayMenuExcludedItem === 'function') syncDayMenuExcludedItem(dayEl);
   });
   recalcWeeklyAvg();
 }
+// Alias retrocompatible
+function applyWeekendExcluded(data) { return applyDaysExcluded(data); }
 
-function toggleExcludeDay(dayId, btn) {
+function toggleExcludeDay(dayId) {
   const dayEl = document.getElementById('day-' + dayId);
   if (!dayEl) return;
   const excluded = dayEl.dataset.excluded === '1';
   const saved = lsGet(WEEKEND_EXCLUDED_KEY, {});
   saved[dayId] = !excluded;
   lsSet(WEEKEND_EXCLUDED_KEY, saved);
-  applyWeekendExcluded(saved);
-  // Guardar Firebase
+  applyDaysExcluded(saved);
+  setSyncStatus('saved', !excluded ? '✓ Día excluido de la media' : '✓ Día incluido en la media');
   if (CLOUD_CONFIGURED) {
     fetch(FB_BASE + '/' + WEEKEND_EXCLUDED_FB_KEY + '.json', {
       method: 'PUT', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(saved)
-    }).catch(() => {});
+    }).catch(_fbErr);
   }
 }
 
 async function loadWeekendExcluded() {
   const local = lsGet(WEEKEND_EXCLUDED_KEY, null);
-  if (local) applyWeekendExcluded(local);
+  if (local) applyDaysExcluded(local);
   if (!CLOUD_CONFIGURED) return;
   try {
     const res = await fetch(FB_BASE + '/' + WEEKEND_EXCLUDED_FB_KEY + '.json');
     if (!res.ok) throw new Error();
     const d = await res.json();
-    if (d) { lsSet(WEEKEND_EXCLUDED_KEY, d); applyWeekendExcluded(d); }
+    if (d) { lsSet(WEEKEND_EXCLUDED_KEY, d); applyDaysExcluded(d); }
   } catch(e) {}
 }
 
+// ── DAY HIDDEN (oculta meals-grid de un día concreto, mantiene tab para reactivar) ──
+function applyDaysHidden(data) {
+  ALL_DAY_IDS.forEach(dayId2 => {
+    const isHidden = !!(data && data[dayId2]);
+    const dayEl = document.getElementById('day-' + dayId2);
+    if (!dayEl) return;
+    dayEl.dataset.hidden = isHidden ? '1' : '0';
+    dayEl.classList.toggle('day-hidden', isHidden);
+    document.querySelectorAll('.day-tab').forEach(t => {
+      const oc = t.getAttribute('onclick') || '';
+      if (oc.includes("'" + dayId2 + "'")) t.classList.toggle('tab-hidden', isHidden);
+    });
+    if (typeof syncDayMenuHiddenItem === 'function') syncDayMenuHiddenItem(dayEl);
+  });
+  recalcWeeklyAvg();
+}
+
+function toggleHideDay(dayId) {
+  const dayEl = document.getElementById('day-' + dayId);
+  if (!dayEl) return;
+  const hidden = dayEl.dataset.hidden === '1';
+  const saved = lsGet(DAYS_HIDDEN_KEY, {});
+  saved[dayId] = !hidden;
+  lsSet(DAYS_HIDDEN_KEY, saved);
+  applyDaysHidden(saved);
+  setSyncStatus('saved', !hidden ? '✓ Día oculto' : '✓ Día visible');
+  if (CLOUD_CONFIGURED) {
+    fetch(FB_BASE + '/' + DAYS_HIDDEN_FB_KEY + '.json', {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(saved)
+    }).catch(_fbErr);
+  }
+}
+
+async function loadDaysHidden() {
+  const local = lsGet(DAYS_HIDDEN_KEY, null);
+  if (local) applyDaysHidden(local);
+  if (!CLOUD_CONFIGURED) return;
+  try {
+    const res = await fetch(FB_BASE + '/' + DAYS_HIDDEN_FB_KEY + '.json');
+    if (!res.ok) throw new Error();
+    const d = await res.json();
+    if (d) { lsSet(DAYS_HIDDEN_KEY, d); applyDaysHidden(d); }
+  } catch(e) {}
+}
+
+function syncDayMenuHiddenItem(dayEl) {
+  const hidden = dayEl.dataset.hidden === '1';
+  const item = dayEl.querySelector('.day-menu-item-hide');
+  if (!item) return;
+  const icon = item.querySelector('.item-icon');
+  const lbl  = item.querySelector('.item-label');
+  if (icon) icon.textContent = hidden ? '👁' : '👁‍🗨';
+  if (lbl)  lbl.textContent  = hidden ? 'Mostrar día' : 'Ocultar día';
+  item.classList.toggle('warn', hidden);
+}
+
 // ── SYNC STATUS ──
+// Helper centralizado para errores de sincronización con Firebase: log + status visible
+function _fbErr(e) {
+  console.warn('FB sync error:', e);
+  if (typeof setSyncStatus === 'function') setSyncStatus('error', '⚠ Sin sincronizar');
+}
+
 function setSyncStatus(state, msg) {
   const el = document.getElementById('sync-status');
   el.className = 'show ' + state;
@@ -1593,14 +1567,30 @@ function setSyncStatus(state, msg) {
 }
 
 // ── NAVEGACIÓN ──
+function closeAllOverlays() {
+  // Cierra cualquier modal/panel abierto antes de cambiar de sección
+  document.querySelectorAll('.app-modal.open').forEach(m => m.classList.remove('open'));
+  document.getElementById('modal-plan')?.classList.remove('open');
+  document.getElementById('modal-confirm')?.classList.remove('open');
+  const regPanel = document.getElementById('reg-panel');
+  if (regPanel && regPanel.classList.contains('open')) regPanel.classList.remove('open');
+  document.body.classList.remove('reg-mobile-open');
+  document.body.style.overflow = '';
+  // Cerrar también cualquier popup abierto del menú ⋯ por día
+  if (typeof closeAllDayMenus === 'function') closeAllDayMenus();
+}
+
 function showSection(id) {
+  closeAllOverlays();
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.main-nav .nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.querySelectorAll('nav button').forEach(b => {
+  document.querySelectorAll('.main-nav .nav-btn').forEach(b => {
     if ((b.getAttribute('onclick') || '').includes("'" + id + "'")) b.classList.add('active');
   });
   try { sessionStorage.setItem('nav_section', id); } catch(e) {}
+  // Scroll al inicio al cambiar de sección
+  window.scrollTo({top: 0, behavior: 'instant'});
 }
 function showDay(id) {
   document.querySelectorAll('.day-content').forEach(d => d.classList.remove('active'));
@@ -1609,6 +1599,7 @@ function showDay(id) {
   document.querySelectorAll('.day-tab').forEach(t => {
     if ((t.getAttribute('onclick') || '').includes("'" + id + "'")) t.classList.add('active');
   });
+  if (typeof refreshWeeklyBatidoBtn === 'function') refreshWeeklyBatidoBtn();
 }
 function showPlan(id) {
   setPlanActive(id);
@@ -1701,10 +1692,10 @@ function restoreNavState() {
     const section = sessionStorage.getItem('nav_section');
     if (section && document.getElementById(section)) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.main-nav .nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById(section).classList.add('active');
-      // Marcar el botón de nav correspondiente
-      document.querySelectorAll('nav button').forEach(b => {
+      // Marcar el botón de nav correspondiente (desktop + móvil)
+      document.querySelectorAll('.main-nav .nav-btn').forEach(b => {
         if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + section + "'")) b.classList.add('active');
       });
     }
@@ -1721,61 +1712,143 @@ function normalizeAccents(s) {
   return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 }
 function isBatidoCard(card) {
-  // Detectar por nombre del header (Merienda)
-  const headerName = normalizeAccents(card.querySelector('.meal-name')?.textContent || '');
-  if (headerName.includes('batido')) return true;
-  // Detectar por Nombre del Plato (primer <strong> en meal-food)
-  const tmp = document.createElement('div');
-  tmp.innerHTML = card.querySelector('.meal-food')?.innerHTML || '';
-  const firstStrong = tmp.querySelector('strong');
-  return firstStrong ? normalizeAccents(firstStrong.textContent).includes('batido') : false;
+  // El batido es ahora una entidad explícita opt-in: solo se marca con dataset.isBatido al añadirlo.
+  return card?.dataset?.isBatido === '1';
+}
+
+// ── MEAL CARD INTERACTIONS (click → edit + × delete inline) ──
+function attachMealCardInteractions(card, dayEl) {
+  if (card.dataset.clickBound !== '1') {
+    card.dataset.clickBound = '1';
+    card.addEventListener('click', (ev) => {
+      if (card.classList.contains('editing') || card.classList.contains('adding')) return;
+      if (card.dataset.isBatido === '1') return;
+      if (ev.target.closest('button, input, textarea, select, a, label, .meal-card-delete')) return;
+      enterEditMode(card);
+    });
+  }
+  if (!card.querySelector('.meal-card-delete')) {
+    const isBatido = card.dataset.isBatido === '1';
+    const x = document.createElement('button');
+    x.type = 'button';
+    x.className = 'meal-card-delete';
+    x.title = isBatido ? 'Quitar batido' : 'Eliminar comida';
+    x.setAttribute('aria-label', x.title);
+    x.textContent = '×';
+    x.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      deleteMeal(card, dayEl);
+    });
+    card.appendChild(x);
+  }
+}
+
+// ── DAY MENU (⋯) ──
+function buildDayMenu(dayEl, dayId2) {
+  const dayTotal = dayEl.querySelector('.day-total');
+  if (!dayTotal || dayTotal.querySelector('.day-menu')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'day-menu';
+  wrap.innerHTML = '<button type="button" class="day-menu-trigger" aria-haspopup="true" aria-expanded="false" title="Opciones del día">⋯</button>'
+    + '<div class="day-menu-popup" role="menu">'
+    +   '<button type="button" class="day-menu-item day-menu-item-add" role="menuitem"><span class="item-icon">+</span><span class="item-label">Añadir comida</span></button>'
+    +   '<button type="button" class="day-menu-item day-menu-item-exclude" role="menuitem"><span class="item-icon">✕</span><span class="item-label">Excluir de media semanal</span></button>'
+    +   '<button type="button" class="day-menu-item day-menu-item-hide" role="menuitem"><span class="item-icon">👁‍🗨</span><span class="item-label">Ocultar día</span></button>'
+    +   '<button type="button" class="day-menu-item day-menu-item-reset warn" role="menuitem"><span class="item-icon">↺</span><span class="item-label">Resetear día</span></button>'
+    + '</div>';
+  const lbl = dayTotal.querySelector('.day-total-label');
+  if (lbl && lbl.parentNode === dayTotal) lbl.parentNode.insertBefore(wrap, lbl.nextSibling);
+  else dayTotal.appendChild(wrap);
+
+  const trigger = wrap.querySelector('.day-menu-trigger');
+  const popup   = wrap.querySelector('.day-menu-popup');
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const opening = !popup.classList.contains('open');
+    closeAllDayMenus();
+    if (opening) {
+      popup.classList.add('open');
+      trigger.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+  });
+  wrap.querySelector('.day-menu-item-add').addEventListener('click', () => {
+    closeAllDayMenus();
+    addMealMode(dayEl);
+  });
+  wrap.querySelector('.day-menu-item-reset').addEventListener('click', () => {
+    closeAllDayMenus();
+    resetDay(dayEl.id);
+  });
+  wrap.querySelector('.day-menu-item-exclude').addEventListener('click', () => {
+    closeAllDayMenus();
+    toggleExcludeDay(dayId2);
+  });
+  wrap.querySelector('.day-menu-item-hide').addEventListener('click', () => {
+    closeAllDayMenus();
+    toggleHideDay(dayId2);
+  });
+  // Reflejar estado inicial de "excluido" / "oculto" si ya estaba marcado
+  syncDayMenuExcludedItem(dayEl);
+  if (typeof syncDayMenuHiddenItem === 'function') syncDayMenuHiddenItem(dayEl);
+}
+
+function closeAllDayMenus() {
+  document.querySelectorAll('.day-menu-popup.open').forEach(p => {
+    p.classList.remove('open');
+    const t = p.parentElement?.querySelector('.day-menu-trigger');
+    if (t) { t.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); }
+  });
+}
+
+function syncDayMenuExcludedItem(dayEl) {
+  const excluded = dayEl.dataset.excluded === '1';
+  const item = dayEl.querySelector('.day-menu-item-exclude');
+  if (!item) return;
+  const icon = item.querySelector('.item-icon');
+  const lbl  = item.querySelector('.item-label');
+  if (icon) icon.textContent = excluded ? '✓' : '✕';
+  if (lbl)  lbl.textContent  = excluded ? 'Incluir en media semanal' : 'Excluir de media semanal';
+  item.classList.toggle('warn', excluded);
 }
 
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', () => {
+  // Medir altura del header dinámicamente para que .day-tabs sticky se posicione justo debajo
+  const updateHeaderHeight = () => {
+    const h = document.querySelector('header')?.offsetHeight || 80;
+    document.documentElement.style.setProperty('--header-h', h + 'px');
+  };
+  updateHeaderHeight();
+  window.addEventListener('resize', updateHeaderHeight);
+  // Reajustar tras cargar imágenes (logo) que puedan cambiar la altura
+  window.addEventListener('load', updateHeaderHeight);
+  // Cerrar menús ⋯ al click fuera o con Esc
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.day-menu')) closeAllDayMenus();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAllDayMenus();
+  });
+  renderMenuCardsSync();
   document.querySelectorAll('.day-content').forEach(dayEl => {
     const dayId = dayEl.id;
+    const dayId2 = dayId.replace('day-', '');
     let _mealIdx = 0;
     dayEl.querySelectorAll('.meal-card').forEach((card) => {
-      const _nameCheck = normalizeAccents(card.querySelector('.meal-name')?.textContent || '');
-      if (_nameCheck.includes('batido')) {
-        // Tarjeta de batido: ID legible fijo + botón edición limitada
-        card.id = dayId + '-batido';
+      if (!card.id) {
+        // Fallback legacy (cards no creadas por renderMenuCardsSync)
+        card.id = dayId + '-meal' + _mealIdx++;
+      }
+      // Marcar explícitamente como batido sólo si el id es day-XXX-batido (entidad opt-in)
+      if (/^day-[a-z]+-batido$/.test(card.id)) {
         card.dataset.isBatido = '1';
         ensureBatidoEditBtn(card);
-      } else {
-        card.id = dayId + '-meal' + _mealIdx++;
-        const btn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
-        btn.addEventListener('click', () => enterEditMode(card));
-        card.querySelector('.meal-header').appendChild(btn);
       }
+      attachMealCardInteractions(card, dayEl);
     });
-    // Botón «Añadir comida» y «Eliminar comida» en el contenedor fijo de cada día
-    const dayId2 = dayEl.id.replace('day-', '');
-    const btnRow = document.getElementById('btn-row-' + dayId2);
-    if (btnRow) {
-      btnRow.style.cssText = 'display:flex;flex-direction:row;justify-content:flex-end;align-items:center;gap:.4rem;margin-bottom:0;margin-top:.5rem;width:100%;box-sizing:border-box;';
-      const addBtn = Object.assign(document.createElement('button'), { className: 'edit-btn add-variant', textContent: '+ Añadir comida' });
-      addBtn.addEventListener('click', () => addMealMode(dayEl));
-      const delBtn = Object.assign(document.createElement('button'), { className: 'edit-btn del-variant', textContent: '🗑 Eliminar comida' });
-      delBtn.addEventListener('click', () => toggleDeleteMode(dayEl, delBtn));
-      btnRow.appendChild(addBtn);
-      btnRow.appendChild(delBtn);
-    }
-    const lbl = dayEl.querySelector('.day-total-label');
-    if (lbl) {
-      const rb = Object.assign(document.createElement('button'), { className: 'reset-day-btn', textContent: '↺ Resetear' });
-      rb.addEventListener('click', () => resetDay(dayId));
-      lbl.parentNode.insertBefore(rb, lbl.nextSibling);
-      // Botón excluir macros de media (solo sábado y domingo), al lado del Resetear
-      if (dayId2 === 'sab' || dayId2 === 'dom') {
-        const exBtn = document.createElement('button');
-        exBtn.className = 'btn-exclude-day';
-        exBtn.textContent = '✓ Incluir macros en media semanal';
-        exBtn.addEventListener('click', () => toggleExcludeDay(dayId2, exBtn));
-        rb.after(exBtn);
-      }
-    }
+    buildDayMenu(dayEl, dayId2);
+    ensureBatidoToggleBtn(dayEl);
   });
   // ── LIGHTBOX (solo lectura, galería por código vía data-gallery) ──
   const lb      = document.getElementById('lightbox');
@@ -1883,10 +1956,12 @@ document.addEventListener('DOMContentLoaded', () => {
   loadData();
   loadBatidoData();
   loadCompraData();
+  loadMenuSlots();
   loadSuplStateFromCloud();
   loadBatidoActiveState();
   Promise.all([loadDayTypes(), loadEntrenoPlans()]).then(() => activateRecommendedPlan());
   loadWeekendExcluded();
+  loadDaysHidden();
 
   // Procesar planes hardcodeados: extraer día de dia-sub y mostrarlo como badge naranja
   const DIAS_SEMANA = ['LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO','DOMINGO'];
@@ -1902,13 +1977,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!found) return;
     // Remove day from dia-sub
     subEl.textContent = subText.replace(new RegExp('\\s*·?\\s*' + found + '$', 'i'), '').replace(/\s*·\s*$/, '').trim();
-    // Add badge to dia-entreno-header (not inside dia-title)
+    // Add badge to dia-entreno-header — preferimos la fila superior (junto a los badges)
     const headerEl = diaEl.querySelector('.dia-entreno-header');
     if (!headerEl) return;
     const badge = document.createElement('span');
     badge.className = 'dia-day-badge';
     badge.textContent = found;
-    headerEl.appendChild(badge);
+    const rowTop = headerEl.querySelector('.dia-entreno-row-top');
+    (rowTop || headerEl).appendChild(badge);
   });
   // Modal backdrop close (modales tras el script, se enganchan en DOMContentLoaded)
   const _mp = document.getElementById('modal-plan');
@@ -1972,40 +2048,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function applyAllScrollHints() {
     if (window.innerWidth > 600) return;
 
-    // Nav (menú principal) — es grid item, no se puede wrappear
-    // Inyectamos overlays reales como hijos de .header-inner
-    const navEl = document.querySelector('nav');
-    const headerInner = document.querySelector('.header-inner');
-    if (navEl && headerInner && !navEl.dataset.scrollHint) {
-      navEl.dataset.scrollHint = '1';
-      headerInner.style.position = 'relative';
-      const overlayR = document.createElement('div');
-      overlayR.className = 'nav-scroll-hint right';
-      overlayR.textContent = '›';
-      headerInner.appendChild(overlayR);
-      const overlayL = document.createElement('div');
-      overlayL.className = 'nav-scroll-hint left hidden';
-      overlayL.textContent = '‹';
-      headerInner.appendChild(overlayL);
-      function positionOverlays() {
-        const navRect = navEl.getBoundingClientRect();
-        const hRect   = headerInner.getBoundingClientRect();
-        const top = navRect.top - hRect.top;
-        const h   = navRect.height;
-        [overlayR, overlayL].forEach(o => { o.style.top = top + 'px'; o.style.height = h + 'px'; });
-      }
-      function updateNav() {
-        const atEnd   = navEl.scrollLeft + navEl.clientWidth >= navEl.scrollWidth - 4;
-        const atStart = navEl.scrollLeft <= 4;
-        overlayR.classList.toggle('hidden', atEnd);
-        overlayL.classList.toggle('hidden',  atStart);
-        overlayL.classList.toggle('visible', !atStart);
-        positionOverlays();
-      }
-      navEl.addEventListener('scroll', updateNav, { passive: true });
-      new ResizeObserver(updateNav).observe(navEl);
-      updateNav();
-    }
+    // (El nav principal ya no necesita scroll hint: en móvil va abajo fijo
+    //  con los 4 botones distribuidos)
 
     // Días comidas
     initScrollHint(document.querySelector('.day-tabs'));
@@ -2508,75 +2552,31 @@ function sortMealsByTime(dayEl) {
 // ── AÑADIR COMIDA ──
 function addMealMode(dayEl) { openMealModal({ mode: 'add', dayEl }); }
 
-// ── MODO ELIMINAR COMIDAS ──
-function toggleDeleteMode(dayEl, toggleBtn) {
-  const isActive = dayEl.dataset.deleteMode === '1';
-  if (isActive) {
-    // Desactivar modo eliminar
-    dayEl.dataset.deleteMode = '0';
-    toggleBtn.textContent = '🗑 Eliminar comida';
-    toggleBtn.style.color = 'var(--red)';
-    toggleBtn.style.borderColor = 'rgba(240,55,55,.35)';
-    dayEl.querySelectorAll('.meal-delete-btn').forEach(b => b.remove());
-  } else {
-    // Activar modo eliminar
-    dayEl.dataset.deleteMode = '1';
-    toggleBtn.textContent = '✕ Cancelar eliminación';
-    toggleBtn.style.color = 'var(--text2)';
-    toggleBtn.style.borderColor = 'var(--border)';
-    dayEl.querySelectorAll('.meal-card').forEach(card => {
-      if (card.classList.contains('adding')) return;
-      if (isBatidoCard(card)) return; // El batido no se puede eliminar
-      if (card.querySelector('.meal-delete-btn')) return;
-      const delBtn = document.createElement('button');
-      delBtn.className = 'meal-delete-btn';
-      delBtn.textContent = '🗑 Borrar';
-      delBtn.style.cssText = "background:rgba(240,55,55,.1);border:1px solid rgba(240,55,55,.4);color:var(--red);border-radius:7px;padding:5px 12px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.75rem;width:100%;transition:background .2s";
-      delBtn.addEventListener('mouseenter', () => { delBtn.style.background = 'rgba(240,55,55,.22)'; });
-      delBtn.addEventListener('mouseleave', () => { delBtn.style.background = 'rgba(240,55,55,.1)'; });
-      delBtn.addEventListener('click', () => deleteMeal(card, dayEl, toggleBtn));
-      card.appendChild(delBtn);
-    });
-  }
-}
-
-async function deleteMeal(card, dayEl, toggleBtn) {
-  // Las tarjetas de batido no se pueden eliminar
-  if (isBatidoCard(card)) {
-    await mobileConfirm('No se puede eliminar', 'El batido no se puede eliminar. Usa el botón <strong>⏸ Desactivar hoy</strong> para ocultarlo en un día concreto, o el botón global <strong>✗ Desactivado</strong> para desactivarlo globalmente.');
-    return;
-  }
-  const mealName = card.querySelector('.meal-name')?.textContent || 'esta comida';
-  const confirmed = await mobileConfirm('Eliminar comida', '¿Seguro que quieres eliminar <strong>' + escapeHtml(mealName) + '</strong>?<br><br>Esta acción no se puede deshacer.');
+async function deleteMeal(card, dayEl) {
+  const isBatido = isBatidoCard(card);
+  const mealName = card.querySelector('.meal-name')?.textContent || (isBatido ? 'el batido' : 'esta comida');
+  const confirmed = await mobileConfirm(
+    isBatido ? 'Quitar batido' : 'Eliminar comida',
+    '¿Seguro que quieres ' + (isBatido ? 'quitar' : 'eliminar') + ' <strong>' + escapeHtml(mealName) + '</strong>?<br><br>Esta acción no se puede deshacer.'
+  );
   if (!confirmed) return;
-  // Eliminar del snapshot si tiene id
   if (card.id) {
     let data = lsGet(LOCAL_KEY, {});
     delete data[card.id];
     lsSet(LOCAL_KEY, data);
     if (CLOUD_CONFIGURED) {
-      // DELETE quirúrgico de la clave concreta (no toca el resto del nodo /menus)
       try { await fetch(FB_BASE + '/menus/' + encodeURIComponent(card.id) + '.json', { method: 'DELETE' }); } catch(e) {}
     }
   }
   card.remove();
-  // Desactivar modo eliminar después de borrar
-  const remaining = dayEl.querySelectorAll('.meal-card');
-  if (remaining.length === 0 || dayEl.dataset.deleteMode === '1') {
-    dayEl.dataset.deleteMode = '0';
-    toggleBtn.textContent = '🗑 Eliminar comida';
-    toggleBtn.style.color = 'var(--red)';
-    toggleBtn.style.borderColor = 'rgba(240,55,55,.35)';
-    dayEl.querySelectorAll('.meal-delete-btn').forEach(b => b.remove());
-  }
-  // Recalcular totales
   const anyCard = dayEl.querySelector('.meal-card');
   if (anyCard) { recalcDayTotal(anyCard); } else {
     const macrosDiv = dayEl.querySelector('.day-total-macros');
     if (macrosDiv) macrosDiv.innerHTML = '<span class="pill kcal">0 kcal</span><span class="pill p">0g P</span><span class="pill c">0g C</span><span class="pill f">0g G</span>';
   }
   recalcWeeklyAvg();
-  setSyncStatus('saved', '✓ Comida eliminada');
+  if (isBatido) ensureBatidoToggleBtn(dayEl);
+  setSyncStatus('saved', isBatido ? '✓ Batido quitado' : '✓ Comida eliminada');
 }
 
 // saveNewMeal: thin wrapper retrocompatible — la lógica vive en _doSaveMealAdd
@@ -2605,27 +2605,18 @@ function createRestoredExtraMeal(dayEl, id, saved) {
       <span class="pill f">${saved.fat}g G</span>
     </div>`;
   grid.appendChild(card);
-  if (isBatidoCard(card)) {
+  if (/^day-[a-z]+-batido$/.test(card.id)) {
     card.dataset.isBatido = '1';
     ensureBatidoEditBtn(card);
-  } else {
-    const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
-    editBtn.addEventListener('click', () => enterEditMode(card));
-    card.querySelector('.meal-header').appendChild(editBtn);
   }
+  attachMealCardInteractions(card, dayEl);
 }
 
 // Garantiza que una tarjeta batido tiene el botón de edición limitado,
 // independientemente de cómo haya sido creada (HTML, Firebase, snapshot…)
 function ensureBatidoEditBtn(card) {
-  // Quitar botón de edición completa si existe
-  card.querySelector('.edit-btn:not(.batido-edit-btn)')?.remove();
-  if (card.querySelector('.batido-edit-btn')) return; // ya existe
-  const bEditBtn = Object.assign(document.createElement('button'), {
-    className: 'edit-btn batido-edit-btn', textContent: '✏ Editar nombre/hora'
-  });
-  bEditBtn.addEventListener('click', () => enterBatidoEditMode(card));
-  card.querySelector('.meal-header').appendChild(bEditBtn);
+  // El batido card no tiene botón de edición propio: la receta se edita desde el ⚙ Configurar global.
+  card.querySelector('.edit-btn')?.remove();
 }
 
 // ── EDIT MODE ──
@@ -2811,18 +2802,12 @@ async function _doSaveMealAdd() {
   ];
   if (!await confirmSave(newChanges)) return;
 
-  // Crear nueva tarjeta y aplicar contenido
+  // Crear nueva tarjeta y aplicar contenido (siempre como comida normal — el batido es una entidad opt-in aparte)
   const card = document.createElement('div');
   card.className = 'meal-card';
   const _dayId = dayEl.id;
-  const isBatidoNew = normalizeAccents(mealName).includes('batido');
-  if (isBatidoNew) {
-    card.id = _dayId + '-batido';
-    card.dataset.isBatido = '1';
-  } else {
-    let n = 1; while (document.getElementById(_dayId + '-extra-' + n)) n++;
-    card.id = _dayId + '-extra-' + n;
-  }
+  let n = 1; while (document.getElementById(_dayId + '-extra-' + n)) n++;
+  card.id = _dayId + '-extra-' + n;
   card.innerHTML = `
     <div class="meal-header">
       <div class="meal-icon d">${escapeHtml(chosenEmoji)}</div>
@@ -2833,11 +2818,8 @@ async function _doSaveMealAdd() {
   grid.appendChild(card);
   if (isBatidoNew) {
     ensureBatidoEditBtn(card);
-  } else {
-    const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
-    editBtn.addEventListener('click', () => enterEditMode(card));
-    card.querySelector('.meal-header').appendChild(editBtn);
   }
+  attachMealCardInteractions(card, dayEl);
   sortMealsByTime(dayEl);
   recalcDayTotal(card);
   recalcWeeklyAvg();
@@ -2962,26 +2944,6 @@ async function _doSaveMealBatido() {
     else foodEl.innerHTML = `<strong>${escapeHtml(newPlato)}</strong>` + (foodEl.innerHTML ? '<br>' + foodEl.innerHTML : '');
   }
 
-  // ¿Ya no es batido? → convertir a comida normal
-  if (!normalizeAccents(newName).includes('batido') && !normalizeAccents(newPlato).includes('batido')) {
-    delete card.dataset.isBatido;
-    card.classList.remove('batido-disabled', 'batido-global-off');
-    card.querySelector('.batido-day-toggle')?.remove();
-    card.querySelector('.meal-food').innerHTML = '';
-    card.querySelector('.meal-macros').innerHTML = '';
-    card.querySelector('.batido-edit-btn')?.remove();
-    const editBtn = Object.assign(document.createElement('button'), { className: 'edit-btn', textContent: '✏ Editar comida' });
-    editBtn.addEventListener('click', () => enterEditMode(card));
-    card.querySelector('.meal-header').appendChild(editBtn);
-    closeMealModal();
-    const _snap = buildSnapshot(); lsSet(LOCAL_KEY, _snap);
-    if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
-    setSyncStatus('saved', '✓ Tarjeta convertida a comida normal');
-    sortMealsByTime(card.closest('.day-content'));
-    return;
-  }
-
-  // Sigue siendo batido
   closeMealModal();
   const _snap = buildSnapshot(); lsSet(LOCAL_KEY, _snap);
   if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
@@ -2996,7 +2958,6 @@ function recalcDayTotal(card) {
   if (!macrosDiv) return;
   let [k,p,c,f] = [0,0,0,0];
   dayEl.querySelectorAll('.meal-card').forEach(card => {
-    if (card.classList.contains('batido-disabled') || card.classList.contains('batido-global-off')) return;
     const pills = card.querySelectorAll('.meal-macros .pill');
     if (pills.length >= 4) { k += +parsePillNum(pills[0].textContent); p += +parsePillNum(pills[1].textContent); c += +parsePillNum(pills[2].textContent); f += +parsePillNum(pills[3].textContent); }
   });
@@ -3030,39 +2991,7 @@ function buildSnapshot() {
 function applySnapshot(data) {
   if (!data) return;
 
-  // ── Migrate legacy batido IDs (day-XXX-extra-TIMESTAMP) → day-XXX-batido ──
-  let migrated = false;
-  const migratedData = Object.assign({}, data);
-  Object.keys(data).forEach(id => {
-    // Match both old timestamp format and sequential extras that are batidos
-    const extraMatch = id.match(/^(day-[a-z]+)-extra-(.+)$/);
-    if (!extraMatch) return;
-    if (document.getElementById(id)) return; // already in DOM, no migration needed
-    const dayId = extraMatch[1];
-    const saved = data[id];
-    // Only migrate if content is a batido
-    const foodText = normalizeAccents((saved.food || '') + (saved.name || ''));
-    if (!foodText.includes('batido')) return;
-    const newId = dayId + '-batido';
-    if (!migratedData[newId]) {
-      migratedData[newId] = saved;
-      delete migratedData[id];
-      migrated = true;
-    }
-  });
-  if (migrated) {
-    // Persist migrated data
-    lsSet(LOCAL_KEY, migratedData);
-    if (CLOUD_CONFIGURED) {
-      fetch(FIREBASE_ENDPOINT, {
-        method: 'PUT', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(migratedData)
-      }).catch(() => {});
-    }
-    data = migratedData;
-  }
-
-  // Recrear primero las comidas extra (y batidos) que no existen en el DOM
+  // Recrear las comidas extra que no existen en el DOM (las añadidas por el usuario)
   Object.entries(data).forEach(([id, saved]) => {
     if (document.getElementById(id)) return;
     const match = id.match(/^(day-[a-z]+)-(extra-|batido)/);
@@ -3084,8 +3013,8 @@ function applySnapshot(data) {
     if (nameEl  && saved.name)             nameEl.textContent  = saved.name;
     if (timeEl  && saved.time  !== undefined) timeEl.textContent = saved.time;
     if (iconEl  && saved.emoji)            iconEl.textContent  = saved.emoji;
-    // Re-evaluar si la tarjeta es batido tras aplicar nombre/comida desde Firebase
-    if (isBatidoCard(card)) {
+    // Marcar como batido sólo si el id es day-XXX-batido (entidad explícita opt-in)
+    if (/^day-[a-z]+-batido$/.test(card.id)) {
       card.dataset.isBatido = '1';
       ensureBatidoEditBtn(card);
     }
@@ -3093,6 +3022,7 @@ function applySnapshot(data) {
   document.querySelectorAll('.day-content').forEach(dayEl => {
     sortMealsByTime(dayEl);
     const c = dayEl.querySelector('.meal-card'); if (c) recalcDayTotal(c);
+    ensureBatidoToggleBtn(dayEl);
   });
   recalcWeeklyAvg();
   // Re-aplicar datos del batido SIEMPRE al final del snapshot,
@@ -3105,14 +3035,30 @@ function applySnapshot(data) {
 // ── CLOUD SYNC ──
 async function loadData() {
   let local = lsGet(LOCAL_KEY, null);
-  if (local) applySnapshot(local);
+  if (local) {
+    const localMigrated = migrateMealIdsInData(local);
+    if (JSON.stringify(localMigrated) !== JSON.stringify(local)) {
+      lsSet(LOCAL_KEY, localMigrated);
+      local = localMigrated;
+    }
+    applySnapshot(local);
+  }
   if (!CLOUD_CONFIGURED) return;
   setSyncStatus('loading', 'Sincronizando…');
   try {
     const res = await fetch(FIREBASE_ENDPOINT);
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    const cloud = await res.json();
+    let cloud = await res.json();
     if (cloud) {
+      const cloudMigrated = migrateMealIdsInData(cloud);
+      if (JSON.stringify(cloudMigrated) !== JSON.stringify(cloud)) {
+        cloud = cloudMigrated;
+        // Persistir migración en la nube
+        fetch(FIREBASE_ENDPOINT, {
+          method: 'PUT', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(cloud)
+        }).catch(_fbErr);
+      }
       lsSet(LOCAL_KEY, cloud);
       applySnapshot(cloud);
       // Tras aplicar el snapshot de la nube, re-aplicar también los datos del batido
@@ -3151,7 +3097,7 @@ function saveSuplState(s) {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(s)
-  }).catch(() => {});
+  }).catch(_fbErr);
 }
 
 async function loadSuplStateFromCloud() {
@@ -3318,7 +3264,7 @@ function persistBatidosCount(count) {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(count)
-  }).catch(() => {});
+  }).catch(_fbErr);
 }
 
 async function resetBatidos() {
@@ -3412,8 +3358,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // ══ BATIDO EDIT ══
 const BATIDO_FB_KEY = 'batido';
 const BATIDO_LOCAL_KEY = 'planMuscular_batido_v1';
-
-function toggleBatidoEdit() { openBatidoModal(); }
 
 function openBatidoModal() {
   const modal = document.getElementById('modal-batido');
@@ -3529,139 +3473,15 @@ function applyBatidoData(d) {
   }
   // Sincronizar tarjetas de Merienda/Batido en el menú diario
   syncBatidoToMenuCards(d);
-  // Re-apply active state after sync (in case cards were just created)
-  setTimeout(() => applyBatidoActiveUI(getBatidoGlobalActive()), 0);
 }
 
-// ── BATIDO ACTIVE STATE ──
-const BATIDO_ACTIVE_FB_KEY = 'batido_active';
-const BATIDO_DAYS_FB_KEY   = 'batido_days_disabled';
-
-function getBatidoGlobalActive() {
-  try { const v = localStorage.getItem('batido_global_active'); return v === null ? true : v === '1'; } catch(e) { return true; }
-}
-function setBatidoGlobalActive(val) {
-  try { localStorage.setItem('batido_global_active', val ? '1' : '0'); } catch(e) {}
-  if (!CLOUD_CONFIGURED) return;
-  fetch(FB_BASE + '/' + BATIDO_ACTIVE_FB_KEY + '.json', {
-    method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(val)
-  }).catch(()=>{});
-}
-function getBatidoDaysDisabled() {
-  return lsGet('batido_days_disabled', {});
-}
-function getBatidoDayDisabled(dayId) {
-  return !!getBatidoDaysDisabled()[dayId];
-}
-function setBatidoDayDisabled(dayId, val) {
-  const d = getBatidoDaysDisabled();
-  if (val) d[dayId] = true; else delete d[dayId];
-  lsSet('batido_days_disabled', d);
-  if (!CLOUD_CONFIGURED) return;
-  fetch(FB_BASE + '/' + BATIDO_DAYS_FB_KEY + '.json', {
-    method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(d)
-  }).catch(()=>{});
-}
-
-function applyBatidoActiveUI(active) {
-  const btn = document.getElementById('batido-global-toggle');
-  if (btn) { btn.textContent = active ? '✓ Activo' : '✗ Desactivado'; btn.className = 'batido-toggle-btn ' + (active ? 'active' : 'inactive'); }
-  const descView = document.getElementById('batido-desc-view');
-  if (descView) descView.style.opacity = active ? '' : '.4';
-  const macrosView = document.getElementById('batido-macros-view');
-  if (macrosView) macrosView.style.opacity = active ? '' : '.4';
-  // Update all batido cards
+// ── BATIDO: lógica de active/disabled retirada (el batido es opt-in por día via toolbar/×) ──
+async function loadBatidoActiveState() {
+  // Limpieza defensiva: quitar cualquier clase legacy de desactivado en cards existentes
   document.querySelectorAll('.meal-card').forEach(card => {
     if (!isBatidoCard(card)) return;
-    card.classList.toggle('batido-global-off', !active);
-    if (!active) { card.classList.remove('batido-disabled'); }
-    const dayId = (card.closest('.day-content')?.id || '').replace('day-','');
-    card.classList.toggle('batido-disabled', active && getBatidoDayDisabled(dayId));
-    updateBatidoDayBtn(card, dayId);
-    recalcDayTotal(card);
+    card.classList.remove('batido-global-off', 'batido-disabled');
   });
-  recalcWeeklyAvg();
-}
-
-function updateBatidoDayBtn(card, dayId) {
-  const btn = card.querySelector('.batido-day-toggle');
-  if (!btn) return;
-  const globalActive = getBatidoGlobalActive();
-  const dayOff = getBatidoDayDisabled(dayId);
-  btn.disabled = !globalActive;
-  btn.style.opacity = globalActive ? '' : '.4';
-  btn.textContent = dayOff ? '▶ Activar hoy' : '⏸ Desactivar hoy';
-  btn.classList.toggle('off', dayOff);
-}
-
-function toggleBatidoGlobal() {
-  const newVal = !getBatidoGlobalActive();
-  setBatidoGlobalActive(newVal);
-  applyBatidoActiveUI(newVal);
-  setSyncStatus('saved', newVal ? '✓ Batido activado' : '✓ Batido desactivado');
-}
-
-function toggleBatidoDay(dayId) {
-  if (!getBatidoGlobalActive()) return;
-  const newVal = !getBatidoDayDisabled(dayId);
-  setBatidoDayDisabled(dayId, newVal);
-  const dayEl = document.getElementById('day-' + dayId);
-  if (!dayEl) return;
-  dayEl.querySelectorAll('.meal-card').forEach(card => {
-    if (!isBatidoCard(card)) return;
-    card.classList.toggle('batido-disabled', newVal);
-    updateBatidoDayBtn(card, dayId);
-    recalcDayTotal(card);
-  });
-  recalcWeeklyAvg();
-  setSyncStatus('saved', newVal ? '✓ Batido desactivado hoy' : '✓ Batido activado hoy');
-}
-
-async function loadBatidoActiveState() {
-  // Apply local first
-  applyBatidoActiveUI(getBatidoGlobalActive());
-  // Apply days disabled
-  const days = getBatidoDaysDisabled();
-  Object.keys(days).forEach(dayId => {
-    const dayEl = document.getElementById('day-' + dayId);
-    if (!dayEl) return;
-    dayEl.querySelectorAll('.meal-card').forEach(card => {
-      if (!isBatidoCard(card)) return;
-      card.classList.add('batido-disabled');
-      updateBatidoDayBtn(card, dayId);
-    });
-  });
-  if (!CLOUD_CONFIGURED) return;
-  // Load from Firebase
-  try {
-    const [rA, rD] = await Promise.all([
-      fetch(FB_BASE + '/' + BATIDO_ACTIVE_FB_KEY + '.json'),
-      fetch(FB_BASE + '/' + BATIDO_DAYS_FB_KEY + '.json')
-    ]);
-    if (rA.ok) {
-      const val = await rA.json();
-      if (val !== null) {
-        try { localStorage.setItem('batido_global_active', val ? '1' : '0'); } catch(e) {}
-        applyBatidoActiveUI(!!val);
-      }
-    }
-    if (rD.ok) {
-      const daysData = await rD.json();
-      if (daysData && typeof daysData === 'object') {
-        lsSet('batido_days_disabled', daysData);
-        // Reset all then apply
-        document.querySelectorAll('.meal-card').forEach(card => {
-          if (!isBatidoCard(card)) return;
-          const dayId = (card.closest('.day-content')?.id || '').replace('day-','');
-          const disabled = getBatidoGlobalActive() && !!daysData[dayId];
-          card.classList.toggle('batido-disabled', disabled);
-          updateBatidoDayBtn(card, dayId);
-          recalcDayTotal(card);
-        });
-        recalcWeeklyAvg();
-      }
-    }
-  } catch(e) {}
 }
 
 // ── Sincronizar datos del batido a las tarjetas de Merienda/Batido del menú diario ──
@@ -3691,7 +3511,6 @@ function syncBatidoToMenuCards(d) {
 
       // Actualizar descripción preservando el Nombre del Plato
       const foodEl = card.querySelector('.meal-food');
-      const globalActive = getBatidoGlobalActive();
       if (foodEl) {
         // Leer el Nombre del Plato actual (primer <strong> en meal-food)
         const tmp = document.createElement('div');
@@ -3705,29 +3524,11 @@ function syncBatidoToMenuCards(d) {
         foodEl.innerHTML = `<strong>${nombrePlato}</strong><br>${descText}`;
       }
 
-      // Reemplazar botón editar normal por el limitado de batido
+      // Garantizar el botón limitado de edición del batido
       const existingEditBtn = card.querySelector('.edit-btn:not(.batido-edit-btn)');
       if (existingEditBtn) existingEditBtn.remove();
       card.dataset.isBatido = '1';
       ensureBatidoEditBtn(card);
-
-      // Añadir botón toggle por día si no existe
-      if (!card.querySelector('.batido-day-toggle')) {
-        const btn = document.createElement('button');
-        btn.className = 'batido-day-toggle';
-        btn.textContent = '⏸ Desactivar hoy';
-        const dayEl2 = card.closest('.day-content');
-        const dayId = dayEl2 ? dayEl2.id.replace('day-','') : '';
-        btn.onclick = () => toggleBatidoDay(dayId);
-        card.appendChild(btn);
-      }
-
-      // Aplicar estado disabled global
-      card.classList.toggle('batido-global-off', !globalActive);
-      // Mantener estado por día
-      const dayId2 = (card.closest('.day-content')?.id || '').replace('day-','');
-      const dayDisabled = getBatidoDayDisabled(dayId2);
-      card.classList.toggle('batido-disabled', globalActive && dayDisabled);
 
       // Actualizar macros
       if (kcal !== null && prot !== null && carb !== null && fat !== null) {
@@ -3771,9 +3572,423 @@ async function loadBatidoData() {
   } catch(e) {}
 }
 
+// ══ MENU SLOTS (plantilla de comidas por día) ══
+const MENU_SLOTS_FB_KEY    = 'menuSlots';
+const MENU_SLOTS_LOCAL_KEY = 'planMuscular_menu_slots_v1';
+
+const DEFAULT_MENU_SLOTS = [
+  { id: 'desayuno', name: 'Desayuno', emoji: '🌅', iconClass: 'd',  order: 0 },
+  { id: 'comida',   name: 'Comida',   emoji: '☀️', iconClass: 'c',  order: 1 },
+  { id: 'merienda', name: 'Merienda', emoji: '🥤', iconClass: 'm',  order: 2 },
+  { id: 'cena',     name: 'Cena',     emoji: '🌙', iconClass: 'ce', order: 3 }
+];
+
+async function loadMenuSlots() {
+  if (CLOUD_CONFIGURED) {
+    try {
+      const r = await fetch(FB_BASE + '/' + MENU_SLOTS_FB_KEY + '.json');
+      if (r.ok) {
+        const d = await r.json();
+        if (Array.isArray(d) && d.length) {
+          lsSet(MENU_SLOTS_LOCAL_KEY, d);
+          return d;
+        }
+      }
+    } catch(e) {}
+  }
+  const lc = lsGet(MENU_SLOTS_LOCAL_KEY, null);
+  if (Array.isArray(lc) && lc.length) return lc;
+  const def = DEFAULT_MENU_SLOTS.map(s => ({ ...s }));
+  lsSet(MENU_SLOTS_LOCAL_KEY, def);
+  if (CLOUD_CONFIGURED) {
+    fetch(FB_BASE + '/' + MENU_SLOTS_FB_KEY + '.json', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(def)
+    }).catch(_fbErr);
+  }
+  return def;
+}
+
+function saveMenuSlots(slots) {
+  lsSet(MENU_SLOTS_LOCAL_KEY, slots);
+  if (!CLOUD_CONFIGURED) return Promise.resolve();
+  return fetch(FB_BASE + '/' + MENU_SLOTS_FB_KEY + '.json', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(slots)
+  });
+}
+
+// ── BATIDO opt-in por día (botón único en toolbar superior, opera sobre el día activo) ──
+function _activeDayKey() {
+  const active = document.querySelector('.day-content.active');
+  return active ? active.id.replace('day-', '') : null;
+}
+
+function _dayLabel(dayKey) {
+  const map = { lun:'lunes', mar:'martes', mie:'miércoles', jue:'jueves', vie:'viernes', sab:'sábado', dom:'domingo' };
+  return map[dayKey] || dayKey;
+}
+
+function refreshWeeklyBatidoBtn() {
+  const btn = document.getElementById('menu-batido-toggle-btn');
+  if (!btn) return;
+  const dk = _activeDayKey();
+  if (!dk) { btn.style.display = 'none'; return; }
+  btn.style.display = '';
+  const dayEl = document.getElementById('day-' + dk);
+  const has = !!dayEl?.querySelector('.meal-card[data-is-batido="1"]');
+  btn.textContent = has
+    ? '− Quitar batido del ' + _dayLabel(dk)
+    : '+ Añadir batido al ' + _dayLabel(dk);
+  btn.classList.toggle('active', has);
+}
+
+function addDayBatido(dayKey) {
+  const dayEl = document.getElementById('day-' + dayKey);
+  if (!dayEl) return false;
+  if (dayEl.querySelector('.meal-card[data-is-batido="1"]')) return false;
+  const grid = dayEl.querySelector('.meals-grid');
+  if (!grid) return false;
+  const bd = lsGet(BATIDO_LOCAL_KEY, null) || {};
+  const protDosis  = bd.protDosis  || 35;
+  const creatDosis = bd.creatDosis || 3;
+  const extra      = bd.extra      || 'fruta (100g) + 300ml leche semi';
+  const kcal       = bd.kcal       || 0;
+  const prot       = bd.prot       || 0;
+  const carb       = bd.carb       || 0;
+  const fat        = bd.fat        || 0;
+  const card = document.createElement('div');
+  card.className = 'meal-card';
+  card.id = 'day-' + dayKey + '-batido';
+  card.dataset.isBatido = '1';
+  card.innerHTML =
+    '<div class="meal-header">' +
+      '<div class="meal-icon m">🥤</div>' +
+      '<div><div class="meal-name">Batido protéico</div><div class="meal-time"></div></div>' +
+    '</div>' +
+    '<div class="meal-food"><strong>Batido</strong><br>' + protDosis + 'g Proteína + ' + creatDosis + 'g Creatina + ' + escapeHtml(extra) + '</div>' +
+    '<div class="meal-macros"><span class="pill kcal">' + kcal + ' kcal</span><span class="pill p">' + prot + 'g P</span><span class="pill c">' + carb + 'g C</span><span class="pill f">' + fat + 'g G</span></div>';
+  grid.appendChild(card);
+  ensureBatidoEditBtn(card);
+  attachMealCardInteractions(card, dayEl);
+  recalcDayTotal(card);
+  recalcWeeklyAvg();
+  const snap = buildSnapshot(); lsSet(LOCAL_KEY, snap);
+  if (CLOUD_CONFIGURED) {
+    fetch(FIREBASE_ENDPOINT, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(snap) }).catch(()=>{});
+  }
+  refreshWeeklyBatidoBtn();
+  setSyncStatus('saved', '✓ Batido añadido');
+  return true;
+}
+
+async function removeDayBatido(dayKey) {
+  const dayEl = document.getElementById('day-' + dayKey);
+  if (!dayEl) return;
+  const card = dayEl.querySelector('.meal-card[data-is-batido="1"]');
+  if (!card) return;
+  await deleteMeal(card, dayEl);
+}
+
+async function toggleWeeklyBatido() {
+  const dk = _activeDayKey();
+  if (!dk) return;
+  const dayEl = document.getElementById('day-' + dk);
+  const has = !!dayEl?.querySelector('.meal-card[data-is-batido="1"]');
+  if (has) await removeDayBatido(dk);
+  else addDayBatido(dk);
+  refreshWeeklyBatidoBtn();
+}
+
+// Stub retrocompatible: ya no inyectamos botón por día (todo va por el toolbar superior)
+function ensureBatidoToggleBtn(dayEl) {
+  if (dayEl) dayEl.querySelector('.batido-add-row')?.remove();
+  refreshWeeklyBatidoBtn();
+}
+
+// ── SLOTS DE COMIDAS · UI editar (modal global) ──
+const MENU_SLOT_ICON_CLASSES = [
+  { val: 'd',  label: 'Lima'  },
+  { val: 'c',  label: 'Azul'  },
+  { val: 'm',  label: 'Ámbar' },
+  { val: 'ce', label: 'Menta' }
+];
+
+function _slotRowHTML(slot) {
+  const opts = MENU_SLOT_ICON_CLASSES.map(c =>
+    '<option value="' + c.val + '"' + (c.val === slot.iconClass ? ' selected' : '') + '>' + c.label + '</option>'
+  ).join('');
+  return (
+    '<div class="slot-edit-row" data-orig-id="' + escapeHtml(slot.id || '') + '">' +
+      '<div class="slot-edit-controls">' +
+        '<button onclick="moveSlotRow(this,-1)" title="Subir">↑</button>' +
+        '<button onclick="moveSlotRow(this,1)" title="Bajar">↓</button>' +
+        '<button class="danger" onclick="removeSlotRow(this)" title="Eliminar">🗑</button>' +
+      '</div>' +
+      '<div class="slot-edit-fields">' +
+        '<input class="slot-edit-emoji" type="text" maxlength="4" value="' + escapeHtml(slot.emoji || '') + '" placeholder="🍽️">' +
+        '<input class="slot-edit-name" type="text" maxlength="32" value="' + escapeHtml(slot.name || '') + '" placeholder="Nombre del slot">' +
+        '<select class="slot-edit-icon-class">' + opts + '</select>' +
+      '</div>' +
+    '</div>'
+  );
+}
+
+async function openMenuSlotsModal() {
+  const slots = await loadMenuSlots();
+  const sorted = [...slots].sort((a, b) => (a.order || 0) - (b.order || 0));
+  const body = document.getElementById('modal-menu-slots-body');
+  body.innerHTML = sorted.map(_slotRowHTML).join('');
+  _refreshSlotMoveButtons();
+  document.getElementById('modal-menu-slots').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMenuSlotsModal() {
+  const m = document.getElementById('modal-menu-slots');
+  if (m) m.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function _refreshSlotMoveButtons() {
+  const rows = Array.from(document.querySelectorAll('#modal-menu-slots-body .slot-edit-row'));
+  rows.forEach((row, i) => {
+    const btns = row.querySelectorAll('.slot-edit-controls button');
+    if (btns[0]) btns[0].disabled = (i === 0);
+    if (btns[1]) btns[1].disabled = (i === rows.length - 1);
+  });
+}
+
+function addSlotRow() {
+  const body = document.getElementById('modal-menu-slots-body');
+  body.insertAdjacentHTML('beforeend', _slotRowHTML({ id:'', name:'', emoji:'🍽️', iconClass:'d', order: 99 }));
+  _refreshSlotMoveButtons();
+}
+
+function moveSlotRow(btn, dir) {
+  const row = btn.closest('.slot-edit-row');
+  if (!row) return;
+  if (dir === -1 && row.previousElementSibling) row.parentNode.insertBefore(row, row.previousElementSibling);
+  if (dir === 1  && row.nextElementSibling)     row.parentNode.insertBefore(row.nextElementSibling, row);
+  _refreshSlotMoveButtons();
+}
+
+function removeSlotRow(btn) {
+  const row = btn.closest('.slot-edit-row');
+  if (!row) return;
+  row.remove();
+  _refreshSlotMoveButtons();
+}
+
+async function saveMenuSlotsModal() {
+  const rows = Array.from(document.querySelectorAll('#modal-menu-slots-body .slot-edit-row'));
+  if (!rows.length) { alert('Debe haber al menos 1 slot'); return; }
+  const oldSlots = await loadMenuSlots();
+  const oldIds = new Set(oldSlots.map(s => s.id));
+  const newSlots = [];
+  const usedIds = new Set();
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const name  = row.querySelector('.slot-edit-name').value.trim();
+    const emoji = row.querySelector('.slot-edit-emoji').value.trim() || '🍽️';
+    const iconClass = row.querySelector('.slot-edit-icon-class').value;
+    const origId = row.dataset.origId || '';
+    if (!name) { alert('Todos los slots deben tener nombre'); return; }
+    let id = origId;
+    if (!id) {
+      const baseId = name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'slot';
+      id = baseId; let n = 1;
+      while (usedIds.has(id)) { id = baseId + '_' + (++n); }
+    }
+    if (usedIds.has(id)) { alert('Hay slots con id duplicado: ' + id); return; }
+    usedIds.add(id);
+    newSlots.push({ id, name, emoji, iconClass, order: i });
+  }
+  const removedIds = [...oldIds].filter(id => !usedIds.has(id));
+  // Borrar datos huérfanos en local + cloud para slots eliminados
+  if (removedIds.length) {
+    const allMenu = lsGet(LOCAL_KEY, {});
+    let dirty = false;
+    Object.keys(allMenu).forEach(k => {
+      const m = k.match(/^(day-[a-z]+)-(.+)$/);
+      if (!m) return;
+      if (removedIds.includes(m[2])) { delete allMenu[k]; dirty = true; }
+    });
+    if (dirty) lsSet(LOCAL_KEY, allMenu);
+    if (CLOUD_CONFIGURED) {
+      const days = ['lun','mar','mie','jue','vie','sab','dom'];
+      removedIds.forEach(slotId => {
+        days.forEach(d => {
+          fetch(FB_BASE + '/menus/day-' + d + '-' + slotId + '.json', { method: 'DELETE' }).catch(_fbErr);
+        });
+      });
+    }
+  }
+  await saveMenuSlots(newSlots);
+  // Re-render menu cards y reaplica datos
+  renderMenuCardsSync(newSlots);
+  // Re-asignar interacciones a las cards recién creadas
+  document.querySelectorAll('.day-content').forEach(dayEl => {
+    dayEl.querySelectorAll('.meal-card').forEach(card => {
+      if (/^day-[a-z]+-batido$/.test(card.id)) {
+        card.dataset.isBatido = '1';
+        ensureBatidoEditBtn(card);
+      }
+      attachMealCardInteractions(card, dayEl);
+    });
+    ensureBatidoToggleBtn(dayEl);
+  });
+  // Re-aplicar snapshot para repoblar contenido
+  const snap = lsGet(LOCAL_KEY, null);
+  if (snap) applySnapshot(snap);
+  closeMenuSlotsModal();
+  setSyncStatus('saved', '✓ Slots guardados');
+}
+
+// Render meal cards into each .day-content/.meals-grid based on slots (sync, uses cached/default if no arg)
+function renderMenuCardsSync(slotsArg) {
+  let slots = slotsArg;
+  if (!Array.isArray(slots) || !slots.length) slots = lsGet(MENU_SLOTS_LOCAL_KEY, null);
+  if (!Array.isArray(slots) || !slots.length) slots = DEFAULT_MENU_SLOTS;
+  const sorted = [...slots].sort((a, b) => (a.order || 0) - (b.order || 0));
+  document.querySelectorAll('.day-content').forEach(dayEl => {
+    const dayKey = dayEl.id.replace('day-', '');
+    const grid = dayEl.querySelector('.meals-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    sorted.forEach(slot => {
+      const card = document.createElement('div');
+      card.className = 'meal-card';
+      card.id = 'day-' + dayKey + '-' + slot.id;
+      card.innerHTML =
+        '<div class="meal-header">' +
+          '<div class="meal-icon ' + (slot.iconClass || '') + '">' + (slot.emoji || '') + '</div>' +
+          '<div><div class="meal-name">' + escapeHtml(slot.name || '') + '</div><div class="meal-time"></div></div>' +
+        '</div>' +
+        '<div class="meal-food"></div>' +
+        '<div class="meal-macros"></div>';
+      grid.appendChild(card);
+    });
+  });
+}
+
+// Migra claves antiguas: day-XXX-mealN → day-XXX-{slotId} basado en slot.order. Otras claves se conservan
+// intactas (incluyendo day-XXX-batido y day-XXX-extra-* — el batido es ahora una entidad opt-in independiente).
+function migrateMealIdsInData(data) {
+  if (!data || typeof data !== 'object') return data;
+  let slots = lsGet(MENU_SLOTS_LOCAL_KEY, null);
+  if (!Array.isArray(slots) || !slots.length) slots = DEFAULT_MENU_SLOTS;
+  const slotIdsByOrder = [...slots].sort((a, b) => (a.order || 0) - (b.order || 0)).map(s => s.id);
+  const result = {};
+  Object.entries(data).forEach(([key, val]) => {
+    const mealMatch = key.match(/^(day-[a-z]+)-meal(\d+)$/);
+    if (mealMatch) {
+      const idx = parseInt(mealMatch[2]);
+      const slotId = slotIdsByOrder[idx];
+      if (slotId) {
+        const newKey = mealMatch[1] + '-' + slotId;
+        if (!result[newKey]) result[newKey] = val;
+        return;
+      }
+    }
+    result[key] = val;
+  });
+  return result;
+}
+
 // ══ COMPRA EDIT ══
 const COMPRA_FB_KEY  = 'compra';
 const COMPRA_LOCAL_KEY = 'planMuscular_compra_v1';
+const COMPRA_CATS_FB_KEY    = 'compraCats';
+const COMPRA_CATS_LOCAL_KEY = 'planMuscular_compra_cats_v1';
+
+const DEFAULT_COMPRA_CATEGORIES = [
+  { id: 'frutas',    name: 'FRUTAS Y VERDURAS',   emoji: '🥦', color: 'var(--accent2)', order: 0 },
+  { id: 'lacteos',   name: 'LÁCTEOS Y DERIVADOS', emoji: '🥛', color: '#b07af0',        order: 1 },
+  { id: 'proteinas', name: 'PROTEÍNAS ANIMALES',  emoji: '🍗', color: '#f09050',        order: 2 },
+  { id: 'hidratos',  name: 'HIDRATOS',            emoji: '🌾', color: 'var(--accent3)', order: 3 },
+  { id: 'despensa',  name: 'DESPENSA Y GRASAS',   emoji: '🧴', color: 'var(--red)',     order: 4 }
+];
+
+async function loadCompraCategories() {
+  if (CLOUD_CONFIGURED) {
+    try {
+      const r = await fetch(FB_BASE + '/' + COMPRA_CATS_FB_KEY + '.json');
+      if (r.ok) {
+        const d = await r.json();
+        if (Array.isArray(d) && d.length) {
+          lsSet(COMPRA_CATS_LOCAL_KEY, d);
+          return d;
+        }
+      }
+    } catch(e) {}
+  }
+  const lc = lsGet(COMPRA_CATS_LOCAL_KEY, null);
+  if (Array.isArray(lc) && lc.length) return lc;
+  const def = DEFAULT_COMPRA_CATEGORIES.map(c => ({ ...c }));
+  lsSet(COMPRA_CATS_LOCAL_KEY, def);
+  if (CLOUD_CONFIGURED) {
+    fetch(FB_BASE + '/' + COMPRA_CATS_FB_KEY + '.json', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(def)
+    }).catch(_fbErr);
+  }
+  return def;
+}
+
+function saveCompraCategories(cats) {
+  lsSet(COMPRA_CATS_LOCAL_KEY, cats);
+  if (!CLOUD_CONFIGURED) return Promise.resolve();
+  return fetch(FB_BASE + '/' + COMPRA_CATS_FB_KEY + '.json', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(cats)
+  });
+}
+
+function renderCompraCategories(cats) {
+  const grid = document.querySelector('.compra-grid');
+  if (!grid) return;
+  const suplCard = grid.querySelector('.compra-card[data-cat-id="suplementos"]');
+  Array.from(grid.querySelectorAll('.compra-card[data-cat-id]')).forEach(c => {
+    if (c.dataset.catId !== 'suplementos') c.remove();
+  });
+  const oldTile = grid.querySelector('.compra-add-cat-tile');
+  if (oldTile) oldTile.remove();
+  const sorted = [...cats].sort((a, b) => (a.order || 0) - (b.order || 0));
+  sorted.forEach((cat, idx) => {
+    const card = document.createElement('div');
+    card.className = 'compra-card';
+    card.dataset.catId = cat.id;
+    const isFirst = idx === 0;
+    const isLast  = idx === sorted.length - 1;
+    card.innerHTML =
+      '<div class="compra-cat-header">' +
+        '<div class="compra-cat" style="color:' + cat.color + ';margin-bottom:0">' + cat.emoji + escapeHtml(cat.name) + '</div>' +
+        '<div style="display:flex;align-items:center;gap:.3rem;flex-wrap:wrap;justify-content:flex-end">' +
+          '<button class="compra-edit-btn" onclick="toggleCompraEdit(this)">📋 Productos</button>' +
+          '<div class="compra-cat-actions">' +
+            '<button class="compra-cat-action-btn" onclick="moveCompraCategory(\'' + cat.id + '\',-1)" title="Subir"' + (isFirst ? ' disabled' : '') + '>↑</button>' +
+            '<button class="compra-cat-action-btn" onclick="moveCompraCategory(\'' + cat.id + '\',1)" title="Bajar"' + (isLast ? ' disabled' : '') + '>↓</button>' +
+            '<button class="compra-cat-action-btn" onclick="openCompraCatModal(\'' + cat.id + '\')" title="Renombrar">✏</button>' +
+            '<button class="compra-cat-action-btn danger" onclick="deleteCompraCategory(\'' + cat.id + '\')" title="Eliminar">🗑</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="compra-items-list"></div>';
+    if (suplCard) grid.insertBefore(card, suplCard);
+    else grid.appendChild(card);
+  });
+  const addTile = document.createElement('div');
+  addTile.className = 'compra-add-cat-tile';
+  addTile.onclick = () => openCompraCatModal(null);
+  addTile.innerHTML = '+ Añadir categoría';
+  if (suplCard) grid.insertBefore(addTile, suplCard);
+  else grid.appendChild(addTile);
+}
 
 // Extrae array de items de una compra-card tal como está en el DOM
 function extractItemsFromCard(card) {
@@ -3879,6 +4094,124 @@ function extractSuplItems() {
     });
   });
   return items;
+}
+
+function toggleCompraListEdit() {
+  const section = document.getElementById('compra');
+  const btn = document.getElementById('compra-list-edit-btn');
+  if (!section || !btn) return;
+  const active = section.classList.toggle('compra-edit-mode');
+  btn.classList.toggle('active', active);
+  btn.textContent = active ? '✓ Salir edición' : '✏ Editar lista';
+}
+
+const COMPRA_CAT_COLORS = [
+  { val: 'var(--accent)',  hex: '#b5f037' },
+  { val: 'var(--accent2)', hex: '#37d0a0' },
+  { val: 'var(--accent3)', hex: '#f0c040' },
+  { val: 'var(--blue)',    hex: '#37a0f0' },
+  { val: 'var(--red)',     hex: '#f06868' },
+  { val: '#f09050',        hex: '#f09050' },
+  { val: '#b07af0',        hex: '#b07af0' },
+  { val: '#f06090',        hex: '#f06090' }
+];
+
+async function moveCompraCategory(catId, direction) {
+  const cats = await loadCompraCategories();
+  const sorted = [...cats].sort((a, b) => (a.order || 0) - (b.order || 0));
+  const idx = sorted.findIndex(c => c.id === catId);
+  if (idx < 0) return;
+  const newIdx = idx + direction;
+  if (newIdx < 0 || newIdx >= sorted.length) return;
+  [sorted[idx], sorted[newIdx]] = [sorted[newIdx], sorted[idx]];
+  sorted.forEach((c, i) => { c.order = i; });
+  await saveCompraCategories(sorted);
+  renderCompraCategories(sorted);
+  // Repoblar items tras re-render
+  const allCompra = lsGet(COMPRA_LOCAL_KEY, {});
+  applyCompraData(allCompra);
+}
+
+async function openCompraCatModal(catId) {
+  const cats = await loadCompraCategories();
+  const cat = catId ? cats.find(c => c.id === catId) : null;
+  window._compraCatModal = { mode: cat ? 'edit' : 'new', origId: catId };
+  document.getElementById('modal-compra-cat-title').textContent = cat ? 'EDITAR CATEGORÍA' : 'NUEVA CATEGORÍA';
+  document.getElementById('cat-input-name').value  = cat ? cat.name  : '';
+  document.getElementById('cat-input-emoji').value = cat ? cat.emoji : '🛒';
+  const colorPicker = document.getElementById('cat-color-picker');
+  const currentColor = cat ? cat.color : COMPRA_CAT_COLORS[0].val;
+  colorPicker.innerHTML = '';
+  COMPRA_CAT_COLORS.forEach(c => {
+    const sw = document.createElement('div');
+    sw.className = 'cat-color-swatch' + (c.val === currentColor ? ' selected' : '');
+    sw.style.background = c.hex;
+    sw.dataset.colorVal = c.val;
+    sw.onclick = () => {
+      colorPicker.querySelectorAll('.cat-color-swatch').forEach(s => s.classList.remove('selected'));
+      sw.classList.add('selected');
+    };
+    colorPicker.appendChild(sw);
+  });
+  const modal = document.getElementById('modal-compra-cat');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCompraCatModal() {
+  const modal = document.getElementById('modal-compra-cat');
+  if (modal) modal.classList.remove('open');
+  document.body.style.overflow = '';
+  window._compraCatModal = null;
+}
+
+async function saveCompraCatModal() {
+  const state = window._compraCatModal;
+  if (!state) return;
+  const name  = document.getElementById('cat-input-name').value.trim();
+  const emoji = document.getElementById('cat-input-emoji').value.trim() || '🛒';
+  const sel   = document.querySelector('#cat-color-picker .cat-color-swatch.selected');
+  const color = sel ? sel.dataset.colorVal : COMPRA_CAT_COLORS[0].val;
+  if (!name) { alert('El nombre no puede estar vacío'); return; }
+  const cats = await loadCompraCategories();
+  if (state.mode === 'edit') {
+    const cat = cats.find(c => c.id === state.origId);
+    if (!cat) return;
+    cat.name = name; cat.emoji = emoji; cat.color = color;
+  } else {
+    const baseId = name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'cat';
+    let id = baseId; let n = 1;
+    while (cats.some(c => c.id === id) || id === 'suplementos') { id = baseId + '_' + (++n); }
+    const maxOrder = cats.reduce((m, c) => Math.max(m, c.order || 0), -1);
+    cats.push({ id, name, emoji, color, order: maxOrder + 1 });
+  }
+  await saveCompraCategories(cats);
+  renderCompraCategories(cats);
+  const allCompra = lsGet(COMPRA_LOCAL_KEY, {});
+  applyCompraData(allCompra);
+  closeCompraCatModal();
+}
+
+async function deleteCompraCategory(catId) {
+  const cats = await loadCompraCategories();
+  const cat = cats.find(c => c.id === catId);
+  if (!cat) return;
+  const ok = await mobileConfirm('Eliminar categoría', '¿Seguro que quieres eliminar <strong>' + escapeHtml(cat.name) + '</strong>?<br><br>Se borrarán también todos sus productos. Esta acción no se puede deshacer.');
+  if (!ok) return;
+  const filtered = cats.filter(c => c.id !== catId);
+  filtered.sort((a, b) => (a.order || 0) - (b.order || 0));
+  filtered.forEach((c, i) => { c.order = i; });
+  await saveCompraCategories(filtered);
+  // Limpiar items huérfanos en DB y local
+  const allCompra = lsGet(COMPRA_LOCAL_KEY, {});
+  delete allCompra[catId];
+  lsSet(COMPRA_LOCAL_KEY, allCompra);
+  if (CLOUD_CONFIGURED) {
+    fetch(FB_BASE + '/' + COMPRA_FB_KEY + '/' + catId + '.json', { method: 'DELETE' }).catch(_fbErr);
+  }
+  renderCompraCategories(filtered);
+  applyCompraData(allCompra);
+  recalcTotalSemanal();
 }
 
 async function toggleCompraEdit(btn) {
@@ -4279,6 +4612,8 @@ function applyCompraData(allCompra) {
 }
 
 async function loadCompraData() {
+  const cats = await loadCompraCategories();
+  renderCompraCategories(cats);
   const _cd = lsGet(COMPRA_LOCAL_KEY, null); if (_cd) applyCompraData(_cd);
   if (!CLOUD_CONFIGURED) return;
   try {
@@ -4810,17 +5145,6 @@ function peAddDay(dayData) {
 
   box.innerHTML = `
     <div class="plan-day-header">
-      <select class="pe-diaSemana" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'Bebas Neue',sans-serif;font-size:.85rem;font-weight:400;padding:3px 28px 3px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:background-color .2s,border-color .2s,color .2s;background-repeat:no-repeat;background-position:right 8px center">
-        <optgroup label="DÍA DE LA SEMANA">
-        <option value="LUNES"     ${(d.diaSemana||'LUNES')==='LUNES'     ?'selected':''}>LUNES</option>
-        <option value="MARTES"    ${(d.diaSemana||'')==='MARTES'    ?'selected':''}>MARTES</option>
-        <option value="MIÉRCOLES" ${(d.diaSemana||'')==='MIÉRCOLES' ?'selected':''}>MIÉRCOLES</option>
-        <option value="JUEVES"    ${(d.diaSemana||'')==='JUEVES'    ?'selected':''}>JUEVES</option>
-        <option value="VIERNES"   ${(d.diaSemana||'')==='VIERNES'   ?'selected':''}>VIERNES</option>
-        <option value="SÁBADO"    ${(d.diaSemana||'')==='SÁBADO'    ?'selected':''}>SÁBADO</option>
-        <option value="DOMINGO"   ${(d.diaSemana||'')==='DOMINGO'   ?'selected':''}>DOMINGO</option>
-        </optgroup>
-      </select>
       ${badgeSelectHTML(d.badge || 'pecho')}
         <span class="pe-badge-custom-preview" style="font-family:Bebas Neue,sans-serif;font-size:1.1rem;letter-spacing:.5px;color:#c07af0;display:${d.badge==='custom'?'inline':'none'}">${d.badgeCustom ? '\u2192 ' + escapeHtml(d.badgeCustom) : ''}</span>
         <button class="pe-badge-custom-edit-btn" onclick="peOpenCustomPromptFromEditBtn(this)" style="display:${d.badge==='custom'?'inline-flex':'none'};background:rgba(181,240,55,.12);border:1px dashed rgba(181,240,55,.5);color:var(--accent);border-radius:7px;padding:4px 11px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;align-items:center;gap:4px;transition:all .2s" onmouseover="this.style.background='rgba(181,240,55,.22)';this.style.borderColor='var(--accent)'" onmouseout="this.style.background='rgba(181,240,55,.12)';this.style.borderColor='rgba(181,240,55,.5)'">✏ Cambiar nombre</button>
@@ -4837,7 +5161,18 @@ function peAddDay(dayData) {
         <button class="pe-badge-custom-edit-btn3" onclick="peOpenCustomPromptSlot(this,3)" style="display:${d.badge3==='custom'?'inline-flex':'none'};background:rgba(181,240,55,.1);border:1px dashed rgba(181,240,55,.4);color:var(--accent);border-radius:6px;padding:3px 8px;font-size:.7rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;align-items:center;gap:3px">✏</button>
         <input class="pe-badge-custom3" type="hidden" value="${escapeHtml(d.badgeCustom3 || '')}"/>
       </span>
-      <button class="btn-del-day" onclick="peDelDay(this)" style="margin-left:auto">🗑 Eliminar día</button>
+      <select class="pe-diaSemana" style="appearance:none;-webkit-appearance:none;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-family:'Bebas Neue',sans-serif;font-size:.85rem;font-weight:400;padding:3px 28px 3px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;transition:background-color .2s,border-color .2s,color .2s;background-repeat:no-repeat;background-position:right 8px center;margin-left:auto">
+        <optgroup label="DÍA DE LA SEMANA">
+        <option value="LUNES"     ${(d.diaSemana||'LUNES')==='LUNES'     ?'selected':''}>LUNES</option>
+        <option value="MARTES"    ${(d.diaSemana||'')==='MARTES'    ?'selected':''}>MARTES</option>
+        <option value="MIÉRCOLES" ${(d.diaSemana||'')==='MIÉRCOLES' ?'selected':''}>MIÉRCOLES</option>
+        <option value="JUEVES"    ${(d.diaSemana||'')==='JUEVES'    ?'selected':''}>JUEVES</option>
+        <option value="VIERNES"   ${(d.diaSemana||'')==='VIERNES'   ?'selected':''}>VIERNES</option>
+        <option value="SÁBADO"    ${(d.diaSemana||'')==='SÁBADO'    ?'selected':''}>SÁBADO</option>
+        <option value="DOMINGO"   ${(d.diaSemana||'')==='DOMINGO'   ?'selected':''}>DOMINGO</option>
+        </optgroup>
+      </select>
+      <button class="btn-del-day" onclick="peDelDay(this)">🗑 Eliminar día</button>
     </div>
     <div class="plan-day-info">
       <div>
@@ -5040,7 +5375,7 @@ function peBuildPlanHTML(planId, data) {
     const badge1HTML = _badgeChipHTML(dia.badge, dia.badgeCustom);
     const badge2HTML = _badgeChipHTML(dia.badge2, dia.badgeCustom2);
     const badge3HTML = (dia.badge2 ? _badgeChipHTML(dia.badge3, dia.badgeCustom3) : '');
-    html += `<div class="dia-entreno-header"><div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center">${badge1HTML}${badge2HTML}${badge3HTML}</div><div style="flex:1;min-width:0"><div class="dia-title">${escapeHtml(dia.titulo)}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div>${diaSemanaHTML}</div>`;
+    html += `<div class="dia-entreno-header"><div class="dia-entreno-row-top"><div class="dia-entreno-badges">${badge1HTML}${badge2HTML}${badge3HTML}</div>${diaSemanaHTML}</div><div class="dia-entreno-row-title"><div class="dia-title">${escapeHtml(dia.titulo)}</div><div class="dia-sub">${escapeHtml(dia.descripcion)}</div></div></div>`;
     (dia.ejercicios || []).forEach(ex => {
       html += `<div class="exercise"><div class="ex-name"><strong>${escapeHtml(ex.nombre)}</strong>${escapeHtml(ex.desc)}</div><span class="ex-sets">${escapeHtml(ex.series)}</span></div>`;
     });
@@ -5404,6 +5739,24 @@ function _migrateOldPlanId(oldId, data, existingIds) {
   return candidate;
 }
 
+// ── 7 PLANES DE ENTRENAMIENTO POR DEFECTO (1-7 días/semana) ──
+// Plantilla VACÍA: cada plan trae sus N day-cards (Día 1..N) sin ejercicios.
+// El usuario añade ejercicios/badges/etc. Se siembran sólo la primera vez (flag entreno_plans_seeded en localStorage).
+const _emptyDay = (n) => ({
+  badge:'', badgeCustom:'', badge2:'', badgeCustom2:'', badge3:'', badgeCustom3:'',
+  titulo:'Día ' + n, descripcion:'', diaSemana:'',
+  ejercicios:[],
+  comentario:''
+});
+const _emptyPlan = (n) => ({
+  nombre: 'Plan ' + n + (n === 1 ? ' Día' : ' Días'),
+  estructura: n + (n === 1 ? ' día' : ' días') + '/semana',
+  estructura2: '',
+  dias: Array.from({ length: n }, (_, i) => _emptyDay(i + 1))
+});
+const DEFAULT_ENTRENO_PLANS = Object.fromEntries([1,2,3,4,5,6,7].map(n => [n + 'dias', _emptyPlan(n)]));
+const ENTRENO_PLANS_SEEDED_KEY = 'entreno_plans_seeded_v2';
+
 async function loadEntrenoPlans() {
   let allPlans = lsGet(ENTRENO_PLANS_LOCAL_KEY, {});
   if (CLOUD_CONFIGURED) {
@@ -5417,6 +5770,26 @@ async function loadEntrenoPlans() {
         }
       }
     } catch(e) {}
+  }
+
+  // ── Sembrar 7 planes por defecto (v2: limpia primero) ──
+  // v2: primera vez WIPE total y siembra los 7 defaults limpios.
+  //     Esto elimina duplicados legacy (Ndias_2, Ndias_3, p_TIMESTAMP, etc.)
+  // Tras la siembra marca el flag → nunca se vuelve a sembrar.
+  // Si el usuario crea/edita/elimina planes después, esos cambios persisten porque
+  // el flag está guardado y este bloque ya no se ejecuta.
+  const alreadySeeded = !!lsGet(ENTRENO_PLANS_SEEDED_KEY, false);
+  if (!alreadySeeded) {
+    // WIPE: reemplazar TODO con los 7 defaults limpios
+    allPlans = JSON.parse(JSON.stringify(DEFAULT_ENTRENO_PLANS));
+    lsSet(ENTRENO_PLANS_LOCAL_KEY, allPlans);
+    if (CLOUD_CONFIGURED) {
+      fetch(FB_BASE + '/' + ENTRENO_PLANS_FB_KEY + '.json', {
+        method: 'PUT', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(allPlans)
+      }).catch(()=>{});
+    }
+    lsSet(ENTRENO_PLANS_SEEDED_KEY, true);
   }
 
   // Migrate legacy badge values push/pull → empuje/tiron
@@ -5471,13 +5844,17 @@ async function loadEntrenoPlans() {
   }
 
   const toggleBar = document.getElementById('entreno-toggle-bar');
+  // Anchor de inserción: si ya existen .entreno-plan en el DOM, insertamos detrás del último.
+  // Si no, insertamos detrás del wrapper que contiene la toggle bar (nuevo comportamiento
+  // tras eliminar los planes hardcoded, antes había siempre al menos uno).
+  const toggleBarWrapper = toggleBar?.parentElement || document.getElementById('entreno');
   Object.entries(allPlans).forEach(([planId, data]) => {
     const tmp = document.createElement('div');
     tmp.innerHTML = peBuildPlanHTML(planId, data);
     const newPlanEl = tmp.firstElementChild;
     const existing = document.getElementById('plan-' + planId);
     if (existing) {
-      // Firebase es la fuente de verdad: reemplazar el HTML hardcoded (ej. 3dias/4dias)
+      // Reemplazar in-place
       if (existing.classList.contains('active')) newPlanEl.classList.add('active');
       existing.replaceWith(newPlanEl);
       // Actualizar label del botón toggle si cambió el nombre
@@ -5485,8 +5862,14 @@ async function loadEntrenoPlans() {
         if (getPlanIdFromBtn(b) === planId) b.textContent = data.nombre;
       });
     } else {
+      // Insertar tras el último plan existente, o tras la toggle-bar wrapper si no hay ninguno
       const lastPlan = document.querySelector('#entreno .entreno-plan:last-of-type');
-      if (lastPlan) lastPlan.after(newPlanEl);
+      const insertAfter = lastPlan || toggleBarWrapper;
+      if (insertAfter && insertAfter.after) {
+        insertAfter.after(newPlanEl);
+      } else if (document.getElementById('entreno')) {
+        document.getElementById('entreno').appendChild(newPlanEl);
+      }
       const btn = document.createElement('button');
       btn.className = 'etog-btn';
       btn.textContent = data.nombre;
@@ -5585,6 +5968,55 @@ async function loadEntrenoPlans() {
     <div class="app-modal-footer">
       <button class="modal-btn-cancel" onclick="closeCompraModal()">✕ Cancelar</button>
       <button class="modal-btn-ok" id="modal-compra-save" onclick="saveCompraModal()">✓ Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL SLOTS DE COMIDAS (plantilla por día) ══ -->
+<div class="app-modal" id="modal-menu-slots" role="dialog" aria-modal="true">
+  <div class="app-modal-box">
+    <div class="app-modal-header">
+      <div class="app-modal-title">EDITAR SLOTS DE COMIDAS</div>
+      <button class="app-modal-close" onclick="closeMenuSlotsModal()" title="Cerrar">✕</button>
+    </div>
+    <div class="app-modal-body">
+      <p style="font-size:.78rem;color:var(--muted);margin:0 0 .85rem;line-height:1.45">Estos slots se aplican a los 7 días. Reordena, renombra o cambia el emoji/color. Eliminar un slot borra los datos guardados de ese slot en todos los días.</p>
+      <div id="modal-menu-slots-body"></div>
+      <div class="slot-add-row"><button class="btn-add-slot" onclick="addSlotRow()">+ Añadir slot</button></div>
+    </div>
+    <div class="app-modal-footer">
+      <button class="modal-btn-cancel" onclick="closeMenuSlotsModal()">✕ Cancelar</button>
+      <button class="modal-btn-ok" onclick="saveMenuSlotsModal()">✓ Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL CATEGORÍA COMPRA (metadata) ══ -->
+<div class="app-modal" id="modal-compra-cat" role="dialog" aria-modal="true">
+  <div class="app-modal-box">
+    <div class="app-modal-header">
+      <div class="app-modal-title" id="modal-compra-cat-title">EDITAR CATEGORÍA</div>
+      <button class="app-modal-close" onclick="closeCompraCatModal()" title="Cerrar">✕</button>
+    </div>
+    <div class="app-modal-body">
+      <div class="compra-item-edit" style="border-bottom:none">
+        <div style="display:flex;flex-direction:column;gap:.22rem">
+          <span class="compra-item-edit-lbl">Nombre</span>
+          <input class="plan-input" id="cat-input-name" type="text" placeholder="Ej. Snacks">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.22rem;margin-top:.5rem">
+          <span class="compra-item-edit-lbl">Emoji</span>
+          <input class="plan-input" id="cat-input-emoji" type="text" maxlength="4" style="max-width:90px;text-align:center;font-size:1.1rem" placeholder="🛒">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.22rem;margin-top:.5rem">
+          <span class="compra-item-edit-lbl">Color</span>
+          <div class="cat-color-picker" id="cat-color-picker"></div>
+        </div>
+      </div>
+    </div>
+    <div class="app-modal-footer">
+      <button class="modal-btn-cancel" onclick="closeCompraCatModal()">✕ Cancelar</button>
+      <button class="modal-btn-ok" onclick="saveCompraCatModal()">✓ Guardar</button>
     </div>
   </div>
 </div>
@@ -6023,6 +6455,9 @@ function populateRegPlanSelect() {
     weekdayUpper = WEEKDAY_NAMES[dt.getDay()] || '';
   }
 
+  // ID del plan recomendado según los días de entreno seleccionados (puede ser null)
+  const recommendedPlanId = (typeof getRecommendedPlanId === 'function') ? getRecommendedPlanId() : null;
+
   let html = `<option value="">— Selecciona —</option>`;
   allPlans.forEach(([planId, plan]) => {
     if (!plan.dias || !plan.dias.length) return;
@@ -6031,8 +6466,12 @@ function populateRegPlanSelect() {
       .map((day, idx) => ({ day, idx }))
       .filter(({ day }) => !weekdayUpper || (day.diaSemana || '').toUpperCase() === weekdayUpper);
     if (!matching.length) return;
-    const planName = plan.nombre || planId;
-    html += `<optgroup label="${escapeHtml(planName)}">`;
+    const baseName = plan.nombre || planId;
+    const isRec = (planId === recommendedPlanId);
+    const planName = isRec ? baseName + ' · ⭐ PLAN RECOMENDADO' : baseName;
+    // Color verde accent en el optgroup recomendado para distinguirlo del amarillo del resto
+    const optStyle = isRec ? ' style="color:#b5f037"' : '';
+    html += `<optgroup label="${escapeHtml(planName)}"${optStyle}>`;
     matching.forEach(({ day, idx }) => {
       const badgeLbl = regBadgesCombined(day);
       const diaSemPrefix = day.diaSemana ? day.diaSemana + ' — ' : '';
@@ -6055,7 +6494,9 @@ function openRegPanel(key) {
     `${days[dt.getDay()].charAt(0).toUpperCase() + days[dt.getDay()].slice(1)} ${d}/${m}/${y}`;
 
   const panel = document.getElementById('reg-panel');
-  panel.style.display = 'block';
+  panel.classList.add('open');
+  // Mobile: bloquear scroll del body cuando el panel cubre la pantalla
+  if (window.innerWidth < 1024) document.body.classList.add('reg-mobile-open');
 
   populateRegPlanSelect();
   const sel = document.getElementById('reg-plan-select');
@@ -6067,16 +6508,37 @@ function openRegPanel(key) {
 
   const entry = regCache[key];
   if (entry && entry.plan && sel) {
+    // Si la opción guardada no está en el dropdown (porque el filtro por día-semana no la incluye),
+    // la añadimos manualmente bajo un optgroup destacado para que se pueda seleccionar y editar.
+    const optionExists = Array.from(sel.options).some(o => o.value === entry.plan);
+    if (!optionExists) {
+      let savedLabel = entry.plan;
+      if (entry.plan === 'rest') savedLabel = '💤 DESCANSO';
+      else if (typeof regPlanLabel === 'function') {
+        const lbl = regPlanLabel(entry.plan);
+        if (lbl) savedLabel = lbl;
+      }
+      const optGroup = document.createElement('optgroup');
+      optGroup.label = '💾 Registro guardado para este día';
+      const opt = document.createElement('option');
+      opt.value = entry.plan;
+      opt.textContent = savedLabel;
+      optGroup.appendChild(opt);
+      // Insertar justo después del placeholder "— Selecciona —"
+      sel.insertBefore(optGroup, sel.children[1] || null);
+    }
     sel.value = entry.plan;
-    if (sel.value !== entry.plan) sel.value = ''; // valor no existe (plan eliminado)
+    if (sel.value !== entry.plan) sel.value = '';
     if (sel.value) renderRegExercises(sel.value, entry);
   }
 
-  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // En móvil scrollea el panel arriba; en desktop está sticky a la dcha
+  if (window.innerWidth < 1024) panel.scrollTop = 0;
 }
 
 function closeRegPanel() {
-  document.getElementById('reg-panel').style.display = 'none';
+  document.getElementById('reg-panel').classList.remove('open');
+  document.body.classList.remove('reg-mobile-open');
   selDate = null;
   renderCalendar();
 }
