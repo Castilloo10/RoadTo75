@@ -42,7 +42,29 @@ header{background:var(--surface);border-bottom:1px solid var(--border);position:
 /* LAYOUT */
 .hero{padding:3rem 2rem 2rem;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start}
 .section{max-width:1100px;margin:0 auto;padding:2rem;display:none}
-.section.active{display:block}
+.section.active{display:block;animation:section-in .22s cubic-bezier(.22,.9,.32,1) both}
+@keyframes section-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.section.active{animation:none}}
+:root{accent-color:var(--accent)}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@keyframes btn-pulse-ok{0%{box-shadow:0 0 0 0 rgba(181,240,55,.7)}70%{box-shadow:0 0 0 12px rgba(181,240,55,0)}100%{box-shadow:0 0 0 0 rgba(181,240,55,0)}}
+.btn-pulse-ok{animation:btn-pulse-ok .7s ease-out}
+/* Card lift / tap feedback (desktop hover + mobile :active) */
+.meal-card,.compra-card,.dia-entreno,.cal-day,.exercise{will-change:transform}
+.meal-card{transition:border-color .2s,transform .18s,box-shadow .18s}
+.compra-card{transition:transform .18s,box-shadow .18s,border-color .2s}
+.dia-entreno{transition:transform .18s,box-shadow .18s}
+@media (hover:hover){
+  .meal-card:hover:not(.editing):not(.adding){transform:translateY(-2px);box-shadow:0 6px 18px -8px rgba(0,0,0,.5)}
+  .compra-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px -8px rgba(0,0,0,.5)}
+  .dia-entreno:hover{transform:translateY(-2px);box-shadow:0 6px 18px -8px rgba(0,0,0,.5)}
+  .cal-day:hover:not(.other-month){transform:scale(1.04)}
+}
+.meal-card:active:not(.editing):not(.adding){transform:scale(.985)}
+.compra-card:active{transform:scale(.99)}
+.cal-day:active:not(.other-month){transform:scale(.96)}
 h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,5.5rem);line-height:.92;letter-spacing:1px;margin-bottom:1rem}
 h1 em{color:var(--accent);font-style:normal}
 h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;color:var(--text);margin-bottom:.75rem}
@@ -99,14 +121,13 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .day-menu-item.danger:hover{background:rgba(240,55,55,.1)}
 .day-menu-item.warn{color:var(--accent3)}
 .day-menu-item.warn:hover{background:rgba(240,168,55,.1)}
-.day-content.day-hidden .meals-grid,.day-content.day-hidden .batido-add-row{display:none}
+.day-content.day-hidden .meals-grid{display:none}
 .day-content.day-hidden .day-total-macros{opacity:.35}
 .day-content.day-hidden::before{content:'👁‍🗨 Día oculto · usa ⋯ → Mostrar día';display:block;font-size:.85rem;font-weight:700;color:var(--accent3);text-align:center;padding:1.5rem 1rem;background:rgba(240,168,55,.07);border:1px dashed rgba(240,168,55,.3);border-radius:10px;margin-bottom:1rem;letter-spacing:.3px}
 .day-tab.tab-hidden{opacity:.4;text-decoration:line-through;text-decoration-color:rgba(240,168,55,.6);text-decoration-thickness:2px}
 .day-total .day-menu{margin-left:.5rem;margin-right:auto}
 /* ── BOTÓN × DELETE INLINE EN MEAL CARDS ── */
 .meal-card{position:relative;cursor:pointer}
-.meal-card[data-is-batido="1"]{cursor:default}
 .meal-card-delete{
   position:absolute;top:8px;right:8px;width:26px;height:26px;
   background:rgba(240,55,55,.08);border:1px solid rgba(240,55,55,.25);
@@ -284,38 +305,14 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .supl-batidos.warn{border-color:var(--red);color:var(--red);background:rgba(240,55,55,.08)}
 .supl-batidos:empty{display:none}
 
-/* BATIDO ADD ROW (legacy contenedor del botón per-day; el toolbar global lo sustituye, pero queda por compat) */
-.batido-add-row{display:flex;justify-content:center;margin:.75rem 0 .25rem}
-.batido-toggle-btn{font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all .2s;white-space:nowrap}
-.batido-toggle-btn--add{background:rgba(55,208,160,.1);border:1px dashed rgba(55,208,160,.5);color:var(--accent2)}
-.batido-toggle-btn--add:hover{background:rgba(55,208,160,.18);border-style:solid}
-.batido-toggle-btn--remove{background:rgba(240,104,104,.08);border:1px solid rgba(240,104,104,.3);color:#f06868}
-.batido-toggle-btn--remove:hover{background:rgba(240,104,104,.16);border-color:rgba(240,104,104,.55)}
+/* TOOLBAR DEL MENÚ (botón añadir comida + añadir batido) */
 .menu-slots-toolbar{display:flex;justify-content:flex-end;align-items:center;gap:.5rem;flex-wrap:wrap;margin:0 0 .65rem}
-.menu-slots-edit-btn{background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);font-size:.78rem;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s;white-space:nowrap}
-.menu-slots-edit-btn:hover{background:rgba(55,160,240,.2);border-color:var(--blue)}
 .menu-add-meal-btn{background:rgba(181,240,55,.1);border:1px dashed rgba(181,240,55,.5);color:var(--accent);font-size:.78rem;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s;white-space:nowrap}
 .menu-add-meal-btn:hover{background:rgba(181,240,55,.2);border-style:solid}
 .menu-batido-toggle-btn{font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap;background:rgba(240,144,80,.1);border:1px solid rgba(240,144,80,.45);color:#f09050}
 .menu-batido-toggle-btn:hover{background:rgba(240,144,80,.2);border-color:#f09050}
 .menu-batido-toggle-btn.active{background:rgba(240,104,104,.08);border-color:rgba(240,104,104,.4);color:#f06868}
 .menu-batido-toggle-btn.active:hover{background:rgba(240,104,104,.16);border-color:rgba(240,104,104,.6)}
-.slot-edit-row{display:flex;gap:.5rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.slot-edit-row:last-child{border-bottom:none}
-.slot-edit-controls{display:flex;gap:.25rem;flex-shrink:0}
-.slot-edit-controls button{background:transparent;border:1px solid var(--border);color:var(--text2);font-size:.75rem;padding:3px 7px;border-radius:5px;cursor:pointer;line-height:1;transition:all .15s;font-family:'DM Sans',sans-serif}
-.slot-edit-controls button:hover{background:var(--surface2);color:var(--text)}
-.slot-edit-controls button:disabled{opacity:.3;cursor:not-allowed}
-.slot-edit-controls button.danger:hover{border-color:var(--red);color:var(--red);background:rgba(220,80,80,.08)}
-.slot-edit-fields{display:flex;gap:.4rem;flex:1;min-width:200px;flex-wrap:wrap}
-.slot-edit-fields input,.slot-edit-fields select{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.8rem;padding:5px 8px}
-.slot-edit-fields input:focus,.slot-edit-fields select:focus{outline:none;border-color:var(--accent)}
-.slot-edit-emoji{max-width:60px;text-align:center;font-size:1.05rem}
-.slot-edit-name{flex:1;min-width:120px}
-.slot-edit-icon-class{flex-shrink:0}
-.slot-add-row{display:flex;justify-content:center;margin-top:.75rem}
-.btn-add-slot{background:rgba(181,240,55,.08);border:2px dashed rgba(181,240,55,.4);color:var(--accent);font-weight:600;font-size:.8rem;padding:8px 18px;border-radius:7px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
-.btn-add-slot:hover{background:rgba(181,240,55,.15);border-style:solid}
 /* BATIDO EDIT MODE */
 .batido-edit-panel{display:none;margin-top:1rem;background:var(--surface2);border:1px solid var(--accent);border-radius:10px;padding:1.1rem}
 .batido-edit-panel.open{display:block}
@@ -374,7 +371,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .compra-edit-actions{display:flex;gap:.5rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
 
 /* MODAL CONFIRM */
-#modal-confirm{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9000;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .2s}
+#modal-confirm{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:9000;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .2s}
 #modal-confirm.open{opacity:1;pointer-events:all}
 #modal-confirm-box{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem 1.5rem 2rem;width:100%;max-width:520px;max-height:80vh;overflow-y:auto;transform:scale(.96);transition:transform .25s}
 #modal-confirm.open #modal-confirm-box{transform:scale(1)}
@@ -639,7 +636,8 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
   #entreno-plan-banner-text{font-size:.86rem}
 
   /* ── SYNC STATUS ── */
-  #sync-status{bottom:calc(.75rem + env(safe-area-inset-bottom));right:.75rem;left:.75rem;font-size:.7rem;padding:7px 12px;border-radius:9px}
+  #sync-status{top:calc(.5rem + env(safe-area-inset-top));right:.5rem;bottom:auto;left:auto;font-size:.68rem;padding:6px 10px;border-radius:8px;max-width:calc(100vw - 1rem);transform:translateY(-6px)}
+  #sync-status.show{transform:translateY(0)}
 
   /* ── MODAL CONFIRM ── */
   #modal-confirm-box{padding:1.25rem 1.25rem 1.75rem;max-height:85dvh}
@@ -675,7 +673,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 }
 
 /* GENERIC APP MODAL (shared) */
-.app-modal,#modal-plan{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:4000;opacity:0;pointer-events:none;transition:opacity .2s;padding:1.5rem}
+.app-modal,#modal-plan{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:4000;opacity:0;pointer-events:none;transition:opacity .2s;padding:1.5rem}
 .app-modal.open,#modal-plan.open{opacity:1;pointer-events:all}
 .app-modal-box,#modal-plan-box{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:720px;max-height:90vh;display:flex;flex-direction:column;transform:scale(.96);transition:transform .25s}
 .app-modal.open .app-modal-box,#modal-plan.open #modal-plan-box{transform:scale(1)}
@@ -1252,11 +1250,7 @@ function setEntrenoDay(day, val) {
   // Guardar local
   lsSet(DAYTYPE_LOCAL_KEY, window._entrenoWeekTypes);
   // Guardar Firebase
-  if (!CLOUD_CONFIGURED) return;
-  fetch(FB_BASE + '/' + DAYTYPE_FB_KEY + '.json', {
-    method: 'PUT', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(window._entrenoWeekTypes)
-  }).catch(_fbErr);
+  fbPut(DAYTYPE_FB_KEY, window._entrenoWeekTypes).catch(_fbErr);
 }
 
 // Alias para compatibilidad
@@ -1439,10 +1433,17 @@ function recalcWeeklyAvg() {
   });
   if (!days) return;
   const _unit = u => '<span style="font-size:.52em;margin-left:.18em;opacity:.8">' + u + '</span>';
-  document.getElementById('avg-kcal').innerHTML = Math.round(totK/days) + _unit('kcal');
-  document.getElementById('avg-prot').innerHTML = Math.round(totP/days) + _unit('g');
-  document.getElementById('avg-carb').innerHTML = Math.round(totC/days) + _unit('g');
-  document.getElementById('avg-fat').innerHTML  = Math.round(totF/days) + _unit('g');
+  if (typeof animateNumber === 'function') {
+    animateNumber(document.getElementById('avg-kcal'), Math.round(totK/days), _unit('kcal'));
+    animateNumber(document.getElementById('avg-prot'), Math.round(totP/days), _unit('g'));
+    animateNumber(document.getElementById('avg-carb'), Math.round(totC/days), _unit('g'));
+    animateNumber(document.getElementById('avg-fat'),  Math.round(totF/days), _unit('g'));
+  } else {
+    document.getElementById('avg-kcal').innerHTML = Math.round(totK/days) + _unit('kcal');
+    document.getElementById('avg-prot').innerHTML = Math.round(totP/days) + _unit('g');
+    document.getElementById('avg-carb').innerHTML = Math.round(totC/days) + _unit('g');
+    document.getElementById('avg-fat').innerHTML  = Math.round(totF/days) + _unit('g');
+  }
 }
 
 const ALL_DAY_IDS = ['lun','mar','mie','jue','vie','sab','dom'];
@@ -1469,12 +1470,7 @@ function toggleExcludeDay(dayId) {
   lsSet(WEEKEND_EXCLUDED_KEY, saved);
   applyDaysExcluded(saved);
   setSyncStatus('saved', !excluded ? '✓ Día excluido de la media' : '✓ Día incluido en la media');
-  if (CLOUD_CONFIGURED) {
-    fetch(FB_BASE + '/' + WEEKEND_EXCLUDED_FB_KEY + '.json', {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(saved)
-    }).catch(_fbErr);
-  }
+  fbPut(WEEKEND_EXCLUDED_FB_KEY, saved).catch(_fbErr);
 }
 
 async function loadWeekendExcluded() {
@@ -1515,12 +1511,7 @@ function toggleHideDay(dayId) {
   lsSet(DAYS_HIDDEN_KEY, saved);
   applyDaysHidden(saved);
   setSyncStatus('saved', !hidden ? '✓ Día oculto' : '✓ Día visible');
-  if (CLOUD_CONFIGURED) {
-    fetch(FB_BASE + '/' + DAYS_HIDDEN_FB_KEY + '.json', {
-      method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(saved)
-    }).catch(_fbErr);
-  }
+  fbPut(DAYS_HIDDEN_FB_KEY, saved).catch(_fbErr);
 }
 
 async function loadDaysHidden() {
@@ -1553,6 +1544,20 @@ function _fbErr(e) {
   if (typeof setSyncStatus === 'function') setSyncStatus('error', '⚠ Sin sincronizar');
 }
 
+// Helpers Firebase: silenciosos si no hay cloud configurada. `path` es la ruta sin FB_BASE ni `.json` (ej. "compra/frutas")
+function fbPut(path, data) {
+  if (!CLOUD_CONFIGURED) return Promise.resolve(null);
+  return fetch(FB_BASE + '/' + path + '.json', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+}
+function fbPatch(path, data) {
+  if (!CLOUD_CONFIGURED) return Promise.resolve(null);
+  return fetch(FB_BASE + '/' + path + '.json', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+}
+function fbDelete(path) {
+  if (!CLOUD_CONFIGURED) return Promise.resolve(null);
+  return fetch(FB_BASE + '/' + path + '.json', { method: 'DELETE' });
+}
+
 function setSyncStatus(state, msg) {
   const el = document.getElementById('sync-status');
   el.className = 'show ' + state;
@@ -1562,6 +1567,31 @@ function setSyncStatus(state, msg) {
     clearTimeout(el._t);
     el._t = setTimeout(() => el.classList.remove('show'), 3000);
   }
+  // Pulse de éxito en el botón "Guardar" del modal abierto cuando sincroniza ok
+  if (state === 'saved') {
+    document.querySelectorAll('.app-modal.open .modal-btn-ok, #modal-plan.open .modal-btn-ok, .btn-save-meal').forEach(btn => {
+      btn.classList.remove('btn-pulse-ok');
+      void btn.offsetWidth; // reflow para reiniciar la animación
+      btn.classList.add('btn-pulse-ok');
+    });
+  }
+}
+
+// ── ANIMATED COUNT-UP (macros semanales) ──
+function animateNumber(el, to, suffix, dur) {
+  if (!el) return;
+  const cur = parseInt((el.textContent || '0').replace(/[^\d-]/g, '')) || 0;
+  if (cur === to) { el.innerHTML = to + (suffix || ''); return; }
+  const start = performance.now();
+  const delta = to - cur;
+  const _suffix = suffix || '';
+  function step(t) {
+    const p = Math.min(1, (t - start) / (dur || 400));
+    const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+    el.innerHTML = Math.round(cur + delta * eased) + _suffix;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
 // ── NAVEGACIÓN ──
@@ -1721,8 +1751,9 @@ function attachMealCardInteractions(card, dayEl) {
     card.dataset.clickBound = '1';
     card.addEventListener('click', (ev) => {
       if (card.classList.contains('editing') || card.classList.contains('adding')) return;
-      if (card.dataset.isBatido === '1') return;
       if (ev.target.closest('button, input, textarea, select, a, label, .meal-card-delete')) return;
+      // Batido cards: edición limitada (nombre, hora, nombre del plato)
+      if (card.dataset.isBatido === '1') { enterBatidoEditMode(card); return; }
       enterEditMode(card);
     });
   }
@@ -1813,8 +1844,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const h = document.querySelector('header')?.offsetHeight || 80;
     document.documentElement.style.setProperty('--header-h', h + 'px');
   };
+  // Debounce para evitar recalcular en cada pixel al rotar dispositivo / redimensionar
+  let _hhT;
+  const updateHeaderHeightDebounced = () => {
+    clearTimeout(_hhT);
+    _hhT = setTimeout(updateHeaderHeight, 150);
+  };
   updateHeaderHeight();
-  window.addEventListener('resize', updateHeaderHeight);
+  window.addEventListener('resize', updateHeaderHeightDebounced);
   // Reajustar tras cargar imágenes (logo) que puedan cambiar la altura
   window.addEventListener('load', updateHeaderHeight);
   // Cerrar menús ⋯ al click fuera o con Esc
@@ -2824,7 +2861,7 @@ async function _doSaveMealAdd() {
   lsSet(LOCAL_KEY, _snap);
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida añadida'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FIREBASE_ENDPOINT, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap) })
+  fbPatch('menus', _snap)
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); setSyncStatus('saved', '✓ Comida añadida en la nube'); })
     .catch(() => setSyncStatus('error', '⚠ Error al guardar comida'));
 }
@@ -2906,7 +2943,7 @@ async function _doSaveMealEdit() {
   lsSet(LOCAL_KEY, _snap);
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Comida guardada'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FIREBASE_ENDPOINT, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(_snap) })
+  fbPatch('menus', _snap)
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); setSyncStatus('saved', '✓ Comida guardada en la nube'); })
     .catch(() => setSyncStatus('error', '⚠ Error al guardar comida'));
 }
@@ -2940,7 +2977,7 @@ async function _doSaveMealBatido() {
 
   closeMealModal();
   const _snap = buildSnapshot(); lsSet(LOCAL_KEY, _snap);
-  if (CLOUD_CONFIGURED) fetch(FIREBASE_ENDPOINT, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(_snap) }).catch(()=>{});
+  fbPatch('menus', _snap).catch(_fbErr);
   setSyncStatus('saved', '✓ Batido actualizado');
   sortMealsByTime(card.closest('.day-content'));
 }
@@ -3086,12 +3123,7 @@ function loadSuplState() {
 function saveSuplState(s) {
   lsSet(SUPL_KEY, s);
   // Sincronizar con Firebase de forma silenciosa
-  if (!CLOUD_CONFIGURED) return;
-  fetch(FB_BASE + '/' + SUPL_FB_KEY + '.json', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(s)
-  }).catch(_fbErr);
+  fbPut(SUPL_FB_KEY, s).catch(_fbErr);
 }
 
 async function loadSuplStateFromCloud() {
@@ -3440,11 +3472,7 @@ async function saveBatidoEdit() {
 
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Batido guardado'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FB_BASE + '/' + BATIDO_FB_KEY + '.json', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  }).then(r => {
+  fbPut(BATIDO_FB_KEY, data).then(r => {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     setSyncStatus('saved', '✓ Batido guardado en la nube');
   }).catch(() => setSyncStatus('error', '⚠ Error al guardar batido'));
@@ -3594,26 +3622,14 @@ async function loadMenuSlots() {
   if (Array.isArray(lc) && lc.length) return lc;
   const def = DEFAULT_MENU_SLOTS.map(s => ({ ...s }));
   lsSet(MENU_SLOTS_LOCAL_KEY, def);
-  if (CLOUD_CONFIGURED) {
-    fetch(FB_BASE + '/' + MENU_SLOTS_FB_KEY + '.json', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(def)
-    }).catch(_fbErr);
-  }
+  fbPut(MENU_SLOTS_FB_KEY, def).catch(_fbErr);
   return def;
 }
 
 function saveMenuSlots(slots) {
   lsSet(MENU_SLOTS_LOCAL_KEY, slots);
-  if (!CLOUD_CONFIGURED) return Promise.resolve();
-  return fetch(FB_BASE + '/' + MENU_SLOTS_FB_KEY + '.json', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(slots)
-  });
+  return fbPut(MENU_SLOTS_FB_KEY, slots);
 }
-
 // ── BATIDO opt-in por día (botón único en toolbar superior, opera sobre el día activo) ──
 function _activeDayKey() {
   const active = document.querySelector('.day-content.active');
@@ -3684,12 +3700,11 @@ function addDayBatido(dayKey) {
   grid.appendChild(card);
   ensureBatidoEditBtn(card);
   attachMealCardInteractions(card, dayEl);
+  sortMealsByTime(dayEl);
   recalcDayTotal(card);
   recalcWeeklyAvg();
   const snap = buildSnapshot(); lsSet(LOCAL_KEY, snap);
-  if (CLOUD_CONFIGURED) {
-    fetch(FIREBASE_ENDPOINT, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(snap) }).catch(()=>{});
-  }
+  fbPatch('menus', snap).catch(_fbErr);
   refreshWeeklyBatidoBtn();
   setSyncStatus('saved', '✓ Batido añadido');
   return true;
@@ -3713,150 +3728,11 @@ async function toggleWeeklyBatido() {
   refreshWeeklyBatidoBtn();
 }
 
-// Stub retrocompatible: ya no inyectamos botón por día (todo va por el toolbar superior)
-function ensureBatidoToggleBtn(dayEl) {
-  if (dayEl) dayEl.querySelector('.batido-add-row')?.remove();
+// Stub: ya no inyectamos botón por día (todo va por el toolbar superior)
+function ensureBatidoToggleBtn(_dayEl) {
   refreshWeeklyBatidoBtn();
 }
 
-// ── SLOTS DE COMIDAS · UI editar (modal global) ──
-const MENU_SLOT_ICON_CLASSES = [
-  { val: 'd',  label: 'Lima'  },
-  { val: 'c',  label: 'Azul'  },
-  { val: 'm',  label: 'Ámbar' },
-  { val: 'ce', label: 'Menta' }
-];
-
-function _slotRowHTML(slot) {
-  const opts = MENU_SLOT_ICON_CLASSES.map(c =>
-    '<option value="' + c.val + '"' + (c.val === slot.iconClass ? ' selected' : '') + '>' + c.label + '</option>'
-  ).join('');
-  return (
-    '<div class="slot-edit-row" data-orig-id="' + escapeHtml(slot.id || '') + '">' +
-      '<div class="slot-edit-controls">' +
-        '<button onclick="moveSlotRow(this,-1)" title="Subir">↑</button>' +
-        '<button onclick="moveSlotRow(this,1)" title="Bajar">↓</button>' +
-        '<button class="danger" onclick="removeSlotRow(this)" title="Eliminar">🗑</button>' +
-      '</div>' +
-      '<div class="slot-edit-fields">' +
-        '<input class="slot-edit-emoji" type="text" maxlength="4" value="' + escapeHtml(slot.emoji || '') + '" placeholder="🍽️">' +
-        '<input class="slot-edit-name" type="text" maxlength="32" value="' + escapeHtml(slot.name || '') + '" placeholder="Nombre del slot">' +
-        '<select class="slot-edit-icon-class">' + opts + '</select>' +
-      '</div>' +
-    '</div>'
-  );
-}
-
-async function openMenuSlotsModal() {
-  const slots = await loadMenuSlots();
-  const sorted = [...slots].sort((a, b) => (a.order || 0) - (b.order || 0));
-  const body = document.getElementById('modal-menu-slots-body');
-  body.innerHTML = sorted.map(_slotRowHTML).join('');
-  _refreshSlotMoveButtons();
-  document.getElementById('modal-menu-slots').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeMenuSlotsModal() {
-  const m = document.getElementById('modal-menu-slots');
-  if (m) m.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function _refreshSlotMoveButtons() {
-  const rows = Array.from(document.querySelectorAll('#modal-menu-slots-body .slot-edit-row'));
-  rows.forEach((row, i) => {
-    const btns = row.querySelectorAll('.slot-edit-controls button');
-    if (btns[0]) btns[0].disabled = (i === 0);
-    if (btns[1]) btns[1].disabled = (i === rows.length - 1);
-  });
-}
-
-function addSlotRow() {
-  const body = document.getElementById('modal-menu-slots-body');
-  body.insertAdjacentHTML('beforeend', _slotRowHTML({ id:'', name:'', emoji:'🍽️', iconClass:'d', order: 99 }));
-  _refreshSlotMoveButtons();
-}
-
-function moveSlotRow(btn, dir) {
-  const row = btn.closest('.slot-edit-row');
-  if (!row) return;
-  if (dir === -1 && row.previousElementSibling) row.parentNode.insertBefore(row, row.previousElementSibling);
-  if (dir === 1  && row.nextElementSibling)     row.parentNode.insertBefore(row.nextElementSibling, row);
-  _refreshSlotMoveButtons();
-}
-
-function removeSlotRow(btn) {
-  const row = btn.closest('.slot-edit-row');
-  if (!row) return;
-  row.remove();
-  _refreshSlotMoveButtons();
-}
-
-async function saveMenuSlotsModal() {
-  const rows = Array.from(document.querySelectorAll('#modal-menu-slots-body .slot-edit-row'));
-  if (!rows.length) { alert('Debe haber al menos 1 slot'); return; }
-  const oldSlots = await loadMenuSlots();
-  const oldIds = new Set(oldSlots.map(s => s.id));
-  const newSlots = [];
-  const usedIds = new Set();
-  for (let i = 0; i < rows.length; i++) {
-    const row = rows[i];
-    const name  = row.querySelector('.slot-edit-name').value.trim();
-    const emoji = row.querySelector('.slot-edit-emoji').value.trim() || '🍽️';
-    const iconClass = row.querySelector('.slot-edit-icon-class').value;
-    const origId = row.dataset.origId || '';
-    if (!name) { alert('Todos los slots deben tener nombre'); return; }
-    let id = origId;
-    if (!id) {
-      const baseId = name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'slot';
-      id = baseId; let n = 1;
-      while (usedIds.has(id)) { id = baseId + '_' + (++n); }
-    }
-    if (usedIds.has(id)) { alert('Hay slots con id duplicado: ' + id); return; }
-    usedIds.add(id);
-    newSlots.push({ id, name, emoji, iconClass, order: i });
-  }
-  const removedIds = [...oldIds].filter(id => !usedIds.has(id));
-  // Borrar datos huérfanos en local + cloud para slots eliminados
-  if (removedIds.length) {
-    const allMenu = lsGet(LOCAL_KEY, {});
-    let dirty = false;
-    Object.keys(allMenu).forEach(k => {
-      const m = k.match(/^(day-[a-z]+)-(.+)$/);
-      if (!m) return;
-      if (removedIds.includes(m[2])) { delete allMenu[k]; dirty = true; }
-    });
-    if (dirty) lsSet(LOCAL_KEY, allMenu);
-    if (CLOUD_CONFIGURED) {
-      const days = ['lun','mar','mie','jue','vie','sab','dom'];
-      removedIds.forEach(slotId => {
-        days.forEach(d => {
-          fetch(FB_BASE + '/menus/day-' + d + '-' + slotId + '.json', { method: 'DELETE' }).catch(_fbErr);
-        });
-      });
-    }
-  }
-  await saveMenuSlots(newSlots);
-  // Re-render menu cards y reaplica datos
-  renderMenuCardsSync(newSlots);
-  // Re-asignar interacciones a las cards recién creadas
-  document.querySelectorAll('.day-content').forEach(dayEl => {
-    dayEl.querySelectorAll('.meal-card').forEach(card => {
-      if (/^day-[a-z]+-batido$/.test(card.id)) {
-        card.dataset.isBatido = '1';
-        ensureBatidoEditBtn(card);
-      }
-      attachMealCardInteractions(card, dayEl);
-    });
-    ensureBatidoToggleBtn(dayEl);
-  });
-  // Re-aplicar snapshot para repoblar contenido
-  const snap = lsGet(LOCAL_KEY, null);
-  if (snap) applySnapshot(snap);
-  closeMenuSlotsModal();
-  setSyncStatus('saved', '✓ Slots guardados');
-}
 
 // Render meal cards into each .day-content/.meals-grid based on slots (sync, uses cached/default if no arg)
 function renderMenuCardsSync(slotsArg) {
@@ -3940,24 +3816,13 @@ async function loadCompraCategories() {
   if (Array.isArray(lc) && lc.length) return lc;
   const def = DEFAULT_COMPRA_CATEGORIES.map(c => ({ ...c }));
   lsSet(COMPRA_CATS_LOCAL_KEY, def);
-  if (CLOUD_CONFIGURED) {
-    fetch(FB_BASE + '/' + COMPRA_CATS_FB_KEY + '.json', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(def)
-    }).catch(_fbErr);
-  }
+  fbPut(COMPRA_CATS_FB_KEY, def).catch(_fbErr);
   return def;
 }
 
 function saveCompraCategories(cats) {
   lsSet(COMPRA_CATS_LOCAL_KEY, cats);
-  if (!CLOUD_CONFIGURED) return Promise.resolve();
-  return fetch(FB_BASE + '/' + COMPRA_CATS_FB_KEY + '.json', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(cats)
-  });
+  return fbPut(COMPRA_CATS_FB_KEY, cats);
 }
 
 function renderCompraCategories(cats) {
@@ -4217,9 +4082,7 @@ async function deleteCompraCategory(catId) {
   const allCompra = lsGet(COMPRA_LOCAL_KEY, {});
   delete allCompra[catId];
   lsSet(COMPRA_LOCAL_KEY, allCompra);
-  if (CLOUD_CONFIGURED) {
-    fetch(FB_BASE + '/' + COMPRA_FB_KEY + '/' + catId + '.json', { method: 'DELETE' }).catch(_fbErr);
-  }
+  fbDelete(COMPRA_FB_KEY + '/' + catId).catch(_fbErr);
   renderCompraCategories(filtered);
   applyCompraData(allCompra);
   recalcTotalSemanal();
@@ -4432,11 +4295,7 @@ async function saveSuplEdit() {
 
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Suplementos guardados'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FB_BASE + '/' + COMPRA_FB_KEY + '/suplementos.json', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(suplData)
-  }).then(r => {
+  fbPut(COMPRA_FB_KEY + '/suplementos', suplData).then(r => {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     setSyncStatus('saved', '✓ Suplementos guardados en la nube');
   }).catch(() => setSyncStatus('error', '⚠ Error al guardar suplementos'));
@@ -4568,11 +4427,7 @@ async function saveCompraEdit() {
 
   if (!CLOUD_CONFIGURED) { setSyncStatus('saved', '✓ Lista guardada'); return; }
   setSyncStatus('saving', 'Guardando…');
-  fetch(FB_BASE + '/' + COMPRA_FB_KEY + '/' + catId + '.json', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(items)
-  }).then(r => {
+  fbPut(COMPRA_FB_KEY + '/' + catId, items).then(r => {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     setSyncStatus('saved', '✓ Lista guardada en la nube');
   }).catch(() => setSyncStatus('error', '⚠ Error al guardar lista'));
@@ -5697,9 +5552,7 @@ async function savePlanModal() {
   if (CLOUD_CONFIGURED) {
     setSyncStatus('saving', 'Guardando plan…');
     try {
-      await fetch(FB_BASE + '/' + ENTRENO_PLANS_FB_KEY + '/' + planId + '.json', {
-        method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
-      });
+      await fbPut(ENTRENO_PLANS_FB_KEY + '/' + planId, data);
       setSyncStatus('saved', '✓ Plan guardado en la nube');
     } catch(e) { setSyncStatus('error','⚠ Error al guardar el plan'); }
   } else {
@@ -5732,7 +5585,7 @@ async function deletePlan(planId) {
   if (CLOUD_CONFIGURED) {
     setSyncStatus('saving','Eliminando plan…');
     try {
-      await fetch(FB_BASE + '/' + ENTRENO_PLANS_FB_KEY + '/' + planId + '.json', { method:'DELETE' });
+      await fbDelete(ENTRENO_PLANS_FB_KEY + '/' + planId);
       setSyncStatus('saved','✓ Plan eliminado');
     } catch(e) { setSyncStatus('error','⚠ Error al eliminar el plan'); }
   } else {
@@ -5794,12 +5647,7 @@ async function loadEntrenoPlans() {
     // WIPE: reemplazar TODO con los 7 defaults limpios
     allPlans = JSON.parse(JSON.stringify(DEFAULT_ENTRENO_PLANS));
     lsSet(ENTRENO_PLANS_LOCAL_KEY, allPlans);
-    if (CLOUD_CONFIGURED) {
-      fetch(FB_BASE + '/' + ENTRENO_PLANS_FB_KEY + '.json', {
-        method: 'PUT', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(allPlans)
-      }).catch(()=>{});
-    }
+    fbPut(ENTRENO_PLANS_FB_KEY, allPlans).catch(_fbErr);
     lsSet(ENTRENO_PLANS_SEEDED_KEY, true);
   }
 
@@ -5814,11 +5662,7 @@ async function loadEntrenoPlans() {
     });
     if (dirtyBadges) {
       lsSet(ENTRENO_PLANS_LOCAL_KEY, allPlans);
-      if (CLOUD_CONFIGURED) {
-        fetch(FB_BASE + '/' + ENTRENO_PLANS_FB_KEY + '.json', {
-          method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(allPlans)
-        }).catch(()=>{});
-      }
+      fbPut(ENTRENO_PLANS_FB_KEY, allPlans).catch(_fbErr);
     }
   }
 
@@ -5840,18 +5684,12 @@ async function loadEntrenoPlans() {
     allPlans = migratedPlans;
     lsSet(ENTRENO_PLANS_LOCAL_KEY, allPlans);
     // Update Firebase: write new keys, delete old keys
-    if (CLOUD_CONFIGURED) {
-      const base = FB_BASE + '/' + ENTRENO_PLANS_FB_KEY;
-      await Promise.all(Object.entries(migrations).map(async ([oldId, newId]) => {
-        try {
-          await fetch(base + '/' + newId + '.json', {
-            method: 'PUT', headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(allPlans[newId])
-          });
-          await fetch(base + '/' + oldId + '.json', { method: 'DELETE' });
-        } catch(e) {}
-      }));
-    }
+    await Promise.all(Object.entries(migrations).map(async ([oldId, newId]) => {
+      try {
+        await fbPut(ENTRENO_PLANS_FB_KEY + '/' + newId, allPlans[newId]);
+        await fbDelete(ENTRENO_PLANS_FB_KEY + '/' + oldId);
+      } catch(e) {}
+    }));
   }
 
   const toggleBar = document.getElementById('entreno-toggle-bar');
@@ -5979,25 +5817,6 @@ async function loadEntrenoPlans() {
     <div class="app-modal-footer">
       <button class="modal-btn-cancel" onclick="closeCompraModal()">✕ Cancelar</button>
       <button class="modal-btn-ok" id="modal-compra-save" onclick="saveCompraModal()">✓ Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ MODAL SLOTS DE COMIDAS (plantilla por día) ══ -->
-<div class="app-modal" id="modal-menu-slots" role="dialog" aria-modal="true">
-  <div class="app-modal-box">
-    <div class="app-modal-header">
-      <div class="app-modal-title">EDITAR SLOTS DE COMIDAS</div>
-      <button class="app-modal-close" onclick="closeMenuSlotsModal()" title="Cerrar">✕</button>
-    </div>
-    <div class="app-modal-body">
-      <p style="font-size:.78rem;color:var(--muted);margin:0 0 .85rem;line-height:1.45">Estos slots se aplican a los 7 días. Reordena, renombra o cambia el emoji/color. Eliminar un slot borra los datos guardados de ese slot en todos los días.</p>
-      <div id="modal-menu-slots-body"></div>
-      <div class="slot-add-row"><button class="btn-add-slot" onclick="addSlotRow()">+ Añadir slot</button></div>
-    </div>
-    <div class="app-modal-footer">
-      <button class="modal-btn-cancel" onclick="closeMenuSlotsModal()">✕ Cancelar</button>
-      <button class="modal-btn-ok" onclick="saveMenuSlotsModal()">✓ Guardar</button>
     </div>
   </div>
 </div>
