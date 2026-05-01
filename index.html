@@ -43,7 +43,7 @@ header{background:var(--surface);border-bottom:1px solid var(--border);position:
 .hero{padding:3rem 2rem 2rem;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start}
 .section{max-width:1100px;margin:0 auto;padding:2rem;display:none}
 .section.active{display:block}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,5.5rem);line-height:.92;letter-spacing:1px}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,5.5rem);line-height:.92;letter-spacing:1px;margin-bottom:1rem}
 h1 em{color:var(--accent);font-style:normal}
 h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;color:var(--text);margin-bottom:.75rem}
 .hero-sub{color:var(--text2);font-size:.95rem;margin-top:1rem;line-height:1.7}
@@ -294,8 +294,10 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 .menu-slots-toolbar{display:flex;justify-content:flex-end;align-items:center;gap:.5rem;flex-wrap:wrap;margin:0 0 .65rem}
 .menu-slots-edit-btn{background:rgba(55,160,240,.1);border:1px solid rgba(55,160,240,.35);color:var(--blue);font-size:.78rem;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s;white-space:nowrap}
 .menu-slots-edit-btn:hover{background:rgba(55,160,240,.2);border-color:var(--blue)}
-.menu-batido-toggle-btn{font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap;background:rgba(55,208,160,.1);border:1px solid rgba(55,208,160,.4);color:var(--accent2)}
-.menu-batido-toggle-btn:hover{background:rgba(55,208,160,.2);border-color:var(--accent2)}
+.menu-add-meal-btn{background:rgba(181,240,55,.1);border:1px dashed rgba(181,240,55,.5);color:var(--accent);font-size:.78rem;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s;white-space:nowrap}
+.menu-add-meal-btn:hover{background:rgba(181,240,55,.2);border-style:solid}
+.menu-batido-toggle-btn{font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap;background:rgba(240,144,80,.1);border:1px solid rgba(240,144,80,.45);color:#f09050}
+.menu-batido-toggle-btn:hover{background:rgba(240,144,80,.2);border-color:#f09050}
 .menu-batido-toggle-btn.active{background:rgba(240,104,104,.08);border-color:rgba(240,104,104,.4);color:#f06868}
 .menu-batido-toggle-btn.active:hover{background:rgba(240,104,104,.16);border-color:rgba(240,104,104,.6)}
 .slot-edit-row{display:flex;gap:.5rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
@@ -857,10 +859,9 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 </nav>
 <!-- ══ MENÚ ══ -->
 <section class="section active" id="menu">
-<div class="hero" style="padding-top:2rem">
+<div class="hero" style="padding-top:0">
 <div>
 <h1>PLAN DE<em> NUTRICIÓN </em>SEMANAL</h1>
-<p class="hero-sub">Diseñado para hombre de 29 años · 60 kg · objetivo 75-80 kg<br/>3-4 entrenos/semana · Superávit calórico controlado · Ingredientes Mercadona</p>
 </div>
 </div>
 <div class="section" style="display:block;padding-top:0">
@@ -910,7 +911,7 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <div class="supl-alert" id="batido-prot-alert"></div>
 <div class="supl-alert" id="batido-creat-alert"></div>
 </div>
-<div class="menu-slots-toolbar"><button class="menu-batido-toggle-btn" id="menu-batido-toggle-btn" onclick="toggleWeeklyBatido()">+ Añadir batido</button><button class="menu-slots-edit-btn" onclick="openMenuSlotsModal()">✏ Editar slots de comidas</button></div>
+<div class="menu-slots-toolbar"><button class="menu-batido-toggle-btn" id="menu-batido-toggle-btn" onclick="toggleWeeklyBatido()">+ Añadir batido</button><button class="menu-add-meal-btn" id="menu-add-meal-btn" onclick="addMealActiveDay()">+ Añadir comida</button></div>
 <div class="day-tabs">
 <button class="day-tab active" onclick="showDay('lun')">LUNES</button>
 <button class="day-tab" onclick="showDay('mar')">MARTES</button>
@@ -960,7 +961,6 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <!-- ══ COMPRA ══ -->
 <section class="section" id="compra">
 <h1>LISTA DE LA <em>COMPRA SEMANAL</em></h1>
-<p class="section-intro">Estimación semanal para 5 días · Mercadona · Precios Abril 2026</p>
 <!--
   ─── CÓMO AÑADIR FOTOS EXTRA A UN PRODUCTO ───────────────────────────────────
   Añade el atributo  data-gallery="URL1|URL2|URL3"  al div.compra-item
@@ -1059,7 +1059,6 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <!-- ══ ENTRENAMIENTO ══ -->
 <section class="section" id="entreno">
 <h1>PLAN DE<em> ENTRENAMIENTO</em></h1>
-<p class="section-intro">Hipertrofia · Progresión de cargas · Ejercicios compuestos prioritarios</p>
 <div id="entreno-plan-banner" style="background:linear-gradient(135deg,rgba(181,240,55,.08),rgba(55,240,168,.05));border:1px solid rgba(181,240,55,.25);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.5rem">
   <!-- ── SELECTOR DE DÍAS ── -->
   <div id="entreno-dias-picker">
@@ -1120,7 +1119,6 @@ h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.5px;colo
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem">
   <h1>REGISTRO DE<em> PESOS</em></h1>
 </div>
-<p class="section-intro">Selecciona un día del calendario, elige el plan y anota los pesos de cada ejercicio.</p>
 
 <!-- CALENDAR NAV (2 filas) -->
 <div class="cal-nav">
@@ -1600,6 +1598,7 @@ function showDay(id) {
     if ((t.getAttribute('onclick') || '').includes("'" + id + "'")) t.classList.add('active');
   });
   if (typeof refreshWeeklyBatidoBtn === 'function') refreshWeeklyBatidoBtn();
+  if (typeof refreshAddMealBtn === 'function') refreshAddMealBtn();
 }
 function showPlan(id) {
   setPlanActive(id);
@@ -1751,7 +1750,6 @@ function buildDayMenu(dayEl, dayId2) {
   wrap.className = 'day-menu';
   wrap.innerHTML = '<button type="button" class="day-menu-trigger" aria-haspopup="true" aria-expanded="false" title="Opciones del día">⋯</button>'
     + '<div class="day-menu-popup" role="menu">'
-    +   '<button type="button" class="day-menu-item day-menu-item-add" role="menuitem"><span class="item-icon">+</span><span class="item-label">Añadir comida</span></button>'
     +   '<button type="button" class="day-menu-item day-menu-item-exclude" role="menuitem"><span class="item-icon">✕</span><span class="item-label">Excluir de media semanal</span></button>'
     +   '<button type="button" class="day-menu-item day-menu-item-hide" role="menuitem"><span class="item-icon">👁‍🗨</span><span class="item-label">Ocultar día</span></button>'
     +   '<button type="button" class="day-menu-item day-menu-item-reset warn" role="menuitem"><span class="item-icon">↺</span><span class="item-label">Resetear día</span></button>'
@@ -1771,10 +1769,6 @@ function buildDayMenu(dayEl, dayId2) {
       trigger.classList.add('open');
       trigger.setAttribute('aria-expanded', 'true');
     }
-  });
-  wrap.querySelector('.day-menu-item-add').addEventListener('click', () => {
-    closeAllDayMenus();
-    addMealMode(dayEl);
   });
   wrap.querySelector('.day-menu-item-reset').addEventListener('click', () => {
     closeAllDayMenus();
@@ -3643,6 +3637,23 @@ function refreshWeeklyBatidoBtn() {
     ? '− Quitar batido del ' + _dayLabel(dk)
     : '+ Añadir batido al ' + _dayLabel(dk);
   btn.classList.toggle('active', has);
+}
+
+function refreshAddMealBtn() {
+  const btn = document.getElementById('menu-add-meal-btn');
+  if (!btn) return;
+  const dk = _activeDayKey();
+  if (!dk) { btn.style.display = 'none'; return; }
+  btn.style.display = '';
+  btn.textContent = '+ Añadir comida al ' + _dayLabel(dk);
+}
+
+function addMealActiveDay() {
+  const dk = _activeDayKey();
+  if (!dk) return;
+  const dayEl = document.getElementById('day-' + dk);
+  if (!dayEl) return;
+  if (typeof addMealMode === 'function') addMealMode(dayEl);
 }
 
 function addDayBatido(dayKey) {
